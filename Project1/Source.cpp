@@ -1,40 +1,37 @@
-#include "bits/stdc++.h"
-#define endl '\n'
-#define forh(var, begin, end) for(auto var = begin; var < end; ++var)//for: half-opened range
-#define forhi(var, begin, end) for(auto var = begin-1; var >= end; --var)//inversion
-#define forc(var, begin, end) for(auto var = begin; var <= end; ++var)//for: closed range
-#define forci(var, begin, end) for(auto var = begin; var >= end; --var)//inversion
-#pragma GCC optimize ("Ofast")
-
-using namespace std;
-
-using ld = long double;
-using ll = long long;
-using ull = unsigned long long;
-using uint = unsigned;
-using ushort = unsigned short;
-using uchar = unsigned char;
-
-const int mod = int(1e9 + 7);
-const int prime = int(2e9 + 11);
-const ld pi = acosl(-1);
-const ld eps = 1e-13;
-const int dirs[4][2] = { { 1, 0 },{ 0, 1 },{ -1, 0 },{ 0, -1 } };
-
-template<typename T>
-constexpr T inf() { return numeric_limits<T>::max() / 2; }
-
-void error()
-{
-	cout << -1 << endl;
-	exit(0);
-}
+#include "Graph.h"
 
 int main()
 {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
 	srand((uint)time(0));
+
+	int n, m;
+	cin >> n >> m;
+	Graph g(n);
+	forh(i, 0, m)
+	{
+		int x;
+		cin >> x;
+		int p;
+		cin >> p;
+		p--;
+		forh(i, 1, x)
+		{
+			int c;
+			cin >> c;
+			c--;
+			g.add_edge(c, p);
+			p = c;
+		}
+	}
+
+	auto ans = g.topo_sort();
+	if (ans.empty())
+		cout << 0 << endl;
+	else
+		for (auto i : ans)
+			cout << i + 1 << endl;
 
 	return 0;
 }
