@@ -25,9 +25,3 @@ const int dirs[4][2] = { { 1, 0 },{ 0, 1 },{ -1, 0 },{ 0, -1 } };
 
 template<typename T>
 constexpr T inf() { return numeric_limits<T>::max() / 2; }
-
-void error()
-{
-	cout << -1 << endl;
-	exit(0);
-}
