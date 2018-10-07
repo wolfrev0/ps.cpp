@@ -3,12 +3,12 @@
 
 struct DisjointSet
 {
-	static const int N = 1000000;
-	int par[N];
+	vector<int> par;
 
-	DisjointSet()
+	DisjointSet(int n)
+		:par(n)
 	{
-		forh(i, 0, N)
+		forh(i, 0, n)
 			par[i] = i;
 	}
 

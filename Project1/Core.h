@@ -6,7 +6,7 @@
 #define forhi(var, begin, end) for(auto var = begin-1; var >= end; --var)//inversion
 #define forc(var, begin, end) for(auto var = begin; var <= end; ++var)//for: closed range
 #define forci(var, begin, end) for(auto var = begin; var >= end; --var)//inversion
-#pragma GCC optimize ("Ofast")
+//#pragma GCC optimize ("Ofast")
 
 using namespace std;
 

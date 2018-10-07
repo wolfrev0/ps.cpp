@@ -122,7 +122,8 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Algorithms.h" />
+    <ClInclude Include="Matrix.h" />
+    <ClInclude Include="NumberTheory.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="DisjointSet.h" />
     <ClInclude Include="Geometry.h" />

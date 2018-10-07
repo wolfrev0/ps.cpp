@@ -1,10 +1,11 @@
 #pragma once
 #include "Core.h"
 
-using T = ld;
 struct Vec2
 {
+	using T = ld;
 	T x, y;
+	Vec2() :x(0), y(0) {}
 	Vec2(T x, T y) :x(x), y(y) {}
 	bool operator==(const Vec2 &r)const { return x == r.x && y == r.y; }
 	bool operator!=(const Vec2 &r)const { return !(*this == r); }
@@ -20,17 +21,23 @@ struct Vec2
 	Vec2 normalize()const { return { x / size(), y / size() }; }
 	T dot(const Vec2 &r) const { return x * r.x + y * r.y; }
 	T cross(const Vec2 &r)const { return x * r.y - y * r.x; }
+	T ccw(const Vec2 &r) { return cross(r); }
 	T polar()const { return fmodl(atan2l(y, x) + 2 * pi, 2 * pi); }
 	Vec2 project(const Vec2 &base)const { Vec2 b = base.normalize(); return b * b.dot(*this); }
 	Vec2 operator+= (const Vec2 &r) { return *this = *this + r; }
 	Vec2 operator-= (const Vec2 &r) { return *this = *this - r; }
 	Vec2 operator*= (T r) { return *this = *this * r; }
-} err = { inf<T>(), inf<T>() };
-T ccw(Vec2 a, Vec2 b) { return a.cross(b); }
+} err = { inf<Vec2::T>(), inf<Vec2::T>() };
+
+struct Polygon
+{
+	vector<Vec2> arr;
+	Polygon(int n) :arr(n) {}
+};
 
 Vec2 line_intersect(Vec2 a, Vec2 b, Vec2 c, Vec2 d)
 {
-	T det = (b - a).cross(d - c);
+	Vec2::T det = (b - a).cross(d - c);
 	if (abs(det) < eps)
 		return err;
 	return a + (b - a)*((c - a).cross(d - c) / det);
@@ -40,7 +47,7 @@ Vec2 paral_seg(Vec2 a, Vec2 b, Vec2 c, Vec2 d)
 {
 	if (b < a) swap(a, b);
 	if (d < c) swap(c, d);
-	if (ccw(b - a, c - a) != 0 || b < c || d < a)
+	if ((b - a).ccw(c - a) != 0 || b < c || d < a)
 		return err;
 	return max(a, c);
 }
@@ -68,12 +75,12 @@ Vec2 perpendFoot(Vec2 a, Vec2 b, Vec2 p)
 	return bound_rect(a, b, res) ? res : err;
 }
 
-T distm(const Vec2 &pa, const Vec2 &a, const Vec2 &pb, const Vec2 &b)
+Vec2::T distm(const Vec2 &pa, const Vec2 &a, const Vec2 &pb, const Vec2 &b)
 {
 	if (seg_intersect(pa, a, pb, b) != err)
 		return 0;
 
-	T ans = inf<T>();
+	Vec2::T ans = inf<Vec2::T>();
 	auto v = perpendFoot(pb, b, pa);
 	if (v != err)
 		ans = min(ans, (v - pa).size());
@@ -98,9 +105,9 @@ T distm(const Vec2 &pa, const Vec2 &a, const Vec2 &pb, const Vec2 &b)
 	return ans;
 }
 
-T distM(const Vec2 &pa, const Vec2 &a, const Vec2 &pb, const Vec2 &b)
+Vec2::T distM(const Vec2 &pa, const Vec2 &a, const Vec2 &pb, const Vec2 &b)
 {
-	T ans = inf<T>();
+	Vec2::T ans = inf<Vec2::T>();
 	ans = max(ans, (pa - b).size());
 	ans = max(ans, (a - pb).size());
 	ans = max(ans, (a - b).size());

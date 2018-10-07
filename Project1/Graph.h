@@ -2,14 +2,10 @@
 #include "Core.h"
 
 struct Graph {
-	static const int N = 1000;
-	int n;
-	vector<int> g[N];
-	int in[N];
+	vector<vector<int>> g;
+	vector<int> in;
 
-	Graph(int n) :n(n) {
-		memset(in, 0, sizeof in);
-	}
+	Graph(int n) :g(n), in(n) {}
 
 	void add_edge(int s, int e)
 	{
@@ -20,7 +16,7 @@ struct Graph {
 	vector<int> topo_sort()
 	{
 		queue<int> q;
-		forh(i, 0, n)
+		forh(i, 0u, g.size())
 			if (!in[i])
 				q.push(i);
 		vector<int> ret;
@@ -34,9 +30,9 @@ struct Graph {
 					q.push(i);
 		}
 		reverse(ret.begin(), ret.end());
-		forh(i, 0, n)
+		forh(i, 0u, g.size())
 			if (in[i])
-				return {};
+				throw "Error";
 		return ret;
 	}
 };
