@@ -1,5 +1,4 @@
-#include "Graph.h"
-#include "Geometry.h"
+#include "Matrix.h"
 
 int main()
 {
@@ -7,32 +6,24 @@ int main()
 	cout << fixed << setprecision(10);
 	srand((uint)time(0));
 
-	int n, m;
-	cin >> n >> m;
-	Graph g(n);
-	forh(i, 0, m)
+	int d, t;
+	cin >> d >> t;
+
+	SqMat m(d);
+	forh(i, 0, d)
 	{
-		int x;
-		cin >> x;
-		int p;
-		cin >> p;
-		p--;
-		forh(i, 1, x)
+		m.arr[0][i] = 1;
+		forh(j, 0, d)
 		{
-			int c;
-			cin >> c;
-			c--;
-			g.add_edge(c, p);
-			p = c;
+			if (i - j == 1)
+				m.arr[i][j] = 1;
 		}
 	}
-
-	auto ans = g.topo_sort();
-	if (ans.empty())
-		cout << 0 << endl;
-	else
-		for (auto i : ans)
-			cout << i + 1 << endl;
+	m = fastpow(m, t);
+	Mat v(d, 1);
+	v.arr[0][0] = 1;
+	auto ans = m * v;
+	cout << ans.arr[0][0] << endl;
 
 	return 0;
 }
