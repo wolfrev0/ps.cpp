@@ -35,4 +35,14 @@ struct Graph {
 				throw "Error";
 		return ret;
 	}
+
+	vector<int> dijikstra()
+	{
+		return {};
+	}
+
+	vector<int> spfa()
+	{
+		return {};
+	}
 };
