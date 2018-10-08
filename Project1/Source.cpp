@@ -1,4 +1,4 @@
-#include "Matrix.h"
+#include "Geometry.h"
 
 int main()
 {
@@ -6,24 +6,12 @@ int main()
 	cout << fixed << setprecision(10);
 	srand((uint)time(0));
 
-	int d, t;
-	cin >> d >> t;
-
-	SqMat m(d);
-	forh(i, 0, d)
-	{
-		m.arr[0][i] = 1;
-		forh(j, 0, d)
-		{
-			if (i - j == 1)
-				m.arr[i][j] = 1;
-		}
-	}
-	m = fastpow(m, t);
-	Mat v(d, 1);
-	v.arr[0][0] = 1;
-	auto ans = m * v;
-	cout << ans.arr[0][0] << endl;
+	int n;
+	cin >> n;
+	vector<Vec2> arr(n);
+	forh(i, 0, n)
+		cin >> arr[i].x >> arr[i].y;
+	cout << convex_hull(arr).size() << endl;
 
 	return 0;
 }
