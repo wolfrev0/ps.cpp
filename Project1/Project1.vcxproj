@@ -130,6 +130,7 @@
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="Segment.h" />
+    <ClInclude Include="SegmentTree.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -59,5 +59,8 @@
     <ClInclude Include="DisjointSet.h">
       <Filter>Header Files\Tree</Filter>
     </ClInclude>
+    <ClInclude Include="SegmentTree.h">
+      <Filter>Header Files\Tree</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
