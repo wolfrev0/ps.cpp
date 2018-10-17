@@ -1,6 +1,5 @@
 #pragma once
 #include "Core.h"
-#include "NumberTheory.h"
 
 struct Mat
 {
@@ -11,12 +10,13 @@ struct Mat
 		for (auto &i : arr)
 			i.resize(c);
 	}
-	Mat(int r, int c, vector<vector<T>> arr) :arr(arr) 
+	Mat(vector<vector<T>> arr)
+		:arr(arr)
 	{
-		assert(arr.size() == r);
 		for (auto &i : arr)
-			assert(i.size() == c);
+			assert(i.size() == c());
 	}
+	Mat(const Mat &r) :arr(r.arr) {	}
 
 	int r()const { return arr.size(); }
 	int c()const { return arr[0].size(); }
@@ -41,14 +41,14 @@ struct Mat
 struct SqMat : public Mat
 {
 	SqMat(int n) :Mat(n, n) {}
-	explicit SqMat(const Mat &m) :Mat(m.r(), m.c(), m.arr) { assert(m.r() == m.c()); }
+	explicit SqMat(const Mat &m) :Mat(m) { assert(m.r() == m.c()); }
 
 	int n()const { return r(); }
 
-	SqMat id()
+	static SqMat id(int n)
 	{
-		SqMat ret(n());
-		forh(i, 0, n())
+		SqMat ret(n);
+		forh(i, 0, n)
 			ret.arr[i][i] = 1;
 		return ret;
 	}

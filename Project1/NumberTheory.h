@@ -49,10 +49,21 @@ ll fibo(int n)
 }
 
 template<typename T>
-T fastpow(const T &a, int p)
+typename enable_if<std::is_fundamental<T>::value, T>::type fastpow(const T &a, int p)
 {
-	if (p == 1)
-		return a;
+	if (p == 0)
+		return 1;
+	T tmp = fastpow(a, p / 2);
+	if (p % 2)
+		return tmp * tmp*a;
+	return tmp * tmp;
+}
+
+template<typename T>
+typename enable_if<!is_fundamental<T>::value, T>::type fastpow(const T &a, int p)
+{
+	if (p == 0)
+		return T::id(a.n());
 	T tmp = fastpow(a, p / 2);
 	if (p % 2)
 		return tmp * tmp*a;
