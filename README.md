@@ -16,9 +16,12 @@ Making a basic algorithms and data structures library
   <p>fast pow</p>  
   <p>modular number</p>
 <h3>2D Geometry</h3>
-  <ol>Vector</ol>  
+  <ol><p>Vector</p>  
     <li>perpendicular_foot</li>
-  <ol>Segment</ol>  
+  </ol>
+  <ol><p>Segment</p>
     <li>segment intersection</li>
-  <ol>Polygon</ol>
+  </ol>
+  <ol><p>Polygon</p>
     <li>convex hull</li>
+  </ol>
