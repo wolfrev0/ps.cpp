@@ -1,4 +1,10 @@
-#include "SegmentTree.h"
+#include "Core.h"
+
+void error()
+{
+	cout << -1 << endl;
+	exit(0);
+}
 
 int main()
 {
@@ -6,31 +12,7 @@ int main()
 	cout << fixed << setprecision(10);
 	srand((uint)time(0));
 
-	SegmentTree<ll> st(1000000, 1, [](auto a, auto b) {return (a * b) % mod; }, [](int l, int r, auto a, auto b) {return b; }, [](auto a, auto b) {return b; });
-	int n, m, k;
-	cin >> n >> m >> k;
-	for (int i = 0; i < n; i++)
-	{
-		ll x;
-		cin >> x;
-		st.update(i, x);
-	}
-	for (int i = 0; i < m + k; i++)
-	{
-		int a, b;
-		ll c;
-		cin >> a;
-		if (a == 1)
-		{
-			cin >> b >> c;
-			st.update(--b, c);
-		}
-		else
-		{
-			cin >> b >> c;
-			cout << st.query(--b, --c) << endl;
-		}
-	}
+
 
 	return 0;
 }
