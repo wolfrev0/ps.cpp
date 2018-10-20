@@ -21,7 +21,7 @@ struct Vec2
 	inline Vec2 normalize()const { return Vec2(x / size(), y / size()); }
 	inline T dot(const Vec2 &r) const { return x * r.x + y * r.y; }
 	inline T cross(const Vec2 &r)const { return x * r.y - y * r.x; }
-	inline T ccw(const Vec2 &a, const Vec2 &b) { return (a - *this).cross(b - *this); }
+	inline T ccw(const Vec2 &a, const Vec2 &b) const { return (a - *this).cross(b - *this); }
 	inline T angle()const { return atan2(y, x); }
 	inline Vec2 project(const Vec2 &p)const { Vec2 base = normalize(); return base * base.dot(p); }
 	inline Vec2 operator+= (const Vec2 &r) { return *this = *this + r; }

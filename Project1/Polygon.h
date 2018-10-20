@@ -21,11 +21,9 @@ struct Polygon
 		swap(vs[0], *min_element(vs.begin(), vs.end()));
 		auto base = vs[0];
 		std::sort(vs.begin() + 1, vs.end(), [base](const Vec2 &l, const Vec2 &r) {
-			auto ll = l - base;
-			auto lr = r - base;
-			ld val = ll.cross(lr);
+			ld val = base.ccw(l, r);
 			if (val == 0)
-				return ll < lr;
+				return l < r;//need some thinking but ok.
 			else
 				return val > 0;
 		});
@@ -34,6 +32,8 @@ struct Polygon
 	//graham scan
 	Polygon convex_hull()
 	{
+		for (int i = 1; i < vs.size() - 1; i++)
+			assert(vs[0].ccw(vs[i], vs[i + 1]) >= 0);
 		Polygon ret;
 		forc(i, 0, vs.size())
 		{
