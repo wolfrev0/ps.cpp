@@ -132,6 +132,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Line.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="NumberTheory.h" />
     <ClInclude Include="Core.h" />
@@ -139,7 +140,6 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Polygon.h" />
-    <ClInclude Include="Segment.h" />
     <ClInclude Include="SegmentTree.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
