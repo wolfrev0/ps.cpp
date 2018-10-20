@@ -17,11 +17,14 @@ Making a basic algorithms and data structures library
   <p>modular number</p>
 <h3>2D Geometry</h3>
   <ol><p>Vector</p>  
-    <li>perpendicular_foot</li>
+    <li>+,-,*,/,<,ccw,dot product,cross product, size, angle, etc...</li>
   </ol>
   <ol><p>Segment</p>
-    <li>segment intersection</li>
+    <li>Line & Segment intersection</li>
+    <li>Perpendicular Foot</li>
   </ol>
   <ol><p>Polygon</p>
     <li>convex hull</li>
+    <li>area</li>
+    <li>ccw sort</li>
   </ol>
