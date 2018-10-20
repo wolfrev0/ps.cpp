@@ -8,14 +8,19 @@ struct Line
 {
 	Vec2 s, e;
 	explicit Line() :Line(zero, zero) {}
-	explicit Line(Vec2 s, Vec2 e) :s(s), e(e) { if (s > e)swap(this->s, this->e); }
+	explicit Line(Vec2 s, Vec2 e) :s(s), e(e) { }
 	inline Vec2 dir()const { return e - s; }
 
-	Vec2 intersect(const Line &r)const
+	Vec2 intersect(Line &r)
 	{
+		if (s > e)
+			swap(s, e);
+		if (r.s > r.e)
+			swap(r.s, r.e);
+
 		Vec2::T det = dir().cross(r.dir());
 		if (abs(det) < eps)
-			if ((s - r.s).size() < eps)
+			if (abs((r.s - s).cross(e - s)) < eps)
 				throw LineSame();
 			else
 				return err;
