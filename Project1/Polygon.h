@@ -18,24 +18,6 @@ struct Polygon
 
 	void sort()
 	{
-		//too high error. see BOJ-11620
-		//swap(vs[0], *min_element(vs.begin(), vs.end()));
-		//auto ret.back2() = vs[0];
-		//std::sort(vs.begin() + 1, vs.end(), [ret.back2()](const Vec2 &l, const Vec2 &r) {
-		//	auto la = (l - ret.back2()).angle(); 
-		//	auto ra = (r - ret.back2()).angle();
-		//	if (abs(la - ra) < eps)
-		//		return l < r;
-		//	return la < ra;
-		//});
-		//not useful sort(can't calculate convex hull)
-		//std::sort(vs.begin(), vs.end(), [](const Vec2& a, const Vec2& b) {
-		//	ld val = a.cross(b);
-		//	if (val == 0)
-		//		return a < b;
-		//	else
-		//		return val > 0;
-		//});
 		swap(vs[0], *min_element(vs.begin(), vs.end()));
 		auto base = vs[0];
 		std::sort(vs.begin() + 1, vs.end(), [base](const Vec2 &l, const Vec2 &r) {
