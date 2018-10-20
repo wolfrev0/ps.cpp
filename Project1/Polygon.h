@@ -6,7 +6,7 @@ struct Polygon
 	vector<Vec2> vs;
 
 	Polygon() {}
-	Polygon(int n) :vs(n) {}
+	explicit Polygon(int n) :vs(n) {}
 	int size()const { return vs.size(); }
 	Vec2 &front() { return vs.front(); }
 	Vec2 &back1() { return vs.back(); }
