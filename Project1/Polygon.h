@@ -1,46 +1,93 @@
 #pragma once
 #include "Vec2.h"
 
-using Polygon = vector<Vec2>;
-
-//graham scan
-Polygon convex_hull(vector<Vec2> &pts)
+struct Polygon
 {
-	swap(pts[0], *min_element(pts.begin(), pts.end()));
-	auto base = pts[0];
-	sort(pts.begin() + 1, pts.end(), [base](const Vec2 &l, const Vec2 &r) {
-		return (l - base).angle() < (r - base).angle();
-	});
+	vector<Vec2> vs;
 
-	Polygon ret;
-	forc(i, 0, pts.size())
+	Polygon() {}
+	Polygon(int n) :vs(n) {}
+	int size()const { return vs.size(); }
+	Vec2 &front() { return vs.front(); }
+	Vec2 &back1() { return vs.back(); }
+	Vec2 &back2() { return vs[size() - 2]; }
+	void pushback(const Vec2 &v) { vs.push_back(v); }
+	void popback() { vs.pop_back(); }
+	Vec2 &operator[](int idx) { return vs[idx]; }
+	void clear() { vs.clear(); }
+
+	void sort()
 	{
-		auto im = i % pts.size();
-
-		while (ret.size() >= 2)
-		{
-			auto base = ret[ret.size() - 2];
-			auto top = ret.back() - base;
-			auto candi = pts[im] - base;
-			if (top.ccw(candi) < 0 || top.ccw(candi) == 0 && candi.size() > top.size())
-				ret.pop_back();
+		//too high error. see BOJ-11620
+		//swap(vs[0], *min_element(vs.begin(), vs.end()));
+		//auto ret.back2() = vs[0];
+		//std::sort(vs.begin() + 1, vs.end(), [ret.back2()](const Vec2 &l, const Vec2 &r) {
+		//	auto la = (l - ret.back2()).angle(); 
+		//	auto ra = (r - ret.back2()).angle();
+		//	if (abs(la - ra) < eps)
+		//		return l < r;
+		//	return la < ra;
+		//});
+		//not useful sort(can't calculate convex hull)
+		//std::sort(vs.begin(), vs.end(), [](const Vec2& a, const Vec2& b) {
+		//	ld val = a.cross(b);
+		//	if (val == 0)
+		//		return a < b;
+		//	else
+		//		return val > 0;
+		//});
+		swap(vs[0], *min_element(vs.begin(), vs.end()));
+		auto base = vs[0];
+		std::sort(vs.begin() + 1, vs.end(), [base](const Vec2 &l, const Vec2 &r) {
+			auto ll = l - base;
+			auto lr = r - base;
+			ld val = ll.cross(lr);
+			if (val == 0)
+				return ll < lr;
 			else
-				break;
-		}
-
-		if (ret.size() < 2)
-			ret.push_back(pts[im]);
-		else
-		{
-			auto base = ret[ret.size() - 2];
-			auto top = ret.back() - base;
-			auto candi = pts[im] - base;
-			if (top.ccw(candi) > 0 || candi.size() > top.size())
-				ret.push_back(pts[im]);
-		}
+				return val > 0;
+		});
 	}
-	if (ret.front() == ret.back())
-		ret.pop_back();
 
-	return ret;
-}
+	//graham scan
+	Polygon convex_hull()
+	{
+		Polygon ret;
+		forc(i, 0, vs.size())
+		{
+			auto im = i % vs.size();
+
+			while (ret.size() >= 2)
+			{
+				auto ltop = ret.back1() - ret.back2();
+				auto lcandi = vs[im] - ret.back2();
+				if (ltop.cross(lcandi) < 0 || ltop.cross(lcandi) == 0 && lcandi.size() > ltop.size())
+					ret.popback();
+				else
+					break;
+			}
+
+			if (ret.size() < 2)
+				ret.pushback(vs[im]);
+			else
+			{
+				auto ltop = ret.back1() - ret.back2();
+				auto lcandi = vs[im] - ret.back2();
+				if (ltop.cross(lcandi) > 0 || lcandi.size() > ltop.size())
+					ret.pushback(vs[im]);
+			}
+		}
+		if (ret.front() == ret.back1())
+			ret.popback();
+
+		return ret;
+	}
+
+	ld area()
+	{
+		ld ans = 0;
+		forh(i, 1, vs.size() - 1)
+			ans += vs[0].ccw(vs[i], vs[i + 1]);
+		return ans / 2;
+	}
+};

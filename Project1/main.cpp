@@ -1,4 +1,6 @@
-#include "Core.h"
+#include "Polygon.h"
+#include "Segment.h"
+#include "Vec2.h"
 
 void error()
 {
@@ -12,7 +14,13 @@ int main()
 	cout << fixed << setprecision(10);
 	srand((uint)time(0));
 
-
+	int n;
+	cin >> n;
+	Polygon polygon(n);
+	forh(i, 0, n)
+		cin >> polygon[i].x >> polygon[i].y;
+	polygon.sort();
+	cout << polygon.convex_hull().size() << endl;
 
 	return 0;
 }

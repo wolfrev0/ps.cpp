@@ -20,7 +20,7 @@ Vec2 paral_seg(Segment s1, Segment s2)
 {
 	if (s1.e < s1.s) swap(s1.s, s1.e);
 	if (s2.e < s2.s) swap(s2.s, s2.e);
-	if (s1.dir().ccw(s2.s - s1.s) != 0 || s1.e < s2.s || s2.e < s1.s)
+	if (s1.dir().cross(s2.s - s1.s) != 0 || s1.e < s2.s || s2.e < s1.s)
 		return err;
 	return max(s1.s, s2.s);
 }

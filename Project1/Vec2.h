@@ -21,13 +21,13 @@ struct Vec2
 	inline Vec2 normalize()const { return { x / size(), y / size() }; }
 	inline T dot(const Vec2 &r) const { return x * r.x + y * r.y; }
 	inline T cross(const Vec2 &r)const { return x * r.y - y * r.x; }
-	inline T ccw(const Vec2 &r) { return cross(r); }
+	inline T ccw(const Vec2 &a, const Vec2 &b) { return (a - *this).cross(b - *this); }
 	inline T angle()const { return atan2(y, x); }
 	inline Vec2 project(const Vec2 &base)const { Vec2 b = base.normalize(); return b * b.dot(*this); }
 	inline Vec2 operator+= (const Vec2 &r) { return *this = *this + r; }
 	inline Vec2 operator-= (const Vec2 &r) { return *this = *this - r; }
 	inline Vec2 operator*= (T r) { return *this = *this * r; }
-} err = { inf<Vec2::T>(), inf<Vec2::T>() };
+} zero, err = { inf<Vec2::T>(), inf<Vec2::T>() };
 
 bool bound_rect(Vec2 a, Vec2 b, Vec2 p)
 {
