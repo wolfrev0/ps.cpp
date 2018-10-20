@@ -328,4 +328,4 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
-Project1/output.cpp
+output.cpp
