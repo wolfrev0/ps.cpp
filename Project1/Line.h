@@ -9,7 +9,7 @@ struct Line
 	Vec2 s, e;
 	explicit Line() :Line(zero, zero) {}
 	explicit Line(Vec2 s, Vec2 e) :s(s), e(e) { if (s > e)swap(this->s, this->e); }
-	Vec2 dir()const { return e - s; }
+	inline Vec2 dir()const { return e - s; }
 
 	Vec2 intersect(const Line &r)const
 	{

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-using ld = long double;
+using ld = double;
 using ll = long long;
 using ull = unsigned long long;
 using uint = unsigned;
@@ -18,8 +18,8 @@ using uchar = unsigned char;
 
 const int mod = int(1e9 + 7);
 const int prime = int(2e9 + 11);
-const ld pi = acosl(-1);
-const ld eps = 1e-13;
+const ld pi = acos(-1);
+const ld eps = 1e-12;
 const int dir[4][2] = { { 1, 0 },{ 0, 1 },{ -1, 0 },{ 0, -1 } };
 
 template<typename T>

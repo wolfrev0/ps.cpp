@@ -7,7 +7,7 @@ struct Graph {
 
 	Graph(int n) :g(n), in(n) {}
 
-	void add_edge(int s, int e)
+	inline void add_edge(int s, int e)
 	{
 		g[s].push_back(e);
 		in[e]++;

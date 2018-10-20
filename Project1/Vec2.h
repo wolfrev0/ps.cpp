@@ -3,7 +3,7 @@
 
 struct Vec2
 {
-	using T = double;
+	using T = ld;
 	T x, y;
 	explicit Vec2() :Vec2(0, 0) {}
 	explicit Vec2(T x, T y) :x(x), y(y) {}
@@ -18,6 +18,7 @@ struct Vec2
 	inline Vec2 operator- (const Vec2 &r)const { return *this + -r; }
 	inline Vec2 operator* (T r)const { return Vec2(x*r, y*r); }
 	inline T size()const { return hypot(x, y); }
+	inline T sizesq()const { return dot(*this); }
 	inline Vec2 normalize()const { return Vec2(x / size(), y / size()); }
 	inline T dot(const Vec2 &r) const { return x * r.x + y * r.y; }
 	inline T cross(const Vec2 &r)const { return x * r.y - y * r.x; }

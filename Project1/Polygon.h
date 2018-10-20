@@ -7,21 +7,21 @@ struct Polygon
 
 	Polygon() {}
 	explicit Polygon(int n) :vs(n) {}
-	int size()const { return vs.size(); }
-	Vec2 &front() { return vs.front(); }
-	Vec2 &back1() { return vs.back(); }
-	Vec2 &back2() { return vs[size() - 2]; }
-	void pushback(const Vec2 &v) { vs.push_back(v); }
-	void popback() { vs.pop_back(); }
-	Vec2 &operator[](int idx) { return vs[idx]; }
-	void clear() { vs.clear(); }
+	inline int size()const { return vs.size(); }
+	inline Vec2 &front() { return vs.front(); }
+	inline Vec2 &back1() { return vs.back(); }
+	inline Vec2 &back2() { return vs[size() - 2]; }
+	inline void pushback(const Vec2 &v) { vs.push_back(v); }
+	inline void popback() { vs.pop_back(); }
+	inline Vec2 &operator[](int idx) { return vs[idx]; }
+	inline void clear() { vs.clear(); }
 
 	void sort()
 	{
 		swap(vs[0], *min_element(vs.begin(), vs.end()));
 		auto base = vs[0];
 		std::sort(vs.begin() + 1, vs.end(), [base](const Vec2 &l, const Vec2 &r) {
-			ld val = base.ccw(l, r);
+			Vec2::T val = base.ccw(l, r);
 			if (val == 0)
 				return l < r;//need some thinking but ok.
 			else
@@ -34,33 +34,21 @@ struct Polygon
 	{
 		for (int i = 1; i < vs.size() - 1; i++)
 			assert(vs[0].ccw(vs[i], vs[i + 1]) >= 0);
-		Polygon ret;
-		forc(i, 0, vs.size())
-		{
-			auto im = i % vs.size();
 
+		Polygon ret;
+		forh(i, 0, vs.size())
+		{
 			while (ret.size() >= 2)
 			{
 				auto ltop = ret.back1() - ret.back2();
-				auto lcandi = vs[im] - ret.back2();
-				if (ltop.cross(lcandi) < 0 || ltop.cross(lcandi) == 0 && lcandi.size() > ltop.size())
+				auto lcandi = vs[i] - ret.back2();
+				if (ltop.cross(lcandi) <= 0)
 					ret.popback();
 				else
 					break;
 			}
-
-			if (ret.size() < 2)
-				ret.pushback(vs[im]);
-			else
-			{
-				auto ltop = ret.back1() - ret.back2();
-				auto lcandi = vs[im] - ret.back2();
-				if (ltop.cross(lcandi) > 0 || lcandi.size() > ltop.size())
-					ret.pushback(vs[im]);
-			}
+			ret.pushback(vs[i]);
 		}
-		if (ret.front() == ret.back1())
-			ret.popback();
 
 		return ret;
 	}
