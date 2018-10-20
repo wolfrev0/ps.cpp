@@ -5,13 +5,8 @@ struct Mat
 {
 	using T = int;
 	vector<vector<T>> arr;
-	Mat(int r, int c) :arr(r)
-	{
-		for (auto &i : arr)
-			i.resize(c);
-	}
-	Mat(vector<vector<T>> arr)
-		:arr(arr)
+	Mat(int r, int c) :arr(r, vector<T>(c)){}
+	Mat(vector<vector<T>> arr) :arr(arr)
 	{
 		for (auto &i : arr)
 			assert(i.size() == c());
