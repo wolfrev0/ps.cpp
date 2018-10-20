@@ -9,9 +9,9 @@ struct SegmentTree
 		int n,
 		T id = 0,
 		function<T(T, T)> segf = [](T a, T b) {return a + b; },
-		function<T(int, int, T, T)> lazyf = [](int l, int r, T tval, T lval) {return tval + (r - l + 1)*lval; },
-		function<T(T, T)> propaf = [](T lval, T val) {return lval + val; },
-		T lazy_null = inf<T>())
+		function<T(int, int, T, T)> lazyf = [](int l, int r, T tval, T lval) {return tval + lval*(r - l + 1); },
+		function<T(T, T)> propaf = [](T lval, T val) { return lval + val; },
+		T lazy_null = 0)
 		//upperbound of 2^(ceil(log2(n))+1)/n is 4
 		:n(n), id(id), segf(segf), lazyf(lazyf), propaf(propaf), lazy_null(lazy_null),
 		tree(4 * n, id), lazy(4 * n, lazy_null)
