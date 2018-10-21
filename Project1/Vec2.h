@@ -31,3 +31,11 @@ struct Vec2
 	inline T angle()const { auto ret = atan2(y, x); return ret; }
 	inline Vec2 project(const Vec2 &p)const { Vec2 base = normalize(); return base * base.dot(p); }
 } zero, err = Vec2(inf<Vec2::T>(), inf<Vec2::T>()), epsv = Vec2(eps, eps);
+
+bool cmpccw(const Vec2 &l, const Vec2 &r, const Vec2 &leftbottom) {
+	Vec2::T val = leftbottom.ccw(l, r);
+	if (val == 0)
+		return l < r;//need some thinking but ok.
+	else
+		return val > 0;
+}

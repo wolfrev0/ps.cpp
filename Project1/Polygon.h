@@ -19,14 +19,7 @@ struct Polygon
 	void sort()
 	{
 		swap(vtx[0], *min_element(vtx.begin(), vtx.end()));
-		auto base = vtx[0];
-		std::sort(vtx.begin() + 1, vtx.end(), [base](const Vec2 &l, const Vec2 &r) {
-			Vec2::T val = base.ccw(l, r);
-			if (val == 0)
-				return l < r;//need some thinking but ok.
-			else
-				return val > 0;
-		});
+		std::sort(vtx.begin() + 1, vtx.end(), bind(cmpccw, _1, _2, vtx[0]));
 	}
 
 	//graham scan

@@ -8,6 +8,7 @@
 #pragma GCC optimize ("Ofast")
 
 using namespace std;
+using namespace std::placeholders;
 
 using ld = double;
 using ll = long long;
