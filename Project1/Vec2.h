@@ -28,6 +28,6 @@ struct Vec2
 	inline T cross(const Vec2 &r)const { return x * r.y - y * r.x; }
 	inline T cross(const Vec2 &a, const Vec2 &b) const { return (a - *this).cross(b - *this); }
 	inline T ccw(const Vec2 &a, const Vec2 &b) const { return cross(a, b); }
-	inline T angle()const { return atan2(y, x); }
+	inline T angle()const { auto ret = atan2(y, x); return ret; }
 	inline Vec2 project(const Vec2 &p)const { Vec2 base = normalize(); return base * base.dot(p); }
 } zero, err = Vec2(inf<Vec2::T>(), inf<Vec2::T>()), epsv = Vec2(eps, eps);
