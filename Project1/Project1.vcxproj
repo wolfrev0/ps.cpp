@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="Line.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="ModNum.h" />
     <ClInclude Include="NumberTheory.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="DisjointSet.h" />
