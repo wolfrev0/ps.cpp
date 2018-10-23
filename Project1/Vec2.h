@@ -35,7 +35,9 @@ struct Vec2
 
 inline bool cmpccw(const Vec2 &l, const Vec2 &r, const Vec2 &base) {
 	Vec2::T val = base.ccw(l, r);
+	assert(base <= l && base <= r);
 	if (val == 0)
-		return (l - base).sizesq() < (r - base).sizesq();
+		//need some thinking but ok. because base should be left-bottom element.
+		return l < r;
 	return val > 0;
 }

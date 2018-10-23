@@ -18,16 +18,13 @@ struct Polygon
 
 	void sort()
 	{
-		swap(vtx[0], *min_element(vtx.begin(), vtx.end()));
-		std::sort(vtx.begin() + 1, vtx.end(), bind(cmpccw, _1, _2, vtx[0]));
+		std::sort(vtx.begin(), vtx.end(), bind(cmpccw, _1, _2, *min_element(vtx.begin(), vtx.end())));
 	}
 
 	//graham scan
 	Polygon convex_hull()
 	{
-		for (int i = 1; i < size() - 1; i++)
-			assert(vtx[0].ccw(vtx[i], vtx[i + 1]) >= 0);
-
+		sort();
 		Polygon ret;
 		forh(i, 0, size())
 		{
