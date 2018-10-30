@@ -1,4 +1,4 @@
-#include "Geometry.h"
+﻿#include "Geometry.h"
 
 void error()
 {
@@ -17,14 +17,12 @@ int main()
 	Polygon p(n);
 	forh(i, 0, n)
 		cin >> p[i].x >> p[i].y;
-
-	ll ans = 0;
-	forh(i, 0, n)
+	forh(i, 0, 3)
 	{
-		p.sort();
-		int j = (i + 1) % n;
+		Vec2 v;
+		cin >> v.x >> v.y;
+		cout << p.contains(v) << endl;
 	}
-	cout << ans / 2 << endl;
 
 	return 0;
 }

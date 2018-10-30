@@ -11,8 +11,7 @@ struct Line
 	explicit Line(Vec2 s, Vec2 e) :s(s), e(e) { }
 	inline Vec2 dir()const { return e - s; }
 
-	Vec2 intersect(Line &r)
-	{
+	Vec2 intersect(Line &r) {
 		if (s > e)
 			swap(s, e);
 		if (r.s > r.e)
@@ -28,14 +27,36 @@ struct Line
 		return valid_intersect(res) && r.valid_intersect(res) ? res : err;
 	}
 
-	virtual Vec2 perpend_foot(Vec2 p) const {
+	bool intersect_det(Line &r) {
+		if (s > e)
+			swap(s, e);
+		if (r.s > r.e)
+			swap(r.s, r.e);
+
+		Vec2::T det1 = s.ccw(e, r.s) * s.ccw(e, r.e);
+		Vec2::T det2 = r.s.ccw(r.e, s) * r.s.ccw(r.e, e);
+		if (!det1 && !det2)
+			return e >= r.s && r.e >= s;
+		return det1 <= 0 && det2 <= 0;
+	}
+
+	Vec2 perpend_foot(const Vec2 &p) {
+		if (s > e)
+			swap(s, e);
 		auto res = s + dir().project(p - s);
 		return valid_foot(res) ? res : err;
+	}
+
+	bool contains(const Vec2 &v) {
+		if (s > e)
+			swap(s, e);
+		return valid_contains(v) && v.ccw(s, e) == 0;
 	}
 
 private:
 	virtual bool valid_intersect(const Vec2 &p) const { return true; }
 	virtual bool valid_foot(const Vec2 &p) const { return true; }
+	virtual bool valid_contains(const Vec2 &p) const { return true; }
 };
 
 struct Segment :public Line
@@ -44,4 +65,5 @@ struct Segment :public Line
 	explicit Segment(Vec2 s, Vec2 e) :Line(s, e) {}
 	virtual bool valid_intersect(const Vec2 &p)const override { return s <= p && p <= e; }
 	virtual bool valid_foot(const Vec2& p)const override { return s <= p && p <= e; }
+	virtual bool valid_contains(const Vec2 &p) const override { return s <= p && p <= e; }
 };

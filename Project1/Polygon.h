@@ -1,5 +1,5 @@
 #pragma once
-#include "Vec2.h"
+#include "Line.h"
 
 struct Polygon
 {
@@ -43,11 +43,35 @@ struct Polygon
 		return ret;
 	}
 
+	vector<Segment> to_segments()
+	{
+		vector<Segment> ret;
+		forh(i, 0, vtx.size())
+			ret.emplace_back(vtx[i], vtx[(i + 1) % vtx.size()]);
+		return ret;
+	}
+
+	bool contains(const Vec2 &v)
+	{
+		auto arr = to_segments();
+		for (auto i : arr)
+			if (i.contains(v))
+				return true;
+		int cnt = 0;
+		auto l = Segment(v, v + Vec2(prime, 1));
+		for (auto i : arr)
+		{
+			if (i.intersect_det(l))
+				cnt++;
+		}
+		return cnt % 2;
+	}
+
 	ld area()
 	{
 		ld ans = 0;
 		forh(i, 1, size() - 1)
-			ans += vtx[0].ccw(vtx[i], vtx[i + 1]);
+			ans += vtx[0].cross(vtx[i], vtx[i + 1]);
 		return ans / 2;
 	}
 

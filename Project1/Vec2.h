@@ -3,7 +3,7 @@
 
 struct Vec2
 {
-	using T = ld;
+	using T = ll;
 	T x, y;
 	explicit Vec2() :Vec2(0, 0) {}
 	explicit Vec2(T x, T y) :x(x), y(y) {}
@@ -27,7 +27,7 @@ struct Vec2
 	inline T dot(const Vec2 &a, const Vec2 &b) const { return (a - *this).dot(b - *this); }
 	inline T cross(const Vec2 &r)const { return x * r.y - y * r.x; }
 	inline T cross(const Vec2 &a, const Vec2 &b) const { return (a - *this).cross(b - *this); }
-	inline T ccw(const Vec2 &a, const Vec2 &b) const { return cross(a, b); }
+	inline T ccw(const Vec2 &a, const Vec2 &b) const { return cross(a, b) ? cross(a, b) / abs(cross(a, b)) : 0; }
 	inline T angle()const { auto ret = atan2(y, x); return fmod(ret + 2 * pi, 2 * pi); }
 	inline T tan()const { if (x == 0) return abs(y) / x; if (y == 0)return 0; return y / x; }
 	inline Vec2 project(const Vec2 &p)const { Vec2 base = normalize(); return base * base.dot(p); }
