@@ -3,7 +3,7 @@
 
 struct Vec2
 {
-	using T = ll;
+	using T = ld;
 	T x, y;
 	explicit Vec2() :Vec2(0, 0) {}
 	explicit Vec2(T x, T y) :x(x), y(y) {}

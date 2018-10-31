@@ -51,7 +51,7 @@ struct Vec2
 	inline T dot(const Vec2 &a, const Vec2 &b) const { return (a - *this).dot(b - *this); }
 	inline T cross(const Vec2 &r)const { return x * r.y - y * r.x; }
 	inline T cross(const Vec2 &a, const Vec2 &b) const { return (a - *this).cross(b - *this); }
-	inline T ccw(const Vec2 &a, const Vec2 &b) const { return cross(a, b); }
+	inline T ccw(const Vec2 &a, const Vec2 &b) const { return cross(a, b) ? cross(a, b) / abs(cross(a, b)) : 0; }
 	inline T angle()const { auto ret = atan2(y, x); return fmod(ret + 2 * pi, 2 * pi); }
 	inline T tan()const { if (x == 0) return abs(y) / x; if (y == 0)return 0; return y / x; }
 	inline Vec2 project(const Vec2 &p)const { Vec2 base = normalize(); return base * base.dot(p); }
@@ -59,44 +59,85 @@ struct Vec2
 
 inline bool cmpccw(const Vec2 &l, const Vec2 &r, const Vec2 &base) {
 	Vec2::T val = base.ccw(l, r);
+	assert(base <= l && base <= r);
 	if (val == 0)
-		return (l - base).sizesq() < (r - base).sizesq();
+		//need some thinking but ok. because base should be left-bottom element.
+		return l < r;
 	return val > 0;
 }
 
-template<typename T>
-typename enable_if<std::is_fundamental<T>::value, T>::type fastpow(const T &a, int p)
-{
-	if (p == 0)
-		return 1;
-	T tmp = fastpow(a, p / 2);
-	if (p % 2)
-		return tmp * tmp*a;
-	return tmp * tmp;
-}
+class LineException {};
+class LineSame :public LineException {};
 
-template<typename T>
-typename enable_if<!is_fundamental<T>::value, T>::type fastpow(const T &a, int p)
+struct Line
 {
-	if (p == 0)
-		return a.mulid();
-	T tmp = fastpow(a, p / 2);
-	if (p % 2)
-		return tmp * tmp*a;
-	return tmp * tmp;
-}
+	Vec2 s, e;
+	explicit Line() :Line(zero, zero) {}
+	explicit Line(Vec2 s, Vec2 e) :s(s), e(e) { }
+	inline Vec2 dir()const { return e - s; }
 
-ll fibo(int n)
+	Vec2 intersect(Line &r) {
+		if (s > e)
+			swap(s, e);
+		if (r.s > r.e)
+			swap(r.s, r.e);
+
+		Vec2::T det = dir().cross(r.dir());
+		if (abs(det) < eps)
+			if (abs((r.s - s).cross(e - s)) < eps)
+				throw LineSame();
+			else
+				return err;
+		auto res = s + dir()*((r.s - s).cross(r.dir()) / det);
+		return valid_intersect(res) && r.valid_intersect(res) ? res : err;
+	}
+
+	bool intersect_det(Line &r) {
+		if (s > e)
+			swap(s, e);
+		if (r.s > r.e)
+			swap(r.s, r.e);
+
+		Vec2::T det1 = s.ccw(e, r.s) * s.ccw(e, r.e);
+		Vec2::T det2 = r.s.ccw(r.e, s) * r.s.ccw(r.e, e);
+		if (!det1 && !det2)
+			return e >= r.s && r.e >= s;
+		return det1 <= 0 && det2 <= 0;
+	}
+
+	Vec2 perpend_foot(const Vec2 &p) {
+		if (s > e)
+			swap(s, e);
+		auto res = s + dir().project(p - s);
+		return valid_foot(res) ? res : err;
+	}
+
+	bool contains(const Vec2 &v) {
+		if (s > e)
+			swap(s, e);
+		return valid_contains(v) && v.ccw(s, e) == 0;
+	}
+
+private:
+	virtual bool valid_intersect(const Vec2 &p) const { return true; }
+	virtual bool valid_foot(const Vec2 &p) const { return true; }
+	virtual bool valid_contains(const Vec2 &p) const { return true; }
+};
+
+struct Segment :public Line
 {
-	static ll memo[100];
-
-	if (n <= 1)
-		return 1;
-	auto &ret = memo[n];
-	if (ret)
-		return ret;
-	return ret = fibo(n - 1) + fibo(n - 2);
-}
+	explicit Segment() :Segment(zero, zero) {}
+	explicit Segment(Vec2 s, Vec2 e) :Line(s, e) {}
+	virtual bool valid_intersect(const Vec2 &p)const override {
+		if (abs(s.x - e.x) < eps && abs(p.x - s.x) < eps)
+			return s.y <= p.y && p.y <= e.y;
+		if (abs(s.y - e.y) < eps && abs(p.y - s.y) < eps)
+			return s.x <= p.x && p.x <= e.x;
+		return s <= p && p <= e; 
+	}
+	virtual bool valid_foot(const Vec2& p)const override { return s <= p && p <= e; }
+	virtual bool valid_contains(const Vec2 &p) const override { return s <= p && p <= e; }
+};
 
 struct Polygon
 {
@@ -115,16 +156,13 @@ struct Polygon
 
 	void sort()
 	{
-		swap(vtx[0], *min_element(vtx.begin(), vtx.end()));
-		std::sort(vtx.begin() + 1, vtx.end(), bind(cmpccw, _1, _2, vtx[0]));
+		std::sort(vtx.begin(), vtx.end(), bind(cmpccw, _1, _2, *min_element(vtx.begin(), vtx.end())));
 	}
 
 	//graham scan
 	Polygon convex_hull()
 	{
-		for (int i = 1; i < size() - 1; i++)
-			assert(vtx[0].ccw(vtx[i], vtx[i + 1]) >= 0);
-
+		sort();
 		Polygon ret;
 		forh(i, 0, size())
 		{
@@ -147,7 +185,7 @@ struct Polygon
 	{
 		ld ans = 0;
 		forh(i, 1, size() - 1)
-			ans += vtx[0].ccw(vtx[i], vtx[i + 1]);
+			ans += vtx[0].cross(vtx[i], vtx[i + 1]);
 		return ans / 2;
 	}
 
@@ -158,87 +196,72 @@ struct Polygon
 			ret += (vtx[i] - vtx[(i + 1) % size()]).size();
 		return ret;
 	}
-};
 
-class LineException {};
-class LineSame :public LineException {};
-
-struct Line
-{
-	Vec2 s, e;
-	explicit Line() :Line(zero, zero) {}
-	explicit Line(Vec2 s, Vec2 e) :s(s), e(e) { }
-	inline Vec2 dir()const { return e - s; }
-
-	Vec2 intersect(Line &r)
+	vector<Segment> to_segments()const
 	{
-		if (s > e)
-			swap(s, e);
-		if (r.s > r.e)
-			swap(r.s, r.e);
-
-		Vec2::T det = dir().cross(r.dir());
-		if (abs(det) < eps)
-			if (abs((r.s - s).cross(e - s)) < eps)
-				throw LineSame();
-			else
-				return err;
-		auto res = s + dir()*((r.s - s).cross(r.dir()) / det);
-		return valid_intersect(res) && r.valid_intersect(res) ? res : err;
+		vector<Segment> ret;
+		forh(i, 0, vtx.size())
+			ret.emplace_back(vtx[i], vtx[(i + 1) % vtx.size()]);
+		return ret;
 	}
 
-	virtual Vec2 perpend_foot(Vec2 p) const {
-		auto res = s + dir().project(p - s);
-		return valid_foot(res) ? res : err;
+	virtual bool contains(const Vec2 &v) const
+	{
+		auto arr = to_segments();
+		for (auto i : arr)
+			if (i.contains(v))
+				return true;
+		int cnt = 0;
+		auto l = Segment(v, v + Vec2(prime, 1));
+		for (auto i : arr)
+		{
+			if (i.intersect_det(l))
+				cnt++;
+		}
+		return cnt % 2;
 	}
 
-private:
-	virtual bool valid_intersect(const Vec2 &p) const { return true; }
-	virtual bool valid_foot(const Vec2 &p) const { return true; }
+	Polygon intersect(const Polygon &r)
+	{
+		//see jongman book geometry
+		throw 0;
+	}
 };
 
-struct Segment :public Line
+struct Convex :public Polygon
 {
-	explicit Segment() :Segment(zero, zero) {}
-	explicit Segment(Vec2 s, Vec2 e) :Line(s, e) {}
-	virtual bool valid_intersect(const Vec2 &p)const override { return s <= p && p <= e; }
-	virtual bool valid_foot(const Vec2& p)const override { return s <= p && p <= e; }
-};
+	virtual bool contains(const Vec2 &v)const override
+	{
+		Vec2::T tmp = v.cross(vtx[0], vtx[1]);
+		forh(i, 0, size())
+			if (tmp*v.cross(vtx[i], vtx[(i + 1) % vtx.size()]) <= 0)
+				return false;
+		return true;
+	}
 
-struct ModNum
-{
-	using T = ll;
-	ModNum(T n = 0, T m = T(1e9+7)) :n((n%m + m) % m), m(m) {}
-	inline T val()const { return n; }
-	inline ModNum mulid() const { return 1; }
-
-	inline ModNum operator - () const { return -n; }
-	inline ModNum operator + (const ModNum b)const { return n + b.val(); }
-	inline ModNum operator - (const ModNum b)const { return n - b.val() + m; }
-	inline ModNum operator * (const ModNum b)const { return n * b.val(); }
-	inline ModNum operator / (const ModNum b)const { return fastpow(ModNum(m, b.val()), m - 2)*n; }
-	inline ModNum operator+= (const ModNum b) { return *this = *this + b.val(); }
-	inline ModNum operator-= (const ModNum b) { return *this = *this - b.val(); }
-	inline ModNum operator*= (const ModNum b) { return *this = *this * b.val(); }
-	inline ModNum operator/= (const ModNum b) { return *this = *this / b.val(); }
-
-	inline ModNum &operator++ () { *this += 1; return *this; }
-	inline ModNum &operator-- () { *this -= 1; return *this; }
-	inline ModNum operator++(int) { auto ret = *this; ++*this; return ret; }
-	inline ModNum operator--(int) { auto ret = *this; --*this; return ret; }
-
-	inline bool operator==(const ModNum &r) const { return n == r.n; }
-	inline bool operator!=(const ModNum &r) const { return !(*this == r); }
-	inline bool operator<(const ModNum &r) const { return n < r.n; }
-	inline bool operator<=(const ModNum &r) const { return n <= r.n; }
-	inline bool operator>(const ModNum &r) const { return n > r.n; }
-	inline bool operator>=(const ModNum &r) const { return n >= r.n; }
-
-	//operator T() const { return n; }
-	inline ModNum &operator= (const ModNum &r) { n = r.n; return *this; }
-private:
-	T n;
-	const T m;
+	Polygon intersect(const Convex &r)const
+	{
+		Convex ret;
+		for (auto i : vtx)
+			if (r.contains(i))
+				ret.pushback(i);
+		for (auto i : r.vtx)
+			if (contains(i))
+				ret.pushback(i);
+		auto s1 = to_segments();
+		auto s2 = r.to_segments();
+		for(auto i:s1)
+			for (auto j : s2)
+			{
+				try {
+					auto res = i.intersect(j);
+					if (res != err)
+						ret.pushback(res);
+				}
+				catch (...) {}
+			}
+		return ret.convex_hull();
+	}
 };
 
 void error()
@@ -250,22 +273,25 @@ void error()
 int main()
 {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-	cout << fixed << setprecision(10);
+	cout << fixed << setprecision(12);
 	srand((uint)time(0));
 
-	int n;
-	cin >> n;
-	Polygon p(n);
-	forh(i, 0, n)
-		cin >> p[i].x >> p[i].y;
-
-	ll ans = 0;
+	int n, m;
+	cin >> n >> m;
+	Convex p1, p2;
 	forh(i, 0, n)
 	{
-		p.sort();
-		int j = (i + 1) % n;
+		int x, y;
+		cin >> x >> y;
+		p1.pushback(Vec2(x, y));
 	}
-	cout << ans / 2 << endl;
+	forh(i, 0, m)
+	{
+		int x, y;
+		cin >> x >> y;
+		p2.pushback(Vec2(x, y));
+	}
+	cout << p1.intersect(p2).area() << endl;
 
 	return 0;
 }

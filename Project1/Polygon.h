@@ -43,7 +43,23 @@ struct Polygon
 		return ret;
 	}
 
-	vector<Segment> to_segments()
+	ld area()
+	{
+		ld ans = 0;
+		forh(i, 1, size() - 1)
+			ans += vtx[0].cross(vtx[i], vtx[i + 1]);
+		return ans / 2;
+	}
+
+	Vec2::T circum()
+	{
+		Vec2::T ret = 0;
+		forh(i, 0, size())
+			ret += (vtx[i] - vtx[(i + 1) % size()]).size();
+		return ret;
+	}
+
+	vector<Segment> to_segments()const
 	{
 		vector<Segment> ret;
 		forh(i, 0, vtx.size())
@@ -51,7 +67,7 @@ struct Polygon
 		return ret;
 	}
 
-	bool contains(const Vec2 &v)
+	virtual bool contains(const Vec2 &v) const
 	{
 		auto arr = to_segments();
 		for (auto i : arr)
@@ -67,19 +83,45 @@ struct Polygon
 		return cnt % 2;
 	}
 
-	ld area()
+	Polygon intersect(const Polygon &r)
 	{
-		ld ans = 0;
-		forh(i, 1, size() - 1)
-			ans += vtx[0].cross(vtx[i], vtx[i + 1]);
-		return ans / 2;
+		//see jongman book geometry
+		throw 0;
+	}
+};
+
+struct Convex :public Polygon
+{
+	virtual bool contains(const Vec2 &v)const override
+	{
+		Vec2::T tmp = v.cross(vtx[0], vtx[1]);
+		forh(i, 0, size())
+			if (tmp*v.cross(vtx[i], vtx[(i + 1) % vtx.size()]) <= 0)
+				return false;
+		return true;
 	}
 
-	Vec2::T circum()
+	Polygon intersect(const Convex &r)const
 	{
-		Vec2::T ret = 0;
-		forh(i, 0, size())
-			ret += (vtx[i] - vtx[(i + 1) % size()]).size();
-		return ret;
+		Convex ret;
+		for (auto i : vtx)
+			if (r.contains(i))
+				ret.pushback(i);
+		for (auto i : r.vtx)
+			if (contains(i))
+				ret.pushback(i);
+		auto s1 = to_segments();
+		auto s2 = r.to_segments();
+		for(auto i:s1)
+			for (auto j : s2)
+			{
+				try {
+					auto res = i.intersect(j);
+					if (res != err)
+						ret.pushback(res);
+				}
+				catch (...) {}
+			}
+		return ret.convex_hull();
 	}
 };

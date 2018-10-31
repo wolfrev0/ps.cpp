@@ -63,7 +63,13 @@ struct Segment :public Line
 {
 	explicit Segment() :Segment(zero, zero) {}
 	explicit Segment(Vec2 s, Vec2 e) :Line(s, e) {}
-	virtual bool valid_intersect(const Vec2 &p)const override { return s <= p && p <= e; }
+	virtual bool valid_intersect(const Vec2 &p)const override {
+		if (abs(s.x - e.x) < eps && abs(p.x - s.x) < eps)
+			return s.y <= p.y && p.y <= e.y;
+		if (abs(s.y - e.y) < eps && abs(p.y - s.y) < eps)
+			return s.x <= p.x && p.x <= e.x;
+		return s <= p && p <= e; 
+	}
 	virtual bool valid_foot(const Vec2& p)const override { return s <= p && p <= e; }
 	virtual bool valid_contains(const Vec2 &p) const override { return s <= p && p <= e; }
 };

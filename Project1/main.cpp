@@ -1,4 +1,4 @@
-﻿#include "Geometry.h"
+#include "Geometry.h"
 
 void error()
 {
@@ -9,20 +9,25 @@ void error()
 int main()
 {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-	cout << fixed << setprecision(10);
+	cout << fixed << setprecision(12);
 	srand((uint)time(0));
 
-	int n;
-	cin >> n;
-	Polygon p(n);
+	int n, m;
+	cin >> n >> m;
+	Convex p1, p2;
 	forh(i, 0, n)
-		cin >> p[i].x >> p[i].y;
-	forh(i, 0, 3)
 	{
-		Vec2 v;
-		cin >> v.x >> v.y;
-		cout << p.contains(v) << endl;
+		int x, y;
+		cin >> x >> y;
+		p1.pushback(Vec2(x, y));
 	}
+	forh(i, 0, m)
+	{
+		int x, y;
+		cin >> x >> y;
+		p2.pushback(Vec2(x, y));
+	}
+	cout << p1.intersect(p2).area() << endl;
 
 	return 0;
 }
