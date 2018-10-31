@@ -7,41 +7,13 @@ struct Polygon
 
 	Polygon() {}
 	explicit Polygon(int n) :vtx(n) {}
+	explicit Polygon(const vector<Vec2> &v):vtx(v) {}
 	inline int size()const { return vtx.size(); }
 	inline Vec2 &front() { return vtx.front(); }
-	inline Vec2 &back1() { return vtx.back(); }
-	inline Vec2 &back2() { return vtx[size() - 2]; }
 	inline void pushback(const Vec2 &v) { vtx.push_back(v); }
 	inline void popback() { vtx.pop_back(); }
 	inline Vec2 &operator[](int idx) { return vtx[idx]; }
 	inline void clear() { vtx.clear(); }
-
-	void sort()
-	{
-		std::sort(vtx.begin(), vtx.end(), bind(cmpccw, _1, _2, *min_element(vtx.begin(), vtx.end())));
-	}
-
-	//graham scan
-	Polygon convex_hull()
-	{
-		sort();
-		Polygon ret;
-		forh(i, 0, size())
-		{
-			while (ret.size() >= 2)
-			{
-				auto ltop = ret.back1() - ret.back2();
-				auto lcandi = vtx[i] - ret.back2();
-				if (ltop.cross(lcandi) <= 0)
-					ret.popback();
-				else
-					break;
-			}
-			ret.pushback(vtx[i]);
-		}
-
-		return ret;
-	}
 
 	ld area()
 	{
@@ -83,7 +55,7 @@ struct Polygon
 		return cnt % 2;
 	}
 
-	Polygon intersect(const Polygon &r)
+	virtual Polygon intersect(const Polygon &r)const
 	{
 		//see jongman book geometry
 		throw 0;
@@ -92,6 +64,31 @@ struct Polygon
 
 struct Convex :public Polygon
 {
+	Convex() {}
+	explicit Convex(int n) :Polygon(n) {}
+	explicit Convex(const vector<Vec2> &v) :Polygon(v) { normalize(); }
+
+	//graham scan
+	void normalize()
+	{
+		[&]() {sort(vtx.begin(), vtx.end(), bind(cmpccw, _1, _2, *min_element(vtx.begin(), vtx.end()))); }();
+		vector<Vec2> res;
+		forh(i, 0, size())
+		{
+			while (res.size() >= 2)
+			{
+				auto ltop = res[res.size() - 1] - res[res.size() - 2];
+				auto lcandi = vtx[i] - res[res.size() - 2];
+				if (ltop.cross(lcandi) <= 0)
+					res.pop_back();
+				else
+					break;
+			}
+			res.push_back(vtx[i]);
+		}
+		vtx = res;
+	}
+
 	virtual bool contains(const Vec2 &v)const override
 	{
 		Vec2::T tmp = v.cross(vtx[0], vtx[1]);
@@ -101,15 +98,15 @@ struct Convex :public Polygon
 		return true;
 	}
 
-	Polygon intersect(const Convex &r)const
+	virtual Polygon intersect(const Polygon &r)const override
 	{
-		Convex ret;
+		vector<Vec2> ret;
 		for (auto i : vtx)
 			if (r.contains(i))
-				ret.pushback(i);
+				ret.push_back(i);
 		for (auto i : r.vtx)
 			if (contains(i))
-				ret.pushback(i);
+				ret.push_back(i);
 		auto s1 = to_segments();
 		auto s2 = r.to_segments();
 		for(auto i:s1)
@@ -118,10 +115,10 @@ struct Convex :public Polygon
 				try {
 					auto res = i.intersect(j);
 					if (res != err)
-						ret.pushback(res);
+						ret.push_back(res);
 				}
 				catch (...) {}
 			}
-		return ret.convex_hull();
+		return Convex(ret);
 	}
 };
