@@ -9,7 +9,7 @@ void error()
 int main()
 {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-	cout << fixed << setprecision(12);
+	cout << fixed << setprecision(10);
 	srand((uint)time(0));
 
 	int n, m;

@@ -71,7 +71,9 @@ struct Convex :public Polygon
 	//graham scan
 	void normalize()
 	{
-		[&]() {sort(vtx.begin(), vtx.end(), bind(cmpccw, _1, _2, *min_element(vtx.begin(), vtx.end()))); }();
+		if (vtx.empty())
+			return;
+		sort(vtx.begin(), vtx.end(), bind(cmpccw, _1, _2, *min_element(vtx.begin(), vtx.end())));
 		vector<Vec2> res;
 		forh(i, 0, size())
 		{
