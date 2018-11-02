@@ -1,10 +1,4 @@
-#include "Geometry.h"
-
-void error()
-{
-	cout << -1 << endl;
-	exit(0);
-}
+#include "Graph.h"
 
 int main()
 {
@@ -14,20 +8,34 @@ int main()
 
 	int n, m;
 	cin >> n >> m;
-	Convex p1, p2;
+	MCMF g(n + m);
 	forh(i, 0, n)
 	{
-		int x, y;
-		cin >> x >> y;
-		p1.pushback(Vec2(x, y));
+		int cap;
+		cin >> cap;
+		g.add_edge_mcmf(g.src, i, cap, 0);
 	}
+	forh(i, n, n + m)
+	{
+		int cap;
+		cin >> cap;
+		g.add_edge_mcmf(i, g.snk, cap, 0);
+	}
+
 	forh(i, 0, m)
 	{
-		int x, y;
-		cin >> x >> y;
-		p2.pushback(Vec2(x, y));
+		forh(j, 0, n)
+		{
+			int cost;
+			cin >> cost;
+			g.add_edge_mcmf(j, n + i, inf<int>(), cost);
+		}
 	}
-	cout << p1.intersect(p2).area() << endl;
+
+	int ans = 0;
+	while (auto res = g.mcmf().first)
+		ans += res;
+	cout << ans << endl;
 
 	return 0;
 }
