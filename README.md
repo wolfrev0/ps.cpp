@@ -34,6 +34,5 @@ Making a basic algorithms and data structures library
     <li>contain determine</li>
   </ol>
   <h4>Convex Polygon</p><ol>
-  <p>Convex Polygon</p>
     <li> convex polygon intersection</li>
   </ol>
