@@ -19,24 +19,21 @@ Making a basic algorithms and data structures library
   <p>fast pow</p>  
   <p>modular number</p>
 <h3>2D Geometry</h3>
-  <ol>
-  <p>Vector</p>  
+  <h4>Vector</h4><ol>
     <li>+,-,*,/,<,ccw,dot product,cross product, size, angle, etc...</li>
   </ol>
-  <ol>
-  <p>Segment</p>
+  <h4>Segment</h4><ol>
     <li>Line & Segment intersection</li>
     <li>Perpendicular Foot</li>
     <li>Contain Determine</li>
   </ol>
-  <ol>
-  <p>Polygon</p>
+  <h4>Polygon</h4><ol>
     <li>convex hull</li>
     <li>area</li>
     <li>ccw sort</li>
     <li>contain determine</li>
   </ol>
-  <ol>
+  <h4>Convex Polygon</p><ol>
   <p>Convex Polygon</p>
     <li> convex polygon intersection</li>
   </ol>
