@@ -18,7 +18,7 @@ Making a basic algorithms and data structures library
 <h3>Number Theory</h3><ol>
   <li>Fast Power</li>  
   <li>Modular Number</li>
-  <li>Berlekkamp Algorithm(comming soon)</li></ol>
+  <li>Berlekamp Algorithm(comming soon)</li></ol>
 <h3>2D Geometry</h3>
   <h4>Vector</h4><ol>
     <li>Basic Vector Operations</li>
