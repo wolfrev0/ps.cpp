@@ -4,21 +4,21 @@ Making a basic algorithms and data structures library
 # List
 <h3>Graph</h3>
   <h4>Graph</h4>
-    <p>topological sort</p>
-  <h4>Weighted Graph</h4>
-    <p>spfa</p>
-    <p>mcmf</p>
-    <p>dijikstra(comming soon)</p>
+    <ol><li>topological sort</li></ol>
+  <h4>Weighted Graph</h4><ol>
+    <li>spfa</li>
+    <li>mcmf</li>
+    <li>dijikstra(comming soon)</li></ol>
 <h3>Segment Tree</h3>
-  <p>lazy propagation</p>
+  <ol><li>lazy propagation</li></ol>
 <h3>Disjoint Set</h3>
-<h3>Matrix</h3>
-  <p>General Multiplication</p>  
-  <p>Strassen Multiplication(comming soon)</p>  
-<h3>Number Theory</h3>
-  <p>Fast Power</p>  
-  <p>Modular Number</p>
-  <p>Berlekkamp Algorithm(comming soon)</p>
+<h3>Matrix</h3><ol>
+  <li>General Multiplication</li>  
+  <li>Strassen Multiplication(comming soon)</li></ol>
+<h3>Number Theory</h3><ol>
+  <li>Fast Power</li>  
+  <li>Modular Number</li>
+  <li>Berlekkamp Algorithm(comming soon)</li></ol>
 <h3>2D Geometry</h3>
   <h4>Vector</h4><ol>
     <li>Basic Vector Operations</li>
