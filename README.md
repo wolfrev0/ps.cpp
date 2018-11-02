@@ -36,3 +36,5 @@ Making a basic algorithms and data structures library
     <li>Convex Hull(Graham Scan Algorithm)</li>
   </ol>
 <h3>Splay Tree(comming soon)</h3>
+<h3>Tree(comming soon)</h3>
+  <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
