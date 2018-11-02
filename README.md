@@ -33,6 +33,6 @@ Making a basic algorithms and data structures library
     <li>ccw sort</li>
     <li>contain determine</li>
   </ol>
-  <h4>Convex Polygon</p><ol>
+  <h4>Convex Polygon</h4><ol>
     <li> convex polygon intersection</li>
   </ol>
