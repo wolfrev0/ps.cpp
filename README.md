@@ -1,5 +1,5 @@
 # AlgorithmLibrary
-Making a basic algorithms and data structures library
+Making a flexible algorithms and data structures library.
 
 # List
 <h3>Graph</h3>
