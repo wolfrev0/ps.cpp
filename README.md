@@ -1,7 +1,7 @@
 # AlgorithmLibrary
 Making a flexible algorithms and data structures library.
 
-# List
+# Index
 <h3>Graph</h3>
   <h4>Graph</h4>
     <ol><li>topological sort</li></ol>
