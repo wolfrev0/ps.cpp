@@ -22,20 +22,17 @@
 #include <iomanip>
 #include <bitset>
 #include <assert.h>
+#include <fstream>
 
 #define __builtin_ctz(x) ([](int mask) {unsigned long ret=32;_BitScanForward(&ret, mask);return ret;}(x))
 #define __builtin_popcount(x) __popcnt(x)
-int __builtin_popcountll(long long x)
-{
+int __builtin_popcountll(long long x){
 	int ret=0;
 	while(x)
 		x<<=1,ret++;
 	return ret;
 }
 
-long long __gcd(long long a, long long b)
-{
-	if(!a)
-		return b;
-	return __gcd(b%a, a);
-}
+long long __gcd(long long a, long long b){ return !a?b:__gcd(b%a, a); }
+auto gcd = __gcd;
+long long lcm(long long a, long long b){ return a/gcd(a,b)*b; }
