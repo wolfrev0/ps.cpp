@@ -43,13 +43,13 @@ struct Graph {
 template<typename T>
 struct WeightedGraph
 {
-	struct Weight
+	struct Edge
 	{
 		int v;
 		T w;
 	};
 	const int n;
-	vector<vector<Weight>> g;
+	vector<vector<Edge>> g;
 
 	WeightedGraph(int n) :n(n), g(n) {}
 
@@ -61,8 +61,7 @@ struct WeightedGraph
 		return {};
 	}
 
-	bool spfa(vector<T> &ub, vector<pair<int, int>> &p, int s, 
-		const function<bool(const T &, const T &, const T &)> &cond = [](const T &a, const T &b, const T &c) {return b + c < a; })
+	bool spfa(vector<T> &ub, vector<pair<int, int>> &p, int s)
 	{
 		queue<int> q;
 		vector<bool> inq(n);
@@ -82,7 +81,7 @@ struct WeightedGraph
 				inq[j] = false;
 				q.pop();
 				for (uint k = 0; k < g[j].size(); k++)
-					if (cond(ub[g[j][k].v], ub[j], g[j][k].w))
+					if (valid_spfa_edge(g[j][k]) && ub[j] + g[j][k].w < ub[g[j][k].v])
 					{
 						p[g[j][k].v] = { j, k };
 						ub[g[j][k].v] = ub[j] + g[j][k].w;
@@ -95,6 +94,11 @@ struct WeightedGraph
 			}
 		}
 		return q.empty();
+	}
+
+	virtual bool valid_spfa_edge(const Edge &w) const
+	{
+		return true;
 	}
 };
 
@@ -130,7 +134,7 @@ struct MCMF : public WeightedGraph<MCMFWeight>
 
 		vector<MCMFWeight> ub;
 		vector<pair<int, int>> p;
-		if (!spfa(ub, p, src, [](const MCMFWeight &a, const MCMFWeight &b, const MCMFWeight &c) {return c.cap &&  b + c < a; }) || p[snk].first == -1)
+		if (!spfa(ub, p, src) || p[snk].first == -1)
 			return { 0, 0 };
 		for (int cur = snk; p[cur].first != -1; cur = p[cur].first)
 			flow = min(flow, g[p[cur].first][p[cur].second].w.cap);
@@ -157,5 +161,10 @@ struct MCMF : public WeightedGraph<MCMFWeight>
 			ret.second += res.second;
 		}
 		return ret;
+	}
+
+	virtual bool valid_spfa_edge(const Edge &e) const override
+	{
+		return e.w.cap;
 	}
 };
