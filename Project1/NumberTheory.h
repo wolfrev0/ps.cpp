@@ -34,3 +34,24 @@ ll fibo(int n)
 		return ret;
 	return ret = fibo(n - 1) + fibo(n - 2);
 }
+
+ll xgcd(ll a, ll b, ll& x, ll& y) {
+	if (a == 0) {
+		x = 0;
+		y = 1;
+		return b;
+	}
+
+	ll xtmp, ytmp;
+	ll g = xgcd(b%a, a, xtmp, ytmp);
+	x = ytmp - (b / a) * xtmp;
+	y = xtmp;
+	return g;
+}
+
+pair<ll, ll> xgcd2(ll a, ll b) {
+	if (b == 0)
+		return { 1,0 };
+	auto t = xgcd2(b, a%b);
+	return { t.second,t.first - t.second*(a / b) };
+}

@@ -1,41 +1,24 @@
-#include "Graph.h"
+#include "Core.h"
+#include "ModNum.h"
 
-int main()
+ll f(int n)
 {
+	ll res = 1;
+	forc(i, 1, n)
+		res = res * i % mod;
+	return res;
+}
+
+int main(){
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
 	srand((uint)time(0));
 
-	int n, m;
-	cin >> n >> m;
-	MCMF g(n + m);
-	forh(i, 0, n)
-	{
-		int cap;
-		cin >> cap;
-		g.add_edge_mcmf(g.src, i, cap, 0);
-	}
-	forh(i, n, n + m)
-	{
-		int cap;
-		cin >> cap;
-		g.add_edge_mcmf(i, g.snk, cap, 0);
-	}
-
-	forh(i, 0, m)
-	{
-		forh(j, 0, n)
-		{
-			int cost;
-			cin >> cost;
-			g.add_edge_mcmf(j, n + i, inf<int>(), cost);
-		}
-	}
-
-	int ans = 0;
-	while (auto res = g.mcmf().first)
-		ans += res;
-	cout << ans << endl;
+	int n, k;
+	cin >> n >> k;
+	ModNum mi1 = 1;	mi1 /= f(k);
+	ModNum mi2 = 1; mi2 /= f(n - k);
+	cout << (mi1*mi2*f(n)).val() << endl;
 
 	return 0;
 }

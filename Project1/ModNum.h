@@ -1,6 +1,8 @@
 #pragma once
 #include "NumberTheory.h"
 
+class NoModInv {};
+
 struct ModNum
 {
 	using T = ll;
@@ -12,8 +14,18 @@ struct ModNum
 	inline ModNum operator + (const ModNum b)const { return n + b.val(); }
 	inline ModNum operator - (const ModNum b)const { return n - b.val() + m; }
 	inline ModNum operator * (const ModNum b)const { return n * b.val(); }
-	//use exgcd rather than fastpow is better. change it later
-	inline ModNum operator / (const ModNum b)const { return fastpow(ModNum(m, b.val()), m - 2)*n; }
+	inline ModNum operator / (const ModNum b)const {
+		ll x, y;
+		ll g = xgcd(b.val(), -mod, x, y);
+		if (1 % g)
+			throw NoModInv();
+		x *= 1 / g;
+		while (x < 0)
+			x += -mod / g;
+		return x;
+		//extended gcd is better than fastpow.
+		//return fastpow(ModNum(m, b.val()), m - 2)*n; 
+	}
 	inline ModNum operator+= (const ModNum b) { return *this = *this + b.val(); }
 	inline ModNum operator-= (const ModNum b) { return *this = *this - b.val(); }
 	inline ModNum operator*= (const ModNum b) { return *this = *this * b.val(); }
