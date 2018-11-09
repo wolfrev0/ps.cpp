@@ -1,24 +1,37 @@
 #include "Core.h"
-#include "ModNum.h"
+#include "Graph.h"
 
-ll f(int n)
-{
-	ll res = 1;
-	forc(i, 1, n)
-		res = res * i % mod;
-	return res;
-}
-
-int main(){
+int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
 	srand((uint)time(0));
 
-	int n, k;
-	cin >> n >> k;
-	ModNum mi1 = 1;	mi1 /= f(k);
-	ModNum mi2 = 1; mi2 /= f(n - k);
-	cout << (mi1*mi2*f(n)).val() << endl;
+	int n, m;
+	cin >> n >> m;
+	WeightedGraph<int> g(n);
+	forh(i, 0, m) {
+		int a, b, c;
+		cin >> a >> b >> c;
+		a--, b--;
+		g.add_edge(a, b, c);
+		g.add_edge(b, a, c);
+	}
+	forh(i, 0, n) {
+		vector<int> d;
+		vector<pair<int, int>> p;
+		g.dijikstra(d, p, i);
+		forh(j, 0, n) {
+			if (i == j)
+				cout << '-' << ' ';
+			else {
+				int v = j;
+				while (p[v].first != i)
+					v = p[v].first;
+				cout << v + 1 << ' ';
+			}
+		}
+		cout << endl;
+	}
 
 	return 0;
 }

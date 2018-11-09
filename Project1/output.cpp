@@ -25,124 +25,202 @@ const int dir[4][2] = { { 1, 0 },{ 0, 1 },{ -1, 0 },{ 0, -1 } };
 template<typename T>
 constexpr inline T inf() { return numeric_limits<T>::max() / 2; }
 
-template<typename T>
-typename enable_if<std::is_fundamental<T>::value, T>::type fastpow(const T &a, int p){
-	if (p == 0)
-		return 1;
-	T tmp = fastpow(a, p / 2);
-	if (p % 2)
-		return tmp * tmp*a;
-	return tmp * tmp;
-}
+struct Graph {
+	vector<vector<int>> g;
+	vector<int> in;
 
-template<typename T>
-typename enable_if<!is_fundamental<T>::value, T>::type fastpow(const T &a, int p){
-	if (p == 0)
-		return a.mulid();
-	T tmp = fastpow(a, p / 2);
-	if (p % 2)
-		return tmp * tmp*a;
-	return tmp * tmp;
-}
+	Graph(int n) :g(n), in(n) {}
 
-ll fibo(int n){
-	static ll memo[100];
+	inline void add_edge(int s, int e) {
+		g[s].push_back(e);
+		in[e]++;
+	}
 
-	if (n <= 1)
-		return 1;
-	auto &ret = memo[n];
-	if (ret)
+	vector<int> topo_sort() {
+		queue<int> q;
+		forh(i, 0u, g.size())
+			if (!in[i])
+				q.push(i);
+		vector<int> ret;
+		while (q.size()) {
+			auto cur = q.front();
+			ret.push_back(cur);
+			q.pop();
+			for (auto i : g[cur])
+				if (--in[i] == 0)
+					q.push(i);
+		}
+		reverse(ret.begin(), ret.end());
+		forh(i, 0u, g.size())
+			if (in[i])
+				throw "Error";
 		return ret;
-	return ret = fibo(n - 1) + fibo(n - 2);
-}
-
-ll xgcd(ll a, ll b, ll& x, ll& y) {
-	if (a == 0) {
-		x = 0;
-		y = 1;
-		return b;
 	}
-
-	ll xtmp, ytmp;
-	ll g = xgcd(b%a, a, xtmp, ytmp);
-	x = ytmp - (b / a) * xtmp;
-	y = xtmp;
-	return g;
-}
-
-pair<ll, ll> xgcd2(ll a, ll b) {
-	if (b == 0)
-		return { 1,0 };
-	auto t = xgcd2(b, a%b);
-	return { t.second,t.first - t.second*(a / b) };
-}
-
-class NoModInv {};
-
-struct ModNum{
-	using T = ll;
-	ModNum(T n = 0, T m = T(1e9+7)) :n((n%m + m) % m), m(m) {}
-	inline T val()const { return n; }
-	inline ModNum mulid() const { return 1; }
-
-	inline ModNum operator - () const { return -n; }
-	inline ModNum operator + (const ModNum b)const { return n + b.val(); }
-	inline ModNum operator - (const ModNum b)const { return n - b.val() + m; }
-	inline ModNum operator * (const ModNum b)const { return n * b.val(); }
-	inline ModNum operator / (const ModNum b)const {
-		ll x, y;
-		ll g = xgcd(b.val(), -mod, x, y);
-		if (1 % g)
-			throw NoModInv();
-		x *= 1 / g;
-		while (x < 0)
-			x += -mod / g;
-		return x;
-		//extended gcd is better than fastpow.
-		//return fastpow(ModNum(m, b.val()), m - 2)*n; 
-	}
-	inline ModNum operator+= (const ModNum b) { return *this = *this + b.val(); }
-	inline ModNum operator-= (const ModNum b) { return *this = *this - b.val(); }
-	inline ModNum operator*= (const ModNum b) { return *this = *this * b.val(); }
-	inline ModNum operator/= (const ModNum b) { return *this = *this / b.val(); }
-
-	inline ModNum &operator++ () { *this += 1; return *this; }
-	inline ModNum &operator-- () { *this -= 1; return *this; }
-	inline ModNum operator++(int) { auto ret = *this; ++*this; return ret; }
-	inline ModNum operator--(int) { auto ret = *this; --*this; return ret; }
-
-	inline bool operator==(const ModNum &r) const { return n == r.n; }
-	inline bool operator!=(const ModNum &r) const { return !(*this == r); }
-	inline bool operator<(const ModNum &r) const { return n < r.n; }
-	inline bool operator<=(const ModNum &r) const { return n <= r.n; }
-	inline bool operator>(const ModNum &r) const { return n > r.n; }
-	inline bool operator>=(const ModNum &r) const { return n >= r.n; }
-
-	//operator T() const { return n; }
-	inline ModNum &operator= (const ModNum &r) { n = r.n; return *this; }
-private:
-	T n;
-	const T m;
+	//dfs()
+	//bfs()
+	//maybe useless?
 };
 
-ll f(int n)
-{
-	ll res = 1;
-	forc(i, 1, n)
-		res = res * i % mod;
-	return res;
-}
+template<typename T>
+struct WeightedGraph {
+	struct Edge {
+		int v;
+		T w;
+	};
+	const int n;
+	vector<vector<Edge>> g;
 
-int main(){
+	WeightedGraph(int n) :n(n), g(n) {}
+
+	inline void add_edge(int s, int e, T w) { g[s].push_back({ e, w }); }
+
+	void dijikstra(vector<T> &d, vector<pair<int, int>> &p, int s) {
+		priority_queue < pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;//dest, v
+		d.resize(n, inf<int>());
+		p.resize(n, { -1, -1 });
+		d[s] = 0;
+		pq.push({ 0, s });
+		while (!pq.empty())
+		{
+			auto cur = pq.top();
+			pq.pop();
+
+			if (cur.first != d[cur.second])
+				continue;
+
+			auto &cg = g[cur.second];
+			forh(i, 0u, cg.size())
+			{
+				if (d[cg[i].v] > cur.first + cg[i].w) {
+					d[cg[i].v] = cur.first + cg[i].w;
+					p[cg[i].v] = { cur.second, i };
+					pq.push({ cur.first + cg[i].w,cg[i].v });
+				}
+
+			}
+		}
+	}
+
+	bool spfa(vector<T> &ub, vector<pair<int, int>> &p, int s) {
+		queue<int> q;
+		vector<bool> inq(n);
+		ub.resize(n, inf<int>());
+		p.resize(n, { -1, -1 });
+
+		ub[s] = 0;
+		inq[s] = true;
+		q.push(s);
+		int i;
+		for (i = 0; i < n && q.size(); i++) {
+			int qsz = q.size();
+			while (qsz--) {
+				int j = q.front();
+				inq[j] = false;
+				q.pop();
+				forh(k, 0u, g[j].size())
+					if (valid_spfa_edge(g[j][k]) && ub[j] + g[j][k].w < ub[g[j][k].v]) {
+						p[g[j][k].v] = { j, k };
+						ub[g[j][k].v] = ub[j] + g[j][k].w;
+						if (!inq[g[j][k].v]) {
+							inq[g[j][k].v] = true;
+							q.push(g[j][k].v);
+						}
+					}
+			}
+		}
+		return q.empty();
+	}
+
+	virtual bool valid_spfa_edge(const Edge &w) const { return true; }
+};
+
+struct MCMFWeight {
+	uint revi;
+	int cap, cost;
+	MCMFWeight(int cost) :cost(cost) {}
+	MCMFWeight(uint revi, int cap, int cost) :revi(revi), cap(cap), cost(cost) {}
+	bool operator< (const MCMFWeight &r)const { return cost < r.cost; }
+	MCMFWeight operator+(const MCMFWeight &r)const { return cost + r.cost; }
+};
+
+struct MCMF : public WeightedGraph<MCMFWeight>
+{
+	const int src, snk;
+
+	MCMF(int n) :WeightedGraph(n + 2), src(n), snk(n + 1) {}
+
+	inline void add_edge_mcmf(uint s, uint e, int cap, int cost) {
+		WeightedGraph::add_edge(s, e, { g[e].size(), cap, cost });
+		WeightedGraph::add_edge(e, s, { g[s].size() - 1, 0, -cost });
+	}
+
+	pair<int, int> process() {
+		pair<int, int> ret = { 0,0 };
+		int &flow = ret.second;
+		flow = inf<int>();
+
+		vector<MCMFWeight> ub;
+		vector<pair<int, int>> p;
+		if (!spfa(ub, p, src) || p[snk].first == -1)
+			return { 0, 0 };
+		for (int cur = snk; p[cur].first != -1; cur = p[cur].first)
+			flow = min(flow, g[p[cur].first][p[cur].second].w.cap);
+		for (int cur = snk; p[cur].first != -1; cur = p[cur].first) {
+			auto &e = g[p[cur].first][p[cur].second];
+			e.w.cap -= flow;
+			g[e.v][e.w.revi].w.cap += flow;
+			ret.first += e.w.cost*flow;
+		}
+
+		return ret;
+	}
+
+	pair<int, int> mcmf() {
+		pair<int, int> ret = { 0, 0 };
+		while (true) {
+			auto res = process();
+			if (!res.first && !res.second)
+				break;
+			ret.first += res.first;
+			ret.second += res.second;
+		}
+		return ret;
+	}
+
+	virtual bool valid_spfa_edge(const Edge &e) const override { return e.w.cap; }
+};
+
+int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
 	srand((uint)time(0));
 
-	int n, k;
-	cin >> n >> k;
-	ModNum mi1 = 1;	mi1 /= f(k);
-	ModNum mi2 = 1; mi2 /= f(n - k);
-	cout << (mi1*mi2*f(n)).val() << endl;
+	int n, m;
+	cin >> n >> m;
+	WeightedGraph<int> g(n);
+	forh(i, 0, m) {
+		int a, b, c;
+		cin >> a >> b >> c;
+		a--, b--;
+		g.add_edge(a, b, c);
+		g.add_edge(b, a, c);
+	}
+	forh(i, 0, n) {
+		vector<int> d;
+		vector<pair<int, int>> p;
+		g.dijikstra(d, p, i);
+		forh(j, 0, n) {
+			if (i == j)
+				cout << '-' << ' ';
+			else {
+				int v = j;
+				while (p[v].first != i)
+					v = p[v].first;
+				cout << v + 1 << ' ';
+			}
+		}
+		cout << endl;
+	}
 
 	return 0;
 }
