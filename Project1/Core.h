@@ -24,4 +24,4 @@ const ld eps = 1e-12;
 const int dir[4][2] = { { 1, 0 },{ 0, 1 },{ -1, 0 },{ 0, -1 } };
 
 template<typename T>
-constexpr T inf() { return numeric_limits<T>::max() / 2; }
+constexpr inline T inf() { return numeric_limits<T>::max() / 2; }
