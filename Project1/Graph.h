@@ -93,7 +93,7 @@ struct WeightedGraph {
 				int j = q.front();
 				inq[j] = false;
 				q.pop();
-				for (uint k = 0; k < g[j].size(); k++)
+				forh(k, 0u, g[j].size())
 					if (valid_spfa_edge(g[j][k]) && ub[j] + g[j][k].w < ub[g[j][k].v]) {
 						p[g[j][k].v] = { j, k };
 						ub[g[j][k].v] = ub[j] + g[j][k].w;
@@ -122,7 +122,6 @@ struct MCMFWeight {
 struct MCMF : public WeightedGraph<MCMFWeight>
 {
 	const int src, snk;
-	vector<pair<int, int>> p;//prev, curidx0
 
 	MCMF(int n) :WeightedGraph(n + 2), src(n), snk(n + 1) {}
 
@@ -131,7 +130,7 @@ struct MCMF : public WeightedGraph<MCMFWeight>
 		WeightedGraph::add_edge(e, s, { g[s].size() - 1, 0, -cost });
 	}
 
-	pair<int, int> process(int src, int snk) {
+	pair<int, int> process() {
 		pair<int, int> ret = { 0,0 };
 		int &flow = ret.second;
 		flow = inf<int>();
@@ -155,7 +154,7 @@ struct MCMF : public WeightedGraph<MCMFWeight>
 	pair<int, int> mcmf() {
 		pair<int, int> ret = { 0, 0 };
 		while (true) {
-			auto res = process(src, snk);
+			auto res = process();
 			if (!res.first && !res.second)
 				break;
 			ret.first += res.first;
