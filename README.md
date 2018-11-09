@@ -1,30 +1,41 @@
 # AlgorithmLibrary
-Making a basic algorithms and data structures library
+Making a flexible algorithms and data structures library.
 
-# List
+# Index
 <h3>Graph</h3>
-  <p>topological sort</p>
-  <p>dijikstra(not yet)</p>
-  <p>spfa(not yet)</p>
+  <h4>Graph</h4>
+    <ol><li>topological sort</li></ol>
+  <h4>Weighted Graph</h4><ol>
+    <li>spfa</li>
+    <li>mcmf</li>
+    <li>dijikstra(comming soon)</li></ol>
 <h3>Segment Tree</h3>
-  <p>lazy propagation</p>  
+  <ol><li>lazy propagation</li></ol>
 <h3>Disjoint Set</h3>
-<h3>Matrix</h3>
-  <p>normal mul</p>  
-  <p>strassen mul(not yet, low priority because not useful in Competitive Programming)</p>  
-<h3>Number Theory</h3>
-  <p>fast pow</p>  
-  <p>modular number</p>
+<h3>Matrix</h3><ol>
+  <li>General Multiplication</li>  
+  <li>Strassen Multiplication(comming soon)</li></ol>
+<h3>Number Theory</h3><ol>
+  <li>Fast Power</li>  
+  <li>Modular Number</li>
+  <li>Berlekamp Algorithm(comming soon)</li></ol>
 <h3>2D Geometry</h3>
-  <ol><p>Vector</p>  
-    <li>+,-,*,/,<,ccw,dot product,cross product, size, angle, etc...</li>
+  <h4>Vector</h4><ol>
+    <li>Basic Vector Operations</li>
   </ol>
-  <ol><p>Segment</p>
+  <h4>Segment</h4><ol>
     <li>Line & Segment intersection</li>
     <li>Perpendicular Foot</li>
+    <li>Contain Determine</li>
   </ol>
-  <ol><p>Polygon</p>
-    <li>convex hull</li>
-    <li>area</li>
-    <li>ccw sort</li>
+  <h4>Polygon</h4><ol>
+    <li>Area</li>
+    <li>Circum</li>
+    <li>Contain Determine</li>
+    <li>Polygon Intersection(comming soon)</li>
+    <li>Convex Hull(Graham Scan Algorithm)</li>
   </ol>
+<h3>Linear Programming</h3>
+<h3>Splay Tree(comming soon)</h3>
+<h3>Tree(comming soon)</h3>
+  <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
