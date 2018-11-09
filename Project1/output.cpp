@@ -26,8 +26,7 @@ template<typename T>
 constexpr inline T inf() { return numeric_limits<T>::max() / 2; }
 
 template<typename T>
-typename enable_if<std::is_fundamental<T>::value, T>::type fastpow(const T &a, int p)
-{
+typename enable_if<std::is_fundamental<T>::value, T>::type fastpow(const T &a, int p){
 	if (p == 0)
 		return 1;
 	T tmp = fastpow(a, p / 2);
@@ -37,8 +36,7 @@ typename enable_if<std::is_fundamental<T>::value, T>::type fastpow(const T &a, i
 }
 
 template<typename T>
-typename enable_if<!is_fundamental<T>::value, T>::type fastpow(const T &a, int p)
-{
+typename enable_if<!is_fundamental<T>::value, T>::type fastpow(const T &a, int p){
 	if (p == 0)
 		return a.mulid();
 	T tmp = fastpow(a, p / 2);
@@ -47,8 +45,7 @@ typename enable_if<!is_fundamental<T>::value, T>::type fastpow(const T &a, int p
 	return tmp * tmp;
 }
 
-ll fibo(int n)
-{
+ll fibo(int n){
 	static ll memo[100];
 
 	if (n <= 1)
@@ -82,8 +79,7 @@ pair<ll, ll> xgcd2(ll a, ll b) {
 
 class NoModInv {};
 
-struct ModNum
-{
+struct ModNum{
 	using T = ll;
 	ModNum(T n = 0, T m = T(1e9+7)) :n((n%m + m) % m), m(m) {}
 	inline T val()const { return n; }

@@ -3,10 +3,9 @@
 
 class NoModInv {};
 
-struct ModNum
-{
+struct ModNum {
 	using T = ll;
-	ModNum(T n = 0, T m = T(1e9+7)) :n((n%m + m) % m), m(m) {}
+	ModNum(T n = 0, T m = T(1e9 + 7)) :n((n%m + m) % m), m(m) {}
 	inline T val()const { return n; }
 	inline ModNum mulid() const { return 1; }
 

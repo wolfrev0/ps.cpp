@@ -4,8 +4,7 @@
 class LineException {};
 class LineSame :public LineException {};
 
-struct Line
-{
+struct Line {
 	Vec2 s, e;
 	explicit Line() :Line(zero, zero) {}
 	explicit Line(Vec2 s, Vec2 e) :s(s), e(e) { }
@@ -68,7 +67,7 @@ struct Segment :public Line
 			return s.y <= p.y && p.y <= e.y;
 		if (abs(s.y - e.y) < eps && abs(p.y - s.y) < eps)
 			return s.x <= p.x && p.x <= e.x;
-		return s <= p && p <= e; 
+		return s <= p && p <= e;
 	}
 	virtual bool valid_foot(const Vec2& p)const override { return s <= p && p <= e; }
 	virtual bool valid_contains(const Vec2 &p) const override { return s <= p && p <= e; }

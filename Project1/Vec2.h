@@ -1,8 +1,7 @@
 #pragma once
 #include "Core.h"
 
-struct Vec2
-{
+struct Vec2 {
 	using T = ld;
 	T x, y;
 	explicit Vec2() :Vec2(0, 0) {}
