@@ -119,8 +119,7 @@ struct MCMFWeight {
 	MCMFWeight operator+(const MCMFWeight &r)const { return cost + r.cost; }
 };
 
-struct MCMF : public WeightedGraph<MCMFWeight>
-{
+struct MCMF : public WeightedGraph<MCMFWeight>{
 	const int src, snk;
 
 	MCMF(int n) :WeightedGraph(n + 2), src(n), snk(n + 1) {}

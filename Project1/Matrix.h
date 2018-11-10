@@ -1,9 +1,9 @@
 #pragma once
 #include "Core.h"
 
+template<typename T>
 struct Mat
 {
-	using T = int;
 	vector<vector<T>> arr;
 	explicit Mat(int r, int c) :arr(r, vector<T>(c)) {}
 	explicit Mat(vector<vector<T>> arr) :arr(arr) {
@@ -29,12 +29,12 @@ struct Mat
 	}
 };
 
-struct SqMat : public Mat
-{
-	explicit SqMat(int n) :Mat(n, n) {}
-	explicit SqMat(const Mat &m) :Mat(m) { assert(m.r() == m.c()); }
+template<typename T>
+struct SqMat : public Mat<T>{
+	explicit SqMat(int n) :Mat<T>(n, n) {}
+	explicit SqMat(const Mat<T> &m) :Mat<T>(m) { assert(m.r() == m.c()); }
 
-	inline int n()const { return r(); }
+	inline int n()const { return Mat<T>::r(); }
 
 	inline SqMat mulid() const {
 		SqMat ret(n());
@@ -43,6 +43,6 @@ struct SqMat : public Mat
 		return ret;
 	}
 
-	inline Mat operator*(const Mat &o)const { return Mat::operator*(o); }
-	inline SqMat operator*(const SqMat &o)const { return SqMat(Mat::operator*(o)); }
+	inline Mat<T> operator*(const Mat<T> &o)const { return Mat<T>::operator*(o); }
+	inline SqMat operator*(const SqMat &o)const { return SqMat(Mat<T>::operator*(o)); }
 };
