@@ -4,14 +4,15 @@ Making a flexible algorithms and data structures library.
 # Algorithms & DataStructures Index
 <h3>Graph</h3>
   <h4>Graph</h4>
-    <ol><li>topological sort</li></ol>
+    <ol><li>Topological Sort</li></ol>
   <h4>Weighted Graph</h4><ol>
-    <li>spfa</li>
-    <li>mcmf</li>
-    <li>dijikstra</li>
-    <li>dijikstra_vsq(comming soon)</li></ol>
+    <li>SPFA</li>
+    <li>Maximum Flow</li>
+    <li>MCMF</li>
+    <li>Dijikstra</li>
+    <li>Dijikstra V^2(comming soon)</li></ol>
 <h3>Segment Tree</h3>
-  <ol><li>lazy propagation</li></ol>
+  <ol><li>Lazy Propagation</li></ol>
 <h3>Disjoint Set</h3>
 <h3>Matrix</h3><ol>
   <li>General Multiplication</li>  
