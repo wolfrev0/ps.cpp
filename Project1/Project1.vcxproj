@@ -82,7 +82,7 @@
       <StackReserveSize>134217728</StackReserveSize>
     </Link>
     <PostBuildEvent>
-      <Command>Merger.exe</Command>
+      <Command>Merger.exe main.cpp</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

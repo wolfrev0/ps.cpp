@@ -19,17 +19,7 @@ int main() {
 	double ans = inf<int>();
 	for (int i = 0; i < n; i++)
 	{
-		for (int j = 0; j < m; j++)
-		{
-			ans = min(ans, (segn[i].s - segm[j].perpend_foot(segn[i].s)).size());
-			ans = min(ans, (segn[i].e - segm[j].perpend_foot(segn[i].e)).size());
-			ans = min(ans, (segm[j].s - segn[i].perpend_foot(segm[j].s)).size());
-			ans = min(ans, (segm[j].e - segn[i].perpend_foot(segm[j].e)).size());
-			ans = min(ans, (segn[i].s - segm[j].s).size());
-			ans = min(ans, (segn[i].s - segm[j].e).size());
-			ans = min(ans, (segn[i].e - segm[j].s).size());
-			ans = min(ans, (segn[i].e - segm[j].e).size());
-		}
+		;;
 	}
 	cout << ans << endl;
 
