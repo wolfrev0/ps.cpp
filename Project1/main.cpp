@@ -8,22 +8,19 @@ int main() {
 
 	int n, m;
 	cin >> n >> m;
-	MCMF g(n + m);
+	MCMF g(n + n);
+	forh(i, 0, m)
+	{
+		int a, b;
+		cin >> a >> b;
+		a--, b--;
+		g.add_edge_mcmf(a, n + b, 1, 0);
+	}
 	forh(i, 0, n)
 	{
-		int cnt;
-		cin >> cnt;
-		for (int j = 0; j < cnt; j++)
-		{
-			int x;
-			cin >> x;
-			x--;
-			g.add_edge_mcmf(i, n + x, 1, 0);
-		}
 		g.add_edge_mcmf(g.src, i, 1, 0);
+		g.add_edge_mcmf(n + i, g.snk, 1, 0);
 	}
-	forh(i, n, n + m)
-		g.add_edge_mcmf(i, g.snk, 1, 0);
 
 	cout << g.mf() << endl;
 
