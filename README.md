@@ -1,7 +1,7 @@
 # AlgorithmLibrary
 Making a flexible algorithms and data structures library.
 
-# Index
+# Algorithms & DataStructures Index
 <h3>Graph</h3>
   <h4>Graph</h4>
     <ol><li>topological sort</li></ol>
@@ -17,7 +17,8 @@ Making a flexible algorithms and data structures library.
   <li>General Multiplication</li>  
   <li>Strassen Multiplication(comming soon)</li></ol>
 <h3>Number Theory</h3><ol>
-  <li>Fast Power</li>  
+  <li>Fast Power</li>
+  <li>Extended GCD</li>
   <li>Modular Number</li>
   <li>Berlekamp Algorithm(comming soon)</li></ol>
 <h3>2D Geometry</h3>
@@ -40,3 +41,6 @@ Making a flexible algorithms and data structures library.
 <h3>Splay Tree(comming soon)</h3>
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
+
+# Help
+Examples are in ./Project/Examples directory.
