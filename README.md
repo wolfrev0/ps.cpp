@@ -17,7 +17,8 @@ Making a flexible algorithms and data structures library.
   <li>General Multiplication</li>  
   <li>Strassen Multiplication(comming soon)</li></ol>
 <h3>Number Theory</h3><ol>
-  <li>Fast Power</li>  
+  <li>Fast Power</li>
+  <li>Extended GCD</li>
   <li>Modular Number</li>
   <li>Berlekamp Algorithm(comming soon)</li></ol>
 <h3>2D Geometry</h3>
