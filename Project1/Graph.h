@@ -119,7 +119,7 @@ struct MCMFWeight {
 	MCMFWeight operator+(const MCMFWeight &r)const { return cost + r.cost; }
 };
 
-struct MCMF : public WeightedGraph<MCMFWeight>{
+struct MCMF : public WeightedGraph<MCMFWeight> {
 	const int src, snk;
 
 	MCMF(int n) :WeightedGraph(n + 2), src(n), snk(n + 1) {}
@@ -127,6 +127,35 @@ struct MCMF : public WeightedGraph<MCMFWeight>{
 	inline void add_edge_mcmf(uint s, uint e, int cap, int cost) {
 		WeightedGraph::add_edge(s, e, { g[e].size(), cap, cost });
 		WeightedGraph::add_edge(e, s, { g[s].size() - 1, 0, -cost });
+	}
+
+	int process(int v, int mf, vector<bool> &vis)
+	{
+		if (v == snk)
+			return mf;
+
+		vis[v] = true;
+		for (auto &i : g[v]) {
+			if (!vis[i.v] && i.w.cap) {
+				int f = process(i.v, min(mf, i.w.cap), vis);
+				if (f > 0) {
+					i.w.cap -= f;
+					g[i.v][i.w.revi].w.cap += f;
+					return f;
+				}
+			}
+		}
+		return 0;
+	}
+
+	int mf() {
+		int sum = 0;
+		vector<bool> vis(n);
+		while (int flow = process(src, inf<int>(), vis)) {
+			sum += flow;
+			vis = vector<bool>(n);
+		}
+		return sum;
 	}
 
 	pair<int, int> process() {

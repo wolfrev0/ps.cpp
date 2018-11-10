@@ -1,6 +1,5 @@
-#include "Core.h"
+#include "Graph.h"
 #include "Line.h"
-#include "ModNum.h"
 
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
@@ -9,19 +8,24 @@ int main() {
 
 	int n, m;
 	cin >> n >> m;
-	Segment segn[2000];
-	for (int i = 0; i < n; i++)
-		cin >> segn[i].s.x >> segn[i].s.y >> segn[i].e.x >> segn[i].e.y;
-	Segment segm[2000];
-	for (int j = 0; j < m; j++)
-		cin >> segm[j].s.x >> segm[j].s.y >> segm[j].e.x >> segm[j].e.y;
-
-	double ans = inf<int>();
-	for (int i = 0; i < n; i++)
+	MCMF g(n + m);
+	forh(i, 0, n)
 	{
-		;;
+		int cnt;
+		cin >> cnt;
+		for (int j = 0; j < cnt; j++)
+		{
+			int x;
+			cin >> x;
+			x--;
+			g.add_edge_mcmf(i, n + x, 1, 0);
+		}
+		g.add_edge_mcmf(g.src, i, 1, 0);
 	}
-	cout << ans << endl;
+	forh(i, n, n + m)
+		g.add_edge_mcmf(i, g.snk, 1, 0);
+
+	cout << g.mf() << endl;
 
 	return 0;
 }

@@ -51,7 +51,7 @@ int main()
 	forh(i, 0, h)
 		g.add_edge_mcmf(m + i, g.snk, k, 0);
 
-	cout << (g.mcmf().second == m ? "Possible" : "Impossible") << endl;
+	cout << (g.mf() == m ? "Possible" : "Impossible") << endl;
 
 	return 0;
 }
