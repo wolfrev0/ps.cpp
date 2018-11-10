@@ -58,8 +58,7 @@ private:
 	virtual bool valid_contains(const Vec2 &p) const { return true; }
 };
 
-struct Segment :public Line
-{
+struct Segment :public Line {
 	explicit Segment() :Segment(zero, zero) {}
 	explicit Segment(Vec2 s, Vec2 e) :Line(s, e) {}
 	virtual bool valid_intersect(const Vec2 &p)const override {
