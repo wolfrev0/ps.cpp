@@ -5,7 +5,7 @@ class NoModInv {};
 
 struct ModNum {
 	using T = ll;
-	ModNum(T n = 0, T m = T(1e9 + 7)) :n((n%m + m) % m), m(m) {}
+	ModNum(T n = 0, T m = mod) :n((n%m + m) % m), m(m) {}
 	inline T val()const { return n; }
 	inline ModNum mulid() const { return 1; }
 
@@ -15,12 +15,12 @@ struct ModNum {
 	inline ModNum operator * (const ModNum b)const { return n * b.val(); }
 	inline ModNum operator / (const ModNum b)const {
 		ll x, y;
-		ll g = xgcd(b.val(), -mod, x, y);
+		ll g = xgcd(b.val(), -m, x, y);
 		if (1 % g)
 			throw NoModInv();
 		x *= 1 / g;
 		while (x < 0)
-			x += -mod / g;
+			x += -m / g;
 		return x;
 		//extended gcd is better than fastpow.
 		//return fastpow(ModNum(m, b.val()), m - 2)*n; 
