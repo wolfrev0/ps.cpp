@@ -8,7 +8,8 @@ Making a flexible algorithms and data structures library.
   <h4>Weighted Graph</h4><ol>
     <li>spfa</li>
     <li>mcmf</li>
-    <li>dijikstra(comming soon)</li></ol>
+    <li>dijikstra</li>
+    <li>dijikstra_vsq(comming soon)</li></ol>
 <h3>Segment Tree</h3>
   <ol><li>lazy propagation</li></ol>
 <h3>Disjoint Set</h3>
