@@ -46,4 +46,4 @@ Making a flexible algorithms and data structures library.
 Examples are in ./Project/Examples directory.
 
 # See Also
-if you are interested in finding ez way to submit your code to Online Judge, see <a href="https://github.com/Lobo-Prix/CppProject21File/tree/master/Project1">CppProject21File(C++ project to one file, merger.exe)</a>.
+if you are interested in easy submitting to Online Judge, see <a href="https://github.com/Lobo-Prix/CppProject21File">CppProject21File(C++ project to one file, merger.exe)</a>.
