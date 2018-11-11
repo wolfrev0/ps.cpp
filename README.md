@@ -42,6 +42,8 @@ Making a flexible algorithms and data structures library.
 <h3>Splay Tree(comming soon)</h3>
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
+<h3>String</h3>
+KMP(comming soon)
 
 # Help
 Examples are in ./Project/Examples directory.
