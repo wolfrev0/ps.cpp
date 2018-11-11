@@ -40,7 +40,7 @@ struct Graph {
 template<typename T>
 struct WeightedGraph {
 	struct Edge {
-		int v;
+		int dest;
 		T w;
 	};
 	const int n;
@@ -94,12 +94,12 @@ struct WeightedGraph {
 				inq[j] = false;
 				q.pop();
 				forh(k, 0u, g[j].size())
-					if (valid_spfa_edge(g[j][k]) && ub[j] + g[j][k].w < ub[g[j][k].v]) {
-						p[g[j][k].v] = { j, k };
-						ub[g[j][k].v] = ub[j] + g[j][k].w;
-						if (!inq[g[j][k].v]) {
-							inq[g[j][k].v] = true;
-							q.push(g[j][k].v);
+					if (valid_spfa_edge(g[j][k]) && ub[j] + g[j][k].w < ub[g[j][k].dest]) {
+						p[g[j][k].dest] = { j, k };
+						ub[g[j][k].dest] = ub[j] + g[j][k].w;
+						if (!inq[g[j][k].dest]) {
+							inq[g[j][k].dest] = true;
+							q.push(g[j][k].dest);
 						}
 					}
 			}
@@ -120,7 +120,7 @@ struct MCMFWeight {
 };
 
 struct MCMF : public WeightedGraph<MCMFWeight> {
-	const int src, snk;
+	int src, snk;
 
 	MCMF(int n) :WeightedGraph(n + 2), src(n), snk(n + 1) {}
 
@@ -136,11 +136,11 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 
 		vis[v] = true;
 		for (auto &i : g[v]) {
-			if (!vis[i.v] && i.w.cap) {
-				int f = process(i.v, min(mf, i.w.cap), vis);
+			if (!vis[i.dest] && i.w.cap) {
+				int f = process(i.dest, min(mf, i.w.cap), vis);
 				if (f > 0) {
 					i.w.cap -= f;
-					g[i.v][i.w.revi].w.cap += f;
+					g[i.dest][i.w.revi].w.cap += f;
 					return f;
 				}
 			}
@@ -172,7 +172,7 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		for (int cur = snk; p[cur].first != -1; cur = p[cur].first) {
 			auto &e = g[p[cur].first][p[cur].second];
 			e.w.cap -= flow;
-			g[e.v][e.w.revi].w.cap += flow;
+			g[e.dest][e.w.revi].w.cap += flow;
 			ret.first += e.w.cost*flow;
 		}
 
