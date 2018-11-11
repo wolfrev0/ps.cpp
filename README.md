@@ -7,7 +7,8 @@ Making a flexible algorithms and data structures library.
     <ol><li>Topological Sort</li></ol>
   <h4>Weighted Graph</h4><ol>
     <li>SPFA</li>
-    <li>Maximum Flow</li>
+    <li>Maximum Flow(Ford–Fulkerson)</li>
+    <li>Maximum Flow(Edmonds–Karp)</li>
     <li>MCMF</li>
     <li>Dijikstra</li>
     <li>Dijikstra V^2(comming soon)</li></ol>
