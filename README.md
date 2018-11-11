@@ -8,7 +8,7 @@ Making a flexible algorithms and data structures library.
   <h4>Weighted Graph</h4><ol>
     <li>SPFA</li>
     <li>Maximum Flow(Ford–Fulkerson)</li>
-    <li>Maximum Flow(Dinic)</li>
+    <li>Maximum Flow(Dinic)(comming soon)</li>
     <li>MCMF</li>
     <li>Dijikstra</li>
     <li>Dijikstra V^2(comming soon)</li></ol>
@@ -45,6 +45,8 @@ Making a flexible algorithms and data structures library.
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
 <h3>String</h3>
 KMP(comming soon)
+<h3>Bipartite Matching</h3>
+Hopcroft-Karp(comming soon)
 
 # Help
 Examples are in ./Project/Examples directory.
