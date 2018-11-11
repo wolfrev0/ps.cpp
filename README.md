@@ -15,6 +15,8 @@ Making a flexible algorithms and data structures library.
 <h3>Segment Tree</h3>
   <ol><li>Lazy Propagation</li></ol>
 <h3>Disjoint Set</h3>
+  <ol><li>Path Compression</li>
+  <li>Union by Rank</li></ol>
 <h3>Matrix</h3><ol>
   <li>General Multiplication</li>  
   <li>Strassen Multiplication(comming soon)</li></ol>
