@@ -7,13 +7,13 @@ struct ModNum {
 	using T = ll;
 	ModNum(T n = 0, T m = mod) :n((n%m + m) % m), m(m) {}
 	inline T val()const { return n; }
-	inline ModNum mulid() const { return 1; }
+	inline ModNum mulid() const { return { 1, m }; }
 
-	inline ModNum operator - () const { return -n; }
-	inline ModNum operator + (const ModNum b)const { return n + b.val(); }
-	inline ModNum operator - (const ModNum b)const { return n - b.val() + m; }
-	inline ModNum operator * (const ModNum b)const { return n * b.val(); }
-	inline ModNum operator / (const ModNum b)const {
+	inline ModNum operator - () const { return { -n, m }; }
+	inline ModNum operator + (const ModNum &b)const { return { n + b.val(), m }; }
+	inline ModNum operator - (const ModNum &b)const { return { n - b.val() + m, m }; }
+	inline ModNum operator * (const ModNum &b)const { return { n * b.val(), m }; }
+	inline ModNum operator / (const ModNum &b)const {
 		ll x, y;
 		ll g = xgcd(b.val(), -m, x, y);
 		if (1 % g)
@@ -21,14 +21,14 @@ struct ModNum {
 		x *= 1 / g;
 		while (x < 0)
 			x += -m / g;
-		return x;
+		return { x, m };
 		//extended gcd is better than fastpow.
 		//return fastpow(ModNum(m, b.val()), m - 2)*n; 
 	}
-	inline ModNum operator+= (const ModNum b) { return *this = *this + b.val(); }
-	inline ModNum operator-= (const ModNum b) { return *this = *this - b.val(); }
-	inline ModNum operator*= (const ModNum b) { return *this = *this * b.val(); }
-	inline ModNum operator/= (const ModNum b) { return *this = *this / b.val(); }
+	inline ModNum operator+= (const ModNum &b) { return *this = *this + b; }
+	inline ModNum operator-= (const ModNum &b) { return *this = *this - b; }
+	inline ModNum operator*= (const ModNum &b) { return *this = *this * b; }
+	inline ModNum operator/= (const ModNum &b) { return *this = *this / b; }
 
 	inline ModNum &operator++ () { *this += 1; return *this; }
 	inline ModNum &operator-- () { *this -= 1; return *this; }
@@ -43,8 +43,12 @@ struct ModNum {
 	inline bool operator>=(const ModNum &r) const { return n >= r.n; }
 
 	//operator T() const { return n; }
+	ModNum(const ModNum &r) : m(r.m), n(r.n) {}
 	inline ModNum &operator= (const ModNum &r) { n = r.n; return *this; }
 private:
 	T n;
 	const T m;
 };
+
+ostream& operator<<(ostream& s, const ModNum& n) { return s << n.val(); }
+istream& operator<<(istream& s, const ModNum& n) { return s << n.val(); }
