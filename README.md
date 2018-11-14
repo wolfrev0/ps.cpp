@@ -7,13 +7,16 @@ Making a flexible algorithms and data structures library.
     <ol><li>Topological Sort</li></ol>
   <h4>Weighted Graph</h4><ol>
     <li>SPFA</li>
-    <li>Maximum Flow</li>
+    <li>Maximum Flow(Ford–Fulkerson)</li>
+    <li>Maximum Flow(Dinic)(comming soon)</li>
     <li>MCMF</li>
     <li>Dijikstra</li>
     <li>Dijikstra V^2(comming soon)</li></ol>
 <h3>Segment Tree</h3>
   <ol><li>Lazy Propagation</li></ol>
 <h3>Disjoint Set</h3>
+  <ol><li>Path Compression</li>
+  <li>Union by Rank</li></ol>
 <h3>Matrix</h3><ol>
   <li>General Multiplication</li>  
   <li>Strassen Multiplication(comming soon)</li></ol>
@@ -42,6 +45,10 @@ Making a flexible algorithms and data structures library.
 <h3>Splay Tree(comming soon)</h3>
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
+<h3>String</h3>
+KMP(comming soon)
+<h3>Bipartite Matching</h3>
+Hopcroft-Karp(comming soon)
 
 # Help
 Examples are in ./Project/Examples directory.
