@@ -92,3 +92,16 @@ vector<vector<int>> sieve_divs(int n)
 	}
 	return ret;
 }
+
+int lgf(ll n)
+{
+	assert(n > 0);
+	int ret = -1;
+	while (n)
+		n /= 2, ret++;
+	return ret;
+}
+
+int lgc(ll n) {
+	return lgf(n) + __builtin_popcountll(n) != 1;
+}
