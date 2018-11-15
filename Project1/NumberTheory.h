@@ -52,3 +52,43 @@ pair<ll, ll> xgcd2(ll a, ll b) {
 	auto t = xgcd2(b, a%b);
 	return { t.second,t.first - t.second*(a / b) };
 }
+
+vector<ll> divisors(ll n)
+{
+	ll cur = n;
+	vector<ll> ret;
+	for (int i = 2; i*i <= n; i++)
+		while (!(cur%i))
+		{
+			cur /= i;
+			ret.push_back(i);
+		}
+	if (cur > 1)
+		ret.push_back(cur);
+	return ret;
+}
+
+//n*invackermann(n)
+template<int n>
+bitset<n> sieve_prime()
+{
+	bitset<n> ret(3);
+	for (ll i = 2; i*i<=n; i++) {
+		if (ret[i])
+			continue;
+		for (ll j = i * i; j < n; j += i)
+			ret[j] = true;
+	}
+	return ret.flip();
+}
+
+//harmony series: nlogn
+vector<vector<int>> sieve_divs(int n)
+{
+	vector<vector<int>> ret(n);
+	for (ll i = 2; i*i<=n; i++) {
+		for (ll j = i + i; j < n; j += i)
+			ret[j].push_back(i);
+	}
+	return ret;
+}
