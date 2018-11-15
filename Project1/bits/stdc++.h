@@ -28,8 +28,8 @@
 #define __builtin_popcount(x) __popcnt(x)
 int __builtin_popcountll(long long x){
 	int ret=0;
-	while(x)
-		x<<=1,ret++;
+	while (x)
+		ret += x & 1, x >>= 1;
 	return ret;
 }
 
