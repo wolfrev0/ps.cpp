@@ -8,9 +8,9 @@ struct SegmentTree
 	SegmentTree(
 		int n,
 		T id,
-		function<T(T, T)> segf,
-		function<T(int, int, T, T)> lazyf,
-		function<T(T, T)> propaf,
+		const function<T(T, T)>& segf,
+		const function<T(int, int, T, T)>& lazyf,
+		const function<T(T, T)>& propaf,
 		T lazy_null = inf<int>())
 		//upperbound of 2^(ceil(log2(n))+1)/n is 4
 		:n(n), id(id), segf(segf), lazyf(lazyf), propaf(propaf), lazy_null(lazy_null),

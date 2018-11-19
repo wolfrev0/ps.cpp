@@ -2,7 +2,7 @@
 #include "Core.h"
 
 template<typename T>
-typename enable_if<std::is_fundamental<T>::value, T>::type fastpow(const T &a, int p) {
+typename enable_if<std::is_fundamental<T>::value, T>::type fastpow(const T& a, int p) {
 	if (p == 0)
 		return 1;
 	T tmp = fastpow(a, p / 2);
@@ -12,7 +12,7 @@ typename enable_if<std::is_fundamental<T>::value, T>::type fastpow(const T &a, i
 }
 
 template<typename T>
-typename enable_if<!is_fundamental<T>::value, T>::type fastpow(const T &a, int p) {
+typename enable_if<!is_fundamental<T>::value, T>::type fastpow(const T& a, int p) {
 	if (p == 0)
 		return a.mulid();
 	T tmp = fastpow(a, p / 2);
@@ -26,7 +26,7 @@ ll fibo(int n) {
 
 	if (n <= 1)
 		return 1;
-	auto &ret = memo[n];
+	auto& ret = memo[n];
 	if (ret)
 		return ret;
 	return ret = fibo(n - 1) + fibo(n - 2);
@@ -93,6 +93,7 @@ vector<vector<int>> sieve_divs(int n)
 	return ret;
 }
 
+//More accurate than floor(log(n))
 int lgf(ll n)
 {
 	assert(n > 0);
@@ -102,6 +103,7 @@ int lgf(ll n)
 	return ret;
 }
 
+//More accurate than ceil(log(n))
 int lgc(ll n) {
 	return lgf(n) + __builtin_popcountll(n) != 1;
 }

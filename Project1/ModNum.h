@@ -10,10 +10,10 @@ struct ModNum {
 	inline ModNum mulid() const { return { 1, m }; }
 
 	inline ModNum operator - () const { return { -n, m }; }
-	inline ModNum operator + (const ModNum &b)const { return { n + b.val(), m }; }
-	inline ModNum operator - (const ModNum &b)const { return { n - b.val() + m, m }; }
-	inline ModNum operator * (const ModNum &b)const { return { n * b.val(), m }; }
-	inline ModNum operator / (const ModNum &b)const {
+	inline ModNum operator + (const ModNum& b)const { return { n + b.val(), m }; }
+	inline ModNum operator - (const ModNum& b)const { return { n - b.val() + m, m }; }
+	inline ModNum operator * (const ModNum& b)const { return { n * b.val(), m }; }
+	inline ModNum operator / (const ModNum& b)const {
 		ll x, y;
 		ll g = xgcd(b.val(), -m, x, y);
 		if (1 % g)
@@ -25,26 +25,26 @@ struct ModNum {
 		//extended gcd is better than fastpow.
 		//return fastpow(ModNum(m, b.val()), m - 2)*n; 
 	}
-	inline ModNum operator+= (const ModNum &b) { return *this = *this + b; }
-	inline ModNum operator-= (const ModNum &b) { return *this = *this - b; }
-	inline ModNum operator*= (const ModNum &b) { return *this = *this * b; }
-	inline ModNum operator/= (const ModNum &b) { return *this = *this / b; }
+	inline ModNum operator+= (const ModNum& b) { return *this = *this + b; }
+	inline ModNum operator-= (const ModNum& b) { return *this = *this - b; }
+	inline ModNum operator*= (const ModNum& b) { return *this = *this * b; }
+	inline ModNum operator/= (const ModNum& b) { return *this = *this / b; }
 
-	inline ModNum &operator++ () { *this += 1; return *this; }
-	inline ModNum &operator-- () { *this -= 1; return *this; }
+	inline ModNum& operator++ () { *this += 1; return *this; }
+	inline ModNum& operator-- () { *this -= 1; return *this; }
 	inline ModNum operator++(int) { auto ret = *this; ++*this; return ret; }
 	inline ModNum operator--(int) { auto ret = *this; --*this; return ret; }
 
-	inline bool operator==(const ModNum &r) const { return n == r.n; }
-	inline bool operator!=(const ModNum &r) const { return !(*this == r); }
-	inline bool operator<(const ModNum &r) const { return n < r.n; }
-	inline bool operator<=(const ModNum &r) const { return n <= r.n; }
-	inline bool operator>(const ModNum &r) const { return n > r.n; }
-	inline bool operator>=(const ModNum &r) const { return n >= r.n; }
+	inline bool operator==(const ModNum& r) const { return n == r.n; }
+	inline bool operator!=(const ModNum& r) const { return !(*this == r); }
+	inline bool operator<(const ModNum& r) const { return n < r.n; }
+	inline bool operator<=(const ModNum& r) const { return n <= r.n; }
+	inline bool operator>(const ModNum& r) const { return n > r.n; }
+	inline bool operator>=(const ModNum& r) const { return n >= r.n; }
 
 	//operator T() const { return n; }
-	ModNum(const ModNum &r) : m(r.m), n(r.n) {}
-	inline ModNum &operator= (const ModNum &r) { n = r.n; return *this; }
+	ModNum(const ModNum& r) : m(r.m), n(r.n) {}
+	inline ModNum& operator= (const ModNum& r) { n = r.n; return *this; }
 private:
 	T n;
 	const T m;

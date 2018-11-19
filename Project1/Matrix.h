@@ -7,15 +7,15 @@ struct Mat
 	vector<vector<T>> arr;
 	explicit Mat(int r, int c) :arr(r, vector<T>(c)) {}
 	explicit Mat(vector<vector<T>> arr) :arr(arr) {
-		for (auto &i : arr)
+		for (auto& i : arr)
 			assert(i.size() == c());
 	}
-	Mat(const Mat &r) :arr(r.arr) {	}
+	Mat(const Mat& r) :arr(r.arr) {	}
 
 	inline int r()const { return arr.size(); }
 	inline int c()const { return arr[0].size(); }
 
-	inline Mat operator*(const Mat &o)const {
+	inline Mat operator*(const Mat& o)const {
 		assert(c() == o.r());
 
 		Mat ret(r(), o.c());
@@ -32,7 +32,7 @@ struct Mat
 template<typename T>
 struct SqMat : public Mat<T>{
 	explicit SqMat(int n) :Mat<T>(n, n) {}
-	explicit SqMat(const Mat<T> &m) :Mat<T>(m) { assert(m.r() == m.c()); }
+	explicit SqMat(const Mat<T>& m) :Mat<T>(m) { assert(m.r() == m.c()); }
 
 	inline int n()const { return Mat<T>::r(); }
 
@@ -43,6 +43,6 @@ struct SqMat : public Mat<T>{
 		return ret;
 	}
 
-	inline Mat<T> operator*(const Mat<T> &o)const { return Mat<T>::operator*(o); }
-	inline SqMat operator*(const SqMat &o)const { return SqMat(Mat<T>::operator*(o)); }
+	inline Mat<T> operator*(const Mat<T>& o)const { return Mat<T>::operator*(o); }
+	inline SqMat operator*(const SqMat& o)const { return SqMat(Mat<T>::operator*(o)); }
 };

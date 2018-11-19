@@ -7,12 +7,12 @@ struct Polygon
 
 	Polygon() {}
 	explicit Polygon(int n) :vtx(n) {}
-	explicit Polygon(const vector<Vec2> &v) :vtx(v) {}
+	explicit Polygon(const vector<Vec2>& v) :vtx(v) {}
 	inline int size()const { return vtx.size(); }
-	inline Vec2 &front() { return vtx.front(); }
-	inline void pushback(const Vec2 &v) { vtx.push_back(v); }
+	inline Vec2& front() { return vtx.front(); }
+	inline void pushback(const Vec2& v) { vtx.push_back(v); }
 	inline void popback() { vtx.pop_back(); }
-	inline Vec2 &operator[](int idx) { return vtx[idx]; }
+	inline Vec2& operator[](int idx) { return vtx[idx]; }
 	inline void clear() { vtx.clear(); }
 
 	ld area() {
@@ -36,7 +36,7 @@ struct Polygon
 		return ret;
 	}
 
-	virtual bool contains(const Vec2 &v) const {
+	virtual bool contains(const Vec2& v) const {
 		auto arr = to_segments();
 		for (auto i : arr)
 			if (i.contains(v))
@@ -50,7 +50,7 @@ struct Polygon
 		return cnt % 2;
 	}
 
-	virtual Polygon intersect(const Polygon &r)const {
+	virtual Polygon intersect(const Polygon& r)const {
 		//see jongman book geometry
 		throw 0;
 	}
@@ -60,7 +60,7 @@ struct Convex :public Polygon
 {
 	Convex() {}
 	explicit Convex(int n) :Polygon(n) {}
-	explicit Convex(const vector<Vec2> &v) :Polygon(v) { normalize(); }
+	explicit Convex(const vector<Vec2>& v) :Polygon(v) { normalize(); }
 
 	//graham scan
 	void normalize() {
@@ -82,7 +82,7 @@ struct Convex :public Polygon
 		vtx = res;
 	}
 
-	virtual bool contains(const Vec2 &v)const override
+	virtual bool contains(const Vec2& v)const override
 	{
 		Vec2::T tmp = v.cross(vtx[0], vtx[1]);
 		forh(i, 0, size())
@@ -91,7 +91,7 @@ struct Convex :public Polygon
 		return true;
 	}
 
-	virtual Polygon intersect(const Polygon &r)const override {
+	virtual Polygon intersect(const Polygon& r)const override {
 		vector<Vec2> ret;
 		for (auto i : vtx)
 			if (r.contains(i))

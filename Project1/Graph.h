@@ -50,8 +50,8 @@ struct WeightedGraph {
 
 	inline void add_edge(int s, int e, T w) { g[s].push_back({ e, w }); }
 
-	void dijikstra(vector<T> &d, vector<pair<int, int>> &p, int s) {
-		priority_queue < pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;//dest, v
+	void dijikstra(vector<T>& d, vector<pair<int, int>>& p, int s) {
+		priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;//dest, v
 		d.resize(n, inf<int>());
 		p.resize(n, { -1, -1 });
 		d[s] = 0;
@@ -64,7 +64,7 @@ struct WeightedGraph {
 			if (cur.first != d[cur.second])
 				continue;
 
-			auto &cg = g[cur.second];
+			auto& cg = g[cur.second];
 			forh(i, 0u, cg.size())
 			{
 				if (d[cg[i].v] > cur.first + cg[i].w) {
@@ -77,7 +77,7 @@ struct WeightedGraph {
 		}
 	}
 
-	bool spfa(vector<T> &ub, vector<pair<int, int>> &p, int s) {
+	bool spfa(vector<T>& ub, vector<pair<int, int>>& p, int s) {
 		queue<int> q;
 		vector<bool> inq(n);
 		ub.resize(n, inf<int>());
@@ -107,7 +107,7 @@ struct WeightedGraph {
 		return q.empty();
 	}
 
-	virtual bool valid_spfa_edge(const Edge &w) const { return true; }
+	virtual bool valid_spfa_edge(const Edge& w) const { return true; }
 };
 
 struct MCMFWeight {
@@ -115,8 +115,8 @@ struct MCMFWeight {
 	int cap, cost;
 	MCMFWeight(int cost) :cost(cost) {}
 	MCMFWeight(uint revi, int cap, int cost) :revi(revi), cap(cap), cost(cost) {}
-	bool operator< (const MCMFWeight &r)const { return cost < r.cost; }
-	MCMFWeight operator+(const MCMFWeight &r)const { return cost + r.cost; }
+	bool operator< (const MCMFWeight& r)const { return cost < r.cost; }
+	MCMFWeight operator+(const MCMFWeight& r)const { return cost + r.cost; }
 };
 
 struct MCMF : public WeightedGraph<MCMFWeight> {
@@ -129,13 +129,13 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		WeightedGraph::add_edge(e, s, { g[s].size() - 1, 0, -cost });
 	}
 
-	int process(int v, int mf, vector<bool> &vis)
+	int process(int v, int mf, vector<bool>& vis)
 	{
 		if (v == snk)
 			return mf;
 
 		vis[v] = true;
-		for (auto &i : g[v]) {
+		for (auto& i : g[v]) {
 			if (!vis[i.dest] && i.w.cap) {
 				int f = process(i.dest, min(mf, i.w.cap), vis);
 				if (f > 0) {
@@ -160,7 +160,7 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 
 	pair<int, int> process() {
 		pair<int, int> ret = { 0,0 };
-		int &flow = ret.second;
+		int& flow = ret.second;
 		flow = inf<int>();
 
 		vector<MCMFWeight> ub;
@@ -170,7 +170,7 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		for (int cur = snk; p[cur].first != -1; cur = p[cur].first)
 			flow = min(flow, g[p[cur].first][p[cur].second].w.cap);
 		for (int cur = snk; p[cur].first != -1; cur = p[cur].first) {
-			auto &e = g[p[cur].first][p[cur].second];
+			auto& e = g[p[cur].first][p[cur].second];
 			e.w.cap -= flow;
 			g[e.dest][e.w.revi].w.cap += flow;
 			ret.first += e.w.cost*flow;
@@ -191,5 +191,5 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		return ret;
 	}
 
-	virtual bool valid_spfa_edge(const Edge &e) const override { return e.w.cap; }
+	virtual bool valid_spfa_edge(const Edge& e) const override { return e.w.cap; }
 };
