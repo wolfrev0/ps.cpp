@@ -41,12 +41,12 @@ Making a flexible algorithms and data structures library.
     <li>Polygon Intersection(comming soon)</li>
     <li>Convex Hull(Graham Scan Algorithm)</li>
   </ol>
+<h3>String</h3>
+  <p>KMP</p>
 <h3>Linear Programming</h3>
 <h3>Splay Tree(comming soon)</h3>
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
-<h3>String</h3>
-KMP(comming soon)
 <h3>Bipartite Matching</h3>
 Hopcroft-Karp(comming soon)
 
