@@ -29,6 +29,7 @@ struct Vec2 {
 	inline T ccw(const Vec2& a, const Vec2& b) const { return cross(a, b) ? cross(a, b) / abs(cross(a, b)) : 0; }
 	inline T angle()const { auto ret = atan2(y, x); return fmod(ret + 2 * pi, 2 * pi); }
 	inline T tan()const { if (x == 0) return abs(y) / x; if (y == 0)return 0; return y / x; }
+	inline Vec2&& project(const Vec2& p)const { Vec2 base = normalize(); return base * base.dot(p); }
 } zero, err = Vec2(inf<Vec2::T>(), inf<Vec2::T>()), epsv = Vec2(eps, eps);
 
 inline bool cmpccw(const Vec2& l, const Vec2& r, const Vec2& base) {
