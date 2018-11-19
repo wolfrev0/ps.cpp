@@ -25,332 +25,93 @@ const int dir[4][2] = { { 1, 0 },{ 0, 1 },{ -1, 0 },{ 0, -1 } };
 template<typename T>
 constexpr inline T inf() { return numeric_limits<T>::max() / 2; }
 
-struct Vec2 {
-	using T = ld;
-	T x, y;
-	explicit Vec2() :Vec2(0, 0) {}
-	explicit Vec2(T x, T y) :x(x), y(y) {}
-	inline bool operator==(const Vec2 &r)const { return x == r.x && y == r.y; }
-	inline bool operator!=(const Vec2 &r)const { return !(*this == r); }
-	inline bool operator<(const Vec2 &r)const { return x == r.x ? y < r.y : x < r.x; }
-	inline bool operator<=(const Vec2 &r)const { return *this == r || *this < r; }
-	inline bool operator>(const Vec2 &r)const { return x == r.x ? y > r.y : x > r.x; }
-	inline bool operator>=(const Vec2 &r)const { return *this == r || *this > r; }
-	inline Vec2 operator+ (const Vec2 &r)const { return Vec2(x + r.x, y + r.y); }
-	inline Vec2 operator-()const { return Vec2(-x, -y); }
-	inline Vec2 operator- (const Vec2 &r)const { return *this + -r; }
-	inline Vec2 operator* (T r)const { return Vec2(x*r, y*r); }
-	inline Vec2 operator+= (const Vec2 &r) { return *this = *this + r; }
-	inline Vec2 operator-= (const Vec2 &r) { return *this = *this - r; }
-	inline Vec2 operator*= (T r) { return *this = *this * r; }
-	inline T size()const { return hypot(x, y); }
-	inline T sizesq()const { return dot(*this); }
-	inline Vec2 normalize()const { return Vec2(x / size(), y / size()); }
-	inline T dot(const Vec2 &r) const { return x * r.x + y * r.y; }
-	inline T dot(const Vec2 &a, const Vec2 &b) const { return (a - *this).dot(b - *this); }
-	inline T cross(const Vec2 &r)const { return x * r.y - y * r.x; }
-	inline T cross(const Vec2 &a, const Vec2 &b) const { return (a - *this).cross(b - *this); }
-	inline T ccw(const Vec2 &a, const Vec2 &b) const { return cross(a, b) ? cross(a, b) / abs(cross(a, b)) : 0; }
-	inline T angle()const { auto ret = atan2(y, x); return fmod(ret + 2 * pi, 2 * pi); }
-	inline T tan()const { if (x == 0) return abs(y) / x; if (y == 0)return 0; return y / x; }
-	inline Vec2 project(const Vec2 &p)const { Vec2 base = normalize(); return base * base.dot(p); }
-} zero, err = Vec2(inf<Vec2::T>(), inf<Vec2::T>()), epsv = Vec2(eps, eps);
-
-inline bool cmpccw(const Vec2 &l, const Vec2 &r, const Vec2 &base) {
-	Vec2::T val = base.ccw(l, r);
-	assert(base <= l && base <= r);
-	if (val == 0)
-		//need some thinking but ok. because base should be left-bottom element.
-		return l < r;
-	return val > 0;
+//a.k.a. partial match table, pi
+vector<int> failure_function(const string &p) {
+	vector<int> ret(p.size());
+	int si = 1, pi = 0;
+	while (si + pi < p.size()) {
+		if (pi < p.size() && p[si + pi] == p[pi]) {
+			pi++;
+			ret[si + pi - 1] = pi;
+		}
+		else {
+			if (!pi)
+				++si;
+			else {
+				si += pi - ret[pi - 1];
+				pi = ret[pi - 1];
+			}
+		}
+	}
+	return ret;
 }
 
-class LineException {};
-class LineSame :public LineException {};
-
-struct Line {
-	Vec2 s, e;
-	explicit Line() :Line(zero, zero) {}
-	explicit Line(Vec2 s, Vec2 e) :s(s), e(e) { }
-	inline Vec2 dir()const { return e - s; }
-
-	Vec2 intersect(Line &r) {
-		if (s > e)
-			swap(s, e);
-		if (r.s > r.e)
-			swap(r.s, r.e);
-
-		Vec2::T det = dir().cross(r.dir());
-		if (abs(det) < eps)
-			if (abs((r.s - s).cross(e - s)) < eps)
-				throw LineSame();
-			else
-				return err;
-		auto res = s + dir()*((r.s - s).cross(r.dir()) / det);
-		return valid_intersect(res) && r.valid_intersect(res) ? res : err;
-	}
-
-	bool intersect_det(Line &r) {
-		if (s > e)
-			swap(s, e);
-		if (r.s > r.e)
-			swap(r.s, r.e);
-
-		Vec2::T det1 = s.ccw(e, r.s) * s.ccw(e, r.e);
-		Vec2::T det2 = r.s.ccw(r.e, s) * r.s.ccw(r.e, e);
-		if (!det1 && !det2)
-			return e >= r.s && r.e >= s;
-		return det1 <= 0 && det2 <= 0;
-	}
-
-	Vec2 perpend_foot(const Vec2 &p) {
-		if (s > e)
-			swap(s, e);
-		auto res = s + dir().project(p - s);
-		return valid_foot(res) ? res : err;
-	}
-
-	bool contains(const Vec2 &v) {
-		if (s > e)
-			swap(s, e);
-		return valid_contains(v) && v.ccw(s, e) == 0;
-	}
-
-private:
-	virtual bool valid_intersect(const Vec2 &p) const { return true; }
-	virtual bool valid_foot(const Vec2 &p) const { return true; }
-	virtual bool valid_contains(const Vec2 &p) const { return true; }
-};
-
-struct Segment :public Line {
-	explicit Segment() :Segment(zero, zero) {}
-	explicit Segment(Vec2 s, Vec2 e) :Line(s, e) {}
-	virtual bool valid_intersect(const Vec2 &p)const override {
-		if (abs(s.x - e.x) < eps && abs(p.x - s.x) < eps)
-			return s.y <= p.y && p.y <= e.y;
-		if (abs(s.y - e.y) < eps && abs(p.y - s.y) < eps)
-			return s.x <= p.x && p.x <= e.x;
-		return s <= p && p <= e;
-	}
-	virtual bool valid_foot(const Vec2& p)const override { return s <= p && p <= e; }
-	virtual bool valid_contains(const Vec2 &p) const override { return s <= p && p <= e; }
-};
-
-struct Graph {
-	vector<vector<int>> g;
-	vector<int> in;
-
-	Graph(int n) :g(n), in(n) {}
-
-	inline void add_edge(int s, int e) {
-		g[s].push_back(e);
-		in[e]++;
-	}
-
-	vector<int> topo_sort() {
-		queue<int> q;
-		forh(i, 0u, g.size())
-			if (!in[i])
-				q.push(i);
-		vector<int> ret;
-		while (q.size()) {
-			auto cur = q.front();
-			ret.push_back(cur);
-			q.pop();
-			for (auto i : g[cur])
-				if (--in[i] == 0)
-					q.push(i);
+vector<int> kmp(const string &s, const string &p) {
+	if (s.size() < p.size())
+		return {};
+	vector<int> ret;
+	auto ff = failure_function(p);
+	int si = 0, pi = 0;
+	while (si <= s.size() - p.size()) {
+		if (pi < p.size() && s[si + pi] == p[pi]) {
+			if (++pi == p.size())
+				ret.push_back(si);
 		}
-		reverse(ret.begin(), ret.end());
-		forh(i, 0u, g.size())
-			if (in[i])
-				throw "Error";
-		return ret;
+		else {
+			if (!pi)
+				++si;
+			else {
+				si += pi - ff[pi - 1];
+				pi = ff[pi - 1];
+			}
+		}
 	}
-	//dfs()
-	//bfs()
-	//maybe useless?
-};
 
-template<typename T>
-struct WeightedGraph {
-	struct Edge {
-		int v;
-		T w;
-	};
-	const int n;
-	vector<vector<Edge>> g;
+	return ret;
+}
 
-	WeightedGraph(int n) :n(n), g(n) {}
+vector<int> failure_function2(const string &p){
+	int pi = 0;
+	vector<int> ret(p.size());
+	forh(i, 1, p.size()) {
+		while (pi > 0 && p[i] != p[pi])
+			pi = ret[pi - 1];
+		if (p[i] == p[pi])
+			ret[i] = ++pi;
+	}
+	return ret;
+}
 
-	inline void add_edge(int s, int e, T w) { g[s].push_back({ e, w }); }
-
-	void dijikstra(vector<T> &d, vector<pair<int, int>> &p, int s) {
-		priority_queue < pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;//dest, v
-		d.resize(n, inf<int>());
-		p.resize(n, { -1, -1 });
-		d[s] = 0;
-		pq.push({ 0, s });
-		while (!pq.empty())
+vector<int> kmp2(const string &s, const string &p) {
+	const auto &ff = failure_function2(p);
+	vector<int> ans;
+	int pi = 0;
+	forh(i, 0, s.size()) {
+		while (pi > 0 && s[i] != p[pi])
+			pi = ff[pi - 1];
+		if (s[i] == p[pi] && ++pi == p.size())
 		{
-			auto cur = pq.top();
-			pq.pop();
-
-			if (cur.first != d[cur.second])
-				continue;
-
-			auto &cg = g[cur.second];
-			forh(i, 0u, cg.size())
-			{
-				if (d[cg[i].v] > cur.first + cg[i].w) {
-					d[cg[i].v] = cur.first + cg[i].w;
-					p[cg[i].v] = { cur.second, i };
-					pq.push({ cur.first + cg[i].w,cg[i].v });
-				}
-
-			}
+			ans.push_back(i - pi + 1);
+			pi = ff[pi - 1];
 		}
 	}
+	return ans;
+}
 
-	bool spfa(vector<T> &ub, vector<pair<int, int>> &p, int s) {
-		queue<int> q;
-		vector<bool> inq(n);
-		ub.resize(n, inf<int>());
-		p.resize(n, { -1, -1 });
-
-		ub[s] = 0;
-		inq[s] = true;
-		q.push(s);
-		int i;
-		for (i = 0; i < n && q.size(); i++) {
-			int qsz = q.size();
-			while (qsz--) {
-				int j = q.front();
-				inq[j] = false;
-				q.pop();
-				forh(k, 0u, g[j].size())
-					if (valid_spfa_edge(g[j][k]) && ub[j] + g[j][k].w < ub[g[j][k].v]) {
-						p[g[j][k].v] = { j, k };
-						ub[g[j][k].v] = ub[j] + g[j][k].w;
-						if (!inq[g[j][k].v]) {
-							inq[g[j][k].v] = true;
-							q.push(g[j][k].v);
-						}
-					}
-			}
-		}
-		return q.empty();
-	}
-
-	virtual bool valid_spfa_edge(const Edge &w) const { return true; }
-};
-
-struct MCMFWeight {
-	uint revi;
-	int cap, cost;
-	MCMFWeight(int cost) :cost(cost) {}
-	MCMFWeight(uint revi, int cap, int cost) :revi(revi), cap(cap), cost(cost) {}
-	bool operator< (const MCMFWeight &r)const { return cost < r.cost; }
-	MCMFWeight operator+(const MCMFWeight &r)const { return cost + r.cost; }
-};
-
-struct MCMF : public WeightedGraph<MCMFWeight> {
-	const int src, snk;
-
-	MCMF(int n) :WeightedGraph(n + 2), src(n), snk(n + 1) {}
-
-	inline void add_edge_mcmf(uint s, uint e, int cap, int cost) {
-		WeightedGraph::add_edge(s, e, { g[e].size(), cap, cost });
-		WeightedGraph::add_edge(e, s, { g[s].size() - 1, 0, -cost });
-	}
-
-	int process(int v, int mf, vector<bool> &vis)
-	{
-		if (v == snk)
-			return mf;
-
-		vis[v] = true;
-		for (auto &i : g[v]) {
-			if (!vis[i.v] && i.w.cap) {
-				int f = process(i.v, min(mf, i.w.cap), vis);
-				if (f > 0) {
-					i.w.cap -= f;
-					g[i.v][i.w.revi].w.cap += f;
-					return f;
-				}
-			}
-		}
-		return 0;
-	}
-
-	int mf() {
-		int sum = 0;
-		vector<bool> vis(n);
-		while (int flow = process(src, inf<int>(), vis)) {
-			sum += flow;
-			vis = vector<bool>(n);
-		}
-		return sum;
-	}
-
-	pair<int, int> process() {
-		pair<int, int> ret = { 0,0 };
-		int &flow = ret.second;
-		flow = inf<int>();
-
-		vector<MCMFWeight> ub;
-		vector<pair<int, int>> p;
-		if (!spfa(ub, p, src) || p[snk].first == -1)
-			return { 0, 0 };
-		for (int cur = snk; p[cur].first != -1; cur = p[cur].first)
-			flow = min(flow, g[p[cur].first][p[cur].second].w.cap);
-		for (int cur = snk; p[cur].first != -1; cur = p[cur].first) {
-			auto &e = g[p[cur].first][p[cur].second];
-			e.w.cap -= flow;
-			g[e.v][e.w.revi].w.cap += flow;
-			ret.first += e.w.cost*flow;
-		}
-
-		return ret;
-	}
-
-	pair<int, int> mcmf() {
-		pair<int, int> ret = { 0, 0 };
-		while (true) {
-			auto res = process();
-			if (!res.first && !res.second)
-				break;
-			ret.first += res.first;
-			ret.second += res.second;
-		}
-		return ret;
-	}
-
-	virtual bool valid_spfa_edge(const Edge &e) const override { return e.w.cap; }
-};
+char text[1000010];
+char pattern[1000010];
 
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
 	srand((uint)time(0));
 
-	int n, m;
-	cin >> n >> m;
-	MCMF g(n + n);
-	forh(i, 0, m)
-	{
-		int a, b;
-		cin >> a >> b;
-		a--, b--;
-		g.add_edge_mcmf(a, n + b, 1, 0);
-	}
-	forh(i, 0, n)
-	{
-		g.add_edge_mcmf(g.src, i, 1, 0);
-		g.add_edge_mcmf(n + i, g.snk, 1, 0);
-	}
-
-	cout << g.mf() << endl;
+	cin.getline(text, 1000010);
+	cin.getline(pattern, 1000010);
+	auto res = kmp2(text, pattern);
+	cout << res.size() << endl;
+	for (auto i : res)
+		cout << i + 1 << ' ';
 
 	return 0;
 }
