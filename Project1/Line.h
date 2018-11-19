@@ -10,7 +10,7 @@ struct Line {
 	explicit Line(const Vec2& s, const Vec2& e) :s(s), e(e) { }
 	inline Vec2&& dir()const { return e - s; }
 
-	Vec2 intersect(Line &r) {
+	Vec2 intersect(Line& r) {
 		if (s > e)
 			swap(s, e);
 		if (r.s > r.e)
@@ -39,7 +39,7 @@ struct Line {
 		return det1 <= 0 && det2 <= 0;
 	}
 
-	Vec2 perpend_foot(const Vec2 &p) {
+	Vec2 perpend_foot(const Vec2& p) {
 		if (s > e)
 			swap(s, e);
 		auto res = s + dir().project(p - s);
