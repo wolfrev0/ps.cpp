@@ -16,7 +16,7 @@ Making a flexible algorithms and data structures library.
   <ol><li>Lazy Propagation</li></ol>
 <h3>Disjoint Set</h3>
   <ol><li>Path Compression</li>
-  <li>Union by Rank</li></ol>
+  <li>Union by Rank(comming soon)</li></ol>
 <h3>Matrix</h3><ol>
   <li>General Multiplication</li>  
   <li>Strassen Multiplication(comming soon)</li></ol>
@@ -41,12 +41,12 @@ Making a flexible algorithms and data structures library.
     <li>Polygon Intersection(comming soon)</li>
     <li>Convex Hull(Graham Scan Algorithm)</li>
   </ol>
+<h3>String</h3>
+  <p>KMP</p>
 <h3>Linear Programming</h3>
 <h3>Splay Tree(comming soon)</h3>
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
-<h3>String</h3>
-KMP(comming soon)
 <h3>Bipartite Matching</h3>
 Hopcroft-Karp(comming soon)
 
