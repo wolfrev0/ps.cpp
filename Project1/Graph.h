@@ -46,8 +46,8 @@ struct WeightedGraph {
 		uint e;
 		uint ei;
 		T w;
-		bool operator<(const Edge &e)const { return w < e.w; }
-		bool operator>(const Edge &e)const { return w > e.w; }
+		bool operator<(const Edge &r)const { return w < r.w; }
+		bool operator>(const Edge &r)const { return w > r.w; }
 	};
 	const uint n;
 	vector<vector<Edge>> g;
