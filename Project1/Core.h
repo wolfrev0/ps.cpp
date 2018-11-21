@@ -26,3 +26,8 @@ const int dir[4][2] = { { 1, 0 },{ 0, 1 },{ -1, 0 },{ 0, -1 } };
 
 template<typename T>
 constexpr inline T inf() { return numeric_limits<T>::max() / 2; }
+
+template<typename T, typename U>
+inline pair<T, U> operator+(const pair<T, U> &a, const pair<T, U> &b) { return { a.first + b.first, a.second + b.second }; }
+template<typename T, typename U>
+inline pair<T, U> operator+=(pair<T, U> &a, const pair<T, U> &b) { return a = a + b; }
