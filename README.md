@@ -45,7 +45,9 @@ Making a flexible algorithms and data structures library.
   </ol>
 <h3>String</h3>
   <p>KMP</p>
-<h3>Linear Programming</h3>
+<h3>Linear Programming(comming soon)</h3>
+  <ol><li>Simplex Method(Randomized Pivot)</li>
+  <li>Inner Point Method</li>
 <h3>Splay Tree(comming soon)</h3>
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
