@@ -11,7 +11,9 @@ Making a flexible algorithms and data structures library.
     <li>Maximum Flow(Dinic)(comming soon)</li>
     <li>MCMF</li>
     <li>Dijikstra</li>
-    <li>Dijikstra V^2(comming soon)</li></ol>
+    <li>Dijikstra V^2(comming soon)</li>
+    <li>MST(Prim)</li>
+    <li>MST(Kruskal)</li></ol>
 <h3>Segment Tree</h3>
   <ol><li>Lazy Propagation</li></ol>
 <h3>Disjoint Set</h3>
