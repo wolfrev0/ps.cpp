@@ -1,11 +1,13 @@
 #pragma once
 #include "Core.h"
+#include "DisjointSet.h"
 
 struct Graph {
+	const int n;
 	vector<vector<int>> g;
 	vector<int> in;
 
-	Graph(int n) :g(n), in(n) {}
+	Graph(int n) :n(n), g(n), in(n) {}
 
 	inline void add_edge(int s, int e) {
 		g[s].push_back(e);
@@ -14,7 +16,7 @@ struct Graph {
 
 	vector<int> topo_sort() {
 		queue<int> q;
-		forh(i, 0u, g.size())
+		forh(i, 0u, n)
 			if (!in[i])
 				q.push(i);
 		vector<int> ret;
@@ -27,7 +29,7 @@ struct Graph {
 					q.push(i);
 		}
 		reverse(ret.begin(), ret.end());
-		forh(i, 0u, g.size())
+		forh(i, 0u, n)
 			if (in[i])
 				throw "Error";
 		return ret;
@@ -65,7 +67,7 @@ struct WeightedGraph {
 				continue;
 
 			auto& cg = g[cur.second];
-			forh(i, 0u, cg.size())
+			forh(i, 0u, cn)
 			{
 				if (d[cg[i].v] > cur.first + cg[i].w) {
 					d[cg[i].v] = cur.first + cg[i].w;
@@ -106,15 +108,71 @@ struct WeightedGraph {
 		}
 		return q.empty();
 	}
-
 	virtual bool valid_spfa_edge(const Edge& w) const { return true; }
+
+	vector<pair<int, int>> mst_prim() {
+		struct E {
+			int cost, s, ei;
+			bool operator<(const E& r)const { return cost > r.cost; }
+		};
+
+		vector<pair<int, int>> ret;
+		vector<bool> vis(n);
+		priority_queue<E> q;
+		q.push({ 0, -1, 0 });
+		while (q.size()) {
+			auto cur = q.top();
+			q.pop();
+
+			auto curv = cur.s == -1 ? 0 : g[cur.s][cur.ei].dest;
+			if (vis[curv])
+				continue;
+			vis[curv] = true;
+			if (cur.s != -1)
+				ret.push_back({ cur.s, cur.ei });
+
+			forh(i, 0, g[curv].size()) {
+				auto &r = g[curv];
+				if (!vis[r[i].dest])
+					q.push({ r[i].w, curv, i });
+			}
+		}
+		return ret;
+	}
+
+	vector<pair<int, int>> mst_kruskal() {
+		struct E {
+			int cost, s, ei;
+			bool operator<(const E& r)const { return cost < r.cost; }
+		};
+		vector<E> e;
+		forh(i, 0, n) {
+			auto &gi = g[i];
+			forh(j, 0, gi.size()) {
+				auto gij = gi[j];
+				e.push_back({ gij.w, i, j });
+			}
+		}
+		sort(e.begin(), e.end());
+
+		DisjointSet djs(n);
+		vector<pair<int, int>> ret;
+		for (auto &i : e) {
+			int ie = g[i.s][i.ei].dest;
+			if (djs.find(i.s) != djs.find(ie)) {
+				djs.uni(i.s, ie);
+				ret.push_back({ i.s, i.ei });
+			}
+		}
+		return ret;
+	}
 };
 
 struct MCMFWeight {
-	uint revi;
+	uint ei;
 	int cap, cost;
 	MCMFWeight(int cost) :cost(cost) {}
-	MCMFWeight(uint revi, int cap, int cost) :revi(revi), cap(cap), cost(cost) {}
+	MCMFWeight(uint ei, int cap, int cost) :ei(ei), cap(cap), cost(cost) {}
 	bool operator< (const MCMFWeight& r)const { return cost < r.cost; }
 	MCMFWeight operator+(const MCMFWeight& r)const { return cost + r.cost; }
 };
@@ -140,7 +198,7 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 				int f = process(i.dest, min(mf, i.w.cap), vis);
 				if (f > 0) {
 					i.w.cap -= f;
-					g[i.dest][i.w.revi].w.cap += f;
+					g[i.dest][i.w.ei].w.cap += f;
 					return f;
 				}
 			}
@@ -172,7 +230,7 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		for (int cur = snk; p[cur].first != -1; cur = p[cur].first) {
 			auto& e = g[p[cur].first][p[cur].second];
 			e.w.cap -= flow;
-			g[e.dest][e.w.revi].w.cap += flow;
+			g[e.dest][e.w.ei].w.cap += flow;
 			ret.first += e.w.cost*flow;
 		}
 
