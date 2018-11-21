@@ -18,12 +18,12 @@ int main() {
 			int x;
 			cin >> x;
 			x--;
-			g.add_edge_mcmf(i, n + x, 1, 0);
+			g.add_edge(i, n + x, 1, 0);
 		}
-		g.add_edge_mcmf(g.src, i, 1, 0);
+		g.add_edge(g.src, i, 1, 0);
 	}
 	forh(i, n, n + m)
-		g.add_edge_mcmf(i, g.snk, 1, 0);
+		g.add_edge(i, g.snk, 1, 0);
 
 	cout << g.mf() << endl;
 

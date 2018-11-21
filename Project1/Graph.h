@@ -90,7 +90,7 @@ struct WeightedGraph {
 		ub[s] = 0;
 		inq[s] = true;
 		q.push(s);
-		trav1(i, 0u, i < n&&q.size()) {
+		trav(i, 0u, i < n&&q.size()) {
 			int qsz = q.size();
 			while (qsz--) {
 				int j = q.front();
@@ -179,14 +179,14 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		WeightedGraph::add_edge(e, s, { g[s].size() - 1, 0, -cost });
 	}
 
-	int process(uint v, int mf, vector<bool>& vis) {
+	int process(uint v, int mf, vector<bool>&& vis) {
 		if (v == snk)
 			return mf;
 
 		vis[v] = true;
 		for (auto& i : g[v]) {
 			if (!vis[i.e] && i.w.cap) {
-				int f = process(i.e, min(mf, i.w.cap), vis);
+				int f = process(i.e, min(mf, i.w.cap), vector<bool>(vis));
 				if (f > 0) {
 					i.w.cap -= f;
 					g[i.e][i.w.si].w.cap += f;
@@ -199,11 +199,8 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 
 	int mf() {
 		int sum = 0;
-		vector<bool> vis(n);
-		while (int flow = process(src, inf<int>(), vis)) {
+		while (int flow = process(src, inf<int>(), vector<bool>(n)))
 			sum += flow;
-			vis = vector<bool>(n);
-		}
 		return sum;
 	}
 
@@ -234,8 +231,7 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 			auto res = process();
 			if (!res.first && !res.second)
 				break;
-			ret.first += res.first;
-			ret.second += res.second;
+			ret += res;
 		}
 		return ret;
 	}

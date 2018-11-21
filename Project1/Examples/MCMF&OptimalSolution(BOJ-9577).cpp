@@ -21,13 +21,13 @@ int main() {
 				cin >> q;
 				q--;
 				forh(k, s, e)
-					g.add_edge_mcmf(k, 100 + q, 1, k*k*k);
+					g.add_edge(k, 100 + q, 1, k*k*k);
 			}
 		}
 		forh(i, 0, 100)
 		{
-			g.add_edge_mcmf(g.src, i, 1, 0);
-			g.add_edge_mcmf(100 + i, g.snk, 1, 0);
+			g.add_edge(g.src, i, 1, 0);
+			g.add_edge(100 + i, g.snk, 1, 0);
 		}
 
 		if (g.mcmf().second != n)

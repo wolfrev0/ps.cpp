@@ -44,12 +44,12 @@ int main()
 					break;
 			}
 			if (!fail)
-				g.add_edge_mcmf(i, m + j, 1, 0);
+				g.add_edge(i, m + j, 1, 0);
 		}
-		g.add_edge_mcmf(g.src, i, 1, 0);
+		g.add_edge(g.src, i, 1, 0);
 	}
 	forh(i, 0, h)
-		g.add_edge_mcmf(m + i, g.snk, k, 0);
+		g.add_edge(m + i, g.snk, k, 0);
 
 	cout << (g.mf() == m ? "Possible" : "Impossible") << endl;
 
