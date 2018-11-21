@@ -46,7 +46,7 @@ Making a flexible algorithms and data structures library.
 <h3>String</h3>
   <p>KMP</p>
 <h3>Linear Programming(comming soon)</h3>
-  <ol><li>Simplex Method(Randomized Pivot)</li>
+  <ol><li>Simplex Method(Randomized)</li>
   <li>Inner Point Method</li>
 <h3>Splay Tree(comming soon)</h3>
 <h3>Tree(comming soon)</h3>
