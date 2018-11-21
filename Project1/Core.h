@@ -5,8 +5,8 @@
 #define forhi(var, begin, end) for(auto var = end-1; var >= begin; --var)//inversion
 #define forc(var, begin, end) for(auto var = begin; var <= end; ++var)//for: closed range
 #define forci(var, begin, end) for(auto var = end; var >= begin; --var)//inversion
-#define trav(var, begin, cond) for(auto var = begin; cond; ++var)//travel
-#define travd(var, begin, cond, delta) for(auto var = begin; cond; var+=d)//travel delta
+#define trav(init, cond, loop) for(init; cond; loop)//travel delta
+#define trav1(var, begin, cond) for(auto var = begin; cond; ++var)//travel
 #pragma GCC optimize ("Ofast")
 
 using namespace std;
