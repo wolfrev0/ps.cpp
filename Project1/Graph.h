@@ -16,7 +16,7 @@ struct Graph {
 
 	vector<int> topo_sort() {
 		queue<int> q;
-		forh(i, 0u, n)
+		forh(i, 0, n)
 			if (!in[i])
 				q.push(i);
 		vector<int> ret;
@@ -29,8 +29,8 @@ struct Graph {
 					q.push(i);
 		}
 		reverse(ret.begin(), ret.end());
-		forh(i, 0u, n)
-			if (in[i])
+		for (auto i : in)
+			if (i)
 				throw "Error";
 		return ret;
 	}
@@ -42,20 +42,24 @@ struct Graph {
 template<typename T>
 struct WeightedGraph {
 	struct Edge {
-		int dest;
+		uint s;
+		uint e;
+		uint ei;
 		T w;
+		bool operator<(const Edge &e)const { return w < e.w; }
+		bool operator>(const Edge &e)const { return w > e.w; }
 	};
-	const int n;
+	const uint n;
 	vector<vector<Edge>> g;
 
-	WeightedGraph(int n) :n(n), g(n) {}
+	WeightedGraph(uint n) :n(n), g(n) {}
 
-	inline void add_edge(int s, int e, T w) { g[s].push_back({ e, w }); }
+	inline void add_edge(uint s, uint e, T w) { g[s].push_back({ s, e, g[s].size(), w }); }
 
-	void dijikstra(vector<T>& d, vector<pair<int, int>>& p, int s) {
-		priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;//dest, v
-		d.resize(n, inf<int>());
-		p.resize(n, { -1, -1 });
+	void dijikstra(vector<T>& d, vector<pair<uint, uint>>& p, int s) {
+		priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> pq;//dest, v
+		d = vector<T>(n, inf<T>());
+		p = vector<pair<uint, uint>>(n, { inf<uint>(), inf<uint>() });
 		d[s] = 0;
 		pq.push({ 0, s });
 		while (!pq.empty())
@@ -67,101 +71,87 @@ struct WeightedGraph {
 				continue;
 
 			auto& cg = g[cur.second];
-			forh(i, 0u, cn)
-			{
-				if (d[cg[i].v] > cur.first + cg[i].w) {
-					d[cg[i].v] = cur.first + cg[i].w;
-					p[cg[i].v] = { cur.second, i };
-					pq.push({ cur.first + cg[i].w,cg[i].v });
+			for (auto &i : cg) {
+				if (d[i.e] > cur.first + i.w) {
+					d[i.e] = cur.first + i.w;
+					p[i.e] = { cur.second, i.ei };
+					pq.push({ cur.first + i.w, i.e });
 				}
-
 			}
 		}
 	}
 
-	bool spfa(vector<T>& ub, vector<pair<int, int>>& p, int s) {
+	bool spfa(vector<T>& ub, vector<pair<uint, uint>>& p, int s) {
 		queue<int> q;
 		vector<bool> inq(n);
-		ub.resize(n, inf<int>());
-		p.resize(n, { -1, -1 });
+		ub = vector<T>(n, inf<T>());
+		p = vector<pair<uint, uint>>(n, { inf<uint>(), inf<uint>() });
 
 		ub[s] = 0;
 		inq[s] = true;
 		q.push(s);
-		int i;
-		for (i = 0; i < n && q.size(); i++) {
+		trav(i, 0u, i<n&&q.size()) {
 			int qsz = q.size();
 			while (qsz--) {
 				int j = q.front();
 				inq[j] = false;
 				q.pop();
-				forh(k, 0u, g[j].size())
-					if (valid_spfa_edge(g[j][k]) && ub[j] + g[j][k].w < ub[g[j][k].dest]) {
-						p[g[j][k].dest] = { j, k };
-						ub[g[j][k].dest] = ub[j] + g[j][k].w;
-						if (!inq[g[j][k].dest]) {
-							inq[g[j][k].dest] = true;
-							q.push(g[j][k].dest);
+				for (auto k : g[j]) {
+					if (valid_spfa_edge(k) && ub[j] + k.w < ub[k.e]) {
+						p[k.e] = { j, k.ei };
+						ub[k.e] = ub[j] + k.w;
+						if (!inq[k.e]) {
+							inq[k.e] = true;
+							q.push(k.e);
 						}
 					}
+				}
 			}
 		}
 		return q.empty();
 	}
 	virtual bool valid_spfa_edge(const Edge& w) const { return true; }
 
-	vector<pair<int, int>> mst_prim() {
-		struct E {
-			int cost, s, ei;
-			bool operator<(const E& r)const { return cost > r.cost; }
-		};
+	vector<Edge> mst_prim() {
 
-		vector<pair<int, int>> ret;
+		vector<Edge> ret;
 		vector<bool> vis(n);
-		priority_queue<E> q;
-		q.push({ 0, -1, 0 });
+		priority_queue<Edge, vector<Edge>, greater<Edge>> q;
+		q.push({ 0, inf<uint>(), 0 });
 		while (q.size()) {
 			auto cur = q.top();
 			q.pop();
 
-			auto curv = cur.s == -1 ? 0 : g[cur.s][cur.ei].dest;
+			auto curv = cur.s == inf<uint>() ? 0 : g[cur.s][cur.ei].e;
 			if (vis[curv])
 				continue;
 			vis[curv] = true;
 			if (cur.s != -1)
-				ret.push_back({ cur.s, cur.ei });
+				ret.push_back(cur);
 
-			forh(i, 0, g[curv].size()) {
-				auto &r = g[curv];
-				if (!vis[r[i].dest])
-					q.push({ r[i].w, curv, i });
+			for (auto &i : g[curv]){
+				if (!vis[i.e]){
+					q.push(i);
+				}
 			}
 		}
 		return ret;
 	}
 
-	vector<pair<int, int>> mst_kruskal() {
-		struct E {
-			int cost, s, ei;
-			bool operator<(const E& r)const { return cost < r.cost; }
-		};
-		vector<E> e;
-		forh(i, 0, n) {
-			auto &gi = g[i];
-			forh(j, 0, gi.size()) {
-				auto gij = gi[j];
-				e.push_back({ gij.w, i, j });
-			}
-		}
+	vector<Edge> mst_kruskal() {
+		vector<Edge> e;
+		for (auto &i : g)
+			for (auto &j : i)
+				e.push_back(j);
 		sort(e.begin(), e.end());
 
 		DisjointSet djs(n);
-		vector<pair<int, int>> ret;
+		vector<Edge> ret;
 		for (auto &i : e) {
-			int ie = g[i.s][i.ei].dest;
+			int ie = g[i.s][i.ei].e;
 			if (djs.find(i.s) != djs.find(ie)) {
 				djs.uni(i.s, ie);
-				ret.push_back({ i.s, i.ei });
+				ret.push_back(i);
 			}
 		}
 		return ret;
@@ -176,6 +166,8 @@ struct MCMFWeight {
 	bool operator< (const MCMFWeight& r)const { return cost < r.cost; }
 	MCMFWeight operator+(const MCMFWeight& r)const { return cost + r.cost; }
 };
+template<>
+inline MCMFWeight inf() { return inf<int>(); }
 
 struct MCMF : public WeightedGraph<MCMFWeight> {
 	int src, snk;
@@ -194,11 +186,11 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 
 		vis[v] = true;
 		for (auto& i : g[v]) {
-			if (!vis[i.dest] && i.w.cap) {
-				int f = process(i.dest, min(mf, i.w.cap), vis);
+			if (!vis[i.e] && i.w.cap) {
+				int f = process(i.e, min(mf, i.w.cap), vis);
 				if (f > 0) {
 					i.w.cap -= f;
-					g[i.dest][i.w.ei].w.cap += f;
+					g[i.e][i.w.ei].w.cap += f;
 					return f;
 				}
 			}
@@ -222,15 +214,15 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		flow = inf<int>();
 
 		vector<MCMFWeight> ub;
-		vector<pair<int, int>> p;
-		if (!spfa(ub, p, src) || p[snk].first == -1)
+		vector<pair<uint, uint>> p;
+		if (!spfa(ub, p, src) || p[snk].first == inf<uint>())
 			return { 0, 0 };
-		for (int cur = snk; p[cur].first != -1; cur = p[cur].first)
+		for (int cur = snk; p[cur].first != inf<uint>(); cur = p[cur].first)
 			flow = min(flow, g[p[cur].first][p[cur].second].w.cap);
-		for (int cur = snk; p[cur].first != -1; cur = p[cur].first) {
+		for (int cur = snk; p[cur].first != inf<uint>(); cur = p[cur].first) {
 			auto& e = g[p[cur].first][p[cur].second];
 			e.w.cap -= flow;
-			g[e.dest][e.w.ei].w.cap += flow;
+			g[e.e][e.w.ei].w.cap += flow;
 			ret.first += e.w.cost*flow;
 		}
 
