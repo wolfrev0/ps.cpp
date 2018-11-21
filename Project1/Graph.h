@@ -90,7 +90,7 @@ struct WeightedGraph {
 		ub[s] = 0;
 		inq[s] = true;
 		q.push(s);
-		trav(i, 0u, i<n&&q.size()) {
+		trav1(i, 0u, i < n&&q.size()) {
 			int qsz = q.size();
 			while (qsz--) {
 				int j = q.front();
@@ -129,8 +129,8 @@ struct WeightedGraph {
 			if (cur.s != -1)
 				ret.push_back(cur);
 
-			for (auto &i : g[curv]){
-				if (!vis[i.e]){
+			for (auto &i : g[curv]) {
+				if (!vis[i.e]) {
 					q.push(i);
 				}
 			}
@@ -159,10 +159,10 @@ struct WeightedGraph {
 };
 
 struct MCMFWeight {
-	uint ei;
+	uint si;
 	int cap, cost;
 	MCMFWeight(int cost) :cost(cost) {}
-	MCMFWeight(uint ei, int cap, int cost) :ei(ei), cap(cap), cost(cost) {}
+	MCMFWeight(uint si, int cap, int cost) :si(si), cap(cap), cost(cost) {}
 	bool operator< (const MCMFWeight& r)const { return cost < r.cost; }
 	MCMFWeight operator+(const MCMFWeight& r)const { return cost + r.cost; }
 };
@@ -170,17 +170,16 @@ template<>
 inline MCMFWeight inf() { return inf<int>(); }
 
 struct MCMF : public WeightedGraph<MCMFWeight> {
-	int src, snk;
+	uint src, snk;
 
-	MCMF(int n) :WeightedGraph(n + 2), src(n), snk(n + 1) {}
+	MCMF(uint n) :WeightedGraph(n + 2), src(n), snk(n + 1) {}
 
-	inline void add_edge_mcmf(uint s, uint e, int cap, int cost) {
+	inline void add_edge(uint s, uint e, int cap, int cost) {
 		WeightedGraph::add_edge(s, e, { g[e].size(), cap, cost });
 		WeightedGraph::add_edge(e, s, { g[s].size() - 1, 0, -cost });
 	}
 
-	int process(int v, int mf, vector<bool>& vis)
-	{
+	int process(uint v, int mf, vector<bool>& vis) {
 		if (v == snk)
 			return mf;
 
@@ -190,7 +189,7 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 				int f = process(i.e, min(mf, i.w.cap), vis);
 				if (f > 0) {
 					i.w.cap -= f;
-					g[i.e][i.w.ei].w.cap += f;
+					g[i.e][i.w.si].w.cap += f;
 					return f;
 				}
 			}
@@ -222,7 +221,7 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		for (int cur = snk; p[cur].first != inf<uint>(); cur = p[cur].first) {
 			auto& e = g[p[cur].first][p[cur].second];
 			e.w.cap -= flow;
-			g[e.e][e.w.ei].w.cap += flow;
+			g[e.e][e.w.si].w.cap += flow;
 			ret.first += e.w.cost*flow;
 		}
 
