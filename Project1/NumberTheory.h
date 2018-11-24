@@ -53,11 +53,11 @@ pair<ll, ll> xgcd2(ll a, ll b) {
 	return { t.second,t.first - t.second*(a / b) };
 }
 
-vector<ll> divisors(ll n)
+vector<ll> factorization(ll n)
 {
 	ll cur = n;
 	vector<ll> ret;
-	for (int i = 2; i*i <= n; i++)
+	trav (i, 2, i*i <= n)
 		while (!(cur%i))
 		{
 			cur /= i;
@@ -65,6 +65,22 @@ vector<ll> divisors(ll n)
 		}
 	if (cur > 1)
 		ret.push_back(cur);
+	return ret;
+}
+
+vector<ll> divisors(ll n)
+{
+	vector<ll> ret, tmp;
+	trav(i, 1, i*i <= n){
+		if (n%i == 0)
+		{
+			ret.push_back(i);
+			if (i != n / i)
+				tmp.push_back(n / i);
+		}
+	}
+	reverse(tmp.begin(), tmp.end());
+	ret.insert(ret.end(), tmp.begin(), tmp.end());
 	return ret;
 }
 
