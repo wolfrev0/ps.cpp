@@ -11,7 +11,9 @@ Making a flexible algorithms and data structures library.
     <li>Maximum Flow(Dinic)(comming soon)</li>
     <li>MCMF</li>
     <li>Dijikstra</li>
-    <li>Dijikstra V^2(comming soon)</li></ol>
+    <li>Dijikstra V^2(comming soon)</li>
+    <li>MST(Prim)</li>
+    <li>MST(Kruskal)</li></ol>
 <h3>Segment Tree</h3>
   <ol><li>Lazy Propagation</li></ol>
 <h3>Disjoint Set</h3>
@@ -43,7 +45,9 @@ Making a flexible algorithms and data structures library.
   </ol>
 <h3>String</h3>
   <p>KMP</p>
-<h3>Linear Programming</h3>
+<h3>Linear Programming(comming soon)</h3>
+  <ol><li>Simplex Method(Randomized)</li>
+  <li>Inner Point Method</li>
 <h3>Splay Tree(comming soon)</h3>
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
