@@ -1,12 +1,16 @@
 #pragma once
+#pragma GCC optimize ("Ofast")
 #include "bits/stdc++.h"
+//syntax sugars
 #define endl '\n'
 #define forh(var, begin, end) for(auto var = begin; var < end; ++var)//for: half-opened range
 #define forhi(var, begin, end) for(auto var = end-1; var >= begin; --var)//inversion
+#define forho(var, begin, end) auto var = begin; for(; var < end; ++var)//out declaration
 #define forc(var, begin, end) for(auto var = begin; var <= end; ++var)//for: closed range
 #define forci(var, begin, end) for(auto var = end; var >= begin; --var)//inversion
+#define forco(var, begin, end) auto var = begin; for(; var <= end; ++var)//out declaration
 #define trav(var, begin, cond) for(auto var = begin; cond; ++var)//travel
-#pragma GCC optimize ("Ofast")
+#define travo(var, begin, cond) auto var = begin; for(; cond; ++var)//out declaration
 
 using namespace std;
 using namespace std::placeholders;
