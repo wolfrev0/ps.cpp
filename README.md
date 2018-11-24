@@ -43,6 +43,9 @@ Making a flexible algorithms and data structures library.
     <li>Polygon Intersection(comming soon)</li>
     <li>Convex Hull(Graham Scan Algorithm)</li>
   </ol>
+  <h4>Rectangle</h4><ol>
+    <li>Intersection</li>
+  </ol>
 <h3>String</h3>
   <p>KMP</p>
 <h3>Linear Programming(comming soon)</h3>
