@@ -1,24 +1,38 @@
-#include "String.h"
+#include "ModNum.h"
 
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
 	srand((uint)time(0));
 
-	string s;
-	cin >> s;
-	int ans = 0;
-	forh(i, 0, s.size()) {
-		auto t = s.substr(i);
-		auto res= kmp2(s, t);
-		int cnt[5001] = { 0, };
-		forh(j, 0, res.size())
-			cnt[res[j]]++;
-		forhi(j, 0, 5001)
-			if (cnt[j] >= 2)
-				ans = max(ans, j);
+	char buf[1000010];
+	while (true)
+	{
+		cin.getline(buf, sizeof buf);
+		if (string(buf) == ".")
+			break;
+		string p = buf;
+
+		ModNum h = 0;
+		ModNum pw = 1;
+		forh(i, 0, p.size()) {
+			h *= prime;
+			pw *= prime;
+			h += p[i];
+		}
+		auto t = h;
+		forho(i, 0, p.size()) {
+			h -= p[p.size() - 1 - i];
+			h /= prime;
+			t -= (pw /= prime) * p[i];
+			if (h == t)
+				break;
+		}
+		if (p.size() % (i + 1))
+			cout << 1 << endl;
+		else
+			cout << p.size() / (i + 1) << endl;
 	}
-	cout<<ans<<endl;
 
 	return 0;
 }

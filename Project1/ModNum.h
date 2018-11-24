@@ -13,18 +13,7 @@ struct ModNum {
 	inline ModNum operator + (const ModNum& b)const { return { n + b.val(), m }; }
 	inline ModNum operator - (const ModNum& b)const { return { n - b.val() + m, m }; }
 	inline ModNum operator * (const ModNum& b)const { return { n * b.val(), m }; }
-	inline ModNum operator / (const ModNum& b)const {
-		ll x, y;
-		ll g = xgcd(b.val(), -m, x, y);
-		if (1 % g)
-			throw NoModInv();
-		x *= 1 / g;
-		while (x < 0)
-			x += -m / g;
-		return { x, m };
-		//extended gcd is better than fastpow.
-		//return fastpow(ModNum(m, b.val()), m - 2)*n; 
-	}
+	inline ModNum operator / (const ModNum& b)const { return *this * inv(b); }
 	inline ModNum operator+= (const ModNum& b) { return *this = *this + b; }
 	inline ModNum operator-= (const ModNum& b) { return *this = *this - b; }
 	inline ModNum operator*= (const ModNum& b) { return *this = *this * b; }
@@ -41,6 +30,19 @@ struct ModNum {
 	inline bool operator<=(const ModNum& r) const { return n <= r.n; }
 	inline bool operator>(const ModNum& r) const { return n > r.n; }
 	inline bool operator>=(const ModNum& r) const { return n >= r.n; }
+
+	inline ModNum inv(const ModNum &b)const {
+		ll x, y;
+		ll g = xgcd(b.val(), -m, x, y);
+		if (1 % g)
+			throw NoModInv();
+		x *= 1 / g;
+		while (x < 0)
+			x += -m / g;
+		return { x, m };
+		//extended gcd is better than fastpow.
+		//return fastpow(ModNum(m, b.val()), m - 2)*n; 
+	}
 
 	//operator T() const { return n; }
 	ModNum(const ModNum& r) : m(r.m), n(r.n) {}
