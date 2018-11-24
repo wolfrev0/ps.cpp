@@ -46,7 +46,7 @@ vector<int> kmp(const string &s, const string &p) {
 	return ret;
 }
 
-vector<int> failure_function2(const string &p){
+vector<int> failure_function2(const string &p) {
 	int pi = 0;
 	vector<int> ret(p.size());
 	forh(i, 1, p.size()) {
@@ -60,14 +60,13 @@ vector<int> failure_function2(const string &p){
 
 vector<int> kmp2(const string &s, const string &p) {
 	const auto &ff = failure_function2(p);
-	vector<int> ans;
+	vector<int> ans(s.size());
 	int pi = 0;
 	forh(i, 0, s.size()) {
 		while (pi > 0 && s[i] != p[pi])
 			pi = ff[pi - 1];
-		if (s[i] == p[pi] && ++pi == p.size())
+		if (s[i] == p[pi] && (ans[i] = ++pi) == p.size())
 		{
-			ans.push_back(i - pi + 1);
 			pi = ff[pi - 1];
 		}
 	}
