@@ -1,29 +1,36 @@
-#include "Core.h"
-#include "Graph.h"
+#include "Frac.h"
+
+int n, k;
+ll arr[200000];
+ll cnt[200001] = { 0, };
 
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
 	srand((uint)time(0));
 
-	int n;
-	cin >> n;
-	WeightedGraph<int> g(n);
-	int m;
-	cin >> m;
-	forh(i, 0, m)
-	{
-		int a, b, c;
-		cin >> a >> b >> c;
-		a--, b--;
-		g.add_edge(a, b, c);
-		g.add_edge(b, a, c);
+	cin >> n >> k;
+	forh(i, 0, n) {
+		cin >> arr[i];
+		cnt[arr[i]]++;
 	}
-	const auto &edges = g.mst_kruskal();
-	int ans = 0;
-	for (auto &i : edges)
-		ans += g.g[i.first][i.second].w;
-	cout << ans << endl;
+	vector<pair<Frac, ll>> v;
+	forc(i, 1, 200000)
+		v.push_back({ { cnt[i], 1 }, i });
+	sort(v.begin(), v.end());
+	multiset<pair<Frac, ll>> ans;
+	forh(i, v.size() - k, v.size())
+		ans.insert(v[i]);
+	while (ans.begin()->first < Frac{ (--ans.end())->first.a, (--ans.end())->first.b + ans.begin()->first.b }) {
+
+		auto it = --ans.end();
+		ans.insert({ { it->first.a, it->first.b + ans.begin()->first.b }, it->second });
+		ans.erase(ans.begin());
+		ans.erase(it);
+	}
+	for (auto &i : ans)
+		forh(j, 0, i.first.b)
+		cout << i.second << ' ';
 
 	return 0;
 }
