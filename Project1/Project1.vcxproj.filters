@@ -66,6 +66,9 @@
     <ClInclude Include="Frac.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>Header Files\Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

@@ -1,0 +1,18 @@
+#pragma once
+#include "Core.h"
+
+struct Rect
+{
+	using T = ll;
+	T x1, y1, x2, y2;
+	Rect(T x1, T y1, T x2, T y2) : x1(x1), y1(y1), x2(x2), y2(y2) {}
+
+	T width()const { return x2 - x1 + 1; }
+	T height()const { return y2 - y1 + 1; }
+
+	Rect intersect(const Rect &r) const {
+		if (x1 > r.x2 || x2 < r.x1 || y1 > r.y2 || y2 < r.y1)
+			throw 0;
+		return Rect(max(x1, r.x1), max(y1, r.y1), min(x2, r.x2), min(y2, r.y2));
+	}
+};

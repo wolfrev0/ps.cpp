@@ -143,6 +143,7 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Polygon.h" />
+    <ClInclude Include="Rect.h" />
     <ClInclude Include="SegmentTree.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Vec2.h" />
