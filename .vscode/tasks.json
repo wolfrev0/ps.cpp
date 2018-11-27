@@ -6,13 +6,13 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "g++ -o b.exe -std=c++17 main.cpp && echo Build Succeed. && merger.exe main.cpp && echo Merge Succeed.",
+            "command": "g++ -std=c++17 main.cpp && echo Build Succeed. && merger.exe main.cpp && echo Merge Succeed.",
             "problemMatcher": []
         },
         {
             "label": "build & run",
             "type": "shell",
-            "command": "g++ -o b.exe -std=c++17 main.cpp && echo Build Succeed. && merger.exe main.cpp && echo Merge Succeed. && b.exe",
+            "command": "g++ -std=c++17 main.cpp && echo Build Succeed. && merger.exe main.cpp && echo Merge Succeed. && a.exe",
             "problemMatcher": []
         }
     ]

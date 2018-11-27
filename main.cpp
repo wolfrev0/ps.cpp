@@ -3,6 +3,6 @@
 using namespace std;
 
 int main(){
-    cout<<"123"<<endl;
+    cout<<"123f"<<endl;
     return 0;
 }
