@@ -1,6 +1,6 @@
 #pragma once
 #pragma GCC optimize ("Ofast")
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 //syntax sugars
 #define endl '\n'
 #define forh(var, begin, end) for(auto var = begin; var < end; ++var)//for: half-opened range
