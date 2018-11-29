@@ -1,5 +1,9 @@
 #pragma once
-#pragma GCC optimize ("Ofast")
+
+#ifndef DEBUG
+    #pragma GCC optimize ("Ofast")
+#endif
+
 #include <bits/stdc++.h>
 //syntax sugars
 #define endl '\n'
