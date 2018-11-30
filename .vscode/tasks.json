@@ -6,12 +6,12 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": "g++ -iquote ./Includes ${relativeFile} && ./merger.out main.cpp && echo Build Succeed.",
+            "command": "g++ -iquote ./Includes ${relativeFile} && ./merger.out main.cpp ./Includes && echo Build Succeed.",
         },
         {
             "label": "Build(Debug)",
             "type": "shell",
-            "command": "g++ -iquote ./Includes -g -O0 -D DEBUG ${relativeFile} && ./merger.out main.cpp && echo 'Build(Debug) Succeed.'"
+            "command": "g++ -iquote ./Includes -g -O0 -D DEBUG ${relativeFile} && ./merger.out main.cpp ./Includes && echo 'Build(Debug) Succeed.'"
         },
         {
             "label": "Run",
