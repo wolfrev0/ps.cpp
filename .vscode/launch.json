@@ -5,25 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "gdb",
+            "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/a.exe",
-            "args": [],
+            "program": "a.out",
+            "args": ["<input",">output"],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": ".",
             "environment": [],
             "externalConsole": true,
-            "MIMode": "gdb",
-            "miDebuggerPath": "C:/MinGW/bin/gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "Build(Debug)"
+            "preLaunchTask": "Build(Debug)",
+            "pipeTransport": {
+                "pipeCwd": "${workspaceFolder}",
+                "pipeProgram": "C:/Windows/System32/bash.exe",
+                "pipeArgs": ["-c"],
+                "debuggerPath": "gdb"
+            },
+            "sourceFileMap": {
+                "/mnt/c": "C:\\"
+            }
         }
     ]
 }

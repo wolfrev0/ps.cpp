@@ -6,21 +6,18 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": "g++ ${file} && merger.exe main.cpp && echo Build Succeed.",
-            "problemMatcher": []
+            "command": "g++ ${relativeFile} && echo Build Succeed."
         },
         {
             "label": "Build(Debug)",
             "type": "shell",
-            "command": "g++ -g -O0 -D DEBUG ${file} && merger.exe main.cpp && echo Build Succeed.",
-            "problemMatcher": []
+            "command": "g++ -g -O0 -D DEBUG ${relativeFile} && echo 'Build(Debug) Succeed.'"
         },
         {
             "label": "Run",
             "type": "shell",
             "dependsOn": ["Build"],
-            "command": "a.exe",
-            "problemMatcher": []
+            "command": "./a.out"
         }
     ]
 }

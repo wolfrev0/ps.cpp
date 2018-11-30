@@ -5,6 +5,7 @@
 #endif
 
 #include <bits/stdc++.h>
+
 //syntax sugars
 #define endl '\n'
 #define forh(var, begin, end) for(auto var = begin; var < end; ++var)//for: half-opened range
