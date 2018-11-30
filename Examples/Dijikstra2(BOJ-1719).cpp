@@ -18,7 +18,7 @@ int main() {
 	}
 	forh(i, 0, n) {
 		vector<int> d;
-		vector<pair<int, int>> p;
+		vector<pair<uint, uint>> p;
 		g.dijikstra(d, p, i);
 		forh(j, 0, n) {
 			if (i == j)
