@@ -7,7 +7,10 @@ int main(){
     cout << fixed << setprecision(3);
     srand((uint)time(0));
 	
-	cout<<"Hello!"<<endl;
+    int n;
+    cin>>n;
+    forh(i, 0, n)
+    	cout<<"Hello!"<<endl;
 
 	return 0;
 }

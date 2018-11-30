@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "a.out",
-            "args": ["<input",">output"],
+            "args": ["<./Debug/input",">./Debug/output"],
             "stopAtEntry": false,
             "cwd": ".",
             "environment": [],
