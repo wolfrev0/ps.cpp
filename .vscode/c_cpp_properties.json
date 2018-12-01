@@ -3,18 +3,15 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/*",
-                "${workspaceFolder}/Includes/*"
+                "C:/Users/lobo_/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc/LocalState/rootfs/usr/include",
+                "C:/Users/lobo_/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc/LocalState/rootfs/usr/include/x86_64-linux-gnu",
+                "C:/Users/lobo_/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc/LocalState/rootfs/usr/lib/gcc/x86_64-linux-gnu/7/include",
+                "${workspaceFolder}/Includes/*",
+                "${workspaceFolder}/*"
             ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
-            ],
-            "compilerPath": "/usr/bin/gcc",
-            "cStandard": "c11",
             "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x64"
+            "cStandard": "c11",
+            "intelliSenseMode": "gcc-x64"
         }
     ],
     "version": 4
