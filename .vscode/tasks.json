@@ -10,7 +10,7 @@
             "args": [
                 "-c", "\"",
                 "g++","-iquote","./Includes","'${relativeFile}'",
-                "&&","./merger.out","main.cpp","./Includes",
+                "&&","./merger.out","${relativeFile}","./Includes",
                 "&&","echo","Build","Succeed.",
                 "\""
             ],
@@ -23,7 +23,7 @@
             "args": [
                 "-c", "\"",
                 "g++","-iquote","./Includes","-g","-O0","-D","DEBUG","'${relativeFile}'",
-                "&&","./merger.out","main.cpp","./Includes",
+                "&&","./merger.out","${relativeFile}","./Includes",
                 "&&","echo","'Build(Debug)","Succeed.'",
                 "\""
             ],
