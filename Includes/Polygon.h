@@ -66,7 +66,8 @@ struct Convex :public Polygon
 	void normalize() {
 		if (vtx.empty())
 			return;
-		sort(vtx.begin(), vtx.end(), bind(cmpccw, _1, _2, *min_element(vtx.begin(), vtx.end())));
+		auto me = *min_element(vtx.begin(), vtx.end());
+		sort(vtx.begin(), vtx.end(), [&](auto &a, auto &b){return cmpccw(a,b, me);});
 		vector<Vec2> res;
 		forh(i, 0, size()) {
 			while (res.size() >= 2) {
