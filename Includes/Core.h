@@ -44,3 +44,25 @@ template<typename T, typename U>
 inline pair<T, U> operator-(const pair<T, U> &a, const pair<T, U> &b) { return { a.first - b.first, a.second - b.second }; }
 template<typename T, typename U>
 inline pair<T, U> operator-=(pair<T, U> &a, const pair<T, U> &b) { return a = a - b; }
+
+template<typename T>
+inline void counting_sort(vector<T>& v, const function<T(T)> &f = [](const T& x){return x;})
+{
+	const int MAX_BW = 500001;
+	static vector<T> bucket[MAX_BW+1];
+	for(auto &i:bucket)
+		i.clear();
+
+    T m = inf<T>(), M = -inf<T>();
+    for(auto &i:v){
+        m = min(m, f(i));
+        M = max(M, f(i));
+    }
+
+    for(auto i:v)
+        bucket[f(i) - m].push_back(i);
+    v.clear();
+    forc(i, 0, M-m)
+        for(auto j:bucket[i])
+            v.push_back(j);
+}
