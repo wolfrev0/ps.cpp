@@ -13,7 +13,12 @@
 			"valarray": "cpp",
 			"tuple": "cpp",
 			"functional": "cpp",
-			"vector": "cpp"
+			"vector": "cpp",
+			"array": "cpp",
+			"bitset": "cpp",
+			"initializer_list": "cpp",
+			"string_view": "cpp",
+			"utility": "cpp"
 		}
 	}
 }

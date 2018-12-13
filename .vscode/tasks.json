@@ -9,7 +9,7 @@
             "command": "bash",
             "args": [
                 "-c", "\"",
-                "g++","-iquote","./Includes","'${relativeFile}'",
+                "g++","-iquote","./Includes","-Wall","'${relativeFile}'",
                 "&&","./merger.out","${relativeFile}","./Includes",
                 "&&","echo","Build","Succeed.",
                 "\""
@@ -22,7 +22,7 @@
             "command": "bash",
             "args": [
                 "-c", "\"",
-                "g++","-iquote","./Includes","-g","-O0","-D","DEBUG","'${relativeFile}'",
+                "g++","-iquote","./Includes","-g","-O0","-D","DEBUG","-Wall","'${relativeFile}'",
                 "&&","./merger.out","${relativeFile}","./Includes",
                 "&&","echo","'Build(Debug)","Succeed.'",
                 "\""
