@@ -3,6 +3,7 @@
 
 class NoModInv {};
 
+//Do not use when Rabin Karp hashing(too weak, instead use ull).
 struct ModNum {
 	using T = ll;
 	ModNum(T n = 0, T m = mod) :n((n%m + m) % m), m(m) {}
@@ -45,11 +46,11 @@ struct ModNum {
 	}
 
 	//operator T() const { return n; }
-	ModNum(const ModNum& r) : m(r.m), n(r.n) {}
+	ModNum(const ModNum& r) : n(r.n),m(r.m) {}
 	inline ModNum& operator= (const ModNum& r) { n = r.n; return *this; }
 private:
-	T n;
 	const T m;
+	T n;
 };
 
 ostream& operator<<(ostream& s, const ModNum& n) { return s << n.val(); }
