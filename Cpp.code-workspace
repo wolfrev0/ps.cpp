@@ -10,7 +10,10 @@
 			"iostream": "cpp",
 			"chrono": "cpp",
 			"limits": "cpp",
-			"valarray": "cpp"
+			"valarray": "cpp",
+			"tuple": "cpp",
+			"functional": "cpp",
+			"vector": "cpp"
 		}
 	}
 }
