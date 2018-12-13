@@ -101,6 +101,7 @@ vector<int> suffix_array(const string &s){
 	return sa;
 }
 
+//plzrun's code
 vector<int> get_lcp(const string &s, const vector<int> &sa){
 	int n = s.size();
 	vector<int> lcp(n), psa(n+1), plcp(n+1);
@@ -123,7 +124,7 @@ vector<int> get_lcp(const string &s, const vector<int> &sa){
 	return lcp;
 }
 
-//jh05013's Code, O(NlogN)
+//jh05013's code, O(NlogN)
 vector<int> suffix_array2(const string &s){
     int n = (int)s.size(), c = 0;
     vector<int> temp(n), pos2bckt(n), bckt(n), bpos(n), out(n);
@@ -150,4 +151,24 @@ vector<int> suffix_array2(const string &s){
         temp.swap(out);
     }
     return out;
+}
+
+//comet's code
+vector<int> get_lcp2(const string &s, const vector<int> &sa){
+	int h=0;
+	int n=s.size();
+	vector<int> rank(n);
+	forh(i, 0, sa.size())
+		rank[sa[i]]=i;
+	vector<int> lcp(n);
+	forh(i,0,n){
+		if(rank[i]){  
+			int j=sa[rank[i]-1];  
+			while(s[i+h]==s[j+h])
+				h++;  
+			lcp[rank[i]]=h;  
+		}
+		h -= !!h;
+	}
+	return lcp;
 }
