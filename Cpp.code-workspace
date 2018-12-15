@@ -18,7 +18,9 @@
 			"bitset": "cpp",
 			"initializer_list": "cpp",
 			"string_view": "cpp",
-			"utility": "cpp"
+			"utility": "cpp",
+			"cmath": "cpp",
+			"complex": "cpp"
 		}
 	}
 }
