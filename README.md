@@ -48,6 +48,7 @@ Making a flexible algorithms and data structures library.
   </ol>
 <h3>String</h3>
   <p>KMP</p>
+  <p>Suffix Array & LCP</p>
 <h3>Linear Programming(comming soon)</h3>
   <ol><li>Simplex Method(Randomized)</li>
   <li>Inner Point Method</li>
