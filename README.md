@@ -26,6 +26,7 @@ Making a flexible algorithms and data structures library.
   <li>Fast Power</li>
   <li>Extended GCD</li>
   <li>Modular Number</li>
+  <li>Fractional</li>
   <li>Berlekamp Algorithm(comming soon)</li></ol>
 <h3>2D Geometry</h3>
   <h4>Vector</h4><ol>
