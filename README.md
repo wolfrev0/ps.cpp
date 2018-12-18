@@ -47,11 +47,11 @@ Making a flexible algorithms and data structures library.
     <li>Intersection</li>
   </ol>
 <h3>String</h3>
-  <p>KMP</p>
-  <p>Suffix Array & LCP</p>
+  <ol><p>KMP</p>
+  <p>Suffix Array & LCP</p></ol>
 <h3>Linear Programming(comming soon)</h3>
   <ol><li>Simplex Method(Randomized)</li>
-  <li>Inner Point Method</li>
+  <li>Inner Point Method</li></ol>
 <h3>Splay Tree(comming soon)</h3>
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
