@@ -21,7 +21,6 @@ using namespace __gnu_pbds;
 #define travo(var, begin, cond) auto var = begin; for(; cond; ++var)//out declaration
 
 using namespace std;
-using namespace std::placeholders;
 
 using ld = double;
 using ll = long long;
