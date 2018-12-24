@@ -10,8 +10,8 @@ Making a flexible algorithms and data structures library.
     <li>Maximum Flow(Ford–Fulkerson)</li>
     <li>Maximum Flow(Dinic)(comming soon)</li>
     <li>MCMF</li>
-    <li>Dijikstra</li>
-    <li>Dijikstra V^2(comming soon)</li>
+    <li>Dijkstra</li>
+    <li>Dijkstra V^2(comming soon)</li>
     <li>MST(Prim)</li>
     <li>MST(Kruskal)</li></ol>
 <h3>Segment Tree</h3>
