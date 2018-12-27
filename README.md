@@ -50,7 +50,9 @@ Making a flexible algorithms and data structures library.
   </ol>
 <h3>String</h3>
   <ol><li>KMP</li>
-  <li>Suffix Array & LCP</li></ol>
+  <li>Suffix Array & LCP</li>
+  <li>Suffix Tree(comming soon)</li>
+  <li>Ahocorasick(comming soon)</li></ol>
 <h3>Linear Programming(comming soon)</h3>
   <ol><li>Simplex Method(Randomized)</li>
   <li>Inner Point Method</li></ol>
