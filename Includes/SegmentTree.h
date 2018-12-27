@@ -3,9 +3,34 @@
 #include "Core.h"
 
 template<typename T>
-struct SegmentTree
+struct SegmentTree{
+	const int n;
+	const function<T(T,T)> f;
+	const T init_val;
+	vector<T> tree;
+
+	SegmentTree(int n, const function<T(T,T)> &f=[](T a, T b){return a+b;}, const T &init_val=0):n(n),f(f),init_val(init_val),tree(2*n, init_val){}
+
+	void modify(int p, T value) {
+		for (tree[p += n] = value; p > 1; p >>= 1)
+			tree[p >> 1] = f(tree[p], tree[p ^ 1]);
+	}
+	
+	//half opened interval [begin, end)
+	T query(int begin, int end) {
+		T res = init_val;
+		for (begin += n, end += n; begin < end; begin >>= 1, end >>= 1) {
+			if (begin & 1) res = f(res, tree[begin++]);
+			if (end & 1) res = f(res, tree[--end]);
+		}
+		return res;
+	}
+};
+
+template<typename T>
+struct SegmentTreeLazy
 {
-	SegmentTree(
+	SegmentTreeLazy(
 		int n,
 		T id,
 		const function<T(T, T)>& segf,
@@ -16,7 +41,7 @@ struct SegmentTree
 		:n(n), id(id), segf(segf), lazyf(lazyf), propaf(propaf), lazy_null(lazy_null),
 		tree(4 * n, id), lazy(4 * n, lazy_null)
 	{}
-	SegmentTree(
+	SegmentTreeLazy(
 		int n,
 		T lazy_null = inf<int>(),
 		T id = 0)
