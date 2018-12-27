@@ -54,7 +54,7 @@ struct WeightedGraph {
 
 	WeightedGraph(uint n) :n(n), g(n) {}
 
-	inline void add_edge(uint s, uint e, T w) { g[s].push_back({ s, e, g[s].size(), w }); }
+	inline void add_edge(uint s, uint e, T w) { g[s].push_back({ s, e, (uint)g[s].size(), w }); }
 
 	void dijkstra(vector<T>& d, vector<pair<uint, uint>>& p, int s) {
 		priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> pq;//dest, v
@@ -168,33 +168,33 @@ struct WeightedGraph {
 
 struct MCMFWeight {
 	uint si;
-	int cap, cost;
-	MCMFWeight(int cost) :cost(cost) {}
-	MCMFWeight(uint si, int cap, int cost) :si(si), cap(cap), cost(cost) {}
+	ll cap, cost;
+	MCMFWeight(ll cost) :cost(cost) {}
+	MCMFWeight(uint si, ll cap, ll cost) :si(si), cap(cap), cost(cost) {}
 	bool operator< (const MCMFWeight& r)const { return cost < r.cost; }
 	MCMFWeight operator+(const MCMFWeight& r)const { return cost + r.cost; }
 };
 template<>
-inline MCMFWeight inf() { return inf<int>(); }
+inline MCMFWeight inf() { return inf<ll>(); }
 
 struct MCMF : public WeightedGraph<MCMFWeight> {
 	uint src, snk;
 
 	MCMF(uint n) :WeightedGraph(n + 2), src(n), snk(n + 1) {}
 
-	inline void add_edge(uint s, uint e, int cap, int cost) {
-		WeightedGraph::add_edge(s, e, { g[e].size(), cap, cost });
-		WeightedGraph::add_edge(e, s, { g[s].size() - 1, 0, -cost });
+	inline void add_edge(uint s, uint e, ll cap, ll cost) {
+		WeightedGraph::add_edge(s, e, { (uint)g[e].size(), cap, cost });
+		WeightedGraph::add_edge(e, s, { (uint)g[s].size() - 1, 0, -cost });
 	}
 
-	int process(uint v, int mf, vector<bool>&& vis) {
+	ll process(uint v, ll mf, vector<bool>&& vis) {
 		if (v == snk)
 			return mf;
 
 		vis[v] = true;
 		for (auto& i : g[v]) {
 			if (!vis[i.e] && i.w.cap) {
-				int f = process(i.e, min(mf, i.w.cap), vector<bool>(vis));
+				ll f = process(i.e, min(mf, i.w.cap), vector<bool>(vis));
 				if (f > 0) {
 					i.w.cap -= f;
 					g[i.e][i.w.si].w.cap += f;
@@ -205,41 +205,38 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		return 0;
 	}
 
-	int mf() {
-		int sum = 0;
-		while (int flow = process(src, inf<int>(), vector<bool>(n)))
-			sum += flow;
+	ll mf(ll flow = inf<ll>()) {
+		ll sum = 0;
+		while (ll f = process(src, flow - sum, vector<bool>(n)))
+			sum += f;
 		return sum;
 	}
 
-	pair<int, int> process() {
-		pair<int, int> ret = { 0,0 };
-		int& flow = ret.second;
-		flow = inf<int>();
-
+	pair<ll, ll> process(ll flow) {
 		vector<MCMFWeight> ub;
 		vector<pair<uint, uint>> p;
 		if (!spfa(ub, p, src) || p[snk].first == inf<uint>())
 			return { 0, 0 };
 		for (int cur = snk; p[cur].first != inf<uint>(); cur = p[cur].first)
 			flow = min(flow, g[p[cur].first][p[cur].second].w.cap);
+		ll cost = 0;
 		for (int cur = snk; p[cur].first != inf<uint>(); cur = p[cur].first) {
 			auto& e = g[p[cur].first][p[cur].second];
 			e.w.cap -= flow;
 			g[e.e][e.w.si].w.cap += flow;
-			ret.first += e.w.cost*flow;
+			cost += e.w.cost*flow;
 		}
 
-		return ret;
+		return {cost, flow};
 	}
 
-	pair<int, int> mcmf() {
-		pair<int, int> ret = { 0, 0 };
+	pair<ll, ll> mcmf(ll flow = inf<ll>()) {
+		pair<ll, ll> ret = { 0, 0 };
 		while (true) {
-			auto res = process();
+			auto res = process(flow-ret.second);
+			ret += res;
 			if (!res.first && !res.second)
 				break;
-			ret += res;
 		}
 		return ret;
 	}
