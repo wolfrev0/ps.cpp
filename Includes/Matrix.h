@@ -27,6 +27,16 @@ struct Mat
 		}
 		return ret;
 	}
+
+	Mat transpose() const{
+		Mat ret(r(), c());
+		forh(i, 0, r()) {
+			forh(j, 0, c()) {
+				ret.arr[i][j]=arr[j][i];
+			}
+		}
+		return ret;
+	}
 };
 
 template<typename T>
