@@ -1,4 +1,4 @@
-# AlgorithmLibrary
+# Algorithm Library for PS
 Making a flexible algorithms and data structures library.
 
 # Algorithms & DataStructures Index
