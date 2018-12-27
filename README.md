@@ -10,8 +10,8 @@ Making a flexible algorithms and data structures library.
     <li>Maximum Flow(Ford–Fulkerson)</li>
     <li>Maximum Flow(Dinic)(comming soon)</li>
     <li>MCMF</li>
-    <li>Dijikstra</li>
-    <li>Dijikstra V^2(comming soon)</li>
+    <li>Dijkstra</li>
+    <li>Dijkstra V^2(comming soon)</li>
     <li>MST(Prim)</li>
     <li>MST(Kruskal)</li></ol>
 <h3>Segment Tree</h3>
@@ -26,6 +26,7 @@ Making a flexible algorithms and data structures library.
   <li>Fast Power</li>
   <li>Extended GCD</li>
   <li>Modular Number</li>
+  <li>Fractional</li>
   <li>Berlekamp Algorithm(comming soon)</li></ol>
 <h3>2D Geometry</h3>
   <h4>Vector</h4><ol>
@@ -47,10 +48,11 @@ Making a flexible algorithms and data structures library.
     <li>Intersection</li>
   </ol>
 <h3>String</h3>
-  <p>KMP</p>
+  <ol><li>KMP</li>
+  <li>Suffix Array & LCP</li></ol>
 <h3>Linear Programming(comming soon)</h3>
   <ol><li>Simplex Method(Randomized)</li>
-  <li>Inner Point Method</li>
+  <li>Inner Point Method</li></ol>
 <h3>Splay Tree(comming soon)</h3>
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
