@@ -15,7 +15,8 @@ Making a flexible algorithms and data structures library.
     <li>MST(Prim)</li>
     <li>MST(Kruskal)</li></ol>
 <h3>Segment Tree</h3>
-  <ol><li>Lazy Propagation</li></ol>
+  <ol><li>Lazy Propagation</li>
+  <li>Persistent Segment Tree(PST)</li></ol>
 <h3>Disjoint Set</h3>
   <ol><li>Path Compression</li>
   <li>Union by Rank(comming soon)</li></ol>
@@ -53,11 +54,13 @@ Making a flexible algorithms and data structures library.
 <h3>Linear Programming(comming soon)</h3>
   <ol><li>Simplex Method(Randomized)</li>
   <li>Inner Point Method</li></ol>
-<h3>Splay Tree(comming soon)</h3>
+<h3>Balanced Binary Search Tree(BBST)</h3>
+  <ol><li>Extended Set(Xset)</li>
+  <li>Splay Tree(comming soon)</li></ol>
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
 <h3>Bipartite Matching</h3>
-Hopcroft-Karp(comming soon)
+  <ol><li>Hopcroft-Karp(comming soon)</li></ol>
 
 # Help
 Examples are in ./Project/Examples directory.
