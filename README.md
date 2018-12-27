@@ -50,7 +50,10 @@ Making a flexible algorithms and data structures library.
   </ol>
 <h3>String</h3>
   <ol><li>KMP</li>
-  <li>Suffix Array & LCP</li></ol>
+  <li>Suffix Array & LCP</li>
+  <li>Suffix Tree(comming soon)</li>
+  <li>Trie(comming soon)</li>
+  <li>Ahocorasick(comming soon)</li></ol>
 <h3>Linear Programming(comming soon)</h3>
   <ol><li>Simplex Method(Randomized)</li>
   <li>Inner Point Method</li></ol>
@@ -58,7 +61,10 @@ Making a flexible algorithms and data structures library.
   <ol><li>Extended Set(Xset)</li>
   <li>Splay Tree(comming soon)</li></ol>
 <h3>Tree(comming soon)</h3>
-  <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
+  <p>maybe inherit Graph?</p>
+  <ol><li>LCA</li>
+  <li>Centroid Decomposition</li>
+  <li>Heavy Light Decomposition(HLD)</li></ol>
 <h3>Bipartite Matching</h3>
   <ol><li>Hopcroft-Karp(comming soon)</li></ol>
 
