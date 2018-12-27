@@ -19,7 +19,7 @@ int main() {
 	forh(i, 0, n) {
 		vector<int> d;
 		vector<pair<uint, uint>> p;
-		g.dijikstra(d, p, i);
+		g.dijkstra(d, p, i);
 		forh(j, 0, n) {
 			if (i == j)
 				cout << '-' << ' ';

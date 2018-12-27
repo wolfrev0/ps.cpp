@@ -56,7 +56,7 @@ struct WeightedGraph {
 
 	inline void add_edge(uint s, uint e, T w) { g[s].push_back({ s, e, g[s].size(), w }); }
 
-	void dijikstra(vector<T>& d, vector<pair<uint, uint>>& p, int s) {
+	void dijkstra(vector<T>& d, vector<pair<uint, uint>>& p, int s) {
 		priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> pq;//dest, v
 		d = vector<T>(n, inf<T>());
 		p = vector<pair<uint, uint>>(n, { inf<uint>(), inf<uint>() });
@@ -79,6 +79,10 @@ struct WeightedGraph {
 				}
 			}
 		}
+	}
+
+	void dijkstra_vsq(vector<T>& d, vector<pair<uint, uint>>& p, int s) {
+		
 	}
 
 	bool spfa(vector<T>& ub, vector<pair<uint, uint>>& p, int s) {
