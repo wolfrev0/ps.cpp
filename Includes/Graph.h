@@ -82,7 +82,11 @@ struct WeightedGraph {
 	}
 
 	void dijkstra_vsq(vector<T>& d, vector<pair<uint, uint>>& p, int s) {
-		
+
+	}
+
+	void floyd(){
+		//v * dijkstra_vsq?
 	}
 
 	bool spfa(vector<T>& ub, vector<pair<uint, uint>>& p, int s) {
