@@ -52,6 +52,7 @@ Making a flexible algorithms and data structures library.
   <ol><li>KMP</li>
   <li>Suffix Array & LCP</li>
   <li>Suffix Tree(comming soon)</li>
+  <li>Trie(comming soon)</li>
   <li>Ahocorasick(comming soon)</li></ol>
 <h3>Linear Programming(comming soon)</h3>
   <ol><li>Simplex Method(Randomized)</li>
