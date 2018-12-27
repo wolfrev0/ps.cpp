@@ -59,6 +59,9 @@ Making a flexible algorithms and data structures library.
   <li>Splay Tree(comming soon)</li></ol>
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
+  <ol><li>LCA</li>
+  <li>Centroid Decomposition</li>
+  <li>Heavy Light Decomposition(HLD)</li></ol>
 <h3>Bipartite Matching</h3>
   <ol><li>Hopcroft-Karp(comming soon)</li></ol>
 
