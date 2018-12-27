@@ -58,7 +58,7 @@ Making a flexible algorithms and data structures library.
   <ol><li>Extended Set(Xset)</li>
   <li>Splay Tree(comming soon)</li></ol>
 <h3>Tree(comming soon)</h3>
-  <p>maybe inherit Graph? will support Centroid Decomposition, HLD</p>
+  <p>maybe inherit Graph?</p>
   <ol><li>LCA</li>
   <li>Centroid Decomposition</li>
   <li>Heavy Light Decomposition(HLD)</li></ol>
