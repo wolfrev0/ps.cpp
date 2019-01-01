@@ -15,6 +15,7 @@ struct Graph {
 	}
 
 	vector<int> topo_sort() {
+    vector<int> in = Graph::in;
 		queue<int> q;
 		forh(i, 0, n)
 			if (!in[i])
