@@ -1,39 +1,33 @@
 #pragma once
-
 #ifndef DEBUG
     #pragma GCC optimize ("Ofast")
 #endif
-
 #include <bits/stdc++.h>
 
+//Syntax Sugars
 using namespace std;
-
 using ld = double;
 using ll = long long;
 using ull = unsigned long long;
 using uint = unsigned;
 using ushort = unsigned short;
 using uchar = unsigned char;
-
 const int mod = int(1e9 + 7);
 const int prime = int(2e9 + 11);
 const ld pi = acos(-1);
 const ld eps = 1e-12;
 const int dir[4][2] = { { 1, 0 },{ 0, 1 },{ -1, 0 },{ 0, -1 } };
-
 #define endl '\n'
-#define forh(var, begin, end) for(auto var = begin; var < end; ++var)//for: half-opened range
-#define forhi(var, begin, end) for(auto var = end-1; var >= begin; --var)//inversion
-#define forho(var, begin, end) auto var = begin; for(; var < end; ++var)//out declaration
-#define forc(var, begin, end) for(auto var = begin; var <= end; ++var)//for: closed range
-#define forci(var, begin, end) for(auto var = end; var >= begin; --var)//inversion
-#define forco(var, begin, end) auto var = begin; for(; var <= end; ++var)//out declaration
+#define forh(var, begin, end) for(auto var = begin; var < decltype(begin)(end); ++var)//for: half-opened range
+#define forhi(var, begin, end) for(auto var = end-1; var >= decltype(end)(begin); --var)//inversion
+#define forho(var, begin, end) auto var = begin; for(; var < decltype(begin)(end); ++var)//out declaration
+#define forc(var, begin, end) for(auto var = begin; var <= decltype(begin)(end); ++var)//for: closed range
+#define forci(var, begin, end) for(auto var = end; var >= decltype(end)(begin); --var)//inversion
+#define forco(var, begin, end) auto var = begin; for(; var <= decltype(begin)(end); ++var)//out declaration
 #define trav(var, begin, cond) for(auto var = begin; cond; ++var)//travel
 #define travo(var, begin, cond) auto var = begin; for(; cond; ++var)//out declaration
-
 template<typename T>
 constexpr inline T inf() { return numeric_limits<T>::max() / 2; }
-
 template<typename T, typename U>
 inline pair<T, U> operator+(const pair<T, U> &a, const pair<T, U> &b) { return { a.first + b.first, a.second + b.second }; }
 template<typename T, typename U>
@@ -43,7 +37,10 @@ inline pair<T, U> operator-(const pair<T, U> &a, const pair<T, U> &b) { return {
 template<typename T, typename U>
 inline pair<T, U> operator-=(pair<T, U> &a, const pair<T, U> &b) { return a = a - b; }
 
+//Extensions
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-
 using namespace __gnu_pbds;
+
+//Settings
+using ScalarType = ll;
