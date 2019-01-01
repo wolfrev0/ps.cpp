@@ -8,7 +8,7 @@ struct Line {
 	Vec2 s, e;
 	explicit Line() :Line(zero, zero) {}
 	explicit Line(const Vec2& s, const Vec2& e) :s(s), e(e) { }
-	inline Vec2&& dir()const { return e - s; }
+	inline Vec2 dir()const { return e - s; }
 
 	Vec2 intersect(Line& r) {
 		if (s > e)
@@ -17,11 +17,12 @@ struct Line {
 			swap(r.s, r.e);
 
 		Vec2::T det = dir().cross(r.dir());
-		if (abs(det) < eps)
+		if (abs(det) < eps){
 			if (abs((r.s - s).cross(e - s)) < eps)
 				throw LineSame();
 			else
 				return err;
+		}
 		auto res = s + dir()*((r.s - s).cross(r.dir()) / det);
 		return valid_intersect(res) && r.valid_intersect(res) ? res : err;
 	}
