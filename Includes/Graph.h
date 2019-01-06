@@ -2,44 +2,6 @@
 #include "Core.h"
 #include "DisjointSet.h"
 
-struct Graph {
-	const int n;
-	vector<vector<int>> g;
-	vector<int> in;
-
-	Graph(int n) :n(n), g(n), in(n) {}
-
-	inline void add_edge(int s, int e) {
-		g[s].push_back(e);
-		in[e]++;
-	}
-
-	vector<int> topo_sort() {
-    vector<int> in = Graph::in;
-		queue<int> q;
-		forh(i, 0, n)
-			if (!in[i])
-				q.push(i);
-		vector<int> ret;
-		while (q.size()) {
-			auto cur = q.front();
-			ret.push_back(cur);
-			q.pop();
-			for (auto i : g[cur])
-				if (--in[i] == 0)
-					q.push(i);
-		}
-		reverse(ret.begin(), ret.end());
-		for (auto i : in)
-			if (i)
-				throw "Error";
-		return ret;
-	}
-	//dfs()
-	//bfs()
-	//maybe useless?
-};
-
 template<typename T>
 struct WeightedGraph {
 	struct Edge {
@@ -47,15 +9,20 @@ struct WeightedGraph {
 		uint e;
 		uint ei;
 		T w;
+		Edge(uint s, uint e, uint ei, T w):s(s),e(e),ei(ei),w(w){};
 		bool operator<(const Edge &r)const { return w < r.w; }
 		bool operator>(const Edge &r)const { return w > r.w; }
 	};
-	const uint n;
+	uint n;
 	vector<vector<Edge>> g;
 
 	WeightedGraph(uint n) :n(n), g(n) {}
 
-	inline void add_edge(uint s, uint e, T w) { g[s].push_back({ s, e, (uint)g[s].size(), w }); }
+	inline void add_edge(uint s, uint e, T w, bool dir=false){ 
+		g[s].push_back(Edge(s, e, g[s].size(), w));
+		if(!dir)
+			g[e].push_back(Edge(e, s, g[e].size(), w));
+	}
 
 	void dijkstra(vector<T>& d, vector<pair<uint, uint>>& p, int s) {
 		priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> pq;//dest, v
@@ -119,7 +86,6 @@ struct WeightedGraph {
 		}
 		return q.empty();
 	}
-	virtual bool valid_spfa_edge(const Edge& w) const { return true; }
 
 	vector<Edge> mst_prim() {
 
@@ -165,6 +131,9 @@ struct WeightedGraph {
 		}
 		return ret;
 	}
+
+protected:
+	virtual bool valid_spfa_edge(const Edge& w) const { return true; }
 };
 
 struct MCMFWeight {
@@ -188,14 +157,32 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		WeightedGraph::add_edge(e, s, { (uint)g[s].size() - 1, 0, -cost });
 	}
 
-	ll process(uint v, ll mf, vector<bool>&& vis) {
+	ll mf(ll flow = inf<ll>()) {
+		ll sum = 0;
+		while (ll f = process_mf(src, flow - sum, vector<bool>(n)))
+			sum += f;
+		return sum;
+	}
+
+	pair<ll, ll> mcmf(ll flow = inf<ll>()) {
+		pair<ll, ll> ret = { 0, 0 };
+		while (true) {
+			auto res = process_mcmf(flow-ret.second);
+			ret += res;
+			if (!res.first && !res.second)
+				break;
+		}
+		return ret;
+	}
+private:
+	ll process_mf(uint v, ll mf, vector<bool>&& vis) {
 		if (v == snk)
 			return mf;
 
 		vis[v] = true;
 		for (auto& i : g[v]) {
 			if (!vis[i.e] && i.w.cap) {
-				ll f = process(i.e, min(mf, i.w.cap), vector<bool>(vis));
+				ll f = process_mf(i.e, min(mf, i.w.cap), vector<bool>(vis));
 				if (f > 0) {
 					i.w.cap -= f;
 					g[i.e][i.w.si].w.cap += f;
@@ -206,14 +193,7 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		return 0;
 	}
 
-	ll mf(ll flow = inf<ll>()) {
-		ll sum = 0;
-		while (ll f = process(src, flow - sum, vector<bool>(n)))
-			sum += f;
-		return sum;
-	}
-
-	pair<ll, ll> process(ll flow) {
+	pair<ll, ll> process_mcmf(ll flow) {
 		vector<MCMFWeight> ub;
 		vector<pair<uint, uint>> p;
 		if (!spfa(ub, p, src) || p[snk].first == inf<uint>())
@@ -231,16 +211,117 @@ struct MCMF : public WeightedGraph<MCMFWeight> {
 		return {cost, flow};
 	}
 
-	pair<ll, ll> mcmf(ll flow = inf<ll>()) {
-		pair<ll, ll> ret = { 0, 0 };
-		while (true) {
-			auto res = process(flow-ret.second);
-			ret += res;
-			if (!res.first && !res.second)
-				break;
+	virtual bool valid_spfa_edge(const Edge& e) const override { return e.w.cap; }
+};
+
+struct Graph: public WeightedGraph<uint>{
+	Graph(uint n):WeightedGraph<uint>(n) {}
+
+	inline void add_edge(uint s, uint e, bool dir=false) {
+		WeightedGraph::add_edge(s, e, 1);
+	}
+
+	vector<uint> topo_sort() {
+		vector<int> in(n);
+		forh(i, 0, n){
+			for(auto &j:g[i])
+				in[j.e]++;
+		}
+		queue<uint> q;
+		forh(i, 0, n)
+			if (!in[i])
+				q.push(i);
+		vector<uint> ret;
+		while (q.size()) {
+			auto cur = q.front();
+			ret.push_back(cur);
+			q.pop();
+			for (auto &i : g[cur])
+				if (--in[i.e] == 0)
+					q.push(i.e);
+		}
+		reverse(ret.begin(), ret.end());
+		for (auto i: in)
+			if (i)
+				throw "Error";
+		return ret;
+	}
+
+	vector<vector<int>> scc(){
+		vector<vector<int>> ret;
+
+		return ret;
+	}
+
+	 void bcc(){
+
+	 }
+	//bfs()
+	//maybe useless?
+};
+
+struct UndirectedGraph: public Graph{
+	UndirectedGraph(uint n):Graph(n){}
+
+	vector<uint> articul_points(){
+		vector<uint> ord(n), ret;
+		uint o=1;
+		forh(i, 0, n){
+			if(ord[i])
+				continue;
+			dfs_ap(i, -1, o, ord, ret);
 		}
 		return ret;
 	}
 
-	virtual bool valid_spfa_edge(const Edge& e) const override { return e.w.cap; }
+	vector<pair<uint,uint>> bridges(){
+		vector<uint> ord(n);
+		vector<pair<uint,uint>> ret;
+		uint o=1;
+		forh(i, 0, n){
+			if(ord[i])
+				continue;
+			dfs_bridge(i, -1, o, ord, ret);
+		}
+		return ret;
+	}
+private:
+	uint dfs_ap(uint v, uint p, uint &o, vector<uint>& ord, vector<uint>& ans){
+		uint ret = ord[v]=o++;
+		uint subcnt=0;
+		bool isAP = false;
+		for(auto i: g[v]){
+			if(ord[i.e]){
+				ret = min(ret, ord[i.e]);
+				continue;
+			}
+
+			uint res=dfs_ap(i.e, v, o, ord, ans);
+			subcnt++;
+			isAP |= res>=ord[v];
+			ret = min(ret, res);
+		}
+		if(isAP && (p!=-1u || subcnt>1))
+				ans.push_back(v);
+		return ret;
+	}
+	uint dfs_bridge(uint v, uint p, uint &o, vector<uint>& ord, vector<pair<uint, uint>>& ans){
+		uint ret = ord[v]=o++;
+		bool conn = false;
+		for(auto i: g[v]){
+			if(ord[i.e]){
+				if(p!=-1)
+					conn |= ord[i.e]<ord[p];
+				ret = min(ret, ord[i.e]);
+				continue;
+			}
+
+			uint res=dfs_bridge(i.e, v, o, ord, ans);
+			conn |= res<ord[v];
+			ret = min(ret, res);
+		}
+		if(!conn && p!=-1u)
+				ans.push_back({min(v, p), max(v, p)});
+		return ret;
+	}
 };
