@@ -1,15 +1,15 @@
 {
-    "configurations": [
-        {
-            "name": "WSL",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64",
-            "includePath": [
-                "C:/Users/lobo_/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc/LocalState/rootfs/usr/include/",
-                "C:/Users/lobo_/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc/LocalState/rootfs/usr/include/c++/7/",
-                "${workspaceFolder}/Includes/*"
-            ]
-        }
-    ],
-    "version": 4
+  "configurations": [
+      {
+          "name": "WSL",
+          "cppStandard": "c++17",
+          "intelliSenseMode": "gcc-x64",
+          "includePath": [
+              "C:/Users/Lobo/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/usr/include/",
+              "C:/Users/Lobo/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/usr/include/c++/7/",
+              "${workspaceFolder}/Includes/*"
+          ]
+      }
+  ],
+  "version": 4
 }
