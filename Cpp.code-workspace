@@ -5,29 +5,5 @@
 		}
 	],
 	"settings": {
-		"files.associations": {
-			"iomanip": "cpp",
-			"iostream": "cpp",
-			"chrono": "cpp",
-			"limits": "cpp",
-			"valarray": "cpp",
-			"tuple": "cpp",
-			"functional": "cpp",
-			"vector": "cpp",
-			"array": "cpp",
-			"bitset": "cpp",
-			"initializer_list": "cpp",
-			"string_view": "cpp",
-			"utility": "cpp",
-			"cmath": "cpp",
-			"complex": "cpp",
-			"ostream": "cpp",
-			"deque": "cpp",
-			"forward_list": "cpp",
-			"list": "cpp",
-			"unordered_map": "cpp",
-			"unordered_set": "cpp",
-			"*.tcc": "cpp"
-		}
 	}
 }

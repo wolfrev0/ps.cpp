@@ -32,7 +32,6 @@
         {
             "label": "Run",
             "type": "shell",
-            "dependsOn": ["Build"],
             "command": "bash -c ./a.out < ./input",
             "problemMatcher": []
         }

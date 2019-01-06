@@ -28,7 +28,7 @@ Making a flexible algorithms and data structures library in order to solve algor
   <li>Extended GCD</li>
   <li>Modular Number</li>
   <li>Fractional</li>
-  <li>Berlekamp Algorithm(comming soon)</li></ol>
+  <li>Berlekamp Massey Algorithm(comming soon)</li></ol>
 <h3>2D Geometry</h3>
   <h4>Vector</h4><ol>
     <li>Basic Vector Operations</li>
