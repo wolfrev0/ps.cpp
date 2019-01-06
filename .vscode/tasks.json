@@ -9,19 +9,6 @@
             "command": "bash",
             "args": [
                 "-c", "\"",
-                "g++","-iquote","./Includes","-Wall","-std=c++17","'${relativeFile}'",
-                "&&","./merger.out","${relativeFile}","./Includes",
-                "&&","echo","Build","Succeed.",
-                "\""
-            ],
-            "problemMatcher": []
-        },
-        {
-            "label": "Build(Debug)",
-            "type": "shell",
-            "command": "bash",
-            "args": [
-                "-c", "\"",
                 "g++","-iquote","./Includes","-g","-O0","-D","DEBUG","-Wall","-std=c++17","'${relativeFile}'",
                 "&&","./merger.out","${relativeFile}","./Includes",
                 "&&","echo","'Build(Debug)","Succeed.'",
