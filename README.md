@@ -7,7 +7,9 @@ Making a flexible algorithms and data structures library in order to solve algor
     <ol><li>Topological Sort</li></ol>
   <h4>Undirected Graph</h4>
     <ol><li>Articulation Points(Cut Vertex)</li>
-    <li>Bridges(Cut Edge)</li></ol>
+    <li>Bridges(Cut Edge)</li>
+    <li>SCC(Tarjan)</li>
+    <li>BCC(comming soon)</li></ol>
   <h4>Weighted Graph</h4>
     <ol><li>SPFA</li>
     <li>Dijkstra</li>
