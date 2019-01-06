@@ -248,14 +248,66 @@ struct Graph: public WeightedGraph<int>{
 	}
 
 	vector<vector<int>> scc(){
-		vector<vector<int>> ret;
+		vector<int> state(n), ord(n), scc_id(n, -1);
+		stack<int> stk;
+		int o=0;
+		forh(i, 0, n){
+			if(!state[i])
+				dfs_scc(i, o, state, ord, scc_id, stk);
+		}
+		int c=0;
+		vector<int> sccid2idx(n, -1);
+		for(auto i:scc_id)
+			if(sccid2idx[i]==-1)
+				sccid2idx[i]=c++;
 
+		vector<vector<int>> ret(c);
+		forh(i, 0, n)
+			ret[sccid2idx[scc_id[i]]].push_back(i);
 		return ret;
 	}
 
-	 void bcc(){
+	void bcc(){
 
-	 }
+	}
+
+private:
+	int dfs_scc(int v, int &o, vector<int> &state, vector<int>& ord, vector<int>& scc_id, stack<int>& stk){
+		state[v]=1;
+		stk.push(v);
+		int ret = ord[v]=o++;
+		for(auto i: g[v]){
+			switch(state[i.e]){
+				case 0:
+					ret = min(ret, dfs_scc(i.e, o, state, ord, scc_id, stk));
+					break;
+				case 1://back
+					ret = min(ret, ord[i.e]);
+					break;
+				case 2:
+					if(ord[i.e]>ord[v])//fwd
+						;
+					else if(ord[i.e]<ord[v]){//cross
+						if(scc_id[i.e]==-1)
+							ret = min(ret, ord[i.e]);
+					}
+					else//loop
+						;
+					break;
+			}
+		}
+		if(ret == ord[v]){
+			int cur;
+			do{
+				cur = stk.top();
+				stk.pop();
+				scc_id[cur]=ord[v];
+			}while(stk.size() && cur!=v);
+		}
+
+		state[v]=2;
+		return ret;
+	}
 	//bfs()
 	//maybe useless?
 };
