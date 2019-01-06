@@ -69,6 +69,7 @@ Making a flexible algorithms and data structures library in order to solve algor
 <h3>Tree(comming soon)</h3>
   <p>maybe inherit Graph?</p>
   <ol><li>LCA</li>
+  <li>Diameter</li>
   <li>Centroid Decomposition</li>
   <li>Heavy Light Decomposition(HLD)</li></ol>
 <h3>Bipartite Matching</h3>
