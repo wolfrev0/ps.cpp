@@ -3,17 +3,21 @@ Making a flexible algorithms and data structures library in order to solve algor
 
 # Algorithms & DataStructures Index
 <h3>Graph</h3>
-  <h4>Graph</h4>
+  <h4>Directed Graph</h4>
     <ol><li>Topological Sort</li></ol>
-  <h4>Weighted Graph</h4><ol>
-    <li>SPFA</li>
-    <li>Maximum Flow(Ford–Fulkerson)</li>
-    <li>Maximum Flow(Dinic)(comming soon)</li>
-    <li>MCMF</li>
+  <h4>Undirected Graph</h4>
+    <ol><li>Articulation Points(Cut Vertex)</li>
+    <li>Bridges(Cut Edge)</li></ol>
+  <h4>Weighted Graph</h4>
+    <ol><li>SPFA</li>
     <li>Dijkstra</li>
     <li>Dijkstra V^2(comming soon)</li>
     <li>MST(Prim)</li>
     <li>MST(Kruskal)</li></ol>
+  <h4>Flow Graph</h4>
+    <ol><li>Maximum Flow(Ford–Fulkerson)</li>
+    <li>Maximum Flow(Dinic)(comming soon)</li>
+    <li>MCMF</li></ol>
 <h3>Segment Tree</h3>
   <ol><li>Lazy Propagation</li>
   <li>Persistent Segment Tree(PST)</li></ol>
