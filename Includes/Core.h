@@ -18,14 +18,16 @@ const ld pi = acos(-1);
 const ld eps = 1e-12;
 const int dir[4][2] = { { 1, 0 },{ 0, 1 },{ -1, 0 },{ 0, -1 } };
 #define endl '\n'
-#define forh(var, begin, end) for(auto var = begin; var < decltype(begin)(end); ++var)//for: half-opened range
-#define forhi(var, begin, end) for(auto var = end-1; var >= decltype(end)(begin); --var)//inversion
-#define forho(var, begin, end) auto var = begin; for(; var < decltype(begin)(end); ++var)//out declaration
-#define forc(var, begin, end) for(auto var = begin; var <= decltype(begin)(end); ++var)//for: closed range
-#define forci(var, begin, end) for(auto var = end; var >= decltype(end)(begin); --var)//inversion
-#define forco(var, begin, end) auto var = begin; for(; var <= decltype(begin)(end); ++var)//out declaration
-#define trav(var, begin, cond) for(auto var = begin; cond; ++var)//travel
-#define travo(var, begin, cond) auto var = begin; for(; cond; ++var)//out declaration
+#define forh(var, begin, end) for(auto var=begin; begin<=var && var<decltype(begin)(end); ++var)//for: half-opened range
+#define forhi(var, begin, end) for(auto var=end-1; decltype(end)(begin)<=var && var<end; --var)//inversion
+#define forho(var, begin, end) auto var=begin; for(; begin<=var && var<decltype(begin)(end); ++var)//out declaration
+#define forhoi(var, begin, end) auto var=end-1; for(; decltype(end)(begin)<=var && var<end; --var)
+#define forc(var, begin, end) for(auto var=begin; begin<=var && var<=decltype(begin)(end); ++var)//for: closed range
+#define forci(var, begin, end) for(auto var=end; decltype(end)(begin)<=var && var<=end; --var)//inversion
+#define forco(var, begin, end) auto var=begin; for(; begin<=var && var<=decltype(begin)(end); ++var)//out declaration
+#define forcoi(var, begin, end) auto var=end; for(; decltype(end)(begin)<=var && var<=end; --var)//inversion
+#define trav(var, begin, cond) for(auto var=begin; cond; ++var)//travel
+#define travo(var, begin, cond) auto var=begin; for(; cond; ++var)//out declaration
 template<typename T>
 constexpr inline T inf() { return numeric_limits<T>::max() / 2; }
 template<typename T, typename U>
