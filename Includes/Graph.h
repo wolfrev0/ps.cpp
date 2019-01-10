@@ -164,6 +164,11 @@ struct FlowGraph : public WeightedGraph<FlowWeight> {
 		return sum;
 	}
 
+	ll dinic(ll flow = inf<ll>()){
+		ll sum = 0;
+		return sum;
+	}
+
 	pair<ll, ll> mcmf(ll flow = inf<ll>()) {
 		pair<ll, ll> ret = { 0, 0 };
 		while (true) {
@@ -250,20 +255,15 @@ struct Graph: public WeightedGraph<int>{
 	vector<vector<int>> scc(){
 		vector<int> state(n), ord(n), scc_id(n, -1);
 		stack<int> stk;
-		int o=0;
+		int o=0, scc_cnt=0;
 		forh(i, 0, n){
 			if(!state[i])
-				dfs_scc(i, o, state, ord, scc_id, stk);
+				dfs_scc(i, o, scc_cnt, state, ord, scc_id, stk);
 		}
-		int c=0;
-		vector<int> sccid2idx(n, -1);
-		for(auto i:scc_id)
-			if(sccid2idx[i]==-1)
-				sccid2idx[i]=c++;
 
-		vector<vector<int>> ret(c);
+		vector<vector<int>> ret(scc_cnt);
 		forh(i, 0, n)
-			ret[sccid2idx[scc_id[i]]].push_back(i);
+			ret[scc_id[i]].push_back(i);
 		return ret;
 	}
 
@@ -272,14 +272,14 @@ struct Graph: public WeightedGraph<int>{
 	}
 
 private:
-	int dfs_scc(int v, int &o, vector<int> &state, vector<int>& ord, vector<int>& scc_id, stack<int>& stk){
+	int dfs_scc(int v, int& o, int &scc_cnt, vector<int>& state, vector<int>& ord, vector<int>& scc_id, stack<int>& stk){
 		state[v]=1;
 		stk.push(v);
 		int ret = ord[v]=o++;
 		for(auto i: g[v]){
 			switch(state[i.e]){
 				case 0:
-					ret = min(ret, dfs_scc(i.e, o, state, ord, scc_id, stk));
+					ret = min(ret, dfs_scc(i.e, o, scc_cnt, state, ord, scc_id, stk));
 					break;
 				case 1://back
 					ret = min(ret, ord[i.e]);
@@ -301,8 +301,9 @@ private:
 			do{
 				cur = stk.top();
 				stk.pop();
-				scc_id[cur]=ord[v];
+				scc_id[cur]=scc_cnt;
 			}while(stk.size() && cur!=v);
+			scc_cnt++;
 		}
 
 		state[v]=2;
