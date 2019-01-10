@@ -159,8 +159,11 @@ struct FlowGraph : public WeightedGraph<FlowWeight> {
 
 	ll mf(ll flow = inf<ll>()) {
 		ll sum = 0;
-		while (ll f = process_mf(src, flow - sum, vector<bool>(n)))
+	  auto vis=vector<bool>(n+2);
+		while (ll f = process_mf(src, flow-sum, vis)){
 			sum += f;
+      vis=vector<bool>(n+2);
+    }
 		return sum;
 	}
 
@@ -180,14 +183,14 @@ struct FlowGraph : public WeightedGraph<FlowWeight> {
 		return ret;
 	}
 private:
-	ll process_mf(int v, ll mf, vector<bool>&& vis) {
+	ll process_mf(int v, ll mf, vector<bool>& vis) {
 		if (v == snk)
 			return mf;
 
 		vis[v] = true;
 		for (auto& i : g[v]) {
 			if (!vis[i.e] && i.w.cap) {
-				ll f = process_mf(i.e, min(mf, i.w.cap), vector<bool>(vis));
+				ll f = process_mf(i.e, min(mf, i.w.cap), vis);
 				if (f > 0) {
 					i.w.cap -= f;
 					g[i.e][i.w.si].w.cap += f;
