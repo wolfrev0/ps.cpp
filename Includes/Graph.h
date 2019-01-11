@@ -255,7 +255,7 @@ struct Graph: public WeightedGraph<int>{
 		return ret;
 	}
 
-	vector<vector<int>> scc(){
+	pair<vector<vector<int>>, Graph> scc(){
 		vector<int> state(n), ord(n), scc_id(n, -1);
 		stack<int> stk;
 		int o=0, scc_cnt=0;
@@ -264,10 +264,17 @@ struct Graph: public WeightedGraph<int>{
 				dfs_scc(i, o, scc_cnt, state, ord, scc_id, stk);
 		}
 
-		vector<vector<int>> ret(scc_cnt);
+		auto group=vector<vector<int>>(scc_cnt);
 		forh(i, 0, n)
-			ret[scc_id[i]].push_back(i);
-		return ret;
+			group[scc_id[i]].push_back(i);
+		Graph sccg(scc_cnt);
+		forh(i, 0, n){
+			for(auto& j:g[i])
+				if(scc_id[i]!=scc_id[j.e])
+					sccg.add_edge(scc_id[i], scc_id[j.e]);
+		}
+
+		return {group, sccg};
 	}
 
 	void bcc(){

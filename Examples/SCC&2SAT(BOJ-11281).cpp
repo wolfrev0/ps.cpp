@@ -16,7 +16,7 @@ int main() {
 		g.add_edge((abs(b)-1)*2+(b<0), (abs(a)-1)*2+!(a<0));
 	}
 
-	auto scc = g.scc();
+	auto scc = g.scc().first;
 	vector<int> tmp(n*2, -1);
 	forh(i, 0, scc.size()){
 		for(auto& j:scc[i]){
