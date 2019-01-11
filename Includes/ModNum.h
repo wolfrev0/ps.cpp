@@ -54,4 +54,3 @@ private:
 };
 
 ostream& operator<<(ostream& s, const ModNum& n) { return s << n.val(); }
-istream& operator<<(istream& s, const ModNum& n) { return s << n.val(); }
