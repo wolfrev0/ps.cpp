@@ -20,7 +20,8 @@
 			"utility": "cpp",
 			"chrono": "cpp",
 			"complex": "cpp",
-			"ostream": "cpp"
+			"ostream": "cpp",
+			"functional": "cpp"
 		}
 	}
 }

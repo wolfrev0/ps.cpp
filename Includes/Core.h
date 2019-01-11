@@ -9,6 +9,8 @@ using namespace std;
 using ld = double;
 using ll = long long;
 using ull = unsigned long long;
+using lll = __int128_t;
+using ulll = __uint128_t;
 using uint = unsigned;
 using ushort = unsigned short;
 using uchar = unsigned char;
@@ -38,6 +40,28 @@ template<typename T, typename U>
 inline pair<T, U> operator-(const pair<T, U> &a, const pair<T, U> &b) { return { a.first - b.first, a.second - b.second }; }
 template<typename T, typename U>
 inline pair<T, U> operator-=(pair<T, U> &a, const pair<T, U> &b) { return a = a - b; }
+ostream& operator<<(ostream &os, lll n){
+    if(n<0){
+        os<<'-';
+        n*=-1;
+    }
+	string s;
+	while(n){
+		s.push_back(n%10+'0');
+		n/=10;
+	}
+	reverse(s.begin(), s.end());
+	return os<<s;
+}
+ostream& operator<<(ostream &os, ulll n){
+	string s;
+	while(n){
+		s.push_back(n%10+'0');
+		n/=10;
+	}
+	reverse(s.begin(), s.end());
+	return os<<s;
+}
 
 //Extensions
 #include <ext/pb_ds/assoc_container.hpp>
