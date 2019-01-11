@@ -9,9 +9,7 @@ using namespace std;
 using ld = double;
 using ll = long long;
 using ull = unsigned long long;
-using lll = __int128_t;
-using ulll = __uint128_t;
-using uint = unsigned;
+using uint = unsigned; 
 using ushort = unsigned short;
 using uchar = unsigned char;
 const int mod = int(1e9 + 7);
@@ -40,6 +38,9 @@ template<typename T, typename U>
 inline pair<T, U> operator-(const pair<T, U> &a, const pair<T, U> &b) { return { a.first - b.first, a.second - b.second }; }
 template<typename T, typename U>
 inline pair<T, U> operator-=(pair<T, U> &a, const pair<T, U> &b) { return a = a - b; }
+#if __x86_64__ || __ppc64__
+using lll = __int128_t;
+using ulll = __uint128_t;
 ostream& operator<<(ostream &os, lll n){
     if(n<0){
         os<<'-';
@@ -62,6 +63,7 @@ ostream& operator<<(ostream &os, ulll n){
 	reverse(s.begin(), s.end());
 	return os<<s;
 }
+#endif
 
 //Extensions
 #include <ext/pb_ds/assoc_container.hpp>

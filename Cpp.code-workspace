@@ -21,7 +21,8 @@
 			"chrono": "cpp",
 			"complex": "cpp",
 			"ostream": "cpp",
-			"functional": "cpp"
+			"functional": "cpp",
+			"iomanip": "cpp"
 		}
 	}
 }
