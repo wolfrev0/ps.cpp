@@ -249,9 +249,6 @@ struct Graph: public WeightedGraph<int>{
 					q.push(i.e);
 		}
 		reverse(ret.begin(), ret.end());
-		for (auto i: in)
-			if (i)
-				throw "Error";
 		return ret;
 	}
 
