@@ -1,5 +1,5 @@
 # Algorithm Library for Cpp
-Making a flexible algorithms and data structures library in order to solve algorithm problems.
+Making a flexible algorithms and data structures library in order to solve algorithm problems with c++.
 
 # Index
 <h3>Graph</h3>
