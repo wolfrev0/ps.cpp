@@ -1,7 +1,7 @@
-# Algorithm Library for PS
+# Algorithm Library for Cpp
 Making a flexible algorithms and data structures library in order to solve algorithm problems.
 
-# Algorithms & DataStructures Index
+# Index
 <h3>Graph</h3>
   <h4>Directed Graph</h4>
     <ol><li>Topological Sort</li>
