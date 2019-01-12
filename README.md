@@ -79,4 +79,4 @@ Making a flexible algorithms and data structures library in order to solve algor
 Examples are in ./Project/Examples directory.
 
 # See Also
-if you are interested in easy submitting to Online Judge, see <a href="https://github.com/Lobo-Prix/CppProject21File">CppProject21File(C++ project to one file, merger.exe)</a>.
+If you are interested in convenient submission to online judge, see <a href="https://github.com/Lobo-Prix/CppProject21File">CppProject21File(C++ project to one file)</a>.
