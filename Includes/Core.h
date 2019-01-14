@@ -70,4 +70,4 @@ ostream& operator<<(ostream &os, ulll n){
 using namespace __gnu_pbds;
 
 //Settings
-using ScalarType = ll;
+using ScalarType = ld;

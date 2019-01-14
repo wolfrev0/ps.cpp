@@ -49,8 +49,8 @@ struct ModNum {
 	ModNum(const ModNum& r) : n(r.n),m(r.m) {}
 	inline ModNum& operator= (const ModNum& r) { n = r.n; return *this; }
 private:
-	const T m;
 	T n;
+	const T m;
 };
 
 ostream& operator<<(ostream& s, const ModNum& n) { return s << n.val(); }

@@ -105,8 +105,8 @@ struct Convex :public Polygon
 		for (auto i : s1)
 			for (auto j : s2) {
 				try {
-					auto res = i.intersect(j);
-					if (res != err)
+					Vec2 res;
+					if (i.intersect(j, res))
 						ret.push_back(res);
 				}
 				catch (...) {}
