@@ -16,7 +16,6 @@ const int mod = int(1e9 + 7);
 const int prime = int(2e9 + 11);
 const ld pi = acos(-1);
 const ld eps = 1e-12;
-const int dir[4][2] = { { 1, 0 },{ 0, 1 },{ -1, 0 },{ 0, -1 } };
 #define endl '\n'
 #define forh(var, begin, end) for(auto var=begin; begin<=var && var<decltype(begin)(end); ++var)//for: half-opened range
 #define forhi(var, begin, end) for(auto var=end-1; decltype(end)(begin)<=var && var<end; --var)//inversion
