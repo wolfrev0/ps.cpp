@@ -9,7 +9,7 @@ int main()
 
 	int n;
 	cin >> n;
-	Convex c(n);
+	Convex<ll> c(n);
 	forh(i, 0, n)
 		cin >> c[i].x >> c[i].y;
 	c.normalize();

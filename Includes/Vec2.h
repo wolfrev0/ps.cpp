@@ -2,8 +2,8 @@
 #include "Core.h"
 #include "Frac.h"
 
+template<typename T>
 struct Vec2 {
-	using T = ScalarType;
 	T x, y;
 	explicit Vec2() :Vec2(0, 0) {}
 	explicit Vec2(T x, T y) :x(x), y(y) {}
@@ -35,13 +35,15 @@ struct Vec2 {
 	inline Vec2 project(const Vec2& p)const { Vec2 base = normalize(); return base*base.dot(p); }
 	inline Vec2 ortho()const{ return Vec2(y, -x); }
 	inline Vec2 rot(double rad)const{ throw 0; }
-} zero, err = Vec2(inf<Vec2::T>(), inf<Vec2::T>()), epsv = Vec2(eps, eps);
 
-inline bool cmpccw(const Vec2& l, const Vec2& r, const Vec2& base) {
-	Vec2::T val = base.ccw(l, r);
+	static inline Vec2 zero(){return {};};
+	static inline bool cmpccw(const Vec2& l, const Vec2& r, const Vec2& base) {
+	T val = base.ccw(l, r);
 	assert(base <= l && base <= r);
 	if (val == 0)
 		//need some thinking but ok. because base should be left-bottom element.
 		return l < r;
 	return val > 0;
 }
+};
+Vec2<ld> epsv = Vec2(eps, eps);

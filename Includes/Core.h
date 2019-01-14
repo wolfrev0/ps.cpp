@@ -29,14 +29,6 @@ const ld eps = 1e-12;
 #define travo(var, begin, cond) auto var=begin; for(; cond; ++var)//out declaration
 template<typename T>
 constexpr inline T inf() { return numeric_limits<T>::max() / 2; }
-template<typename T, typename U>
-inline pair<T, U> operator+(const pair<T, U> &a, const pair<T, U> &b) { return { a.first + b.first, a.second + b.second }; }
-template<typename T, typename U>
-inline pair<T, U> operator+=(pair<T, U> &a, const pair<T, U> &b) { return a = a + b; }
-template<typename T, typename U>
-inline pair<T, U> operator-(const pair<T, U> &a, const pair<T, U> &b) { return { a.first - b.first, a.second - b.second }; }
-template<typename T, typename U>
-inline pair<T, U> operator-=(pair<T, U> &a, const pair<T, U> &b) { return a = a - b; }
 #if __x86_64__ || __ppc64__
 using lll = __int128_t;
 using ulll = __uint128_t;
@@ -70,4 +62,3 @@ ostream& operator<<(ostream &os, ulll n){
 using namespace __gnu_pbds;
 
 //Settings
-using ScalarType = ld;
