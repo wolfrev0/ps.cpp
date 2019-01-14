@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include "Vec2.h"
 #include "DisjointSet.h"
 
 template<typename T>
@@ -172,12 +173,12 @@ struct FlowGraph : public WeightedGraph<FlowWeight> {
 		return sum;
 	}
 
-	pair<ll, ll> mcmf(ll flow = inf<ll>()) {
-		pair<ll, ll> ret = { 0, 0 };
+	Vec2<ll> mcmf(ll flow = inf<ll>()) {
+		Vec2<ll> ret;
 		while (true) {
-			auto res = process_mcmf(flow-ret.second);
+			auto res = process_mcmf(flow-ret.y);
 			ret += res;
-			if (!res.first && !res.second)
+			if (!res.x && !res.y)
 				break;
 		}
 		return ret;
@@ -201,11 +202,11 @@ private:
 		return 0;
 	}
 
-	pair<ll, ll> process_mcmf(ll flow) {
+	Vec2<ll> process_mcmf(ll flow) {
 		vector<FlowWeight> ub;
 		vector<pair<int, int>> p;
 		if (!spfa(ub, p, src) || p[snk].first == inf<int>())
-			return { 0, 0 };
+			return {};
 		for (int cur = snk; p[cur].first != inf<int>(); cur = p[cur].first)
 			flow = min(flow, g[p[cur].first][p[cur].second].w.cap);
 		ll cost = 0;

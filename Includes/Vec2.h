@@ -5,8 +5,8 @@
 template<typename T>
 struct Vec2 {
 	T x, y;
-	explicit Vec2() :Vec2(0, 0) {}
-	explicit Vec2(T x, T y) :x(x), y(y) {}
+	Vec2() :Vec2(0, 0) {}
+	Vec2(T x, T y) :x(x), y(y) {}
 	inline Vec2 operator+(const Vec2& r)const { return Vec2(x+r.x, y+r.y); }
 	inline Vec2 operator-()const { return Vec2(-x,-y); }
 	inline Vec2 operator-(const Vec2& r)const { return *this+-r; }
