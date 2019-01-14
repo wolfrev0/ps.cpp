@@ -1,7 +1,7 @@
-# Algorithm Library for PS
-Making a flexible algorithms and data structures library in order to solve algorithm problems.
+# Algorithm Library for Cpp
+Making an algorithms and data structures library in order to solve algorithm problems with c++.
 
-# Algorithms & DataStructures Index
+# Index
 <h3>Graph</h3>
   <h4>Directed Graph</h4>
     <ol><li>Topological Sort</li>
@@ -79,4 +79,4 @@ Making a flexible algorithms and data structures library in order to solve algor
 Examples are in ./Project/Examples directory.
 
 # See Also
-if you are interested in easy submitting to Online Judge, see <a href="https://github.com/Lobo-Prix/CppProject21File">CppProject21File(C++ project to one file, merger.exe)</a>.
+If you are interested in convenient submission to online judge, see <a href="https://github.com/Lobo-Prix/CppProject21File">CppProject21File(C++ project to one file)</a>.
