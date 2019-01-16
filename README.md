@@ -5,15 +5,16 @@ Making an algorithms and data structures library in order to solve algorithm pro
 <h3>Graph</h3>
   <h4>Directed Graph</h4>
     <ol><li>Topological Sort</li>
-    <li>SCC(Tarjan)</li>
-    <li>BCC(comming soon)</li></ol>
-  <h4>Undirected Graph</h4>
+    <li>SCC(Tarjan)</li></ol>
+  <h4>Simple Graph</h4>
     <ol><li>Articulation Points(Cut Vertex)</li>
-    <li>Bridges(Cut Edge)</li></ol>
-  <h4>Weighted Graph</h4>
+    <li>Bridges(Cut Edge)</li>
+    <li>BCC(comming soon)</li></ol>
+  <h4>Graph</h4>
     <ol><li>SPFA</li>
     <li>Dijkstra</li>
     <li>Dijkstra V^2(comming soon)</li>
+    <li>Floyd</li>
     <li>MST(Prim)</li>
     <li>MST(Kruskal)</li></ol>
   <h4>Flow Graph</h4>
@@ -34,6 +35,7 @@ Making an algorithms and data structures library in order to solve algorithm pro
   <li>Extended GCD</li>
   <li>Modular Number</li>
   <li>Fractional</li>
+  <li>Integer Arithmetic(More accurate)</li>
   <li>Berlekamp Massey Algorithm(comming soon)</li></ol>
 <h3>2D Geometry</h3>
   <h4>Vector</h4><ol>
@@ -66,14 +68,11 @@ Making an algorithms and data structures library in order to solve algorithm pro
 <h3>Balanced Binary Search Tree(BBST)</h3>
   <ol><li>Extended Set(Xset)</li>
   <li>Splay Tree(comming soon)</li></ol>
-<h3>Tree(comming soon)</h3>
-  <p>maybe inherit Graph?</p>
-  <ol><li>LCA</li>
-  <li>Diameter</li>
-  <li>Centroid Decomposition</li>
-  <li>Heavy Light Decomposition(HLD)</li></ol>
-<h3>Bipartite Matching</h3>
-  <ol><li>Hopcroft-Karp(comming soon)</li></ol>
+<h3>Tree</h3>
+  <ol><li>Diameter</li>
+  <li>LCA(comming soon)</li>
+  <li>Centroid Decomposition(comming soon)</li>
+  <li>Heavy Light Decomposition(HLD)(comming soon)</li></ol>
 
 # Help
 Examples are in ./Project/Examples directory.
