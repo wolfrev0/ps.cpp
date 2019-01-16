@@ -98,17 +98,31 @@ vector<vector<int>> sieve_divs(int n)
 	return ret;
 }
 
-//More accurate than floor(log(n))
-int lgf(ll n)
-{
-	assert(n > 0);
-	int ret = -1;
+//floor(log(n))
+int log_f(ll n){
+	int ret = 0;
 	while (n)
-		n /= 2, ret++;
-	return ret;
+		n/=2, ret++;
+	return ret-1;
 }
 
-//More accurate than ceil(log(n))
-int lgc(ll n) {
-	return lgf(n) + __builtin_popcountll(n) != 1;
+//ceil(log(n))
+int log_c(ll n) {
+	int ret = 0;
+	int rem=0;
+	while (n)
+		rem+=n%2, n/=2, ret++;
+	return ret-(rem<=1);
+}
+
+ll sqrt_f(ll n){
+	travo(i, 1, i*i<=n)
+		;
+	return i-1;
+}
+
+ll sqrt_c(ll n){
+	travo(i, 1, i*i<n)
+		;
+	return i;
 }
