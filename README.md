@@ -5,15 +5,16 @@ Making an algorithms and data structures library in order to solve algorithm pro
 <h3>Graph</h3>
   <h4>Directed Graph</h4>
     <ol><li>Topological Sort</li>
-    <li>SCC(Tarjan)</li>
-    <li>BCC(comming soon)</li></ol>
-  <h4>Undirected Graph</h4>
+    <li>SCC(Tarjan)</li></ol>
+  <h4>Simple Graph</h4>
     <ol><li>Articulation Points(Cut Vertex)</li>
-    <li>Bridges(Cut Edge)</li></ol>
-  <h4>Weighted Graph</h4>
+    <li>Bridges(Cut Edge)</li>
+    <li>BCC(comming soon)</li></ol>
+  <h4>Graph</h4>
     <ol><li>SPFA</li>
     <li>Dijkstra</li>
     <li>Dijkstra V^2(comming soon)</li>
+    <li>Floyd</li>
     <li>MST(Prim)</li>
     <li>MST(Kruskal)</li></ol>
   <h4>Flow Graph</h4>
