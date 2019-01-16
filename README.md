@@ -34,6 +34,7 @@ Making an algorithms and data structures library in order to solve algorithm pro
   <li>Extended GCD</li>
   <li>Modular Number</li>
   <li>Fractional</li>
+  <li>Integer Arithmetic(More accurate)</li>
   <li>Berlekamp Massey Algorithm(comming soon)</li></ol>
 <h3>2D Geometry</h3>
   <h4>Vector</h4><ol>
@@ -66,14 +67,11 @@ Making an algorithms and data structures library in order to solve algorithm pro
 <h3>Balanced Binary Search Tree(BBST)</h3>
   <ol><li>Extended Set(Xset)</li>
   <li>Splay Tree(comming soon)</li></ol>
-<h3>Tree(comming soon)</h3>
-  <p>maybe inherit Graph?</p>
-  <ol><li>LCA</li>
-  <li>Diameter</li>
-  <li>Centroid Decomposition</li>
-  <li>Heavy Light Decomposition(HLD)</li></ol>
-<h3>Bipartite Matching</h3>
-  <ol><li>Hopcroft-Karp(comming soon)</li></ol>
+<h3>Tree</h3>
+  <ol><li>Diameter</li>
+  <li>LCA(comming soon)</li>
+  <li>Centroid Decomposition(comming soon)</li>
+  <li>Heavy Light Decomposition(HLD)(comming soon)</li></ol>
 
 # Help
 Examples are in ./Project/Examples directory.
