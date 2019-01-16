@@ -351,7 +351,7 @@ struct UndirectedGraph: public Graph{
 		return ret;
 	}
 private:
-	int dfs_ap(int v, int p, int &o, vector<int>& ord, vector<int>& ans){
+	int dfs_ap(int v, int p, int& o, vector<int>& ord, vector<int>& ans){
 		int ret = ord[v]=o++;
 		int subcnt=0;
 		bool isAP = false;
@@ -370,7 +370,7 @@ private:
 				ans.push_back(v);
 		return ret;
 	}
-	int dfs_bridge(int v, int p, int &o, vector<int>& ord, vector<pair<int, int>>& ans){
+	int dfs_bridge(int v, int p, int& o, vector<int>& ord, vector<pair<int, int>>& ans){
 		int ret = ord[v]=o++;
 		bool conn = false;
 		for(auto i: g[v]){
