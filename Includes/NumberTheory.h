@@ -21,17 +21,6 @@ typename enable_if<!is_fundamental<T>::value, T>::type fastpow(const T& a, int p
 	return tmp * tmp;
 }
 
-ll fibo(int n) {
-	static ll memo[100];
-
-	if (n <= 1)
-		return 1;
-	auto& ret = memo[n];
-	if (ret)
-		return ret;
-	return ret = fibo(n - 1) + fibo(n - 2);
-}
-
 ll xgcd(ll a, ll b, ll& x, ll& y) {
 	if (a == 0) {
 		x = 0;
