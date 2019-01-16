@@ -1,168 +1,146 @@
 #pragma once
-#include "WeightedGraph.h"
+#include "Core.h"
+#include "DisjointSet.h"
 
-struct Graph: public WeightedGraph<int>{
-	Graph(int n):WeightedGraph<int>(n) {}
+template<typename T>
+struct Graph {
+	struct Edge {
+		int s;
+		int e;
+		int ei;
+		T w;
+		Edge(int s, int e, int ei, T w):s(s),e(e),ei(ei),w(w){};
+		bool operator<(const Edge &r)const { return w < r.w; }
+		bool operator>(const Edge &r)const { return w > r.w; }
+	};
+	int n;
+	vector<vector<Edge>> g;
 
-	inline void add_edge(int s, int e, bool dir=true) {
-		WeightedGraph::add_edge(s, e, 1, dir);
+	Graph(int n=0) :n(n), g(n) {}
+
+	inline void add_edge(int s, int e, T w, bool dir=true){ 
+		g[s].push_back(Edge(s, e, g[s].size(), w));
+		if(!dir)
+			g[e].push_back(Edge(e, s, g[e].size(), w));
 	}
 
-	vector<int> topo_sort() {
-		vector<int> in(n);
-		forh(i, 0, n){
-			for(auto &j:g[i])
-				in[j.e]++;
+	void dijkstra(vector<T>& d, vector<pair<int, int>>& p, int s) {
+		priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> pq;//dest, v
+		d = vector<T>(n, inf<T>());
+		p = vector<pair<int, int>>(n, { inf<int>(), inf<int>() });
+		d[s] = 0;
+		pq.push({ 0, s });
+		while (!pq.empty())
+		{
+			auto cur = pq.top();
+			pq.pop();
+
+			if (cur.first != d[cur.second])
+				continue;
+
+			auto& cg = g[cur.second];
+			for (auto &i : cg) {
+				if (d[i.e] > cur.first + i.w) {
+					d[i.e] = cur.first + i.w;
+					p[i.e] = { cur.second, i.ei };
+					pq.push({ cur.first + i.w, i.e });
+				}
+			}
 		}
+	}
+
+	void dijkstra_vsq(vector<T>& d, vector<pair<int, int>>& p, int s) {
+
+	}
+
+	int floyd(int s, int e, int m, vector<vector<vector<int>>>& memo){
+		if(m==n){
+			for(auto& i:g[s])
+				if(i.e==e)
+					return i.w;
+			return inf<int>();
+		}
+		auto& ret=memo[s][e][m];
+		if(ret!=-1)
+			return ret;
+		return ret = min(floyd(s, e, m+1, memo), floyd(s, m, m+1, memo)+floyd(m, e, m+1, memo));
+	}
+
+	bool spfa(vector<T>& ub, vector<pair<int, int>>& p, int s) {
 		queue<int> q;
-		forh(i, 0, n)
-			if (!in[i])
-				q.push(i);
-		vector<int> ret;
-		while (q.size()) {
-			auto cur = q.front();
-			ret.push_back(cur);
-			q.pop();
-			for (auto &i : g[cur])
-				if (--in[i.e] == 0)
-					q.push(i.e);
-		}
-		reverse(ret.begin(), ret.end());
-		return ret;
-	}
+		vector<bool> inq(n);
+		ub = vector<T>(n, inf<T>());
+		p = vector<pair<int, int>>(n, { inf<int>(), inf<int>() });
 
-	pair<vector<vector<int>>, Graph> scc(){
-		vector<int> state(n), ord(n), scc_id(n, -1);
-		stack<int> stk;
-		int o=0, scc_cnt=0;
-		forh(i, 0, n){
-			if(!state[i])
-				dfs_scc(i, o, scc_cnt, state, ord, scc_id, stk);
-		}
-
-		auto group=vector<vector<int>>(scc_cnt);
-		forh(i, 0, n)
-			group[scc_id[i]].push_back(i);
-		Graph sccg(scc_cnt);
-		forh(i, 0, n){
-			for(auto& j:g[i])
-				if(scc_id[i]!=scc_id[j.e])
-					sccg.add_edge(scc_id[i], scc_id[j.e]);
-		}
-
-		return {group, sccg};
-	}
-
-private:
-	int dfs_scc(int v, int& o, int &scc_cnt, vector<int>& state, vector<int>& ord, vector<int>& scc_id, stack<int>& stk){
-		state[v]=1;
-		stk.push(v);
-		int ret = ord[v]=o++;
-		for(auto i: g[v]){
-			switch(state[i.e]){
-				case 0:
-					ret = min(ret, dfs_scc(i.e, o, scc_cnt, state, ord, scc_id, stk));
-					break;
-				case 1://back
-					ret = min(ret, ord[i.e]);
-					break;
-				case 2:
-					if(ord[i.e]>ord[v])//fwd
-						;
-					else if(ord[i.e]<ord[v]){//cross
-						if(scc_id[i.e]==-1)
-							ret = min(ret, ord[i.e]);
+		ub[s] = 0;
+		inq[s] = true;
+		q.push(s);
+		trav(i, 0, i < n&&q.size()) {
+			int qsz = q.size();
+			while (qsz--) {
+				int j = q.front();
+				inq[j] = false;
+				q.pop();
+				for (auto k : g[j]) {
+					if (valid_spfa_edge(k) && ub[j] + k.w < ub[k.e]) {
+						p[k.e] = { j, k.ei };
+						ub[k.e] = ub[j] + k.w;
+						if (!inq[k.e]) {
+							inq[k.e] = true;
+							q.push(k.e);
+						}
 					}
-					else//loop
-						;
-					break;
+				}
 			}
 		}
-		if(ret == ord[v]){
-			int cur;
-			do{
-				cur = stk.top();
-				stk.pop();
-				scc_id[cur]=scc_cnt;
-			}while(stk.size() && cur!=v);
-			scc_cnt++;
-		}
-
-		state[v]=2;
-		return ret;
-	}
-};
-
-struct UndirectedGraph: public Graph{
-	UndirectedGraph(int n):Graph(n){}
-
-	inline void add_edge(int s, int e) {
-		Graph::add_edge(s, e, false);
+		return q.empty();
 	}
 
-	vector<int> articul_points(){
-		vector<int> ord(n, -1), ret;
-		int o=0;
-		forh(i, 0, n){
-			if(ord[i] != -1)
+	vector<Edge> mst_prim() {
+
+		vector<Edge> ret;
+		vector<bool> vis(n);
+		priority_queue<Edge, vector<Edge>, greater<Edge>> q;
+		q.push({ 0, inf<int>(), 0 });
+		while (q.size()) {
+			auto cur = q.top();
+			q.pop();
+
+			auto curv = cur.s == inf<int>() ? 0 : g[cur.s][cur.ei].e;
+			if (vis[curv])
 				continue;
-			dfs_ap(i, -1, o, ord, ret);
-		}
-		return ret;
-	}
+			vis[curv] = true;
+			if (cur.s != -1)
+				ret.push_back(cur);
 
-	vector<pair<int,int>> bridges(){
-		vector<int> ord(n, -1);
-		vector<pair<int,int>> ret;
-		int o=0;
-		forh(i, 0, n){
-			if(ord[i] != -1)
-				continue;
-			dfs_bridge(i, -1, o, ord, ret);
-		}
-		return ret;
-	}
-
-	void bcc(){
-
-	}
-private:
-	int dfs_ap(int v, int p, int& o, vector<int>& ord, vector<int>& ans){
-		int ret = ord[v]=o++;
-		int subcnt=0;
-		bool isAP = false;
-		for(auto i: g[v]){
-			if(ord[i.e] != -1){
-				ret = min(ret, ord[i.e]);
-				continue;
+			for (auto &i : g[curv]) {
+				if (!vis[i.e]) {
+					q.push(i);
+				}
 			}
-
-			int res=dfs_ap(i.e, v, o, ord, ans);
-			subcnt++;
-			isAP |= res>=ord[v];
-			ret = min(ret, res);
 		}
-		if(isAP && (p!=-1 || subcnt>1))
-				ans.push_back(v);
 		return ret;
 	}
-	int dfs_bridge(int v, int p, int& o, vector<int>& ord, vector<pair<int, int>>& ans){
-		int ret = ord[v]=o++;
-		bool conn = false;
-		for(auto i: g[v]){
-			if(ord[i.e] != -1){
-				if(p!=-1)
-					conn |= ord[i.e]<ord[p];
-				ret = min(ret, ord[i.e]);
-				continue;
+
+	vector<Edge> mst_kruskal() {
+		vector<Edge> e;
+		for (auto &i : g)
+			for (auto &j : i)
+				e.push_back(j);
+		sort(e.begin(), e.end());
+
+		DisjointSet djs(n);
+		vector<Edge> ret;
+		for (auto &i : e) {
+			int ie = g[i.s][i.ei].e;
+			if (djs.find(i.s) != djs.find(ie)) {
+				djs.uni(i.s, ie);
+				ret.push_back(i);
 			}
-
-			int res=dfs_bridge(i.e, v, o, ord, ans);
-			conn |= res<ord[v];
-			ret = min(ret, res);
 		}
-		if(!conn && p!=-1)
-				ans.push_back({min(v, p), max(v, p)});
 		return ret;
 	}
+
+protected:
+	virtual bool valid_spfa_edge(const Edge& w) const { return true; }
 };

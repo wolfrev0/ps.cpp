@@ -1,5 +1,5 @@
 #pragma once
-#include "WeightedGraph.h"
+#include "Graph.h"
 #include "Vec2.h"
 
 struct FlowWeight {
@@ -13,14 +13,14 @@ struct FlowWeight {
 template<>
 inline FlowWeight inf() { return inf<ll>(); }
 
-struct FlowGraph : public WeightedGraph<FlowWeight> {
+struct FlowGraph : public Graph<FlowWeight> {
 	int src, snk;
 
-	FlowGraph(int n) :WeightedGraph(n + 2), src(n), snk(n + 1) {}
+	FlowGraph(int n) :Graph(n + 2), src(n), snk(n + 1) {}
 
 	inline void add_edge(int s, int e, ll cap, ll cost) {
-		WeightedGraph::add_edge(s, e, FlowWeight(g[e].size(), cap, cost));
-		WeightedGraph::add_edge(e, s, FlowWeight(g[s].size() - 1, 0, -cost));
+		Graph::add_edge(s, e, FlowWeight(g[e].size(), cap, cost));
+		Graph::add_edge(e, s, FlowWeight(g[s].size() - 1, 0, -cost));
 	}
 
 	ll mf(ll flow = inf<ll>()) {
