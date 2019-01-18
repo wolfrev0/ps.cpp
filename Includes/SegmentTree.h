@@ -36,21 +36,21 @@ struct SegmentTreeLazy
 		const function<T(T, T)>& segf,
 		const function<T(int, int, T, T)>& lazyf,
 		const function<T(T, T)>& propaf,
-		T lazy_null = inf<int>())
+		T lazy_null = inf<T>())
 		//upperbound of 2^(ceil(log2(n))+1)/n is 4
 		:n(n), id(id), segf(segf), lazyf(lazyf), propaf(propaf), lazy_null(lazy_null),
 		tree(4 * n, id), lazy(4 * n, lazy_null)
 	{}
 	SegmentTreeLazy(
-		int n,
-		T lazy_null = inf<int>(),
+		int n=0,
+		T lazy_null = inf<T>(),
 		T id = 0)
 		//upperbound of 2^(ceil(log2(n))+1)/n is 4
-		:n(n), id(id), segf([](T a, T b) {return a + b; }), lazy_null(lazy_null),
-		tree(4 * n, id), lazy(4 * n, lazy_null), 
+		:n(n), id(id), segf([](T a, T b) {return a + b; }),
 		lazyf([lazy_null, id](int l, int r, T tval, T lval) {return tval + (lval != lazy_null ? lval : id) * (r - l + 1); }),
-		propaf([lazy_null, id](T lval, T val) { return (lval != lazy_null ? lval : id) + val; })
-	{}
+		propaf([lazy_null, id](T lval, T val) { return (lval != lazy_null ? lval : id) + val; }),
+		lazy_null(lazy_null), tree(4 * n, id), lazy(4 * n, lazy_null)
+		{}
 	const int n;
 	const T id;
 	const function<T(T, T)> segf;
