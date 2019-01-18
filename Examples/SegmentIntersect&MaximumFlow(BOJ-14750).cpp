@@ -10,34 +10,34 @@ int main()
 
 	int n, k, h, m;
 	cin >> n >> k >> h >> m;
-	MCMF g(m + h);
-	vector<Segment> lines;
-	Vec2 pv;
+	FlowGraph g(m + h);
+	vector<Segment<ld>> lines;
+	Vec2<ld> pv;
 	cin >> pv.x >> pv.y;
 	forh(i, 1, n)
 	{
-		Vec2 v;
+		Vec2<ld> v;
 		cin >> v.x >> v.y;
-		lines.push_back(Segment{ pv, Vec2(v.x, v.y) });
-		pv = Vec2(v.x, v.y);
+		lines.emplace_back(pv, v);
+		pv = Vec2<ld>(v.x, v.y);
 	}
-	vector<Vec2> holes;
+	vector<Vec2<ld>> holes;
 	forh(i, 0, h)
 	{
 		int x, y;
 		cin >> x >> y;
-		holes.push_back(Vec2(x, y));
+		holes.emplace_back(x, y);
 	}
 	forh(i, 0, m)
 	{
-		Vec2 mp;
+		Vec2<ld> mp;
 		cin >> mp.x >> mp.y;
 		forh(j, 0, h)
 		{
 			bool fail = false;
 			for (auto k : lines)
 			{
-				Vec2 hv = holes[j];
+				Vec2<ld> hv = holes[j];
 				hv += (mp - hv).normalize() *0.0001;
 				Segment s(mp, hv);
 				if (fail = k.intersect_det(s))

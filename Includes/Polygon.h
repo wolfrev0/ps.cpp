@@ -1,19 +1,18 @@
 #pragma once
 #include "Line.h"
 
+template<typename T>
 struct Polygon
 {
-	vector<Vec2> vtx;
+	vector<Vec2<T>> vtx;
 
 	Polygon() {}
 	explicit Polygon(int n) :vtx(n) {}
-	explicit Polygon(const vector<Vec2>& v) :vtx(v) {}
+	explicit Polygon(const vector<Vec2<T>>& v) :vtx(v) {}
 	inline int size()const { return vtx.size(); }
-	inline Vec2& front() { return vtx.front(); }
-	inline void pushback(const Vec2& v) { vtx.push_back(v); }
-	inline void popback() { vtx.pop_back(); }
-	inline Vec2& operator[](int idx) { return vtx[idx]; }
-	inline void clear() { vtx.clear(); }
+	inline void pushb(const Vec2<T>& v) { vtx.push_back(v); }
+	inline void popb() { vtx.pop_back(); }
+	inline Vec2<T>& operator[](int idx) { return vtx[idx]; }
 
 	ld area() {
 		ld ans = 0;
@@ -22,27 +21,20 @@ struct Polygon
 		return ans / 2;
 	}
 
-	Vec2::T circum() {
-		Vec2::T ret = 0;
-		forh(i, 0, size())
-			ret += (vtx[i] - vtx[(i + 1) % size()]).size();
-		return ret;
-	}
-
-	vector<Segment> to_segments()const {
-		vector<Segment> ret;
+	vector<Segment<T>> to_segments()const {
+		vector<Segment<T>> ret;
 		forh(i, 0, vtx.size())
 			ret.emplace_back(vtx[i], vtx[(i + 1) % vtx.size()]);
 		return ret;
 	}
 
-	virtual bool contains(const Vec2& v) const {
+	virtual bool contains(const Vec2<T>& v) const {
 		auto arr = to_segments();
 		for (auto i : arr)
 			if (i.contains(v))
 				return true;
 		int cnt = 0;
-		auto l = Segment(v, v + Vec2(prime, 1));
+		auto l = Segment<T>(v, v + Vec2<T>(prime, 1));
 		for (auto i : arr) {
 			if (i.intersect_det(l))
 				cnt++;
@@ -56,20 +48,23 @@ struct Polygon
 	}
 };
 
-struct Convex :public Polygon
-{
-	Convex() {}
-	explicit Convex(int n) :Polygon(n) {}
-	explicit Convex(const vector<Vec2>& v) :Polygon(v) { normalize(); }
+template<typename T>
+struct Convex :public Polygon<T>{
+	using Polygon<T>::vtx;
+	using Polygon<T>::contains;
+	using Polygon<T>::to_segments;
+	Convex():Polygon<T>() {}
+	explicit Convex(int n) :Polygon<T>(n) {}
+	explicit Convex(const vector<Vec2<T>>& v) :Polygon<T>(v) { normalize(); }
 
 	//graham scan
 	void normalize() {
 		if (vtx.empty())
 			return;
 		auto me = *min_element(vtx.begin(), vtx.end());
-		sort(vtx.begin(), vtx.end(), [&](auto &a, auto &b){return cmpccw(a,b, me);});
-		vector<Vec2> res;
-		forh(i, 0, size()) {
+		sort(vtx.begin(), vtx.end(), [&](auto &a, auto &b){return Vec2<T>::cmpccw(a,b, me);});
+		vector<Vec2<T>> res;
+		forh(i, 0, vtx.size()) {
 			while (res.size() >= 2) {
 				auto ltop = res[res.size() - 1] - res[res.size() - 2];
 				auto lcandi = vtx[i] - res[res.size() - 2];
@@ -83,17 +78,16 @@ struct Convex :public Polygon
 		vtx = res;
 	}
 
-	virtual bool contains(const Vec2& v)const override
-	{
-		Vec2::T tmp = v.cross(vtx[0], vtx[1]);
-		forh(i, 0, size())
+	virtual bool contains(const Vec2<T>& v)const override	{
+		T tmp = v.cross(vtx[0], vtx[1]);
+		forh(i, 0, vtx.size())
 			if (tmp*v.cross(vtx[i], vtx[(i + 1) % vtx.size()]) <= 0)
 				return false;
 		return true;
 	}
 
-	virtual Polygon intersect(const Polygon& r)const override {
-		vector<Vec2> ret;
+	virtual Polygon<T> intersect(const Polygon<T>& r)const override {
+		vector<Vec2<T>> ret;
 		for (auto i : vtx)
 			if (r.contains(i))
 				ret.push_back(i);
@@ -105,8 +99,8 @@ struct Convex :public Polygon
 		for (auto i : s1)
 			for (auto j : s2) {
 				try {
-					auto res = i.intersect(j);
-					if (res != err)
+					Vec2<T> res;
+					if (i.intersect(j, res))
 						ret.push_back(res);
 				}
 				catch (...) {}

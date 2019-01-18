@@ -8,7 +8,7 @@ int main() {
 
 	int n, m;
 	cin >> n >> m;
-	MCMF g(n + m);
+	FlowGraph g(n + m);
 	forh(i, 0, n)
 	{
 		int cnt;

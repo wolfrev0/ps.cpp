@@ -9,18 +9,18 @@ int main()
 
 	int n, m;
 	cin >> n >> m;
-	Convex p1, p2;
+	Convex<ld> p1, p2;
 	forh(i, 0, n)
 	{
-		int x, y;
-		cin >> x >> y;
-		p1.pushback(Vec2(x, y));
+		Vec2<ld> v;
+		cin >> v.x >> v.y;
+		p1.pushb(v);
 	}
 	forh(i, 0, m)
 	{
-		int x, y;
-		cin >> x >> y;
-		p2.pushback(Vec2(x, y));
+		Vec2<ld> v;
+		cin >> v.x >> v.y;
+		p2.pushb(v);
 	}
 	cout << p1.intersect(p2).area() << endl;
 

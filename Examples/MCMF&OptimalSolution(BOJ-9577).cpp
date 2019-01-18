@@ -10,7 +10,7 @@ int main() {
 	while (t--) {
 		int n, m;
 		cin >> n >> m;
-		MCMF g(200);
+		FlowGraph g(200);
 		forh(i, 0, m)
 		{
 			int s, e, a;
@@ -37,7 +37,7 @@ int main() {
 			int ans = 0;
 			forh(i, 0, 100)
 				for (auto j : g.g[i])
-					if (j.v < 200 && !j.w.cap)
+					if (j.e < 200 && !j.w.cap)
 						ans = i + 1;
 			cout << ans << endl;
 		}

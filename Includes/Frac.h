@@ -26,3 +26,5 @@ struct Frac
 		  a*=-1, b*=-1;
 	}
 };
+
+ostream& operator<<(ostream& s, const Frac& n) { return s <<n.a<<'/'<<n.b; }

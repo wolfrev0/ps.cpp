@@ -2,65 +2,32 @@
 #include "Core.h"
 #include "DisjointSet.h"
 
-struct Graph {
-	const int n;
-	vector<vector<int>> g;
-	vector<int> in;
-
-	Graph(int n) :n(n), g(n), in(n) {}
-
-	inline void add_edge(int s, int e) {
-		g[s].push_back(e);
-		in[e]++;
-	}
-
-	vector<int> topo_sort() {
-    vector<int> in = Graph::in;
-		queue<int> q;
-		forh(i, 0, n)
-			if (!in[i])
-				q.push(i);
-		vector<int> ret;
-		while (q.size()) {
-			auto cur = q.front();
-			ret.push_back(cur);
-			q.pop();
-			for (auto i : g[cur])
-				if (--in[i] == 0)
-					q.push(i);
-		}
-		reverse(ret.begin(), ret.end());
-		for (auto i : in)
-			if (i)
-				throw "Error";
-		return ret;
-	}
-	//dfs()
-	//bfs()
-	//maybe useless?
-};
-
 template<typename T>
-struct WeightedGraph {
+struct Graph {
 	struct Edge {
-		uint s;
-		uint e;
-		uint ei;
+		int s;
+		int e;
+		int ei;
 		T w;
+		Edge(int s, int e, int ei, T w):s(s),e(e),ei(ei),w(w){};
 		bool operator<(const Edge &r)const { return w < r.w; }
 		bool operator>(const Edge &r)const { return w > r.w; }
 	};
-	const uint n;
+	int n;
 	vector<vector<Edge>> g;
 
-	WeightedGraph(uint n) :n(n), g(n) {}
+	Graph(int n=0) :n(n), g(n) {}
 
-	inline void add_edge(uint s, uint e, T w) { g[s].push_back({ s, e, (uint)g[s].size(), w }); }
+	inline void add_edge(int s, int e, T w, bool dir=true){ 
+		g[s].push_back(Edge(s, e, g[s].size(), w));
+		if(!dir)
+			g[e].push_back(Edge(e, s, g[e].size(), w));
+	}
 
-	void dijkstra(vector<T>& d, vector<pair<uint, uint>>& p, int s) {
+	void dijkstra(vector<T>& d, vector<pair<int, int>>& p, int s) {
 		priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> pq;//dest, v
 		d = vector<T>(n, inf<T>());
-		p = vector<pair<uint, uint>>(n, { inf<uint>(), inf<uint>() });
+		p = vector<pair<int, int>>(n, { inf<int>(), inf<int>() });
 		d[s] = 0;
 		pq.push({ 0, s });
 		while (!pq.empty())
@@ -82,24 +49,33 @@ struct WeightedGraph {
 		}
 	}
 
-	void dijkstra_vsq(vector<T>& d, vector<pair<uint, uint>>& p, int s) {
+	void dijkstra_vsq(vector<T>& d, vector<pair<int, int>>& p, int s) {
 
 	}
 
-	void floyd(){
-		//v * dijkstra_vsq?
+	int floyd(int s, int e, int m, vector<vector<vector<int>>>& memo){
+		if(m==n){
+			for(auto& i:g[s])
+				if(i.e==e)
+					return i.w;
+			return inf<int>();
+		}
+		auto& ret=memo[s][e][m];
+		if(ret!=-1)
+			return ret;
+		return ret = min(floyd(s, e, m+1, memo), floyd(s, m, m+1, memo)+floyd(m, e, m+1, memo));
 	}
 
-	bool spfa(vector<T>& ub, vector<pair<uint, uint>>& p, int s) {
+	bool spfa(vector<T>& ub, vector<pair<int, int>>& p, int s) {
 		queue<int> q;
 		vector<bool> inq(n);
 		ub = vector<T>(n, inf<T>());
-		p = vector<pair<uint, uint>>(n, { inf<uint>(), inf<uint>() });
+		p = vector<pair<int, int>>(n, { inf<int>(), inf<int>() });
 
 		ub[s] = 0;
 		inq[s] = true;
 		q.push(s);
-		trav(i, 0u, i < n&&q.size()) {
+		trav(i, 0, i < n&&q.size()) {
 			int qsz = q.size();
 			while (qsz--) {
 				int j = q.front();
@@ -119,19 +95,18 @@ struct WeightedGraph {
 		}
 		return q.empty();
 	}
-	virtual bool valid_spfa_edge(const Edge& w) const { return true; }
 
 	vector<Edge> mst_prim() {
 
 		vector<Edge> ret;
 		vector<bool> vis(n);
 		priority_queue<Edge, vector<Edge>, greater<Edge>> q;
-		q.push({ 0, inf<uint>(), 0 });
+		q.push({ 0, inf<int>(), 0 });
 		while (q.size()) {
 			auto cur = q.top();
 			q.pop();
 
-			auto curv = cur.s == inf<uint>() ? 0 : g[cur.s][cur.ei].e;
+			auto curv = cur.s == inf<int>() ? 0 : g[cur.s][cur.ei].e;
 			if (vis[curv])
 				continue;
 			vis[curv] = true;
@@ -165,82 +140,7 @@ struct WeightedGraph {
 		}
 		return ret;
 	}
-};
 
-struct MCMFWeight {
-	uint si;
-	ll cap, cost;
-	MCMFWeight(ll cost) :cost(cost) {}
-	MCMFWeight(uint si, ll cap, ll cost) :si(si), cap(cap), cost(cost) {}
-	bool operator< (const MCMFWeight& r)const { return cost < r.cost; }
-	MCMFWeight operator+(const MCMFWeight& r)const { return cost + r.cost; }
-};
-template<>
-inline MCMFWeight inf() { return inf<ll>(); }
-
-struct MCMF : public WeightedGraph<MCMFWeight> {
-	uint src, snk;
-
-	MCMF(uint n) :WeightedGraph(n + 2), src(n), snk(n + 1) {}
-
-	inline void add_edge(uint s, uint e, ll cap, ll cost) {
-		WeightedGraph::add_edge(s, e, { (uint)g[e].size(), cap, cost });
-		WeightedGraph::add_edge(e, s, { (uint)g[s].size() - 1, 0, -cost });
-	}
-
-	ll process(uint v, ll mf, vector<bool>&& vis) {
-		if (v == snk)
-			return mf;
-
-		vis[v] = true;
-		for (auto& i : g[v]) {
-			if (!vis[i.e] && i.w.cap) {
-				ll f = process(i.e, min(mf, i.w.cap), vector<bool>(vis));
-				if (f > 0) {
-					i.w.cap -= f;
-					g[i.e][i.w.si].w.cap += f;
-					return f;
-				}
-			}
-		}
-		return 0;
-	}
-
-	ll mf(ll flow = inf<ll>()) {
-		ll sum = 0;
-		while (ll f = process(src, flow - sum, vector<bool>(n)))
-			sum += f;
-		return sum;
-	}
-
-	pair<ll, ll> process(ll flow) {
-		vector<MCMFWeight> ub;
-		vector<pair<uint, uint>> p;
-		if (!spfa(ub, p, src) || p[snk].first == inf<uint>())
-			return { 0, 0 };
-		for (int cur = snk; p[cur].first != inf<uint>(); cur = p[cur].first)
-			flow = min(flow, g[p[cur].first][p[cur].second].w.cap);
-		ll cost = 0;
-		for (int cur = snk; p[cur].first != inf<uint>(); cur = p[cur].first) {
-			auto& e = g[p[cur].first][p[cur].second];
-			e.w.cap -= flow;
-			g[e.e][e.w.si].w.cap += flow;
-			cost += e.w.cost*flow;
-		}
-
-		return {cost, flow};
-	}
-
-	pair<ll, ll> mcmf(ll flow = inf<ll>()) {
-		pair<ll, ll> ret = { 0, 0 };
-		while (true) {
-			auto res = process(flow-ret.second);
-			ret += res;
-			if (!res.first && !res.second)
-				break;
-		}
-		return ret;
-	}
-
-	virtual bool valid_spfa_edge(const Edge& e) const override { return e.w.cap; }
+protected:
+	virtual bool valid_spfa_edge(const Edge& w) const { return true; }
 };

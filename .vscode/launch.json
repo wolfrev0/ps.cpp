@@ -14,7 +14,6 @@
             "cwd": ".",
             "environment": [],
             "externalConsole": true,
-            "preLaunchTask": "Build(Debug)",
             "pipeTransport": {
                 "pipeCwd": "${workspaceFolder}",
                 "pipeProgram": "C:/Windows/System32/bash.exe",
