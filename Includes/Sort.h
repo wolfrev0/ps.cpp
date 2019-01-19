@@ -9,7 +9,7 @@ inline void counting_sort(vector<T>& v, const function<T(T)> &f = [](const T& x)
 	for(auto &i:bucket)
 		i.clear();
 
-    T m = inf<T>(), M = -inf<T>();
+    T m = T::inf(), M = -T::inf();
     for(auto &i:v){
         m = min(m, f(i));
         M = max(M, f(i));

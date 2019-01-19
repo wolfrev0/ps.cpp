@@ -14,8 +14,8 @@ struct Polygon
 	inline void popb() { vtx.pop_back(); }
 	inline Vec2<T>& operator[](int idx) { return vtx[idx]; }
 
-	ld area() {
-		ld ans = 0;
+	f64 area() {
+		f64 ans = 0;
 		forh(i, 1, size() - 1)
 			ans += vtx[0].cross(vtx[i], vtx[i + 1]);
 		return ans / 2;

@@ -22,7 +22,10 @@
 			"complex": "cpp",
 			"ostream": "cpp",
 			"functional": "cpp",
-			"iomanip": "cpp"
+			"iomanip": "cpp",
+			"thread": "cpp",
+			"iostream": "cpp",
+			"limits": "cpp"
 		}
 	}
 }

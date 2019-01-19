@@ -6,7 +6,7 @@ class LineSame :public LineException {};
 
 template<typename T>
 struct Line {
-	explicit Line() :Line(-Vec2<T>(inf<int>(), inf<int>()), Vec2<T>(inf<int>(), inf<int>())) {}
+	explicit Line() :Line(-Vec2<T>::inf(), Vec2<T>::inf()) {}
 	explicit Line(const Vec2<T>& s, const Vec2<T>& e) :_s(s), _e(e) { if(_s > _e) swap(_s, _e); }
 	inline Vec2<T> dir()const { return _e - _s; }
 

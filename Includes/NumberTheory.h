@@ -2,50 +2,40 @@
 #include "Core.h"
 
 template<typename T>
-typename enable_if<std::is_fundamental<T>::value, T>::type fastpow(const T& a, int p) {
+T fastpow(const T& a, int p) {
 	if (p == 0)
-		return 1;
+		return a.one();
 	T tmp = fastpow(a, p / 2);
 	if (p % 2)
 		return tmp * tmp*a;
 	return tmp * tmp;
 }
 
-template<typename T>
-typename enable_if<!is_fundamental<T>::value, T>::type fastpow(const T& a, int p) {
-	if (p == 0)
-		return a.mulid();
-	T tmp = fastpow(a, p / 2);
-	if (p % 2)
-		return tmp * tmp*a;
-	return tmp * tmp;
-}
-
-ll xgcd(ll a, ll b, ll& x, ll& y) {
+i64 xgcd(i64 a, i64 b, i64& x, i64& y) {
 	if (a == 0) {
 		x = 0;
 		y = 1;
 		return b;
 	}
 
-	ll xtmp, ytmp;
-	ll g = xgcd(b%a, a, xtmp, ytmp);
+	i64 xtmp, ytmp;
+	i64 g = xgcd(b%a, a, xtmp, ytmp);
 	x = ytmp - (b / a) * xtmp;
 	y = xtmp;
 	return g;
 }
 
-pair<ll, ll> xgcd2(ll a, ll b) {
+pair<i64, i64> xgcd2(i64 a, i64 b) {
 	if (b == 0)
 		return { 1,0 };
 	auto t = xgcd2(b, a%b);
 	return { t.second,t.first - t.second*(a / b) };
 }
 
-vector<ll> factorization(ll n)
+vector<i64> factorization(i64 n)
 {
-	ll cur = n;
-	vector<ll> ret;
+	i64 cur = n;
+	vector<i64> ret;
 	trav (i, 2, i*i <= n)
 		while (!(cur%i))
 		{
@@ -57,9 +47,9 @@ vector<ll> factorization(ll n)
 	return ret;
 }
 
-vector<ll> divisors(ll n)
+vector<i64> divisors(i64 n)
 {
-	vector<ll> ret, tmp;
+	vector<i64> ret, tmp;
 	trav(i, 1, i*i <= n){
 		if (n%i == 0)
 		{
@@ -78,10 +68,10 @@ template<int n>
 bitset<n> sieve_prime()
 {
 	bitset<n> ret(3);
-	for (ll i = 2; i*i<=n; i++) {
+	for (i64 i = 2; i*i<=n; i++) {
 		if (ret[i])
 			continue;
-		for (ll j = i * i; j < n; j += i)
+		for (i64 j = i * i; j < n; j += i)
 			ret[j] = true;
 	}
 	return ret.flip();
@@ -91,15 +81,15 @@ bitset<n> sieve_prime()
 vector<vector<int>> sieve_divs(int n)
 {
 	vector<vector<int>> ret(n);
-	for (ll i = 2; i*i<=n; i++) {
-		for (ll j = i + i; j < n; j += i)
+	for (i64 i = 2; i*i<=n; i++) {
+		for (i64 j = i + i; j < n; j += i)
 			ret[j].push_back(i);
 	}
 	return ret;
 }
 
 //floor(log(n))
-int log_f(ll n){
+int log_f(i64 n){
 	int ret = 0;
 	while (n)
 		n/=2, ret++;
@@ -107,7 +97,7 @@ int log_f(ll n){
 }
 
 //ceil(log(n))
-int log_c(ll n) {
+int log_c(i64 n) {
 	int ret = 0;
 	int rem=0;
 	while (n)
@@ -115,13 +105,13 @@ int log_c(ll n) {
 	return ret-(rem<=1);
 }
 
-ll sqrt_f(ll n){
+i64 sqrt_f(i64 n){
 	travo(i, 1, i*i<=n)
 		;
 	return i-1;
 }
 
-ll sqrt_c(ll n){
+i64 sqrt_c(i64 n){
 	travo(i, 1, i*i<n)
 		;
 	return i;

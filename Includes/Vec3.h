@@ -1,8 +1,8 @@
 #pragma once
 #include "Core.h"
 
+template<typename T>
 struct Vec3 {
-	using T = ScalarType;
 	T x, y, z;
 	explicit Vec3() :Vec3(0, 0, 0) {}
 	explicit Vec3(T x, T y, T z) :x(x), y(y), z(z) {}
@@ -17,7 +17,7 @@ struct Vec3 {
 	inline Vec3 operator/=(T r) { return *this=*this/r; }
 	inline bool operator==(const Vec3& r)const { return x == r.x && y == r.y && z == r.z; }
 	inline bool operator!=(const Vec3& r)const { return !(*this == r); }
-	inline bool operator<(const Vec3& r)const { return x==r.x?(y==r.y?z<r.z:y<r.y)?:x<r.x; }
+	inline bool operator<(const Vec3& r)const { return x==r.x?(y==r.y?z<r.z:y<r.y):x<r.x; }
 	inline bool operator<=(const Vec3& r)const { return *this==r || *this<r; }
 	inline bool operator>(const Vec3& r)const { return x==r.x?(y==r.y?z>r.z:y>r.y):x>r.x; }
 	inline bool operator>=(const Vec3& r)const { return *this==r || *this>r; }
@@ -31,4 +31,7 @@ struct Vec3 {
 	inline T angle()const { return 0; }
 	inline Vec3 project(const Vec3& p)const { Vec3 base = normalize(); return base * base.dot(p); }
 	inline Vec3 rot(double rad)const{ throw 0; }
-} zero3, err3 = Vec3(inf<Vec3::T>(), inf<Vec3::T>()), epsv3 = Vec3(eps, eps);
+	
+	static inline Vec3 inf(){ return {T::inf(), T::inf(), T::inf()}; }
+	static inline Vec3 zero(){return {};};
+};

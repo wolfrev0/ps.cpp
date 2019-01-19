@@ -13,7 +13,7 @@ struct PST{
 	const int n;
 	const function<T(T,T)> f;
 	vector<Node> vers;
-	Node *base=new PST<ll>::Node(0);
+	Node *base=new PST<i64>::Node(0);
 
 	PST(int n, const function<T(T,T)>& f=[](T a, T b){return a+b;}):n(n), f(f), vers(n){
 		build_base(base, 0, n-1);

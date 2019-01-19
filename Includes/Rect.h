@@ -1,9 +1,9 @@
 #pragma once
 #include "Core.h"
 
+template<typename T>
 struct Rect
 {
-	using T = ll;
 	T x1, y1, x2, y2;
 	Rect(T x1, T y1, T x2, T y2) : x1(x1), y1(y1), x2(x2), y2(y2) {}
 

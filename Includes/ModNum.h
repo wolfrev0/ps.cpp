@@ -5,23 +5,21 @@ class NoModInv {};
 
 //Do not use when Rabin Karp hashing(too weak, instead use ull).
 struct ModNum {
-	using T = ll;
-	ModNum(T n = 0, T m = mod) :n((n%m + m) % m), m(m) {}
-	inline T val()const { return n; }
-	inline ModNum mulid() const { return { 1, m }; }
+	ModNum(i64 n=0) :n((n%mod+mod)%mod){}
+	inline i64 val()const { return n; }
 
-	inline ModNum operator - () const { return { -n, m }; }
-	inline ModNum operator + (const ModNum& b)const { return { n + b.val(), m }; }
-	inline ModNum operator - (const ModNum& b)const { return { n - b.val() + m, m }; }
-	inline ModNum operator * (const ModNum& b)const { return { n * b.val(), m }; }
+	inline ModNum operator - () const { return {-n}; }
+	inline ModNum operator + (const ModNum& b)const { return n + b.val(); }
+	inline ModNum operator - (const ModNum& b)const { return n - b.val() + mod; }
+	inline ModNum operator * (const ModNum& b)const { return n * b.val(); }
 	inline ModNum operator / (const ModNum& b)const { return *this * inv(b); }
 	inline ModNum operator+= (const ModNum& b) { return *this = *this + b; }
 	inline ModNum operator-= (const ModNum& b) { return *this = *this - b; }
 	inline ModNum operator*= (const ModNum& b) { return *this = *this * b; }
 	inline ModNum operator/= (const ModNum& b) { return *this = *this / b; }
 
-	inline ModNum& operator++ () { *this += 1; return *this; }
-	inline ModNum& operator-- () { *this -= 1; return *this; }
+	inline ModNum& operator++ () { *this += 1ll; return *this; }
+	inline ModNum& operator-- () { *this -= 1ll; return *this; }
 	inline ModNum operator++(int) { auto ret = *this; ++*this; return ret; }
 	inline ModNum operator--(int) { auto ret = *this; --*this; return ret; }
 
@@ -32,25 +30,22 @@ struct ModNum {
 	inline bool operator>(const ModNum& r) const { return n > r.n; }
 	inline bool operator>=(const ModNum& r) const { return n >= r.n; }
 
+	static inline ModNum zero(){ return 0; }
+	static inline ModNum one(){ return 1; }
+	static inline ModNum inf(){ return -1; }
+private:
+	i64 n;
+
 	inline ModNum inv(const ModNum &b)const {
-		ll x, y;
-		ll g = xgcd(b.val(), -m, x, y);
+		i64 x, y;
+		i64 g = xgcd(b.val(), -mod, x, y);
 		if (1 % g)
 			throw NoModInv();
 		x *= 1 / g;
 		while (x < 0)
-			x += -m / g;
-		return { x, m };
-		//extended gcd is better than fastpow.
-		//return fastpow(ModNum(m, b.val()), m - 2)*n; 
+			x += -mod / g;
+		return x;
 	}
-
-	//operator T() const { return n; }
-	ModNum(const ModNum& r) : n(r.n),m(r.m) {}
-	inline ModNum& operator= (const ModNum& r) { n = r.n; return *this; }
-private:
-	T n;
-	const T m;
 };
 
 ostream& operator<<(ostream& s, const ModNum& n) { return s << n.val(); }
