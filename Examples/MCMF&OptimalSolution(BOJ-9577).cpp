@@ -1,9 +1,9 @@
-#include "Graph.h"
+#include "FlowGraph.h"
 
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((uint)time(0));
+	srand((u32)time(0));
 
 	int t;
 	cin >> t;
@@ -30,7 +30,7 @@ int main() {
 			g.add_edge(100 + i, g.snk, 1, 0);
 		}
 
-		if (g.mcmf().second != n)
+		if (g.mcmf().y != n)
 			cout << -1 << endl;
 		else
 		{

@@ -46,7 +46,8 @@ struct SqMat : public Mat<T>{
 
 	inline int n()const { return Mat<T>::r(); }
 
-	inline SqMat mulid() const {
+	
+	inline SqMat one() const {
 		SqMat ret(n());
 		forh(i, 0, n())
 			ret.arr[i][i] = 1;

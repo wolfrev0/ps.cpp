@@ -14,26 +14,33 @@ const f64 pi=acos(-1);
 const f64 eps=1e-12;
 i32 mod=i32(1e9 + 7);
 #define endl '\n'
-#define forh(var, begin, end) for(auto var=begin; begin<=var && var<decltype(begin)(end); ++var)//for: half-opened range
-#define forhi(var, begin, end) for(auto var=end-1; decltype(end)(begin)<=var && var<end; --var)//inversion
-#define forho(var, begin, end) auto var=begin; for(; begin<=var && var<decltype(begin)(end); ++var)//out declaration
-#define forhoi(var, begin, end) auto var=end-1; for(; decltype(end)(begin)<=var && var<end; --var)
-#define forc(var, begin, end) for(auto var=begin; begin<=var && var<=decltype(begin)(end); ++var)//for: closed range
-#define forci(var, begin, end) for(auto var=end; decltype(end)(begin)<=var && var<=end; --var)//inversion
-#define forco(var, begin, end) auto var=begin; for(; begin<=var && var<=decltype(begin)(end); ++var)//out declaration
-#define forcoi(var, begin, end) auto var=end; for(; decltype(end)(begin)<=var && var<=end; --var)//inversion
+#define forh(var, begin, end) for(auto var=begin; begin<=var && var<end; ++var)//for: half-opened range
+#define forhi(var, begin, end) for(auto var=end-1; begin<=var && var<end; --var)//inversion
+#define forho(var, begin, end) auto var=begin; for(; begin<=var && var<end; ++var)//out declaration
+#define forhoi(var, begin, end) auto var=end-1; for(; begin<=var && var<end; --var)
+#define forc(var, begin, end) for(auto var=begin; begin<=var && var<=end; ++var)//for: closed range
+#define forci(var, begin, end) for(auto var=end; begin<=var && var<=end; --var)//inversion
+#define forco(var, begin, end) auto var=begin; for(; begin<=var && var<=end; ++var)//out declaration
+#define forcoi(var, begin, end) auto var=end; for(; begin<=var && var<=end; --var)//inversion
 #define trav(var, begin, cond) for(auto var=begin; cond; ++var)//travel
 #define travo(var, begin, cond) auto var=begin; for(; cond; ++var)//out declaration
 
 template<typename T>
 struct Regular{
-		T a;
-		Regular(T a=0):a(a){}
-		operator T()const{return a;}
+		T n;
+		Regular(T n=0):n(n){}
+		operator T()const{return n;}
 		static T zero(){return 0;}
 		static T one(){return 1;}
 		static T inf(){return numeric_limits<T>::max()/2;}
 };
+template<typename T>
+ostream& operator<<(ostream &os, Regular<T> n){return os<<n.n;}
+template<typename T>
+istream& operator>>(istream &is, Regular<T> &n){return is>>n.n;}
+using I8=Regular<i8>;using I16=Regular<i16>;using I32=Regular<i32>;using I64=Regular<i64>;
+using U8=Regular<u8>;using U16=Regular<u16>;using U32=Regular<u32>;using U64=Regular<u64>;
+using F64=Regular<f64>;
 
 #if __x86_64__ || __ppc64__
 using i128 = __int128_t;
@@ -41,41 +48,42 @@ using u128 = __uint128_t;
 using f128 = __float128;
 template<>
 struct Regular<i128>{
-		i128 a;
-		Regular(i128 a=0):a(a){}
-		operator i128()const{return a;}
+		i128 n;
+		Regular(i128 n=0):n(n){}
+		operator i128()const{return n;}
 		static i128 zero(){return 0;}
 		static i128 one(){return 1;}
 		static i128 inf(){return ((u128(1)<<127)-1)/2;}
 };
 template<>
 struct Regular<u128>{
-		u128 a;
-		Regular(u128 a=0):a(a){}
-		operator u128()const{return a;}
+		u128 n;
+		Regular(u128 n=0):n(n){}
+		operator u128()const{return n;}
 		static u128 zero(){return 0;}
 		static u128 one(){return 1;}
 		static u128 inf(){return u128(-1)/2;}
 };
 template<>
 struct Regular<f128>{
-		f128 a;
-		Regular(f128 a=0):a(a){}
-		operator f128()const{return a;}
+		f128 n;
+		Regular(f128 n=0):n(n){}
+		operator f128()const{return n;}
 		static f128 zero(){return 0;}
 		static f128 one(){return 1;}
 		static f128 inf(){ return numeric_limits<f64>::max()/2; }
 };
-ostream& operator<<(ostream &os, u128 n){
-	string s;while(n){ s.push_back(n%10+'0');n/=10; }
+using I128=Regular<i128>; using U128=Regular<u128>; using F128=Regular<f128>;
+ostream& operator<<(ostream &os, U128 n){
+	string s;while(n){ s.push_back(n%10+'0');n.n/=10; }
 	reverse(s.begin(), s.end());
 	return os<<s;
 }
-ostream& operator<<(ostream &os, i128 n){
-  if(n<0){ os<<'-';n*=-1; }
-	return os<<(u128)n;
+ostream& operator<<(ostream &os, I128 n){
+  if(n<0){ os<<'-';n.n*=-1; }
+	return os<<(U128)n.n;
 }
-ostream& operator<<(ostream &os, f128 n){return os<<(f64)n;}
+ostream& operator<<(ostream &os, F128 n){return os<<f64(n.n);}
 #endif
 
 //Extensions

@@ -4,7 +4,7 @@ int main()
 {
 	cin.sync_with_stdio(false), cin.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((uint)time(0));
+	srand((u32)time(0));
 
 	int n;
 	int arr[200001];
@@ -15,8 +15,8 @@ int main()
 		arr[i] = min(arr[i]-1, n-1);
 	}
 
-	PST<ll> pst(n);
-	ull ans = 0;
+	PST<I64> pst(n);
+	u64 ans = 0;
 	forh(i, 0, n)
 	{
 		ans += pst.query(pst.ver(min(i - 1, arr[i])), i, n-1);

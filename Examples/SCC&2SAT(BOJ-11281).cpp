@@ -1,14 +1,14 @@
 #include "Core.h"
-#include "Graph.h"
+#include "DirectedGraph.h"
 
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(11);
-	srand((uint)time(0));
+	srand((u32)time(0));
 
 	int n, m;
 	cin>>n>>m;
-	Graph g(n*2);
+	DirectedGraph g(n*2);
 	forh(i, 0, m){
 		int a, b;
 		cin>>a>>b;

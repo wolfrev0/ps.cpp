@@ -1,9 +1,9 @@
 #include "Core.h"
 #include "ModNum.h"
 
-ll f(int n)
+i64 f(int n)
 {
-	ll res = 1;
+	i64 res = 1;
 	forc(i, 1, n)
 		res = res * i % mod;
 	return res;
@@ -12,7 +12,7 @@ ll f(int n)
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((uint)time(0));
+	srand((u32)time(0));
 
 	int n, k;
 	cin >> n >> k;

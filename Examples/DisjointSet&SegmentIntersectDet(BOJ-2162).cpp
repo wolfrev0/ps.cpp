@@ -5,23 +5,25 @@
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((uint)time(0));
+	srand((u32)time(0));
 
 	int n;
 	cin >> n;
-	Segment arr[3000];
-	forh(i, 0, n)
-		cin >> arr[i].s.x >> arr[i].s.y >> arr[i].e.x >> arr[i].e.y;
+	Segment<I64> arr[3000];
+	forh(i, 0, n){
+		Vec2<I64> s, e;
+		cin >> s.x.a >> s.y.a >> e.x.a >> e.y.a;
+		arr[i]=Segment{s, e};
+	}
 	DisjointSet djs(n);
 	forh(i, 0, n) {
 		forh(j, i + 1, n) {
 			try {
-				if (arr[i].intersect(arr[j]) != err)
+				if (arr[i].intersect_det(arr[j]))
 					djs.uni(i, j);
 			}
 			catch (const LineSame &e) {
-				auto li = arr[i], lj = arr[j];
-				if (arr[i].s > arr[j].e || arr[i].e < arr[j].s)
+				if (arr[i].s() > arr[j].e() || arr[i].e() < arr[j].s())
 					;
 				else
 					djs.uni(i, j);

@@ -1,10 +1,9 @@
-#include "Graph.h"
-#include "Line.h"
+#include "FlowGraph.h"
 
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((uint)time(0));
+	srand((u32)time(0));
 
 	int n, m;
 	cin >> n >> m;

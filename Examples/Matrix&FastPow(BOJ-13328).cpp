@@ -2,16 +2,13 @@
 #include "Matrix.h"
 #include "ModNum.h"
 
-//have to change Core.h !!!
-//"const int mod = int(1e9+7);" to
-//"const int mod = int(31991);"
-
 int main()
 {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((uint)time(0));
+	srand((u32)time(0));
 
+	mod = 31991;
 	int d, t;
 	cin >> d >> t;
 

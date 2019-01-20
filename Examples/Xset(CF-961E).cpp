@@ -4,7 +4,7 @@ int main()
 {
 	cin.sync_with_stdio(false), cin.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((uint)time(0));
+	srand((u32)time(0));
 
 	int n;
 	int arr[200001];
@@ -18,8 +18,8 @@ int main()
 	}
 	sort(v.begin(), v.end(), [](auto &a, auto &b){return min(a.first, a.second-1) < min(b.first, b.second-1); });
 
-	ull a = 0;
-	xmultiset<int> s;
+	u64 a = 0;
+	Xmultiset<int> s;
 	vector<int> q;
 	forh(i, 0, n){
 		if(!i || min(v[i-1].first, v[i-1].second-1) < min(v[i].first, v[i].second-1)){

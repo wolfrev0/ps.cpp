@@ -27,7 +27,7 @@ struct Graph {
 	void dijkstra(vector<T>& d, vector<pair<int, int>>& p, int s) {
 		priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> pq;//dest, v
 		d = vector<T>(n, T::inf());
-		p = vector<pair<int, int>>(n, { Regular<i32>::inf(), Regular<i32>::inf() });
+		p = vector<pair<int, int>>(n, { I32::inf(), I32::inf() });
 		d[s] = 0;
 		pq.push({ 0, s });
 		while (!pq.empty())
@@ -58,7 +58,7 @@ struct Graph {
 			for(auto& i:g[s])
 				if(i.e==e)
 					return i.w;
-			return Regular<i32>::inf();
+			return I32::inf();
 		}
 		auto& ret=memo[s][e][m];
 		if(ret!=-1)
@@ -70,7 +70,7 @@ struct Graph {
 		queue<int> q;
 		vector<bool> inq(n);
 		ub = vector<T>(n, T::inf());
-		p = vector<pair<int, int>>(n, { Regular<i32>::inf(), Regular<i32>::inf() });
+		p = vector<pair<int, int>>(n, { I32::inf(), I32::inf() });
 
 		ub[s] = 0;
 		inq[s] = true;
@@ -101,12 +101,12 @@ struct Graph {
 		vector<Edge> ret;
 		vector<bool> vis(n);
 		priority_queue<Edge, vector<Edge>, greater<Edge>> q;
-		q.push({ 0, Regular<i32>::inf(), 0 });
+		q.push({ 0, I32::inf(), 0 });
 		while (q.size()) {
 			auto cur = q.top();
 			q.pop();
 
-			auto curv = cur.s == Regular<i32>::inf() ? 0 : g[cur.s][cur.ei].e;
+			auto curv = cur.s == I32::inf() ? 0 : g[cur.s][cur.ei].e;
 			if (vis[curv])
 				continue;
 			vis[curv] = true;

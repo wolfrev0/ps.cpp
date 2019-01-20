@@ -86,7 +86,7 @@ vector<int> suffix_array(const string &s){
 		sa[i]=i, ord[i]=s[i];
 	
 	ord[n]=-1;
-	for(uint i=1;i<n;i*=2){
+	for(int i=1;i<n;i*=2){
 		sort(sa.begin(), sa.end(), [&](const int &a, const int &b){return cmp(a, b, ord, i);});
 		//This is O(N log N) but too high constant -> slower than O(N log^2 N)
 		//counting_sort(sa, {[&](const int& x){return ord[min(i+x, (uint)n)];}});
@@ -126,7 +126,7 @@ vector<int> get_lcp(const string &s, const vector<int> &sa){
 
 //jh05013's code, O(NlogN)
 vector<int> suffix_array2(const string &s){
-    int n = (int)s.size(), c = 0;
+    int n = s.size(), c = 0;
     vector<int> temp(n), pos2bckt(n), bckt(n), bpos(n), out(n);
     for(int i=0; i<n; i++) out[i] = i;
     sort(out.begin(), out.end(), [&](int a, int b){return s[a] < s[b];});
