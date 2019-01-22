@@ -32,7 +32,7 @@
         {
             "label": "Run",
             "type": "shell",
-            "command": "bash -c ./a.out < ./input",
+            "command": "bash -c './xcuter.out a.out' < ./input",
             "problemMatcher": []
         }
     ]

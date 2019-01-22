@@ -1,10 +1,9 @@
 Debug/
 src/
 output.cpp
-a.exe
 a.out
-merger.exe
 merger.out
+xcuter.out
 input
 output
 .vscode/c_cpp_properties.json
