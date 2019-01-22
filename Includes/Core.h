@@ -13,7 +13,6 @@ const i32 prime=i32(2e9 + 11);
 const f64 pi=acos(-1);
 const f64 eps=1e-12;
 i32 mod=i32(1e9 + 7);
-#define endl '\n'
 #define forh(var, begin, end) for(int var=begin; (int)begin<=var && var<(int)end; ++var)//for: half-opened range
 #define forhi(var, begin, end) for(int var=end-1; (int)begin<=var && var<(int)end; --var)//inversion
 #define forho(var, begin, end) int var=begin; for(; (int)begin<=var && var<(int)end; ++var)//out declaration

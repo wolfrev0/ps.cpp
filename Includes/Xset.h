@@ -17,6 +17,7 @@ struct Xmultiset{
     void insert(const T& v){ s.insert({v, counter++}); }
     void erase(const typename Xset<pair<T, int>>::iterator& it){ s.erase(it); }
     int order_of_key(const T& v)const{ return s.order_of_key({v, counter}); }
+    auto find_by_order(int ord)const{ return s.find_by_order(ord); }
     int count(const T& v)const{ return order_of_key(v)-order_of_key(v-1); }
     int size()const{ return s.size(); }
 private:

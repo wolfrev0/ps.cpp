@@ -13,7 +13,7 @@ struct PST{
 	const int n;
 	const function<T(T,T)> f;
 	vector<Node> vers;
-	Node *base=new PST<T>::Node(0);
+	Node* base=new PST<T>::Node(0);
 
 	PST(int n, const function<T(T,T)>& f=[](T a, T b){return a+b;}):n(n), f(f), vers(n){
 		build_base(base, 0, n-1);
@@ -30,10 +30,8 @@ struct PST{
 	}
 
 private:
-	void build_base(Node* node, int low, int high)
-	{
-		if (low == high)
-		{
+	void build_base(Node* node, int low, int high){
+		if (low == high){
 			node->val = 0;
 			return;
 		}
@@ -44,34 +42,28 @@ private:
 		build_base(node->r, mid + 1, high);
 		node->val = f(node->l->val, node->r->val);
 	}
-	void upgrade2(Node* prev, Node* cur, int idx, T value, int low, int high)
-	{
+	void upgrade2(Node* prev, Node* cur, int idx, T value, int low, int high){
 		if (idx > high or idx < low or low > high)
 			return;
 
-		if (low == high)
-		{
+		if (low == high){
 			cur->val = value;
 			return;
 		}
 		int mid = (low + high) / 2;
-		if (idx <= mid)
-		{
+		if (idx <= mid){
 			cur->r = prev->r;
-			cur->l = new Node(0);
+			cur->l = new Node(0);//id
 			upgrade2(prev->l, cur->l, idx, value, low, mid);
-		}
-		else
-		{
+		}else{
 			cur->l = prev->l;
-			cur->r = new Node(0);
+			cur->r = new Node(0);//id
 			upgrade2(prev->r, cur->r, idx, value, mid + 1, high);
 		}
 		cur->val = f(cur->l->val, cur->r->val);
 	}
 
-	T query2(Node* node, int l, int r, int low, int high)
-	{
+	T query2(Node* node, int l, int r, int low, int high){
 		if (l > high or r < low or low > high)
 			return 0;
 		if (l <= low and high <= r)
