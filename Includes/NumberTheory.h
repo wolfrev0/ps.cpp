@@ -11,25 +11,12 @@ T fastpow(const T& a, int p) {
 	return tmp * tmp;
 }
 
-i64 xgcd(i64 a, i64 b, i64& x, i64& y) {
-	if (a == 0) {
-		x = 0;
-		y = 1;
-		return b;
-	}
-
-	i64 xtmp, ytmp;
-	i64 g = xgcd(b%a, a, xtmp, ytmp);
-	x = ytmp - (b / a) * xtmp;
-	y = xtmp;
-	return g;
-}
-
-pair<i64, i64> xgcd2(i64 a, i64 b) {
-	if (b == 0)
-		return { 1,0 };
-	auto t = xgcd2(b, a%b);
-	return { t.second,t.first - t.second*(a / b) };
+struct XGCD{i64 g, i64 x, i64 y};
+XGCD xgcd(i64 a, i64 b) {
+    if (b == 0)
+        return {a, 1, 0};
+    auto res = xgcd(b, a%b);
+    return make_tuple(res.g, res.y, res.x-(a/b)*res.y);
 }
 
 vector<i64> factorization(i64 n)
