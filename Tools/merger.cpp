@@ -71,7 +71,7 @@ int main(int argc, char ** argv){
 	}
 	solve(fn, hdir);
 	auto ord = g.topo_sort();
-	ofstream out("output.cpp");
+	ofstream out("src/output.cpp");
 	for (auto i : ord)
 	{
         if(!im[i])
