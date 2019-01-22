@@ -1,6 +1,5 @@
 #pragma once
 #include "Core.h"
-//upperbound of 2^(ceil(log2(n))+1)/n is 4. (plot floor(2^(ceil(log2(x))+1)/x) from x=0 to 100000000)
 
 template<typename T>
 struct SegmentTree{
@@ -16,7 +15,6 @@ struct SegmentTree{
 			tree[p >> 1] = f(tree[p], tree[p ^ 1]);
 	}
 	
-	//half opened interval [begin, end)
 	T query(int begin, int end) {
 		T res = init_val;
 		for (begin += n, end += n; begin < end; begin >>= 1, end >>= 1) {
@@ -27,6 +25,7 @@ struct SegmentTree{
 	}
 };
 
+//upperbound of 2^(ceil(log2(n))+1)/n is 4. (plot floor(2^(ceil(log2(x))+1)/x) from x=0 to 100000000)
 template<typename T>
 struct SegmentTreeLazy
 {
