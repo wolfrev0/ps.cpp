@@ -3,58 +3,73 @@
 
 struct SplayTree{
   struct Node{
-    Node *p, *l, *r;
-    int cnt=0;
+    Node *p=nullptr, *l=nullptr, *r=nullptr;
+    int size=0;
     i64 val=0, acc=0;
 
+    void adoptL(Node* n){l=n; if(n)n->p=this;}
+    void adoptR(Node* n){r=n; if(n)n->p=this;}
+
     void renew(){
-      cnt=1;
+      size=1;
       acc = val;
       if (l) {
-        cnt += l->cnt;
+        size += l->size;
         acc += l->acc;
       }
       if (r) {
-        cnt += r->cnt;
+        size += r->size;
         acc += r->acc;
       }
+    }
+
+    Node* nth(int n){
+      int lsz = l?l->size:0;
+      if(lsz>n)
+        return l->nth(n);
+      if(lsz<n)
+        return r->nth(n-lsz-1);
+      return this;
     }
   };
   Node* root;
   int n;
 
   SplayTree(int n):n(n){
-    Node *x;
-    int i;
-    root = x = new Node();
-    x->l = x->r = x->p = nullptr;
-    x->cnt = n;
-    x->acc = x->val = 0;
-    for (i = 1; i < n; i++) {
-        x->r = new Node();
-        x->r->p = x;
-        x = x->r;
-        x->l = x->r = nullptr;
-        x->cnt = n - i;
-        x->acc = x->val = 0;
+    Node* x = new Node();
+    root=x;
+    x->size = n;
+    forh(i, 1, n){
+      x->adoptR(new Node());
+      x->r->size = n - i;
+      x=x->r;
     }
   }
 
   void rotate(Node* x){
+    if(!x->p)
+      return;
+    
     auto p = x->p;
-    Node* b;
-    if (x == p->l) {
-        p->l = b = x->r;
-        x->r = p;
-    } else {
-        p->r = b = x->l;
-        x->l = p;
-    }
+    //Mock Adopter?
+    if(!p->p)
+      root=x;
+    else if(p->p->l == p)
+      p->p->l=x;
+    else
+      p->p->r=x;
     x->p = p->p;
-    p->p = x;
-    if (b)
-      b->p = p;
-    (x->p ? p == x->p->l ? x->p->l : x->p->r : root) = x;
+
+    Node* mid;
+    if (x == p->l) {
+        p->adoptL(mid=x->r);
+        x->adoptR(p);
+    } else {
+        p->adoptR(mid=x->l);
+        x->adoptL(p);
+    }
+    if (mid)
+      mid->p = p;
     p->renew();
     x->renew();
   }
@@ -68,39 +83,24 @@ struct SplayTree{
       rotate(x);
     }
   }
-  void nth(int n) {
-    auto x = root;
-    while (true) {
-      while (x->l && x->l->cnt > n)
-        x = x->l;
-      if (x->l)
-        n -= x->l->cnt;
-      if (!n--)
-        break;
-      x = x->r;
-    }
-    splay(x);
-  }
 
   void add(int i, i64 z) {
-    nth(i);
+    splay(root->nth(i));
     root->acc += z;
     root->val += z;
   }
   
-  void interval(int l, int r) {
-    nth(l - 1);
-    Node *x = root;
-    root = x->r;
-    root->p = NULL;
-    nth(r - l + 1);
-    x->r = root;
-    root->p = x;
-    root = x;
-  }
-  
   i64 sum(int l, int r) {
-    interval(l, r);
+    splay(root->nth(l-1));
+    
+    auto sav = root;
+    root->r->p=nullptr;
+    root=root->r;
+    splay(root->nth(r+1 - (sav->l?sav->l->size:0)-1));
+    sav->r=root;
+    root->p=sav;
+    root=sav;
+    
     return root->r->l->acc;
   }
 };
@@ -118,7 +118,7 @@ struct SplayTree{
 //       return ret;
 //     }
 //     Node *p, *l, *r;
-//     i64 val=0, acc=0, cnt=0;
+//     i64 val=0, acc=0, size=0;
 
 //     //move to position of root
 //     void splay(Node*& root){
@@ -130,9 +130,9 @@ struct SplayTree{
 //     }
 
 //     Node* nth(i64 ord){
-//       if(cnt-1-r->cnt > ord)
+//       if(size-1-r->size > ord)
 //         return l->nth(ord);
-//       else if(cnt-1-r->cnt<ord)
+//       else if(size-1-r->size<ord)
 //         return r->nth(ord);
 //       return this;
 //     }
@@ -163,7 +163,7 @@ struct SplayTree{
 //     }
 
 //     void renew(){
-//       cnt = 1+l->cnt+r->cnt;
+//       size = 1+l->size+r->size;
 //       acc = val+l->acc+r->acc;
 //     }
 //   };
@@ -171,18 +171,18 @@ struct SplayTree{
 //   Node* root;
 
 //   SplayTree(i64 n, i64 id=0, i64 lazyid=0){
-//     auto prev=root=Node::create();
-//     root->cnt=n;
+//     auto x=root=Node::create();
+//     root->size=n;
 //     forh(i, 0, n-1){
 //       auto cur=Node::create();
-//       cur->cnt=prev->cnt-1-i;
-//       cur->p=prev;
-//       prev->r=cur;
-//       prev=cur;
+//       cur->size=x->size-1-i;
+//       cur->p=x;
+//       x->r=cur;
+//       x=cur;
 //     }
 //     auto dummy = Node::null;
 //     dummy->r=root;
-//     dummy->l=prev;
+//     dummy->l=x;
 //   }
 
 //   Node* nth(i64 ord){
