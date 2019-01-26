@@ -20,7 +20,7 @@ i32 mod=i32(1e9 + 7);
 #define forc(var, begin, end) for(int var=begin; (int)begin<=var && var<=(int)end; ++var)//for: closed range
 #define forci(var, begin, end) for(int var=end; (int)begin<=var && var<=(int)end; --var)//inversion
 #define forco(var, begin, end) int var=begin; for(; (int)begin<=var && var<=(int)end; ++var)//out declaration
-#define forcoi(var, begin, end) int var=end; for(; (int)begin<=var && var<=(int)end; --var)//inversion
+#define forcoi(var, begin, end) int var=end; for(; (int)begin<=var && var<=(int)end; --var)
 #define trav(var, begin, cond) for(int var=begin; cond; ++var)//travel
 #define travo(var, begin, cond) int var=begin; for(; cond; ++var)//out declaration
 
