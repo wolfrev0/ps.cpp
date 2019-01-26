@@ -26,7 +26,7 @@ struct Graph {
 
 	void dijkstra(vector<T>& d, vector<pair<int, int>>& p, int s) {
 		priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> pq;//dest, v
-		d = vector<T>(n, T::inf());
+		d = vector<T>(n, I32::inf());
 		p = vector<pair<int, int>>(n, { I32::inf(), I32::inf() });
 		d[s] = 0;
 		pq.push({ 0, s });
