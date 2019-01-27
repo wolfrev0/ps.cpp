@@ -30,26 +30,25 @@ template<typename T>
 struct SegmentTreeLazy
 {
 	SegmentTreeLazy(
-		int n, T id, T lazy_null,
+		int n, T id_upd, T id_qry,
 		const function<T(T, T)>& segf,
 		const function<T(int, int, T, T)>& lazyf,
 		const function<T(T, T)>& propaf)
-		:n(n), id(id), lazy_null(lazy_null), segf(segf), lazyf(lazyf), propaf(propaf), tree(4*n, id), lazy(4*n, lazy_null)
+		:n(n), id_upd(id_upd), id_qry(id_qry), segf(segf), lazyf(lazyf), propaf(propaf), tree(4*n, id_upd), lazy(4*n, id_upd)
 	{}
 	SegmentTreeLazy(
 		int n=0,
-		T id=T::zero(),
-		T lazy_null=T::zero())
-		:n(n), id(id), lazy_null(lazy_null),
+		T id_upd=T::zero(),
+		T id_qry=T::zero())
+		:n(n), id_upd(id_upd), id_qry(id_qry),
 		segf([](T a, T b) {return a + b; }),
-		lazyf([id, lazy_null](int s, int e, T tval, T lval) {return tval + (lval != lazy_null ? lval : id) * (e - s); }),
-		propaf([id, lazy_null](T lval, T val) { return (lval != lazy_null ? lval : id) + val; }),
-		tree(4*n, id), lazy(4*n, lazy_null)
+		lazyf([id_upd, id_upd](int s, int e, T tval, T lval) {return tval + (lval != id_upd ? lval : id_upd) * (e - s); }),
+		propaf([id_upd, id_upd](T lval, T val) { return (lval != id_upd ? lval : id_upd) + val; }),
+		tree(4*n, id_upd), lazy(4*n, id_upd)
 	{}
 
 	const int n;
-	const T id;
-	const T lazy_null;
+	const T id_upd, id_qry;
 	const function<T(T, T)> segf;
 	const function<T(int, int, T, T)> lazyf;
 	const function<T(T, T)> propaf;
@@ -61,13 +60,13 @@ struct SegmentTreeLazy
 	T query(int s, int e) { return query2(1, 0, n, s, e); }
 private:
 	void update_lazy(int cur, int cs, int ce) {
-		if (lazy[cur] != lazy_null) {
+		if (lazy[cur] != id_upd) {
 			tree[cur] = lazyf(cs, ce, tree[cur], lazy[cur]);
 			if (ce-cs>1) {
 				lazy[cur * 2] = propaf(lazy[cur * 2], lazy[cur]);
 				lazy[cur * 2 + 1] = propaf(lazy[cur * 2 + 1], lazy[cur]);
 			}
-			lazy[cur] = lazy_null;
+			lazy[cur] = id_upd;
 		}
 	}
 
@@ -88,7 +87,7 @@ private:
 	T query2(int cur, int cs, int ce, int s, int e) {
 		update_lazy(cur, cs, ce);
 		if (s >= ce || e <= cs)
-			return id;
+			return id_qry;
 		if (s <= cs && ce <= e)
 			return tree[cur];
 		return segf(query2(cur * 2, cs, (cs + ce) / 2, s, e), query2(cur * 2 + 1, (cs + ce) / 2, ce, s, e));
