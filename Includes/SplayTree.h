@@ -85,19 +85,19 @@ struct SplayTree{
     }
   }
 
-  void add(int i, i64 z) {
+  void update(int i, i64 z) {
     splay(root->nth(i));
     root->acc += z;
     root->val += z;
   }
   
-  i64 sum(int l, int r) {
-    splay(root->nth(l-1));
+  i64 query(int s, int e) {
+    splay(root->nth(s-1));
     
     auto sav = root;
     root->r->p=nullptr;
     root=root->r;
-    splay(root->nth(r+1 - (sav->l?sav->l->size:0)-1));
+    splay(root->nth(e - (sav->l?sav->l->size:0)-1));
     sav->r=root;
     root->p=sav;
     root=sav;
