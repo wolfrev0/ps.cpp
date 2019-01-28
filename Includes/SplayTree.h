@@ -57,14 +57,14 @@ private:
     x->acc=x->val+acc(x->l)+acc(x->r);
   }
 
-  Node* nth(Node* cur, int n){
-    assert(cur);
-    int lsz=size(cur->l);
+  Node* nth(Node* x, int n){
+    assert(x);
+    int lsz=size(x->l);
     if(lsz>n+1)
-      return nth(cur->l, n);
+      return nth(x->l, n);
     if(lsz<n+1)
-      return nth(cur->r, n-lsz-1);
-    return cur;
+      return nth(x->r, n-lsz-1);
+    return x;
   }
 
   void splay(Node *x) {
