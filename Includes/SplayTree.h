@@ -4,33 +4,11 @@
 struct SplayTree{
   struct Node{
     Node *p=nullptr, *l=nullptr, *r=nullptr;
-    int size=0;
+    int sz=0;
     i64 val=0, acc=0;
 
     void adoptL(Node* n){l=n; if(n)n->p=this;}
     void adoptR(Node* n){r=n; if(n)n->p=this;}
-
-    void renew(){
-      size=1;
-      acc = val;
-      if (l) {
-        size += l->size;
-        acc += l->acc;
-      }
-      if (r) {
-        size += r->size;
-        acc += r->acc;
-      }
-    }
-
-    Node* nth(int n){
-      int lsz = l?l->size:0;
-      if(lsz>n+1)
-        return l->nth(n);
-      if(lsz<n+1)
-        return r->nth(n-lsz-1);
-      return this;
-    }
   };
   Node* root;
   int n;
@@ -39,11 +17,63 @@ struct SplayTree{
     Node* x = new Node();
     root=x;
     //+2 is Left(-1) Right(n) mock nodes
-    x->size = n+2;
+    x->sz = n+2;
     forh(i, 1, n+2){
       x->adoptR(new Node());
-      x->r->size = n+2 - i;
+      x->r->sz = n+2 - i;
       x=x->r;
+    }
+  }
+
+  void update(int i, i64 z) {
+    splay(nth(root, i));
+    root->acc += z;
+    root->val += z;
+  }
+  
+  i64 query(int s, int e) {
+    splay(nth(root, s-1));
+    
+    auto sav = root;
+    root->r->p=nullptr;
+    root=root->r;
+    splay(nth(root, e - size(sav->l)-1));
+    sav->r=root;
+    root->p=sav;
+    root=sav;
+    
+    return root->r->l->acc;
+  }
+
+private:
+  const int id=0;
+  inline int size(Node* x)const{return x?x->sz:0;}
+  inline i64 acc(Node* x)const{return x?x->acc:id;}
+
+  void renew(Node* x){
+    if(!x)
+      return;
+    x->sz=1+size(x->l)+size(x->r);
+    x->acc=x->val+acc(x->l)+acc(x->r);
+  }
+
+  Node* nth(Node* cur, int n){
+    assert(cur);
+    int lsz=size(cur->l);
+    if(lsz>n+1)
+      return nth(cur->l, n);
+    if(lsz<n+1)
+      return nth(cur->r, n-lsz-1);
+    return cur;
+  }
+
+  void splay(Node *x) {
+    while (x->p) {
+      auto p = x->p;
+      auto pp = p->p;
+      if (pp)
+        rotate((x == p->l) == (p == pp->l) ? p : x);
+      rotate(x);
     }
   }
 
@@ -52,7 +82,6 @@ struct SplayTree{
       return;
     
     auto p = x->p;
-    //Mock Adopter?
     if(!p->p)
       root=x;
     else if(p->p->l == p)
@@ -71,37 +100,7 @@ struct SplayTree{
     }
     if (mid)
       mid->p = p;
-    p->renew();
-    x->renew();
-  }
-
-  void splay(Node *x) {
-    while (x->p) {
-      auto p = x->p;
-      auto pp = p->p;
-      if (pp)
-        rotate((x == p->l) == (p == pp->l) ? p : x);
-      rotate(x);
-    }
-  }
-
-  void update(int i, i64 z) {
-    splay(root->nth(i));
-    root->acc += z;
-    root->val += z;
-  }
-  
-  i64 query(int s, int e) {
-    splay(root->nth(s-1));
-    
-    auto sav = root;
-    root->r->p=nullptr;
-    root=root->r;
-    splay(root->nth(e - (sav->l?sav->l->size:0)-1));
-    sav->r=root;
-    root->p=sav;
-    root=sav;
-    
-    return root->r->l->acc;
+    renew(p);
+    renew(x);
   }
 };
