@@ -3,11 +3,6 @@
 
 template<typename T>
 struct SegmentTree{
-	const int n;
-	const function<T(T,T)> f;
-	const T init_val;
-	vector<T> tree;
-
 	SegmentTree(int n, const function<T(T,T)> &f=[](T a, T b){return a+b;}, const T &init_val=0):n(n),f(f),init_val(init_val),tree(2*n, init_val){}
 
 	void update(int p, T value) {
@@ -23,6 +18,12 @@ struct SegmentTree{
 		}
 		return res;
 	}
+
+private:
+	const int n;
+	const function<T(T,T)> f;
+	const T init_val;
+	vector<T> tree;
 };
 
 //upperbound of 2^(ceil(log2(n))+1)/n is 4. (plot floor(2^(ceil(log2(x))+1)/x) from x=0 to 100000000)
@@ -47,6 +48,10 @@ struct SegmentTreeLazy
 		tree(4*n, id_upd), lazy(4*n, id_upd)
 	{}
 
+	void update(int p, T val) { update_range(1, 0, n, p, p+1, val); }
+	void update(int s, int e, T val) { update_range(1, 0, n, s, e, val); }
+	T query(int s, int e) { return query2(1, 0, n, s, e); }
+private:
 	const int n;
 	const T id_upd, id_qry;
 	const function<T(T, T)> segf;
@@ -55,10 +60,6 @@ struct SegmentTreeLazy
 	vector<T> tree;
 	vector<T> lazy;
 
-	void update(int p, T val) { update_range(1, 0, n, p, p+1, val); }
-	void update(int s, int e, T val) { update_range(1, 0, n, s, e, val); }
-	T query(int s, int e) { return query2(1, 0, n, s, e); }
-private:
 	void update_lazy(int cur, int cs, int ce) {
 		if (lazy[cur] != id_upd) {
 			tree[cur] = lazyf(cs, ce, tree[cur], lazy[cur]);
