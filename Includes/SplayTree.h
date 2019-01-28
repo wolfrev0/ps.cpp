@@ -25,17 +25,7 @@ struct SplayTree{
   }
   
   i64 query(int s, int e) {
-    splay(nth(root, s-1));
-    
-    auto sav = root;
-    root->r->p=nullptr;
-    root=root->r;
-    splay(nth(root, e - size(sav->l)-1));
-    sav->r=root;
-    root->p=sav;
-    root=sav;
-    
-    return root->r->l->acc;
+    return interval(s, e)->acc;
   }
 
 private:
@@ -123,5 +113,18 @@ private:
       mid->p = p;
     renew(p);
     renew(x);
+  }
+
+  Node* interval(int s, int e){
+    splay(nth(root, s-1));
+    
+    auto sav = root;
+    root->r->p=nullptr;
+    root=root->r;
+    splay(nth(root, e - size(sav->l)-1));
+    sav->r=root;
+    root->p=sav;
+    root=sav;
+    return root->r->l;
   }
 };
