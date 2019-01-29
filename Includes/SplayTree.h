@@ -9,13 +9,11 @@ struct SplayTree{
     :n(n), id_upd(id_upd), id_qry(id_qry), queryf(queryf), lazyf(lazyf), propaf(propaf)
   { build(); }
 
-	SplayTree(
-		int n=0,
-		i64 id_upd=I64::zero(),
-		i64 id_qry=I64::zero())
-		:SplayTree(n, id_upd, id_qry,[](i64 a, i64 b) {return a + b; },
-    [id_upd, id_qry](int cnt, i64 tval, i64 lval) {return tval + lval * cnt; }, 
-    [id_upd, id_qry](i64 lval, i64 val) { return lval + val; })
+	SplayTree(int n=0)
+		:SplayTree(n, I64::zero(), I64::zero(),
+    [](i64 a, i64 b) {return a + b; },
+    [](int cnt, i64 tval, i64 lval) {return tval + lval * cnt; }, 
+    [](i64 lval, i64 val) { return lval + val; })
   {}
 
   void update(int i, i64 val) {
