@@ -2,17 +2,17 @@
 #include "Core.h"
 
 struct SplayTree{
-  SplayTree(int n, i64 id_upd, i64 id_qry,
+  SplayTree(int n, i64 id_qry, i64 id_upd,
     const function<i64(i64, i64)>& queryf,
-	  const function<i64(int, i64, i64)>& lazyf,
+	  const function<i64(i64, i64, int)>& updf,
 	  const function<i64(i64, i64)>& propaf)
-    :n(n), id_upd(id_upd), id_qry(id_qry), queryf(queryf), lazyf(lazyf), propaf(propaf)
+    :n(n), id_qry(id_qry), id_upd(id_upd), queryf(queryf), updf(updf), propaf(propaf)
   { build(); }
 
 	SplayTree(int n=0)
 		:SplayTree(n, I64::zero(), I64::zero(),
     [](i64 a, i64 b) {return a + b; },
-    [](int cnt, i64 tval, i64 lval) {return tval + lval * cnt; }, 
+    [](i64 tval, i64 lval, int cnt) {return tval + lval * cnt; }, 
     [](i64 lval, i64 val) { return lval + val; })
   {}
 
@@ -42,9 +42,9 @@ private:
 
   Node* root;
   int n;
-  const int id_upd, id_qry;
+  const int id_qry, id_upd;
 	const function<i64(i64, i64)> queryf;
-	const function<i64(int, i64, i64)> lazyf;
+	const function<i64(i64, i64, int cnt)> updf;
 	const function<i64(i64, i64)> propaf;
 
   inline int size(Node* x)const{return x?x->sz:0;}
@@ -150,8 +150,8 @@ private:
     if(x->lazy == id_upd)
       return;
 
-    x->val=lazyf(1, x->val, x->lazy);
-    x->acc=lazyf(x->sz, x->acc, x->lazy);
+    x->val=updf(x->val, x->lazy, 1);
+    x->acc=updf(x->acc, x->lazy, x->sz);
     if(x->l){
       x->l->lazy=propaf(x->l->lazy, x->lazy);
     }
