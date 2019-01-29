@@ -55,12 +55,12 @@ private:
     root=x;
     //+2 is Left(-1) Right(n) mock nodes
     x->sz = n+2;
-    x->val=x->acc=id_qry;
+    x->val=x->acc=id_upd;
     x->lazy=id_upd;
     forh(i, 1, n+2){
       x->adoptR(new Node());
       x->r->sz = n+2 - i;
-      x->r->val=x->r->acc=id_qry;
+      x->r->val=x->r->acc=id_upd;
       x->r->lazy=id_upd;
       x=x->r;
     }
