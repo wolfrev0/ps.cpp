@@ -37,6 +37,8 @@ Making an algorithms and data structures library in order to solve algorithm pro
   <li>Fractional</li>
   <li>Integer Arithmetic(More accurate)</li>
   <li>Berlekamp Massey Algorithm(comming soon)</li></ol>
+ <h3>Convolution</h3>
+ fft,karatuba
 <h3>2D Geometry</h3>
   <h4>Vector</h4><ol>
     <li>Basic Vector Operations</li>
