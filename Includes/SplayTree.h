@@ -50,16 +50,20 @@ private:
 	const function<i64(i64, i64)> propaf;
 
   inline int size(Node* x)const{return x?x->sz:0;}
-  inline i64 acc(Node* x)const{return x?x->acc:id_upd;}
+  inline i64 acc(Node* x)const{return x?x->acc:id_qry;}
 
   void build(){
     Node* x = new Node();
     root=x;
     //+2 is Left(-1) Right(n) mock nodes
     x->sz = n+2;
+    x->val=x->acc=id_qry;
+    x->lazy=id_upd;
     forh(i, 1, n+2){
       x->adoptR(new Node());
       x->r->sz = n+2 - i;
+      x->r->val=x->r->acc=id_qry;
+      x->r->lazy=id_upd;
       x=x->r;
     }
   }
@@ -69,7 +73,7 @@ private:
     if(!x)
       return;
     x->sz=1+size(x->l)+size(x->r);
-    x->acc=x->val+acc(x->l)+acc(x->r);
+    x->acc=queryf(x->val, queryf(acc(x->l), acc(x->r)));
 
     if(parent)
       renew(x->p, parent);
@@ -145,6 +149,9 @@ private:
   void update_lazy(Node* x){
     if(!x)
       return;
+    if(x->lazy == id_upd)
+      return;
+
     x->val=lazyf(1, x->val, x->lazy);
     x->acc=lazyf(x->sz, x->acc, x->lazy);
     if(x->l){
