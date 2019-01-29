@@ -31,20 +31,17 @@ template<typename T>
 struct SegmentTreeLazy
 {
 	SegmentTreeLazy(
-		int n, T id_upd, T id_qry,
+		int n, T id_qry, T id_upd,
 		const function<T(T, T)>& queryf,
-		const function<T(int, int, T, T)>& lazyf,
+		const function<T(T, T, int)>& updf,
 		const function<T(T, T)>& propaf)
-		:n(n), id_upd(id_upd), id_qry(id_qry), queryf(queryf), lazyf(lazyf), propaf(propaf), tree(4*n, id_upd), lazy(4*n, id_upd)
+		:n(n), id_qry(id_qry), id_upd(id_upd), queryf(queryf), updf(updf), propaf(propaf), tree(4*n, id_upd), lazy(4*n, id_upd)
 	{}
-	SegmentTreeLazy(
-		int n=0,
-		T id_upd=T::zero(),
-		T id_qry=T::zero())
-		:n(n), id_upd(id_upd), id_qry(id_qry),
+	SegmentTreeLazy(int n=0)
+		:n(n), id_qry(id_qry), id_upd(id_upd),
 		queryf([](T a, T b) {return a + b; }),
-		lazyf([id_upd, id_upd](int s, int e, T tval, T lval) {return tval + (lval != id_upd ? lval : id_upd) * (e - s); }),
-		propaf([id_upd, id_upd](T lval, T val) { return (lval != id_upd ? lval : id_upd) + val; }),
+		updf([](T tval, T lval, int cnt) {return tval + lval * cnt; }),
+		propaf([](T lval, T val) { return lval + val; }),
 		tree(4*n, id_upd), lazy(4*n, id_upd)
 	{}
 
@@ -53,16 +50,16 @@ struct SegmentTreeLazy
 	T query(int s, int e) { return query2(1, 0, n, s, e); }
 private:
 	const int n;
-	const T id_upd, id_qry;
+	const T id_qry, id_upd;
 	const function<T(T, T)> queryf;
-	const function<T(int, int, T, T)> lazyf;
+	const function<T(T, T, int)> updf;
 	const function<T(T, T)> propaf;
 	vector<T> tree;
 	vector<T> lazy;
 
 	void update_lazy(int cur, int cs, int ce) {
 		if (lazy[cur] != id_upd) {
-			tree[cur] = lazyf(cs, ce, tree[cur], lazy[cur]);
+			tree[cur] = updf(tree[cur], lazy[cur], ce-cs);
 			if (ce-cs>1) {
 				lazy[cur * 2] = propaf(lazy[cur * 2], lazy[cur]);
 				lazy[cur * 2 + 1] = propaf(lazy[cur * 2 + 1], lazy[cur]);
