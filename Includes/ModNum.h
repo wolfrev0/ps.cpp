@@ -37,14 +37,13 @@ private:
 	i64 n;
 
 	inline ModNum inv(const ModNum &b)const {
-		i64 x, y;
-		i64 g = xgcd(b.val(), -mod, x, y);
-		if (1 % g)
+		auto res = xgcd(b.val(), -mod);
+		if (1 % res.g)
 			throw NoModInv();
-		x *= 1 / g;
-		while (x < 0)
-			x += -mod / g;
-		return x;
+		res.x *= 1 / res.g;
+		while (res.x < 0)
+			res.x += -mod / res.g;
+		return res.x;
 	}
 };
 
