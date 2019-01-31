@@ -1,80 +1,87 @@
 #pragma once
 #include "Core.h"
 
+template<typename T>
 struct SplayTree{
-  SplayTree(int n, i64 id_qry, i64 id_upd,
-    const function<i64(i64, i64)>& queryf,
-	  const function<i64(i64, i64, int)>& updf,
-	  const function<i64(i64, i64)>& propaf)
+  SplayTree(int n, T id_qry, T id_upd,
+    const function<T(T, T)>& queryf,
+	  const function<T(T, T, int)>& updf,
+	  const function<T(T, T)>& propaf)
     :n(n), id_qry(id_qry), id_upd(id_upd), queryf(queryf), updf(updf), propaf(propaf)
-  { build(); }
+  {
+    root=new_node();
+    root->adoptR(new_node());
+    renew(root);
+    
+    forh(i, 0, n)
+      insert(0);
+  }
 
 	SplayTree(int n=0)
-		:SplayTree(n, I64::zero(), I64::zero(),
-    [](i64 a, i64 b) {return a + b; },
-    [](i64 tval, i64 lval, int cnt) {return tval + lval * cnt; }, 
-    [](i64 lval, i64 val) { return lval + val; })
+		:SplayTree(n, T::zero(), T::zero(),
+    [](T a, T b) {return a + b; },
+    [](T tval, T lval, int cnt) {return tval + lval * cnt; }, 
+    [](T lval, T val) { return lval + val; })
   {}
 
-  void update(int i, i64 val) {
+  void update(int i, T val) {
     update(i, i+1, val);
   }
 
-  void update(int s, int e, i64 val){
-    auto x=interval(s, e);
+  void update(int s, int e, T val){
+    auto x=interval(s+1, e+1);
     x->lazy=propaf(x->lazy, val);
   }
   
-  i64 query(int s, int e) {
-    return interval(s, e)->acc;
+  T query(int s, int e){
+    return interval(s+1, e+1)->acc;
   }
 
-private:
+  void insert(int ord){
+    splay(nth(root, ord+1));
+    auto r = root->r;
+    root->adoptR(new_node());
+    root->r->adoptR(r);
+    renew(root->r, true);
+  }
+
+  int size()const{return root?root->sz:0;}
+protected:
   struct Node{
     Node *p=nullptr, *l=nullptr, *r=nullptr;
-    int sz=0;
-    i64 val=0, acc=0;
-    i64 lazy=0;
+    int sz=1;
+    T val=0, acc=0;
+    T lazy=0;
 
     void adoptL(Node* n){l=n; if(n)n->p=this;}
     void adoptR(Node* n){r=n; if(n)n->p=this;}
   };
 
-  Node* root;
+  Node* root=nullptr;
   int n;
   const int id_qry, id_upd;
-	const function<i64(i64, i64)> queryf;
-	const function<i64(i64, i64, int cnt)> updf;
-	const function<i64(i64, i64)> propaf;
+	const function<T(T, T)> queryf;
+	const function<T(T, T, int cnt)> updf;
+	const function<T(T, T)> propaf;
 
-  inline int size(Node* x)const{return x?x->sz:0;}
-  inline i64 acc(Node* x)const{return x?x->acc:id_qry;}
+  int size(Node* x)const{return x?x->sz:0;}
+  T acc(Node* x)const{return x?x->acc:id_qry;}
 
-  void build(){
-    Node* x = new Node();
-    root=x;
-    //+2 is Left(-1) Right(n) mock nodes
-    x->sz = n+2;
-    x->val=x->acc=id_upd;
-    x->lazy=id_upd;
-    forh(i, 1, n+2){
-      x->adoptR(new Node());
-      x->r->sz = n+2 - i;
-      x->r->val=x->r->acc=id_upd;
-      x->r->lazy=id_upd;
-      x=x->r;
-    }
+  Node* new_node(){
+    auto ret = new Node();
+    ret->val = ret->acc = ret->lazy = id_upd;
+    return ret;
   }
 
   //children should be renewed.
-  void renew(Node* x, bool parent = false){
+  void renew(Node* x, bool with_ancestor = false){
     if(!x)
       return;
     x->sz=1+size(x->l)+size(x->r);
     x->acc=queryf(x->val, queryf(acc(x->l), acc(x->r)));
 
-    if(parent)
-      renew(x->p, parent);
+    if(with_ancestor)
+      renew(x->p, with_ancestor);
   }
 
   Node* nth(Node* x, int n){
@@ -85,9 +92,9 @@ private:
     renew(x);
 
     int lsz=size(x->l);
-    if(lsz>n+1)
+    if(lsz>n)
       return nth(x->l, n);
-    if(lsz<n+1)
+    if(lsz<n)
       return nth(x->r, n-lsz-1);
     return x;
   }
@@ -135,7 +142,7 @@ private:
     auto sav = root;
     root->r->p=nullptr;
     root=root->r;
-    splay(nth(root, e - size(sav->l)-1));
+    splay(nth(root, e-size(sav->l)-1));
     sav->r=root;
     root->p=sav;
     root=sav;
