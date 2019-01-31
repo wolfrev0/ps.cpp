@@ -20,10 +20,19 @@ Making an algorithms and data structures library in order to solve algorithm pro
   <h4>Flow Graph</h4>
     <ol><li>Maximum Flow(Ford–Fulkerson)</li>
     <li>Maximum Flow(Dinic)(comming soon)</li>
-    <li>MCMF</li></ol>
+    <li>MCMF(Cycle Canceling is comming soon)</li></ol>
+<h3>Tree</h3>
+  <ol><li>Diameter</li>
+  <li>LCA(comming soon)</li>
+  <li>Centroid Decomposition(comming soon)</li>
+  <li>Heavy Light Decomposition(HLD)(comming soon)</li></ol>
+<h3>Balanced Binary Search Tree(BBST)</h3>
+  <ol><li>Extended Set(Xset)</li></ol>
 <h3>Segment Tree</h3>
   <ol><li>Lazy Propagation</li>
   <li>Persistent Segment Tree(PST)</li></ol>
+<h3>Splay Tree</h3>
+  <ol><li>Lazy Propagation</li></ol>
 <h3>Disjoint Set</h3>
   <ol><li>Path Compression</li>
   <li>Union by Rank(comming soon)</li></ol>
@@ -37,6 +46,10 @@ Making an algorithms and data structures library in order to solve algorithm pro
   <li>Fractional</li>
   <li>Integer Arithmetic(More accurate)</li>
   <li>Berlekamp Massey Algorithm(comming soon)</li></ol>
+<h3>Convolution(comming soon)</h3><ol>
+  <li>FFT</li>
+  <li>Karatsuba</li>
+</ol>
 <h3>2D Geometry</h3>
   <h4>Vector</h4><ol>
     <li>Basic Vector Operations</li>
@@ -65,14 +78,6 @@ Making an algorithms and data structures library in order to solve algorithm pro
 <h3>Linear Programming(comming soon)</h3>
   <ol><li>Simplex Method(Randomized)</li>
   <li>Inner Point Method</li></ol>
-<h3>Balanced Binary Search Tree(BBST)</h3>
-  <ol><li>Extended Set(Xset)</li>
-  <li>Splay Tree(comming soon)</li></ol>
-<h3>Tree</h3>
-  <ol><li>Diameter</li>
-  <li>LCA(comming soon)</li>
-  <li>Centroid Decomposition(comming soon)</li>
-  <li>Heavy Light Decomposition(HLD)(comming soon)</li></ol>
 
 # Help
 Examples are in ./Project/Examples directory.
