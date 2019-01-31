@@ -112,11 +112,10 @@ protected:
   }
 
   void splay(Node *x) {
-    while (x->p) {
+    while(x->p){
       auto p = x->p;
-      auto pp = p->p;
-      if (pp)
-        rotate((x == p->l) == (p == pp->l) ? p : x);
+      if (p->p)
+        rotate((x == p->l) == (p == p->p->l) ? p : x);
       rotate(x);
     }
   }
