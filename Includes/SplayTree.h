@@ -29,20 +29,32 @@ struct SplayTree{
   }
 
   void update(int s, int e, T val){
-    auto x=interval(s+1, e+1);
+    s++,e++;//cuz left mock node
+    auto x=interval(s, e);
     x->lazy=propaf(x->lazy, val);
   }
   
   T query(int s, int e){
-    return interval(s+1, e+1)->acc;
+    s++,e++;//cuz left mock node
+    return interval(s, e)->acc;
   }
 
   void insert(int ord){
-    splay(nth(root, ord+1));
+    ord++;//cuz left mock node
+    splay(nth(root, ord-1));
     auto r = root->r;
     root->adoptR(new_node());
     root->r->adoptR(r);
     renew(root->r, true);
+  }
+
+  void erase(int ord){
+    ord++;//cuz left mock node
+    auto x = interval(ord, ord+1);
+    auto p = x->p;
+    delete x;
+    p->l=nullptr;
+    renew(p, true);
   }
 
   int size()const{return root?root->sz:0;}
@@ -59,7 +71,7 @@ protected:
 
   Node* root=nullptr;
   int n;
-  const int id_qry, id_upd;
+  const T id_qry, id_upd;
 	const function<T(T, T)> queryf;
 	const function<T(T, T, int cnt)> updf;
 	const function<T(T, T)> propaf;
@@ -78,7 +90,7 @@ protected:
     if(!x)
       return;
     x->sz=1+size(x->l)+size(x->r);
-    x->acc=queryf(x->val, queryf(acc(x->l), acc(x->r)));
+    x->acc=queryf(queryf(acc(x->l), x->val), acc(x->r));
 
     if(with_ancestor)
       renew(x->p, with_ancestor);
