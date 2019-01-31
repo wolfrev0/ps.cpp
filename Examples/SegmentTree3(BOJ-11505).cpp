@@ -11,7 +11,7 @@ int main() {
 	
 	int n, m, k;
 	cin>>n>>m>>k;
-	SegmentTreeLazy<i64> st(n, 1, I32::inf(), [](auto a, auto b){return a*b%mod;}, [](auto a, auto b, int cnt){return fastpow<ModNum>(b, cnt).val()%mod;}, [](auto a, auto b){return b;});
+	SegmentTreeLazy<i64> st(n, 1, I32::inf(), [](auto a, auto b){return a*b%mod;}, [](auto a, auto b, int cnt){return /*fastpow<ModNum>(b, cnt).val()%mod*/b;}, [](auto a, auto b){return b;});
 	forh(i,0,n){
 		i64 x;
 		cin>>x;
