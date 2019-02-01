@@ -24,9 +24,8 @@ struct SplayTree{
     [](T lval, T val) { return lval + val; })
   {}
 
-  void update(int i, T val) {
-    update(i, i+1, val);
-  }
+  void update(int i, T val) {update(i, i+1, val);}
+  T query(int i){return query(i, i+1);}
 
   void update(int s, int e, T val){
     s++,e++;//cuz left mock node
@@ -62,8 +61,8 @@ protected:
   struct Node{
     Node *p=nullptr, *l=nullptr, *r=nullptr;
     int sz=1;
-    T val=0, acc=0;
-    T lazy=0;
+    T val, acc;
+    T lazy;
 
     void adoptL(Node* n){l=n; if(n)n->p=this;}
     void adoptR(Node* n){r=n; if(n)n->p=this;}
