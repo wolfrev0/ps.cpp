@@ -9,7 +9,7 @@ int main() {
 
 	int n;
 	cin >> n;
-	SegmentTreeLazy<ModNum> st(200001), st2(200001);
+	FenwickTree<ModNum> st(200001), st2(200001);
 	ModNum ans = 1;
 	forh(i, 0, n)
 	{
