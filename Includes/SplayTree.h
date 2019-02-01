@@ -2,11 +2,11 @@
 #include "Core.h"
 
 template<typename T>
-struct SplayTree{
-  SplayTree(int n, T id_qry, T id_upd,
-    const function<T(T, T)>& queryf,
-	  const function<T(T, T, int)>& updf,
-	  const function<T(T, T)>& propaf)
+struct SplayTreeLazy{
+  SplayTreeLazy(int n, T id_qry, T id_upd,
+    const function<T(const T&, const T&)>& queryf,
+	  const function<T(const T&, const T&, int)>& updf,
+	  const function<T(const T&, const T&)>& propaf)
     :n(n), id_qry(id_qry), id_upd(id_upd), queryf(queryf), updf(updf), propaf(propaf)
   {
     root=new_node();
@@ -17,11 +17,11 @@ struct SplayTree{
       insert(0);
   }
 
-	SplayTree(int n=0)
-		:SplayTree(n, T::zero(), T::zero(),
-    [](T a, T b) {return a + b; },
-    [](T tval, T lval, int cnt) {return tval + lval * cnt; }, 
-    [](T lval, T val) { return lval + val; })
+	SplayTreeLazy(int n=0)
+		:SplayTreeLazy(n, T::zero(), T::zero(),
+    [](const T& a, const T& b) {return a + b; },
+    [](const T& tval, const T& lval, int cnt) {return tval + lval * cnt; }, 
+    [](const T& lval, const T& val) { return lval + val; })
   {}
 
   void update(int i, T val) {update(i, i+1, val);}
@@ -71,9 +71,9 @@ protected:
   Node* root=nullptr;
   int n;
   const T id_qry, id_upd;
-	const function<T(T, T)> queryf;
-	const function<T(T, T, int cnt)> updf;
-	const function<T(T, T)> propaf;
+	const function<T(const T&, const T&)> queryf;
+	const function<T(const T&, const T&, int cnt)> updf;
+	const function<T(const T&, const T&)> propaf;
 
   int size(Node* x)const{return x?x->sz:0;}
   T acc(Node* x)const{return x?x->acc:id_qry;}
