@@ -47,7 +47,7 @@ Making an algorithms and data structures library in order to solve algorithm pro
   <li>Integer Arithmetic(More accurate)</li>
   <li>Berlekamp Massey Algorithm(comming soon)</li></ol>
 <h3>Convolution(comming soon)</h3><ol>
-  <li>FFT</li>
+  <li>FFT & NTT</li>
   <li>Karatsuba</li>
 </ol>
 <h3>2D Geometry</h3>
