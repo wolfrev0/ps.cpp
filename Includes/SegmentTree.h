@@ -2,26 +2,61 @@
 #include "Core.h"
 
 template<typename T>
+struct FenwickTree{
+	int n;
+	FenwickTree(int n):n(n+1), tree(n+2){}
+	vector<T> tree;
+
+	T query(int s, int e){
+		s++, e++;//ft idx base = 1
+		return sum(e-1)-sum(s-1);
+	}
+
+	void update(int i, T delta){
+		i++;
+		while(i<n){
+			tree[i]+=delta;
+			i+=(i&-i);
+		}
+	}
+
+private:
+	T sum(int i){
+		T ans=0;
+		while(i>0){
+			ans+=tree[i];
+			i-=(i&-i);
+		}
+		return ans;
+	}
+};
+
+template<typename T>
 struct SegmentTree{
-	SegmentTree(int n, const function<T(T,T)> &f=[](T a, T b){return a+b;}, const T &init_val=0):n(n),f(f),init_val(init_val),tree(2*n, init_val){}
+	SegmentTree(int n, 
+	const function<T(const T&,const T&)> &queryf=[](const T& a, const T& b){return a+b;}, 
+	const function<T(const T&,const T&)> &updf=[](const T& a, const T& b){return a+b;}, 
+	const T& init_val=0):n(n),queryf(queryf),updf(updf),init_val(init_val),tree(2*n, init_val){}
 
 	void update(int p, T value) {
-		for (tree[p += n] = value; p > 1; p >>= 1)
-			tree[p >> 1] = f(tree[p], tree[p ^ 1]);
+		p+=n;
+		for (tree[p] = updf(tree[p], value); p > 1; p >>= 1)
+			tree[p >> 1] = queryf(tree[p], tree[p ^ 1]);
 	}
 	
 	T query(int begin, int end) {
 		T res = init_val;
 		for (begin += n, end += n; begin < end; begin >>= 1, end >>= 1) {
-			if (begin & 1) res = f(res, tree[begin++]);
-			if (end & 1) res = f(res, tree[--end]);
+			if (begin & 1) res = queryf(res, tree[begin++]);
+			if (end & 1) res = queryf(res, tree[--end]);
 		}
 		return res;
 	}
 
 private:
 	const int n;
-	const function<T(T,T)> f;
+	const function<T(const T&, const T&)> queryf;
+	const function<T(const T&, const T&)> updf;
 	const T init_val;
 	vector<T> tree;
 };
@@ -32,9 +67,9 @@ struct SegmentTreeLazy
 {
 	SegmentTreeLazy(
 		int n, T id_qry, T id_upd,
-		const function<T(T, T)>& queryf,
-		const function<T(T, T, int)>& updf,
-		const function<T(T, T)>& propaf)
+		const function<T(const T&, const T&)>& queryf,
+		const function<T(const T&, const T&, int)>& updf,
+		const function<T(const T&, const T&)>& propaf)
 		:n(n), id_qry(id_qry), id_upd(id_upd), queryf(queryf), updf(updf), propaf(propaf), tree(4*n, id_upd), lazy(4*n, id_upd)
 	{}
 	SegmentTreeLazy(int n=0)
@@ -51,9 +86,9 @@ struct SegmentTreeLazy
 private:
 	const int n;
 	const T id_qry, id_upd;
-	const function<T(T, T)> queryf;
-	const function<T(T, T, int)> updf;
-	const function<T(T, T)> propaf;
+	const function<T(const T&, const T&)> queryf;
+	const function<T(const T&, const T&, int)> updf;
+	const function<T(const T&, const T&)> propaf;
 	vector<T> tree;
 	vector<T> lazy;
 
