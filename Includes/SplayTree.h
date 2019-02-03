@@ -56,7 +56,7 @@ struct SplayTree{
     renew(p, true);
   }
 
-  int size()const{return root?root->sz:0;}
+  int size()const{return root->sz-2;}
 protected:
   struct Node{
     Node *p=nullptr, *l=nullptr, *r=nullptr;
