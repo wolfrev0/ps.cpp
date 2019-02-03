@@ -32,7 +32,7 @@ struct Frac
 	
 	static inline Frac zero(){ return 0; }
 	static inline Frac one(){ return 1; }
-	static inline Frac inf() { return {I64::inf(),0}; }
+	static inline Frac inf() { return {T::inf(),0}; }
 };
 
 template<typename T>
