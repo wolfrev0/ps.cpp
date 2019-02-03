@@ -38,7 +38,8 @@ Making an algorithms and data structures library in order to solve algorithm pro
   <li>Union by Rank(comming soon)</li></ol>
 <h3>Matrix</h3><ol>
   <li>General Multiplication</li>  
-  <li>Strassen Multiplication(comming soon)</li></ol>
+  <li>Strassen Multiplication(comming soon)</li>
+  <li>Gaussian Elimination</li></ol>
 <h3>Number Theory</h3><ol>
   <li>Fast Power</li>
   <li>Extended GCD</li>
