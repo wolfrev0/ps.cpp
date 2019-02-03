@@ -47,7 +47,7 @@ struct SplayTree{
   T query(int s, int e){
     if(s++ == e++)//cuz left mock node
       return T::zero();
-    return interval(s, e)->acc;
+    return acc(interval(s, e));
   }
 
   void insert(int ord, T val = T::zero()){
@@ -90,6 +90,10 @@ protected:
   void renew(Node* x, bool with_ancestor = false){
     if(!x)
       return;
+    update_lazy(x);
+    update_lazy(x->l);
+    update_lazy(x->r);
+    
     x->sz=1+size(x->l)+size(x->r);
     x->acc=queryf(queryf(acc(x->l), x->val), acc(x->r));
 
@@ -99,9 +103,6 @@ protected:
 
   Node* nth(Node* x, int n){
     assert(x);
-    update_lazy(x);
-    update_lazy(x->l);
-    update_lazy(x->r);
     renew(x);
 
     int lsz=size(x->l);
@@ -125,6 +126,9 @@ protected:
   void rotate(Node* x){
     if(!x->p)
       return;
+    update_lazy(x->p);
+    update_lazy(x->p->l);
+    update_lazy(x->p->r);
     
     auto p = x->p;
     if(!p->p)

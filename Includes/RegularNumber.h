@@ -75,6 +75,8 @@ template<typename T> Regular<T> operator*=(Regular<T>& a, const Regular<T>& b){r
 template<typename T> Regular<T> operator/=(Regular<T>& a, const Regular<T>& b){return a.n/=b.n;}
 template<typename T> Regular<T> operator%=(Regular<T>& a, const Regular<T>& b){return a.n%=b.n;}
 template<typename T> bool operator==(const Regular<T>& a, const Regular<T>& b){return a.n==b.n;}
+template<typename T> Regular<T> operator^(const Regular<T>& a, const Regular<T>& b){return a.n^b.n;}
+template<typename T> Regular<T> operator^=(Regular<T>& a, const Regular<T>& b){return a.n^=b.n;}
 
 template<typename T> Regular<T> operator+(const Regular<T>& a, const T& b){return a.n+b;}
 template<typename T> Regular<T> operator-(const Regular<T>& a, const T& b){return a.n-b;}
@@ -87,6 +89,8 @@ template<typename T> Regular<T> operator*=(Regular<T>& a, const T& b){return a.n
 template<typename T> Regular<T> operator/=(Regular<T>& a, const T& b){return a.n/=b;}
 template<typename T> Regular<T> operator%=(Regular<T>& a, const T& b){return a.n%=b;}
 template<typename T> bool operator==(const Regular<T>& a, const T& b){return a.n==b;}
+template<typename T> Regular<T> operator^(const Regular<T>& a, const T& b){return a.n^b;}
+template<typename T> Regular<T> operator^=(Regular<T>& a, const T& b){return a.n^=b;}
 
 template<typename T> Regular<T> operator+(const T& a, const Regular<T>& b){return a+b.n;}
 template<typename T> Regular<T> operator-(const T& a, const Regular<T>& b){return a-b.n;}
@@ -99,3 +103,8 @@ template<typename T> Regular<T> operator*=(T& a, const Regular<T>& b){return a*=
 template<typename T> Regular<T> operator/=(T& a, const Regular<T>& b){return a/=b.n;}
 template<typename T> Regular<T> operator%=(T& a, const Regular<T>& b){return a%=b.n;}
 template<typename T> bool operator==(const T& a, const Regular<T>& b){return a==b.n;}
+template<typename T> Regular<T> operator^(const T& a, const Regular<T>& b){return a^b.n;}
+template<typename T> Regular<T> operator^=(T& a, const Regular<T>& b){return a^=b.n;}
+
+Bool operator^(const Bool& a, const Bool& b){return a.n^b.n;}
+Bool operator^=(Bool& a, const Bool& b){return a.n^=b.n;}
