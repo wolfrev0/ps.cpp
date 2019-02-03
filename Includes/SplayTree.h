@@ -1,13 +1,23 @@
 #pragma once
 #include "Core.h"
 
-template<typename T>
+template<typename T, typename U=T>
 struct SplayTree{
-  SplayTree(int n, T id_qry, T id_upd,
+  struct Node{
+    Node *p=nullptr, *l=nullptr, *r=nullptr;
+    int sz=1;
+    T val, acc;
+    U lazy;
+
+    void adoptL(Node* n){l=n; if(n)n->p=this;}
+    void adoptR(Node* n){r=n; if(n)n->p=this;}
+  };
+
+  SplayTree(int n,
     const function<T(const T&, const T&)>& queryf,
-	  const function<T(const T&, const T&, int)>& updf,
-	  const function<T(const T&, const T&)>& propaf)
-    :n(n), id_qry(id_qry), id_upd(id_upd), queryf(queryf), updf(updf), propaf(propaf)
+	  const function<void(Node*)>& updf,
+	  const function<U(const U&, const U&)>& propaf)
+    :n(n), queryf(queryf), updf(updf), propaf(propaf)
   {
     root=new_node();
     root->adoptR(new_node());
@@ -18,31 +28,33 @@ struct SplayTree{
   }
 
 	SplayTree(int n=0)
-		:SplayTree(n, T::zero(), T::zero(),
+		:SplayTree(n,
     [](const T& a, const T& b) {return a + b; },
-    [](const T& tval, const T& lval, int cnt) {return tval + lval * cnt; }, 
-    [](const T& lval, const T& val) { return lval + val; })
+    [](Node* x) {x->val+=x->lazy; x->acc+=x->lazy*x->sz;}, 
+    [](const U& clazy, const U& lazy) { return clazy + lazy; })
   {}
 
   void update(int i, T val) {update(i, i+1, val);}
   T query(int i){return query(i, i+1);}
 
-  void update(int s, int e, T val){
-    s++,e++;//cuz left mock node
+  void update(int s, int e, U val){
+    if(s++ == e++)//cuz left mock node
+      return;
     auto x=interval(s, e);
     x->lazy=propaf(x->lazy, val);
   }
   
   T query(int s, int e){
-    s++,e++;//cuz left mock node
+    if(s++ == e++)//cuz left mock node
+      return T::zero();
     return interval(s, e)->acc;
   }
 
-  void insert(int ord){
+  void insert(int ord, T val = T::zero()){
     ord++;//cuz left mock node
-    splay(nth(root, ord-1));
+    splay(ord-1);
     auto r = root->r;
-    root->adoptR(new_node());
+    root->adoptR(new_node(val));
     root->r->adoptR(r);
     renew(root->r, true);
   }
@@ -58,29 +70,19 @@ struct SplayTree{
 
   int size()const{return root->sz-2;}
 protected:
-  struct Node{
-    Node *p=nullptr, *l=nullptr, *r=nullptr;
-    int sz=1;
-    T val, acc;
-    T lazy;
-
-    void adoptL(Node* n){l=n; if(n)n->p=this;}
-    void adoptR(Node* n){r=n; if(n)n->p=this;}
-  };
-
   Node* root=nullptr;
   int n;
-  const T id_qry, id_upd;
 	const function<T(const T&, const T&)> queryf;
-	const function<T(const T&, const T&, int cnt)> updf;
-	const function<T(const T&, const T&)> propaf;
+	const function<void(Node* x)> updf;
+	const function<U(const U&, const U&)> propaf;
 
   int size(Node* x)const{return x?x->sz:0;}
-  T acc(Node* x)const{return x?x->acc:id_qry;}
+  T acc(Node* x)const{return x?x->acc:T::zero();}
 
-  Node* new_node(){
+  Node* new_node(T val = T::zero()){
     auto ret = new Node();
-    ret->val = ret->acc = ret->lazy = id_upd;
+    ret->val = ret->acc = val;
+    ret->lazy = U::zero();
     return ret;
   }
 
@@ -110,6 +112,7 @@ protected:
     return x;
   }
 
+  void splay(int ord) {splay(nth(root, ord));}
   void splay(Node *x) {
     while(x->p){
       auto p = x->p;
@@ -147,12 +150,12 @@ protected:
   }
 
   Node* interval(int s, int e){
-    splay(nth(root, s-1));
+    splay(s-1);
     
     auto sav = root;
     root->r->p=nullptr;
     root=root->r;
-    splay(nth(root, e-size(sav->l)-1));
+    splay(e-size(sav->l)-1);
     sav->r=root;
     root->p=sav;
     root=sav;
@@ -164,17 +167,16 @@ protected:
   void update_lazy(Node* x){
     if(!x)
       return;
-    if(x->lazy == id_upd)
+    if(x->lazy == U::zero())
       return;
 
-    x->val=updf(x->val, x->lazy, 1);
-    x->acc=updf(x->acc, x->lazy, x->sz);
+    updf(x);
     if(x->l){
       x->l->lazy=propaf(x->l->lazy, x->lazy);
     }
     if(x->r){
       x->r->lazy=propaf(x->r->lazy, x->lazy);
     }
-    x->lazy=id_upd;
+    x->lazy=U::zero();
   }
 };
