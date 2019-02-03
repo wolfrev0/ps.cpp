@@ -1,6 +1,5 @@
 #pragma once
 #include "Graph.h"
-#include "RootedTree.h"
 
 template<typename T>
 struct Tree: public Graph<T>{
