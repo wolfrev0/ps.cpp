@@ -28,7 +28,8 @@ Making an algorithms and data structures library in order to solve algorithm pro
     <ol><li>LCA</li>
     <li>Heavy Light Decomposition(HLD)(comming soon)</li></ol>
  <h4>Dynamic Tree</h4>
-    <ol><li>Splay Tree(Lazy)</li></ol>
+    <ol><li>Splay Tree(Lazy)</li>
+    <li>Treap(comming soon...? Useless?)</li></ol>
   <h4>Balanced Binary Search Tree(BBST)</h4>
     <ol><li>Extended Set(Xset)</li></ol>
   <h4>Segment Tree</h4>
