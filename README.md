@@ -23,19 +23,20 @@ Making an algorithms and data structures library in order to solve algorithm pro
     <li>MCMF(Cycle Canceling is comming soon)</li></ol>
 <h3>Tree</h3>
   <ol><li>Diameter</li>
-  <li>LCA(comming soon)</li>
-  <li>Centroid Decomposition(comming soon)</li>
-  <li>Heavy Light Decomposition(HLD)(comming soon)</li></ol>
-<h3>Balanced Binary Search Tree(BBST)</h3>
-  <ol><li>Extended Set(Xset)</li></ol>
-<h3>Segment Tree</h3>
-  <ol><li>Lazy Propagation</li>
-  <li>Persistent Segment Tree(PST)</li></ol>
-<h3>Splay Tree</h3>
-  <ol><li>Lazy Propagation</li></ol>
-<h3>Disjoint Set</h3>
-  <ol><li>Path Compression</li>
-  <li>Union by Rank(comming soon)</li></ol>
+  <li>Centroid Decomposition(comming soon)</li></ol>
+  <h4>Rooted Tree</h4>
+    <ol><li>LCA</li>
+    <li>Heavy Light Decomposition(HLD)(comming soon)</li></ol>
+ <h4>Dynamic Tree</h4>
+    <ol><li>Splay Tree(Lazy)</li></ol>
+  <h4>Balanced Binary Search Tree(BBST)</h4>
+    <ol><li>Extended Set(Xset)</li></ol>
+  <h4>Segment Tree</h4>
+    <ol><li>Lazy Propagation</li>
+    <li>Persistent Segment Tree(PST)</li></ol>
+  <h4>Disjoint Set</h4>
+    <ol><li>Path Compression</li>
+    <li>Union by Rank(comming soon)</li></ol>
 <h3>Matrix</h3><ol>
   <li>General Multiplication</li>  
   <li>Strassen Multiplication(comming soon)</li>
