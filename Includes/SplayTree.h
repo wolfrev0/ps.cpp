@@ -113,10 +113,10 @@ protected:
   }
 
   void splay(int ord) {splay(nth(root, ord));}
-  void splay(Node *x) {
-    while(x->p){
+  void splay(Node *x, Node *rp=nullptr) {
+    while(x->p != rp){
       auto p = x->p;
-      if (p->p)
+      if (p->p != rp)
         rotate((x == p->l) == (p == p->p->l) ? p : x);
       rotate(x);
     }
@@ -153,15 +153,10 @@ protected:
   }
 
   Node* interval(int s, int e){
-    splay(s-1);
-    
-    auto sav = root;
-    root->r->p=nullptr;
-    root=root->r;
-    splay(e-size(sav->l)-1);
-    sav->r=root;
-    root->p=sav;
-    root=sav;
+    auto a=nth(root, s-1);
+    auto b=nth(root, e);
+    splay(a);
+    splay(b, a);
     return root->r->l;
   }
   
@@ -174,12 +169,10 @@ protected:
       return;
 
     updf(x);
-    if(x->l){
+    if(x->l)
       x->l->lazy=propaf(x->l->lazy, x->lazy);
-    }
-    if(x->r){
+    if(x->r)
       x->r->lazy=propaf(x->r->lazy, x->lazy);
-    }
     x->lazy=U::zero();
   }
 };

@@ -1,7 +1,6 @@
 #pragma once
 #include "Tree.h"
 #include "SegmentTree.h"
-#include "RegularNumber.h"
 
 template<typename T>
 struct RootedTree:public Tree<T>{
@@ -18,7 +17,7 @@ struct RootedTree:public Tree<T>{
   }
 protected:
   struct A{
-    static A zero(){return{I32::zero(), -1};}
+    static A zero(){return{0x7fffffff/2, -1};}
     int ord, idx;
     bool operator<(const A& r)const{return ord<r.ord;}
   };
