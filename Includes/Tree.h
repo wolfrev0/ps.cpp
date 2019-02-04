@@ -4,6 +4,7 @@
 template<typename T>
 struct Tree: public Graph<T>{
   Tree(int n=0):Graph<T>(n){}
+  Tree(const Tree& r):Graph<T>(r){}
 	using Graph<T>::n;
 	using Graph<T>::g;
 
