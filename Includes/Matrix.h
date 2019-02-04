@@ -37,6 +37,11 @@ struct Mat
 		}
 		return ret;
 	}
+
+	Mat gaussian_elim()const{
+		Mat ret(r(), c());
+		return ret;
+	}
 };
 
 template<typename T>
