@@ -2,5 +2,4 @@
 #include "Core.h"
 
 struct DynamicTree{
-  
 };

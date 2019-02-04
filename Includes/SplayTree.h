@@ -1,8 +1,8 @@
 #pragma once
-#include "Core.h"
+#include "DynamicTree.h"
 
 template<typename T, typename U=T>
-struct SplayTree{
+struct SplayTree:public DynamicTree{
   struct Node{
     Node *p=nullptr, *l=nullptr, *r=nullptr;
     int sz=1;
@@ -17,7 +17,7 @@ struct SplayTree{
     const function<T(const T&, const T&)>& queryf,
 	  const function<void(Node*)>& updf,
 	  const function<U(const U&, const U&)>& propaf)
-    :n(n), queryf(queryf), updf(updf), propaf(propaf)
+    :queryf(queryf), updf(updf), propaf(propaf)
   {
     root=new_node();
     root->adoptR(new_node());
@@ -71,7 +71,6 @@ struct SplayTree{
   int size()const{return root->sz-2;}
 protected:
   Node* root=nullptr;
-  int n;
 	const function<T(const T&, const T&)> queryf;
 	const function<void(Node* x)> updf;
 	const function<U(const U&, const U&)> propaf;
