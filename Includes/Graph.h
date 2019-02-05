@@ -9,6 +9,7 @@ struct Graph {
 		int e;
 		int ei;
 		T w;
+		Edge():s(0),e(0),ei(0),w(0){};
 		Edge(int s, int e, int ei, T w):s(s),e(e),ei(ei),w(w){};
 		bool operator<(const Edge &r)const { return w < r.w; }
 		bool operator>(const Edge &r)const { return w > r.w; }
