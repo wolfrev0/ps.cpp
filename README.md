@@ -1,6 +1,3 @@
-# Algorithm Library for Cpp
-Making an algorithms and data structures library in order to solve algorithm problems with c++.
-
 # Index
 <h3>Graph</h3>
   <h4>Directed Graph</h4>
@@ -34,7 +31,8 @@ Making an algorithms and data structures library in order to solve algorithm pro
     <ol><li>Extended Set(Xset)</li></ol>
   <h4>Segment Tree</h4>
     <ol><li>Lazy Propagation</li>
-    <li>Persistent Segment Tree(PST)</li></ol>
+    <li>Persistent Segment Tree(PST)</li>
+    <li>Fenwick</li></ol>
   <h4>Disjoint Set</h4>
     <ol><li>Path Compression</li>
     <li>Union by Rank(comming soon)</li></ol>
@@ -84,7 +82,6 @@ Making an algorithms and data structures library in order to solve algorithm pro
 
 # Help
 Examples are in ./Project/Examples directory.
-Template type arguments must have ::zero(), ::one(), ::inf() (no compile errors and run-time error occurs)
 
 # See Also
 If you are interested in convenient submission to online judge, see <a href="https://github.com/Lobo-Prix/CppProject21File">CppProject21File(C++ project to one file)</a>.
