@@ -1,5 +1,6 @@
 #pragma once
 #include "RootedTree.h"
+#include "SegTree.h"
 
 template<typename T>
 struct LCA:public RootedTree<T>{
@@ -9,7 +10,7 @@ struct LCA:public RootedTree<T>{
   using RootedTree<T>::children;
   
   LCA(const Tree<T>& t, int r)
-  :RootedTree<T>(t, r), st(n*2, [](const auto& a, const auto& b){return min(a, b);}, [](const auto& a, const auto& b){return min(a, b);}),lpos(n)
+  :RootedTree<T>(t, r), st(n*2),lpos(n)
   {int segi=0; dfs_lca(r, segi);}
 
   int lca(int a, int b){
@@ -19,12 +20,20 @@ struct LCA:public RootedTree<T>{
     return st.query(l, r+1).idx;
   }
 protected:
-  struct LCA_ORD_IDX{
-    static LCA_ORD_IDX zero(){return{0x7fffffff/2, -1};}
-    int ord, idx;
-    bool operator<(const LCA_ORD_IDX& r)const{return ord<r.ord;}
+  struct LCA_T{
+    int ord=0x7fffffff/2, idx=-1;
+    bool operator<(const LCA_T& r)const{return ord<r.ord;}
+    bool operator==(const LCA_T& r)const{return ord==r.ord && idx==r.idx;}
   };
-  SegmentTree<LCA_ORD_IDX> st;
+  struct LCA_F{
+    static LCA_T idT(){return LCA_T();}
+    static LCA_T idU(){return LCA_T();}
+    static LCA_T q(const LCA_T& a, const LCA_T& b){return min(a,b);}
+    static LCA_T upd(const LCA_T& a, const LCA_T& b, int c){return b;}
+    static LCA_T propa(const LCA_T& a, const LCA_T& b){return b;}
+  };
+  
+  SegTree<LCA_T, LCA_T, LCA_F> st;
   vector<int> lpos;
 
   void dfs_lca(int cur, int& segi){

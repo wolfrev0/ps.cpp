@@ -3,11 +3,11 @@
 
 template<typename T, typename U>
 struct SegFDefault{
-	static T idT(){return 0;}
-	static T idU(){return 0;}
+	static T idT(){return T();}
+	static T idU(){return U();}
 	static T q(const T& a, const T& b){return a+b;}
 	static T upd(const T& a, const U& b, int c){return a+b*c;}
-	static T propa(const T& a, const T& b){return a+b;}
+	static U propa(const U& a, const U& b){return a+b;}
 };
 
 //upperbound of 2^(ceil(log2(n))+1)/n is 4. (plot floor(2^(ceil(log2(x))+1)/x) from x=0 to 100000000)

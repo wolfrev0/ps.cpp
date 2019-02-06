@@ -1,6 +1,5 @@
 #pragma once
 #include "SimpleTree.h"
-#include "SegmentTree.h"
 
 template<typename T>
 struct RootedTree:public Tree<T>{
