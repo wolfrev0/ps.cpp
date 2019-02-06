@@ -8,9 +8,7 @@ struct A{
 	u32 arr[11]={0,};
 	int cnt;
 
-	static A zero(){ return {0,0}; }
-
-	A(u32 n=0, int cnt=1):cnt(cnt){
+	A(u32 n=0, int cnt=0):cnt(cnt){
 		forh(i, 0, 11){
 			arr[i]=n;
 		}
@@ -35,6 +33,16 @@ struct A{
 	bool operator==(const A& r)const{return !memcmp(arr, r.arr, sizeof arr) && cnt==r.cnt;}
 };
 
+using Node = SplayNode<A, A>;
+
+struct F{
+	static A idT(){return A();}
+	static A idU(){return A();}
+	static A q(const auto& a, const auto& b){return a+b;}
+	static void upd(Node* x){x->val=x->acc=x->lazy;}
+	static A propa(const auto& a, const auto& b){return b;}
+};
+
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(11);
@@ -49,11 +57,11 @@ int main() {
 
 	int n;
 	cin>>n;
-	SplayTree<A> st(n, [](const auto& a, const auto& b){return a+b;}, [](SplayTree<A>::Node* x){x->val=x->acc=x->lazy;}, [](const auto& a, const auto& b){return b;});
+	SplayTree<A,A,F> st;
 	forh(i,0,n){
 		u32 x;
 		cin>>x;
-		st.update(i,x);
+		st.insert(i,{x, 1});
 	}
 	int m;
 	cin>>m;
@@ -63,8 +71,7 @@ int main() {
 		if(type==1){
 			u32 p, v;
 			cin>>p>>v;
-			st.insert(p);
-			st.update(p, v);
+			st.insert(p, {v, 1});
 		}else if(type==2){
 			u32 p;
 			cin>>p;
@@ -72,7 +79,7 @@ int main() {
 		}else if(type==3){
 			u32 p,v;
 			cin>>p>>v;
-			st.update(p, v);
+			st.update(p, {v, 1});
 		}else{
 			int l, r, k;
 			cin>>l>>r>>k;

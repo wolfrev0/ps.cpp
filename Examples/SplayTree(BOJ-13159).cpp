@@ -1,18 +1,25 @@
 #include "Core.h"
-#include "RegularNumber.h"
 #include "SplayTree.h"
 #define endl '\n'//do not use when solving interactive problem!!!
 
 struct A{
-	static A zero(){return {I32::inf(), -1, 0};}
-	i64 m,M,s;
+	i64 m=0x7fffffffffffffff/2, M=-1, s=0;
 	bool operator==(const A& r)const{return m==r.m && M==r.M && s==r.s;}
 	A operator+(const A& r)const{return {min(m, r.m), max(M, r.M), s+r.s};}
 };
 
-struct Solver:public SplayTree<A, Bool>{
-	using Node = SplayTree<A, Bool>::Node;
-	Solver():SplayTree<A, Bool>(0, [](const auto& a, const auto& b){return a+b;}, [](Node* x){if(x->lazy) swap(x->l, x->r);}, [](const auto& a, const auto& b){return a^b;}){}
+using Node = SplayNode<A, bool>;
+
+struct F{
+	static A idT(){return A();}
+	static bool idU(){return false;}
+	static A q(const auto& a, const auto& b){return a+b;}
+	static void upd(Node* x){if(x->lazy) swap(x->l, x->r);}
+	static bool propa(const auto& a, const auto& b){return a^b;}
+};
+
+struct Solver:public SplayTree<A, bool, F>{
+	Solver():SplayTree<A, bool, F>(0){}
 
 	Node* find_by_order(int ord){
 		splay(++ord);
