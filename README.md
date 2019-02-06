@@ -1,6 +1,3 @@
-# Purpose
-Make well abstracted algorithm(and data structure) library.
-
 # Index
 <h3>Graph</h3>
   <h4>Directed Graph</h4>
