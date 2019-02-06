@@ -1,5 +1,5 @@
 #include "Core.h"
-#include "SegmentTree.h"
+#include "Fenwick.h"
 #include "ModNum.h"
 
 int main() {
