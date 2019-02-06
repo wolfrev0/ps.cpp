@@ -19,12 +19,12 @@ struct LCA:public RootedTree<T>{
     return st.query(l, r+1).idx;
   }
 protected:
-  struct A{
-    static A zero(){return{0x7fffffff/2, -1};}
+  struct LCA_ORD_IDX{
+    static LCA_ORD_IDX zero(){return{0x7fffffff/2, -1};}
     int ord, idx;
-    bool operator<(const A& r)const{return ord<r.ord;}
+    bool operator<(const LCA_ORD_IDX& r)const{return ord<r.ord;}
   };
-  SegmentTree<A> st;
+  SegmentTree<LCA_ORD_IDX> st;
   vector<int> lpos;
 
   void dfs_lca(int cur, int& segi){
