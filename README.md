@@ -26,7 +26,7 @@ Making an algorithms and data structures library in order to solve algorithm pro
   <li>Centroid Decomposition(comming soon)</li></ol>
   <h4>Rooted Tree</h4>
     <ol><li>LCA</li>
-    <li>Heavy Light Decomposition(HLD)(comming soon)</li></ol>
+    <li>Heavy Light Decomposition(HLD)</li></ol>
  <h4>Dynamic Tree</h4>
     <ol><li>Splay Tree(Lazy)</li>
     <li>Treap(comming soon...? Useless?)</li></ol>
