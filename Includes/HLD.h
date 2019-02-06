@@ -54,7 +54,7 @@ protected:
   }
 
   void dfs_hld(int cur, int& segi, int& cur_chain){
-    st.update(segidx[cur]=segi++, {parent[cur].w.b, parent[cur].w.n});
+    st.update(segidx[cur]=segi++, parent[cur].w);
     chain[cur]=cur_chain;
     auto c = children[cur];
     forh(i, 0, c.size()){
