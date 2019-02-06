@@ -85,7 +85,6 @@ Make well abstracted algorithm(and data structure) library.
 
 # Help
 Examples are in ./Project/Examples directory.
-Template type arguments must have ::zero(), ::one(), ::inf() (no compile errors and run-time error occurs)
 
 # See Also
 If you are interested in convenient submission to online judge, see <a href="https://github.com/Lobo-Prix/CppProject21File">CppProject21File(C++ project to one file)</a>.
