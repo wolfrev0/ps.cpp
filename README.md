@@ -1,5 +1,5 @@
-# Algorithm Library for Cpp
-Making an algorithms and data structures library in order to solve algorithm problems with c++.
+# Purpose
+Make well abstracted algorithm(and data structure) library.
 
 # Index
 <h3>Graph</h3>
