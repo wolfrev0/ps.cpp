@@ -34,7 +34,8 @@ Making an algorithms and data structures library in order to solve algorithm pro
     <ol><li>Extended Set(Xset)</li></ol>
   <h4>Segment Tree</h4>
     <ol><li>Lazy Propagation</li>
-    <li>Persistent Segment Tree(PST)</li></ol>
+    <li>Persistent Segment Tree(PST)</li>
+    <li>Fenwick</li></ol>
   <h4>Disjoint Set</h4>
     <ol><li>Path Compression</li>
     <li>Union by Rank(comming soon)</li></ol>
