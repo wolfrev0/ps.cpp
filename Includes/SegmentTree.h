@@ -14,6 +14,7 @@ struct SegmentTree{
 			tree[p >> 1] = queryf(tree[p], tree[p ^ 1]);
 	}
 	
+	//use commutative law (definitly, with associative law)
 	T query(int begin, int end) {
 		T res = T::zero();
 		for (begin += n, end += n; begin < end; begin >>= 1, end >>= 1) {
