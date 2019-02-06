@@ -19,7 +19,7 @@ struct SegTree{
 
 	void update(int p, U val) {update_range(1, 0, n, p, p+1, val);}
 	void update(int s, int e, U val) {update_range(1, 0, n, s, e, val);}
-	T query(int s, int e) {return query2(1, 0, n, s, e);}
+	T query(int s, int e, bool revord=false) {return query2(1, 0, n, s, e, revord);}
 private:
 	const int n;
 	vector<T> tree;
@@ -50,12 +50,14 @@ private:
 		tree[cur] = F::q(tree[cur * 2], tree[cur * 2 + 1]);
 	}
 
-	T query2(int cur, int cs, int ce, int s, int e) {
+	T query2(int cur, int cs, int ce, int s, int e, bool revord) {
 		update_lazy(cur, cs, ce);
 		if (s >= ce || e <= cs)
 			return F::idT();
 		if (s <= cs && ce <= e)
 			return tree[cur];
-		return F::q(query2(cur * 2, cs, (cs + ce) / 2, s, e), query2(cur * 2 + 1, (cs + ce) / 2, ce, s, e));
+		if(revord)
+			return F::q(query2(cur * 2 + 1, (cs + ce) / 2, ce, s, e, revord), query2(cur * 2, cs, (cs + ce) / 2, s, e, revord));
+		return F::q(query2(cur * 2, cs, (cs + ce) / 2, s, e, revord), query2(cur * 2 + 1, (cs + ce) / 2, ce, s, e, revord));
 	}
 };

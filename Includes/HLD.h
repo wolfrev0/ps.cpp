@@ -17,13 +17,13 @@ struct HLD:public LCA<T>{
     head[0]=0;
   }
 
-  //use commutative law (definitly, with associative law)
+  //commutativeness free
   T query(int u, int v, bool edge_w=true){
     T ret = F::idT();
     int w = lca(u, v);
     while(chain[w]!=chain[u])
-      ret = F::q(ret, st.query(segidx[head[chain[u]]], segidx[u]+1)), u = parent[head[chain[u]]].e;
-    ret = F::q(ret, st.query(segidx[w]+edge_w, segidx[u]+1));
+      ret = F::q(ret, st.query(segidx[head[chain[u]]], segidx[u]+1, true)), u = parent[head[chain[u]]].e;
+    ret = F::q(ret, st.query(segidx[w]+edge_w, segidx[u]+1, true));
 
     vector<pair<int,int>> ranges;
     while(chain[w]!=chain[v])
