@@ -1,8 +1,14 @@
 #include "Core.h"
-#include "NumberTheory.h"
-#include "ModNum.h"
-#include "SegmentTree.h"
+#include "SegTree.h"
 #define endl '\n'//do not use when solving interactive problem!!!
+
+struct Func{
+	static i64 idT(){return 1;}
+	static i64 idU(){return 987654321;}
+	static i64 q(i64 a, i64 b){return a*b%mod;};
+	static i64 upd(i64 a, i64 b, int cnt){return b;};
+	static i64 propa(i64 a, i64 b){return b;}
+};
 
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
@@ -11,7 +17,7 @@ int main() {
 	
 	int n, m, k;
 	cin>>n>>m>>k;
-	SegmentTreeLazy<i64> st(n, 1, I32::inf(), [](auto a, auto b){return a*b%mod;}, [](auto a, auto b, int cnt){return /*fastpow<ModNum>(b, cnt).val()%mod*/b;}, [](auto a, auto b){return b;});
+	SegTree<i64, i64, Func> st(n);
 	forh(i,0,n){
 		i64 x;
 		cin>>x;

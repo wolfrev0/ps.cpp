@@ -1,6 +1,6 @@
 #include "Core.h"
 #include "Line.h"
-#include "SegmentTree.h"
+#include "SegTree.h"
 
 const int N = 100000;
 const int M = 100000;
@@ -22,7 +22,7 @@ int main()
 	i64 a[N], b[N], c[N];
 	forh(i, 0, n - 1)
 		cin >> a[i] >> b[i] >> c[i];
-	SegmentTreeLazy<I64> st(n);
+	SegTree<i64> st(n);
 	forh(i, 1, m)
 		st.update(min(arr[i - 1], arr[i]), max(arr[i - 1], arr[i]), 1);
 	i64 ans = 0;
