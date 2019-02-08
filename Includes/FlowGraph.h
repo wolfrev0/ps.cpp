@@ -10,7 +10,7 @@ struct FlowWeight {
 	bool operator< (const FlowWeight& r)const { return cost < r.cost; }
 	FlowWeight operator+(const FlowWeight& r)const { return cost + r.cost; }
 
-	static inline FlowWeight inf(){return I64::inf();}
+	static FlowWeight inf(){return I64::inf();}
 };
 
 struct FlowGraph : public Graph<FlowWeight> {
@@ -18,7 +18,7 @@ struct FlowGraph : public Graph<FlowWeight> {
 
 	FlowGraph(int n) :Graph(n + 2), src(n), snk(n + 1) {}
 
-	inline void add_edge(int s, int e, i64 cap, i64 cost) {
+	void add_edge(int s, int e, i64 cap, i64 cost) {
 		Graph::add_edge(s, e, FlowWeight(g[e].size(), cap, cost));
 		Graph::add_edge(e, s, FlowWeight(g[s].size() - 1, 0, -cost));
 	}

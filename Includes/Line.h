@@ -8,12 +8,12 @@ template<typename T>
 struct Line {
 	explicit Line() :Line(-Vec2<T>::inf(), Vec2<T>::inf()) {}
 	explicit Line(const Vec2<T>& s, const Vec2<T>& e) :_s(s), _e(e) { if(_s > _e) swap(_s, _e); }
-	inline Vec2<T> dir()const { return _e - _s; }
+	Vec2<T> dir()const { return _e - _s; }
 
-	inline Vec2<T> s()const{return _s;}
-	inline Vec2<T> e()const{return _e;}
-	inline void s(Vec2<T>& v){ if ((_s=v) > _e) swap(_s, _e); }
-	inline void e(Vec2<T>& v){ if (_s > (_e=v)) swap(_s, _e); }
+	Vec2<T> s()const{return _s;}
+	Vec2<T> e()const{return _e;}
+	void s(Vec2<T>& v){ if ((_s=v) > _e) swap(_s, _e); }
+	void e(Vec2<T>& v){ if (_s > (_e=v)) swap(_s, _e); }
 
 	bool intersect(const Line& r, Vec2<T>& res) const {
 		T det = dir().cross(r.dir());

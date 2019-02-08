@@ -8,7 +8,7 @@ struct Tree: public Graph<T>{
 	using Graph<T>::n;
 	using Graph<T>::g;
 
-  inline void add_edge(int s, int e, T w){
+  void add_edge(int s, int e, T w){
     Graph<T>::add_edge(s, e, w, false);
   }
 

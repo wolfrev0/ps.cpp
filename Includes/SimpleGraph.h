@@ -4,7 +4,7 @@
 struct SimpleGraph: public DirectedGraph{
 	SimpleGraph(int n=0):DirectedGraph(n){}
 
-	inline void add_edge(int s, int e) {
+	void add_edge(int s, int e) {
 		DirectedGraph::add_edge(s, e, false);
 	}
 

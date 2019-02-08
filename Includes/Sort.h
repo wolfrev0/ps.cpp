@@ -2,7 +2,7 @@
 #include "Core.h"
 
 template<typename T>
-inline void counting_sort(vector<T>& v, const function<T(T)> &f = [](const T& x){return x;})
+void counting_sort(vector<T>& v, const function<T(T)> &f = [](const T& x){return x;})
 {
 	const int MAX_BW = 500001;
 	static vector<T> bucket[MAX_BW+1];

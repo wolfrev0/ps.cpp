@@ -9,10 +9,10 @@ struct Polygon
 	Polygon() {}
 	explicit Polygon(int n) :vtx(n) {}
 	explicit Polygon(const vector<Vec2<T>>& v) :vtx(v) {}
-	inline int size()const { return vtx.size(); }
-	inline void pushb(const Vec2<T>& v) { vtx.push_back(v); }
-	inline void popb() { vtx.pop_back(); }
-	inline Vec2<T>& operator[](int idx) { return vtx[idx]; }
+	int size()const { return vtx.size(); }
+	void pushb(const Vec2<T>& v) { vtx.push_back(v); }
+	void popb() { vtx.pop_back(); }
+	Vec2<T>& operator[](int idx) { return vtx[idx]; }
 
 	f64 area() {
 		f64 ans = 0;

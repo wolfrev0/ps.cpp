@@ -12,10 +12,10 @@ struct Mat
 	}
 	Mat(const Mat& r) :arr(r.arr) {	}
 
-	inline int r()const { return arr.size(); }
-	inline int c()const { return arr[0].size(); }
+	int r()const { return arr.size(); }
+	int c()const { return arr[0].size(); }
 
-	inline Mat operator*(const Mat& o)const {
+	Mat operator*(const Mat& o)const {
 		assert(c() == o.r());
 
 		Mat ret(r(), o.c());
@@ -49,16 +49,16 @@ struct SqMat : public Mat<T>{
 	explicit SqMat(int n) :Mat<T>(n, n) {}
 	explicit SqMat(const Mat<T>& m) :Mat<T>(m) { assert(m.r() == m.c()); }
 
-	inline int n()const { return Mat<T>::r(); }
+	int n()const { return Mat<T>::r(); }
 
 	
-	inline SqMat one() const {
+	SqMat one() const {
 		SqMat ret(n());
 		forh(i, 0, n())
 			ret.arr[i][i] = 1;
 		return ret;
 	}
 
-	inline Mat<T> operator*(const Mat<T>& o)const { return Mat<T>::operator*(o); }
-	inline SqMat operator*(const SqMat& o)const { return SqMat(Mat<T>::operator*(o)); }
+	Mat<T> operator*(const Mat<T>& o)const { return Mat<T>::operator*(o); }
+	SqMat operator*(const SqMat& o)const { return SqMat(Mat<T>::operator*(o)); }
 };

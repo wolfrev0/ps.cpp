@@ -4,7 +4,7 @@
 struct DirectedGraph: public Graph<int>{
 	DirectedGraph(int n=0):Graph<int>(n) {}
 
-	inline void add_edge(int s, int e, bool dir=true) {
+	void add_edge(int s, int e, bool dir=true) {
 		Graph::add_edge(s, e, 1, dir);
 	}
 

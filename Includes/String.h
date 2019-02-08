@@ -73,7 +73,7 @@ vector<int> kmp2(const string &s, const string &p) {
 	return ans;
 }
 
-inline bool cmp(int i, int j, const vector<int> &g, int t){
+bool cmp(int i, int j, const vector<int> &g, int t){
 	if(g[i]==g[j])
 		return g[i+t] < g[j+t];
 	return g[i]<g[j];

@@ -20,7 +20,7 @@ struct Graph {
 	Graph(int n=0) :n(n), g(n) {}
 	Graph(const Graph& r) :n(r.n), g(r.g) {}
 
-	inline void add_edge(int s, int e, T w, bool dir=true){ 
+	void add_edge(int s, int e, T w, bool dir=true){ 
 		g[s].push_back(Edge(s, e, g[s].size(), w));
 		if(!dir)
 			g[e].push_back(Edge(e, s, g[e].size(), w));
