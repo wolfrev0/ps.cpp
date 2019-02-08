@@ -32,7 +32,6 @@ struct ModNum {
 
 	static ModNum zero(){ return 0; }
 	static ModNum one(){ return 1; }
-	static ModNum inf(){ return -1; }
 private:
 	i64 n;
 
