@@ -1,4 +1,6 @@
 # Index
+<h3>Queue</h3>
+  <ol><li>Monotonic Queue</li></ol>
 <h3>Graph</h3>
   <h4>Directed Graph</h4>
     <ol><li>Topological Sort</li>
