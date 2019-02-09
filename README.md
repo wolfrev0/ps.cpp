@@ -1,6 +1,5 @@
 # Index
-<h3>Queue</h3>
-  <ol><li>Monotonic Queue</li></ol>
+<h3>Monotonic Q</h3>
 <h3>Graph</h3>
   <h4>Directed Graph</h4>
     <ol><li>Topological Sort</li>
@@ -17,25 +16,24 @@
     <li>MST(Prim)</li>
     <li>MST(Kruskal)</li></ol>
   <h4>Flow Graph</h4>
-    <ol><li>Maximum Flow(Ford–Fulkerson)</li>
-    <li>Maximum Flow(Dinic)(comming soon)</li>
-    <li>MCMF(Cycle Canceling is comming soon)</li></ol>
+    <ol><li>Max Flow(Ford–Fulkerson)</li>
+    <li>Max Flow(Dinic)(comming soon)</li>
+    <li>MCMF(Cycle Canceling is working)</li></ol>
 <h3>Tree</h3>
   <ol><li>Diameter</li>
   <li>Centroid Decomposition(comming soon)</li></ol>
   <h4>Rooted Tree</h4>
     <ol><li>LCA</li>
-    <li>Heavy Light Decomposition(HLD)</li></ol>
+    <li>HLD</li></ol>
  <h4>Dynamic Tree</h4>
-    <ol><li>Splay Tree(Lazy)</li>
-    <li>Treap(comming soon...? Useless?)</li></ol>
+    <ol><li>Splay Tree(Lazy)</li></ol>
   <h4>Balanced Binary Search Tree(BBST)</h4>
     <ol><li>Extended Set(Xset)</li></ol>
   <h4>Segment Tree</h4>
     <ol><li>Lazy Propagation</li>
     <li>Persistent Segment Tree(PST)</li>
     <li>Fenwick</li>
-    <li>Merge Sort Tree</li></ol>
+    <li>Merge Sort Tree(not abstracted yet)</li></ol>
   <h4>Disjoint Set</h4>
     <ol><li>Path Compression</li>
     <li>Union by Rank(comming soon)</li></ol>
