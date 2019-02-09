@@ -1,5 +1,5 @@
 # Index
-<h3>Monotonic Q</h3>
+<h3>Monotonic Queue</h3>
 <h3>Graph</h3>
   <h4>Directed Graph</h4>
     <ol><li>Topological Sort</li>
