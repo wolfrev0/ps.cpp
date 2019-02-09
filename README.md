@@ -50,8 +50,9 @@
   <li>Berlekamp Massey Algorithm(comming soon)</li></ol>
 <h3>DP Optimization</h3>
   <ol><li>Knuth Opt</li>
-  <li>DnC Opt</li>
-  <li>Convex Opt</li></ol>
+  <li>DnC Opt(comming soon)</li>
+  <li>Convex Opt(comming soon)</li>
+  <li>Kitamasa(comming soon)</li></ol>
 <h3>2D Geometry</h3>
   <h4>Vector</h4><ol>
     <li>Basic Vector Operations</li>
