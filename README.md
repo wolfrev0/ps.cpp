@@ -48,10 +48,8 @@
   <li>Fractional</li>
   <li>Integer Arithmetic(More accurate)</li>
   <li>Berlekamp Massey Algorithm(comming soon)</li></ol>
-<h3>Convolution(comming soon)</h3><ol>
-  <li>FFT & NTT</li>
-  <li>Karatsuba</li>
-</ol>
+<h3>DP Optimization</h3>
+  <ol><li>Knuth Opt</li></ol>
 <h3>2D Geometry</h3>
   <h4>Vector</h4><ol>
     <li>Basic Vector Operations</li>
@@ -77,6 +75,10 @@
   <li>Suffix Tree(comming soon)</li>
   <li>Trie(comming soon)</li>
   <li>Ahocorasick(comming soon)</li></ol>
+<h3>Convolution(comming soon)</h3><ol>
+  <li>FFT & NTT</li>
+  <li>Karatsuba</li>
+</ol>
 <h3>Linear Programming(comming soon)</h3>
   <ol><li>Simplex Method(Randomized)</li>
   <li>Inner Point Method</li></ol>
