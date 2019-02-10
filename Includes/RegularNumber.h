@@ -55,6 +55,8 @@ using I128=Regular<i128>; using U128=Regular<u128>; using F128=Regular<f128>;
 ostream& operator<<(ostream &os, u128 n){
 	string s;while(n){ s.push_back(n%10+'0');n/=10; }
 	reverse(s.begin(), s.end());
+  if(s.empty())
+    s.push_back('0');
 	return os<<s;
 }
 ostream& operator<<(ostream &os, i128 n){
