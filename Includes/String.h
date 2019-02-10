@@ -1,12 +1,25 @@
 #pragma once
 #include "Core.h"
 
+vector<string> tokenize(string s, char p){
+  int c;
+  vector<string> ret;
+  while((c=s.find(p)) != -1){
+    ret.push_back(s.substr(0, c));
+    s=s.substr(c+1);
+  }
+  if(s.size())
+    ret.push_back(s);
+  return ret;
+}
+
 //a.k.a. partial match table, pi
 vector<int> failure_function(const string &p) {
 	vector<int> ret(p.size());
 	int si = 1, pi = 0;
-	while (si + pi < p.size()) {
-		if (pi < p.size() && p[si + pi] == p[pi]) {
+  int psz=p.size();
+	while (si + pi < psz) {
+		if (pi < psz && p[si + pi] == p[pi]) {
 			pi++;
 			ret[si + pi - 1] = pi;
 		}
@@ -23,14 +36,16 @@ vector<int> failure_function(const string &p) {
 }
 
 vector<int> kmp(const string &s, const string &p) {
-	if (s.size() < p.size())
+  int ssz=s.size();
+  int psz=p.size();
+	if (ssz < psz)
 		return {};
 	vector<int> ret;
 	auto ff = failure_function(p);
 	int si = 0, pi = 0;
-	while (si <= s.size() - p.size()) {
-		if (pi < p.size() && s[si + pi] == p[pi]) {
-			if (++pi == p.size())
+	while (si <= ssz - psz) {
+		if (pi < psz && s[si + pi] == p[pi]) {
+			if (++pi == psz)
 				ret.push_back(si);
 		}
 		else {
@@ -65,7 +80,7 @@ vector<int> kmp2(const string &s, const string &p) {
 	forh(i, 0, s.size()) {
 		while (pi > 0 && s[i] != p[pi])
 			pi = ff[pi - 1];
-		if (s[i] == p[pi] && (ans[i] = ++pi) == p.size())
+		if (s[i] == p[pi] && (ans[i] = ++pi) == (int)p.size())
 		{
 			pi = ff[pi - 1];
 		}
