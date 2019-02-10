@@ -22,8 +22,8 @@ template<typename T> T inf() { return numeric_limits<T>::max() / 2; }
 #define forci(var, begin, end) for(int var=end; (int)begin<=var && var<=(int)end; --var)//inversion
 #define forco(var, begin, end) int var=begin; for(; (int)begin<=var && var<=(int)end; ++var)//out declaration
 #define forcoi(var, begin, end) int var=end; for(; (int)begin<=var && var<=(int)end; --var)
-#define trav(var, begin, cond) for(int var=begin; cond; ++var)//travel
-#define travo(var, begin, cond) int var=begin; for(; cond; ++var)//out declaration
+#define trav(var, begin, cond) for(i64 var=begin; cond; ++var)//travel
+#define travo(var, begin, cond) i64 var=begin; for(; cond; ++var)//out declaration
 
 //Extensions
 #include <ext/pb_ds/assoc_container.hpp>
