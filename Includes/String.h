@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
 
-vector<string> tokenize(string s, char p){
+vector<string> split(string s, char p){
   int c;
   vector<string> ret;
   while((c=s.find(p)) != -1){
