@@ -103,3 +103,29 @@ i64 sqrt_c(i64 n){
 		;
 	return i;
 }
+
+template<typename T>
+vector<T> factorials(T n){
+  vector<T> ret(int(n)+1);
+  ret[0]=1;
+  forc(i, 1, n)
+    ret[i]=ret[i-1]*i;
+  return ret;
+}
+
+template<typename T>
+T binom(T n, T k){
+  if(k>n/2)
+    return binom(n, n-k);
+  if(k==0)
+    return 1;
+  auto f=factorials(n);
+  return f[int(n)]/(f[int(k)]*f[int(n-k)]);
+}
+
+template<typename T>
+vector<vector<T>> binom_dp(T n, T k){
+  vector<vector<T>> ret(n, vector<T>(k));
+
+  return ret;
+}
