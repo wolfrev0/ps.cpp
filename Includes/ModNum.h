@@ -6,6 +6,8 @@ class NoModInv {};
 //Do not use when Rabin Karp hashing(too weak, instead use ull).
 struct ModNum {
 	ModNum(i64 n=0) :n((n%mod+mod)%mod){}
+  explicit operator int()const{return n;}
+  explicit operator bool()const{return !!n;}
 	i64 val()const { return n; }
 
 	ModNum operator - () const { return {-n}; }
@@ -29,9 +31,6 @@ struct ModNum {
 	bool operator<=(const ModNum& r) const { return n <= r.n; }
 	bool operator>(const ModNum& r) const { return n > r.n; }
 	bool operator>=(const ModNum& r) const { return n >= r.n; }
-
-	static ModNum zero(){ return 0; }
-	static ModNum one(){ return 1; }
 private:
 	i64 n;
 
