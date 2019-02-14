@@ -3,14 +3,9 @@
 
 template<typename T, typename U=T, typename F=SegFDefault<T, U>>
 struct HLD:public LCA<T>{
-  using LCA<T>::n;
-  using LCA<T>::r;
-  using LCA<T>::parent;
-  using LCA<T>::children;
-  using LCA<T>::lca;
-
+  using P=LCA<T>;
   HLD(const Tree<T>& t, int r)
-  :LCA<T>(t, r), st(n), chain(n), head(n), segidx(n), sz(n){
+  :P(t, r), st(n), chain(n), head(n), segidx(n), sz(n){
     dfs_size(r);
     int segi=0, cur_chain=0;
     dfs_hld(r, segi, cur_chain);
@@ -39,6 +34,11 @@ struct HLD:public LCA<T>{
   void update(int cur, U w){return st.update(segidx[cur], w);}
   void update(int s, int e, U w){}
 protected:
+  using P::n;
+  using P::r;
+  using P::parent;
+  using P::children;
+  using P::lca;
   SegTree<T, U, F> st;
   vector<int> chain;
   vector<int> head;

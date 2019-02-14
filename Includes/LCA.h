@@ -4,13 +4,10 @@
 
 template<typename T>
 struct LCA:public RootedTree<T>{
-  using RootedTree<T>::n;
-  using RootedTree<T>::r;
-  using RootedTree<T>::parent;
-  using RootedTree<T>::children;
+  using P=RootedTree<T>;
   
   LCA(const Tree<T>& t, int r)
-  :RootedTree<T>(t, r), st(n*2),lpos(n)
+  :P(t, r), st(n*2),lpos(n)
   {int segi=0; dfs_lca(r, segi);}
 
   int lca(int a, int b){
@@ -20,6 +17,10 @@ struct LCA:public RootedTree<T>{
     return st.query(l, r+1).idx;
   }
 protected:
+  using P::n;
+  using P::r;
+  using P::parent;
+  using P::children;
   struct LCA_T{
     int ord=0x7fffffff/2, idx=-1;
     bool operator<(const LCA_T& r)const{return ord<r.ord;}

@@ -3,16 +3,17 @@
 
 template<typename T>
 struct RootedTree:public Tree<T>{
-  RootedTree(const Tree<T>& tree, int r)
-  :Tree<T>(tree),r(r),parent(n),children(Tree<T>::g){
+  using P=Tree<T>;
+  RootedTree(const P& tree, int r)
+  :P(tree),r(r),parent(n),children(P::g){
     dfs_rootize(r, -1);
     for(const auto &i:parent)
       if(i.s!=i.e)//if not root
         children[i.s].erase(children[i.s].begin()+i.ei);
   }
 protected:
-  using Tree<T>::n;
-  using Tree<T>::g;
+  using P::n;
+  using P::g;
   using typename Graph<T>::Edge;
 
   int r;
