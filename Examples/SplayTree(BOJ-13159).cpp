@@ -18,20 +18,6 @@ struct F{
 	static bool propa(const auto& a, const auto& b){return a^b;}
 };
 
-struct Solver:public SplayTree<A, bool, F>{
-	Solver():SplayTree<A, bool, F>(0){}
-
-	Node* find_by_order(int ord){
-		splay(++ord);
-		return root; 
-	}
-
-	int order_of(Node* x){
-		splay(x);
-		return size(x->l);
-	}
-};
-
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(11);
@@ -39,10 +25,10 @@ int main() {
 
 	int n, q;
 	cin>>n>>q;
-	Solver st;
+	SplayTree<A, bool, F> st;
 	forh(i, 0, n)
 		st.insert(i, {i+1,i+1,i+1});
-	Solver::Node* arr[300001]={nullptr,};
+	Node* arr[300001]={nullptr,};
 	forh(i, 0, n)
 		arr[i+1]=st.find_by_order(i);
 	forh(i, 0, q){
@@ -79,7 +65,7 @@ int main() {
 		}else{
 			int x;
 			cin>>x;
-			cout<<st.order_of(arr[x])<<endl;
+			cout<<st.order_of(arr[x])+1<<endl;
 		}
 	}
 	forh(i, 0, st.size()){

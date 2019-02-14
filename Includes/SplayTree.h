@@ -104,7 +104,7 @@ protected:
 
   Node* nth(Node* x, int n){
     assert(x);
-
+    update_lazy(x);
     int lsz=size(x->l);
     if(lsz>n)
       return nth(x->l, n);
@@ -121,7 +121,7 @@ protected:
         rotate((x == p->l) == (p == p->p->l) ? p : x);
       rotate(x);
     }
-    return root;
+    return x;
   }
 
   void rotate(Node* x){
@@ -159,9 +159,6 @@ protected:
     auto b=nth(root, e);
     splay(a);
     splay(b, a);
-    update_lazy(root);
-    update_lazy(root->r);
-    update_lazy(root->r->l);
     return root->r->l;
   }
   
