@@ -113,6 +113,7 @@ vector<T> factorials(T n){
   return ret;
 }
 
+//recommanded T=ModNum. i64 can easily overflow.
 template<typename T>
 T binom(T n, T k){
   if(k>n/2)
