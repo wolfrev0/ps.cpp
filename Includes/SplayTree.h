@@ -43,6 +43,7 @@ struct SplayTree:public DynamicTree{
       return;
     auto x=interval(s, e);
     x->lazy=F::propa(x->lazy, val);
+    renew(x, true);
   }
   
   T query(int s, int e){
@@ -69,9 +70,8 @@ struct SplayTree:public DynamicTree{
     renew(p, true);
   }
 
-  //warning: Node pointer should be touch() before to use(cuz laziness).
   Node* find_by_order(int ord){return splay(ord+1);}
-  int order_of(Node* x){touch(x); return size(splay(x)->l)-1;}
+  int order_of(Node* x){return size(splay(x)->l)-1;}
 
   int size()const{return root->sz-2;}
 protected:
@@ -104,7 +104,7 @@ protected:
 
   Node* nth(Node* x, int n){
     assert(x);
-    renew(x);
+    update_lazy(x);
 
     int lsz=size(x->l);
     if(lsz>n)
@@ -128,11 +128,11 @@ protected:
   void rotate(Node* x){
     if(!x->p)
       return;
-    update_lazy(x->p);
-    update_lazy(x->p->l);
-    update_lazy(x->p->r);
     
     auto p = x->p;
+    update_lazy(p);
+    update_lazy(p->l);
+    update_lazy(p->r);
     if(!p->p)
       root=x;
     else if(p->p->l == p)
@@ -175,15 +175,5 @@ protected:
     if(x->r)
       x->r->lazy=F::propa(x->r->lazy, x->lazy);
     x->lazy=F::idU();
-  }
-
-  //propagate lazy manually.
-  //have to be called when access node directly by pointer.
-  //(however, order(index) access manages laziness automatically.)
-  void touch(Node* x){
-    if(!x)
-      return;
-    touch(x->p);
-    renew(x);
   }
 };
