@@ -7,6 +7,7 @@ struct SplayNode{
   int sz=1;
   T val, acc;
   U lazy;
+  ~SplayNode(){if(l) delete l;if(r) delete r;}
 
   void adoptL(SplayNode* n){l=n; if(n)n->p=this;}
   void adoptR(SplayNode* n){r=n; if(n)n->p=this;}
@@ -32,6 +33,7 @@ struct SplayTree:public DynamicTree{
     forh(i, 0, n)
       insert(0);
   }
+  ~SplayTree(){delete root;}
 
   void update(int i, T val) {update(i, i+1, val);}
   T query(int i){return query(i, i+1);}
@@ -65,6 +67,17 @@ struct SplayTree:public DynamicTree{
     delete x;
     p->l=nullptr;
     renew(p, true);
+  }
+
+  //warning: Node pointer should be touch() before to use(cuz laziness).
+  Node* find_by_order(int ord){return splay(ord+1);}
+  int order_of(Node* x){touch(x); return size(splay(x)->l)-1;}
+
+  void touch(Node* x){
+    if(!x)
+      return;
+    touch(x->p);
+    renew(x);
   }
 
   int size()const{return root->sz-2;}
@@ -108,14 +121,15 @@ protected:
     return x;
   }
 
-  void splay(int ord) {splay(nth(root, ord));}
-  void splay(Node *x, Node *rp=nullptr) {
+  Node* splay(int ord) {return splay(nth(root, ord));}
+  Node* splay(Node *x, Node *rp=nullptr) {
     while(x->p != rp){
       auto p = x->p;
       if (p->p != rp)
         rotate((x == p->l) == (p == p->p->l) ? p : x);
       rotate(x);
     }
+    return root;
   }
 
   void rotate(Node* x){
