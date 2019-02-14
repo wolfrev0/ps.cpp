@@ -73,13 +73,6 @@ struct SplayTree:public DynamicTree{
   Node* find_by_order(int ord){return splay(ord+1);}
   int order_of(Node* x){touch(x); return size(splay(x)->l)-1;}
 
-  void touch(Node* x){
-    if(!x)
-      return;
-    touch(x->p);
-    renew(x);
-  }
-
   int size()const{return root->sz-2;}
 protected:
   Node* root=nullptr;
@@ -182,5 +175,15 @@ protected:
     if(x->r)
       x->r->lazy=F::propa(x->r->lazy, x->lazy);
     x->lazy=F::idU();
+  }
+
+  //propagate lazy manually.
+  //have to be called when access node directly by pointer.
+  //(however, order(index) access manages laziness automatically.)
+  void touch(Node* x){
+    if(!x)
+      return;
+    touch(x->p);
+    renew(x);
   }
 };
