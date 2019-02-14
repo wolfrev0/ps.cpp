@@ -1,6 +1,6 @@
 # Common Interface
 <ol>
-  <li>[s, e)</li>
+  <li>[s, e) (half-opened range)</li>
   <li>0-based index</li>
 </ol>
 
