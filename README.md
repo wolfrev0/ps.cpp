@@ -1,8 +1,9 @@
 # Common Interface
 <ol>
-  <li>[s, e)</li>
+  <li>[s, e) (half-opened range)</li>
   <li>0-based index</li>
 </ol>
+
 # Index
 <h3>Monotonic Queue</h3>
 <h3>Graph</h3>
