@@ -26,7 +26,7 @@ struct SplayFDefault{
 };
 
 //warning: implement is 1-based index(while interface is 0-based).
-//since mock nodes(idx:0, idx:n+1) for convenient interval.
+//since mock nodes(idx:0, idx:n+1) for convenient interval().
 template<typename T, typename U=T, typename F=SplayFDefault<T, U>>
 struct SplayTree:public DynamicTree{
   using Node=SplayNode<T,U>;
