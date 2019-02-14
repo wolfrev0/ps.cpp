@@ -3,6 +3,7 @@
   <li>[s, e)</li>
   <li>0-based index</li>
 </ol>
+
 # Index
 <h3>Monotonic Queue</h3>
 <h3>Graph</h3>
