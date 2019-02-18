@@ -21,7 +21,7 @@ struct SplayFDefault{
   static T idT(){return T();}
   static U idU(){return U();}
   static T q(const T& a, const T& b){return a+b;}
-  static void upd(SplayNode<T, U>* x){x->val+=x->lazy; x->acc+=x->lazy*x->sz;}
+  static void upd(SplayNode<T,U>* x){x->val+=x->lazy; x->acc+=x->lazy*x->sz;}
   static U propa(const U& clazy, const U& lazy){return clazy+lazy;}
 };
 
