@@ -20,9 +20,9 @@ template<typename T, typename U>
 struct SplayFDefault{
   static T idT(){return T();}
   static U idU(){return U();}
-  static T q(const T& a, const T& b){return a + b;}
+  static T q(const T& a, const T& b){return a+b;}
   static void upd(SplayNode<T, U>* x){x->val+=x->lazy; x->acc+=x->lazy*x->sz;}
-  static U propa(const U& clazy, const U& lazy){return clazy + lazy;}
+  static U propa(const U& clazy, const U& lazy){return clazy+lazy;}
 };
 
 //warning: implement is 1-based index(while interface is 0-based).
