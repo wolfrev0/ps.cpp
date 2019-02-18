@@ -42,7 +42,7 @@ struct SplayTree:public DynamicTree{
   }
   ~SplayTree(){delete root;}
 
-  void update(int i, T val){update(i,i+1,val);}
+  void update(int i, U val){update(i,i+1,val);}
   T query(int i){return query(i,i+1);}
 
   void update(int s, int e, U val){
