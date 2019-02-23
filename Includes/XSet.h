@@ -5,7 +5,7 @@ template<typename T>
 using XSet = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 template<typename T>
-struct Xmultiset{
+struct XMultiset{
     XSet<pair<T, int>> s;
 
 	auto begin()const{return s.begin();}
