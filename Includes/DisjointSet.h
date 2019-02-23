@@ -15,7 +15,7 @@ struct DisjointSet {
 		//if (a == b)
 		//return;
 		//sometimes this if statement needed. (ex: BOJ-4195)
-		par[a] = b;
+		par[b] = a;
 	}
 
 	int find(int a) {
