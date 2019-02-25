@@ -1,6 +1,6 @@
 #pragma once
 #ifndef DEBUG
-    #pragma GCC optimize ("Ofast")
+  #pragma GCC optimize ("Ofast")
 #endif
 #include <bits/stdc++.h>
 
