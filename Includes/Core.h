@@ -28,6 +28,8 @@ template<typename T> T inf() { return numeric_limits<T>::max() / 2; }
 //Extensions
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
+#include <ext/rope>
 using namespace __gnu_pbds;
+using namespace __gnu_cxx;
 
 //Settings
