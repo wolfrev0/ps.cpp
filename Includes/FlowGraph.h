@@ -9,9 +9,10 @@ struct FlowWeight {
 	FlowWeight(int si, i64 cap, i64 cost) :si(si), cap(cap), cost(cost) {}
 	bool operator< (const FlowWeight& r)const { return cost < r.cost; }
 	FlowWeight operator+(const FlowWeight& r)const { return cost + r.cost; }
-
-	static FlowWeight inf(){return I64::inf();}
 };
+
+template<>
+FlowWeight inf(){return inf<i64>();}
 
 struct FlowGraph : public Graph<FlowWeight> {
 	int src, snk;
@@ -23,7 +24,7 @@ struct FlowGraph : public Graph<FlowWeight> {
 		Graph::add_edge(e, s, FlowWeight(g[s].size() - 1, 0, -cost));
 	}
 
-	i64 mf(i64 flow = I64::inf()) {
+	i64 mf(i64 flow = inf<i64>()) {
 		i64 sum = 0;
 	  auto vis=vector<bool>(n+2);
 		while (i64 f = process_mf(src, flow-sum, vis)){
@@ -33,12 +34,12 @@ struct FlowGraph : public Graph<FlowWeight> {
 		return sum;
 	}
 
-	i64 dinic(i64 flow = I64::inf()){
+	i64 dinic(i64 flow = inf<i64>()){
 		i64 sum = 0;
 		return sum;
 	}
 
-	Vec2<i64> mcmf(i64 flow = I64::inf()) {
+	Vec2<i64> mcmf(i64 flow = inf<i64>()) {
 		Vec2<i64> ret;
 		while (true) {
 			auto res = process_mcmf(flow-ret.y);
@@ -70,12 +71,12 @@ private:
 	Vec2<i64> process_mcmf(i64 flow) {
 		vector<FlowWeight> ub;
 		vector<pair<int, int>> p;
-		if (!spfa(ub, p, src) || p[snk].first == I32::inf())
+		if (!spfa(ub, p, src) || p[snk].first == inf<int>())
 			return {};
-		for (int cur = snk; p[cur].first != I32::inf(); cur = p[cur].first)
+		for (int cur = snk; p[cur].first != inf<int>(); cur = p[cur].first)
 			flow = min(flow, g[p[cur].first][p[cur].second].w.cap);
 		i64 cost = 0;
-		for (int cur = snk; p[cur].first != I32::inf(); cur = p[cur].first) {
+		for (int cur = snk; p[cur].first != inf<int>(); cur = p[cur].first) {
 			auto& e = g[p[cur].first][p[cur].second];
 			e.w.cap -= flow;
 			g[e.e][e.w.si].w.cap += flow;

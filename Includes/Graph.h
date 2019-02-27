@@ -28,8 +28,8 @@ struct Graph {
 
 	void dijkstra(vector<T>& d, vector<pair<int, int>>& p, int s) {
 		priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> pq;//dest, v
-		d = vector<T>(n, T::inf());
-		p = vector<pair<int, int>>(n, { T::inf(), T::inf() });
+		d = vector<T>(n, inf<T>());
+		p = vector<pair<int, int>>(n, { inf<T>(), inf<T>() });
 		d[s] = 0;
 		pq.push({ 0, s });
 		while (!pq.empty())
@@ -60,7 +60,7 @@ struct Graph {
 			for(auto& i:g[s])
 				if(i.e==e)
 					return i.w;
-			return T::inf();
+			return inf<T>();
 		}
 		auto& ret=memo[s][e][m];
 		if(ret!=-1)
@@ -71,8 +71,8 @@ struct Graph {
 	bool spfa(vector<T>& ub, vector<pair<int, int>>& p, int s) {
 		queue<int> q;
 		vector<bool> inq(n);
-		ub = vector<T>(n, T::inf());
-		p = vector<pair<int, int>>(n, { T::inf(), T::inf() });
+		ub = vector<T>(n, inf<T>());
+		p = vector<pair<int, int>>(n, { inf<int>(), inf<int>() });
 
 		ub[s] = 0;
 		inq[s] = true;
@@ -103,12 +103,12 @@ struct Graph {
 		vector<Edge> ret;
 		vector<bool> vis(n);
 		priority_queue<Edge, vector<Edge>, greater<Edge>> q;
-		q.push({ 0, T::inf(), 0 });
+		q.push({ 0, inf<T>(), 0 });
 		while (q.size()) {
 			auto cur = q.top();
 			q.pop();
 
-			auto curv = cur.s == T::inf() ? 0 : g[cur.s][cur.ei].e;
+			auto curv = cur.s == inf<T>() ? 0 : g[cur.s][cur.ei].e;
 			if (vis[curv])
 				continue;
 			vis[curv] = true;
