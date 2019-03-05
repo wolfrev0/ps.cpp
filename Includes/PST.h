@@ -3,72 +3,56 @@
 
 template<typename T>
 struct PST{
-	struct Node{
-		T val;
-		Node *l, *r;
+  struct Node{
+    Node *l=nullptr, *r=nullptr;
+    T val=T();
+  };
 
-		Node(T v=0, Node* l=nullptr, Node* r=nullptr):val(v), l(l), r(r){}
-	};
+  const int n;
+  function<T(const T&, const T&)> q;
 
-	const int n;
-	const function<T(T,T)> f;
-	vector<Node> vers;
-	Node* base=new PST<T>::Node(0);
-
-	PST(int n, const function<T(T,T)>& f=[](T a, T b){return a+b;}):n(n), f(f), vers(n){
-		build_base(base, 0, n-1);
-	}
-	
-	Node* ver(int i) { return i>=0?&vers[i]:base; }
-	
-	void upgrade(Node* prev, Node* cur, int idx, T value){
-		upgrade2(prev, cur, idx, value, 0, n-1);
-	}
-
-	T query(Node* node, int l, int r){
-		return query2(node, l, r, 0, n-1);
-	}
+  PST(int n, function<T(const T&, const T&)> q):n(n), q(q){}
+  void build(Node*& cur){ build(cur, 0, n); }
+  void upgrade(Node*& tree, Node*& base, int idx, int val){ upgrade(tree, base, 0, n, idx, val); }
+  T query(Node* tree, int s, int e){ return query(tree, 0, n, s, e); }
 
 private:
-	void build_base(Node* node, int low, int high){
-		if (low == high){
-			node->val = 0;
-			return;
-		}
-		int mid = (low + high) / 2;
-		node->l = new Node(0);
-		node->r = new Node(0);
-		build_base(node->l, low, mid);
-		build_base(node->r, mid + 1, high);
-		node->val = f(node->l->val, node->r->val);
-	}
-	void upgrade2(Node* prev, Node* cur, int idx, T value, int low, int high){
-		if (idx > high or idx < low or low > high)
-			return;
+  T val(Node *x){ return x?x->val:T(); }
 
-		if (low == high){
-			cur->val = value;
-			return;
-		}
-		int mid = (low + high) / 2;
-		if (idx <= mid){
-			cur->r = prev->r;
-			cur->l = new Node(0);//id
-			upgrade2(prev->l, cur->l, idx, value, low, mid);
-		}else{
-			cur->l = prev->l;
-			cur->r = new Node(0);//id
-			upgrade2(prev->r, cur->r, idx, value, mid + 1, high);
-		}
-		cur->val = f(cur->l->val, cur->r->val);
-	}
+  void build(Node*& cur, int s, int e){
+    cur=new Node();
+    if(e-s==1)
+      return;
+    
+    int m=(s+e)/2;
+    build(cur->l,s,m);
+    build(cur->r,m,e);
+    cur->val=q(val(cur->l), val(cur->r));
+  }
 
-	T query2(Node* node, int l, int r, int low, int high){
-		if (l > high or r < low or low > high)
-			return 0;
-		if (l <= low and high <= r)
-			return node->val;
-		int mid = (low + high) / 2;
-		return f(query2(node->l, l, r, low, mid), query2(node->r, l, r, mid + 1, high));
-	}
+  void upgrade(Node*& cur, Node* base, int s, int e, int idx, T v){
+    if(e<=idx or idx<s)
+      return;
+    cur=new Node();
+    if(e-s==1){
+      cur->val=v;
+      return;
+    }
+
+    int m=(s+e)/2;
+    cur->r=base->r;
+    cur->l=base->l;
+    upgrade(cur->l, base->l, s, m, idx, v);
+    upgrade(cur->r, base->r, m, e, idx, v);
+    cur->val=q(val(cur->l), val(cur->r));
+  }
+
+  T query(Node* cur, int cs, int ce, int s, int e){
+    if(ce<=s or e<=cs or e<=s)
+      return T();
+    if(s<=cs and ce<=e)
+      return cur->val;
+    int m=(cs+ce)/2;
+    return q(query(cur->l, cs, m, s, e), query(cur->r, m, ce, s, e));
+  }
 };
