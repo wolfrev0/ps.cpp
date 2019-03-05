@@ -14,16 +14,16 @@ const f64 eps=1e-12;
 const i32 prime=i32(2e9 + 11);
 i32 mod=i32(1e9 + 7);
 template<typename T> T inf() { return numeric_limits<T>::max() / 2; }
-#define forh(var, begin, end) for(int var=begin; (int)begin<=var && var<(int)end; ++var)//for: half-opened range
-#define forhi(var, begin, end) for(int var=end-1; (int)begin<=var && var<(int)end; --var)//inversion
-#define forho(var, begin, end) int var=begin; for(; (int)begin<=var && var<(int)end; ++var)//out declaration
-#define forhoi(var, begin, end) int var=end-1; for(; (int)begin<=var && var<(int)end; --var)
-#define forc(var, begin, end) for(int var=begin; (int)begin<=var && var<=(int)end; ++var)//for: closed range
-#define forci(var, begin, end) for(int var=end; (int)begin<=var && var<=(int)end; --var)//inversion
-#define forco(var, begin, end) int var=begin; for(; (int)begin<=var && var<=(int)end; ++var)//out declaration
-#define forcoi(var, begin, end) int var=end; for(; (int)begin<=var && var<=(int)end; --var)
-#define trav(var, begin, cond) for(i64 var=begin; cond; ++var)//travel
-#define travo(var, begin, cond) i64 var=begin; for(; cond; ++var)//out declaration
+#define forh(var, s, e) for(int var=s; (int)s<=var && var<(int)e; ++var)//for: half-opened range
+#define forhi(var, s, e) for(int var=e-1; (int)s<=var && var<(int)e; --var)//inversion
+#define forho(var, s, e) int var=s; for(; (int)s<=var && var<(int)e; ++var)//out declaration
+#define forhoi(var, s, e) int var=e-1; for(; (int)s<=var && var<(int)e; --var)
+#define forc(var, s, e) for(int var=s; (int)s<=var && var<=(int)e; ++var)//for: closed range
+#define forci(var, s, e) for(int var=e; (int)s<=var && var<=(int)e; --var)//inversion
+#define forco(var, s, e) int var=s; for(; (int)s<=var && var<=(int)e; ++var)//out declaration
+#define forcoi(var, s, e) int var=e; for(; (int)s<=var && var<=(int)e; --var)
+#define trav(var, s, cond) for(i64 var=s; cond; ++var)//travel
+#define travo(var, s, cond) i64 var=s; for(; cond; ++var)//out declaration
 
 //Extensions
 #include <ext/pb_ds/assoc_container.hpp>
