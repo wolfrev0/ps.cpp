@@ -43,9 +43,8 @@ struct Graph {
 			auto& cg = g[cur.second];
 			for (auto &i : cg) {
 				if (d[i.e] > cur.first + i.w) {
-					d[i.e] = cur.first + i.w;
 					p[i.e] = { cur.second, i.ei };
-					pq.push({ cur.first + i.w, i.e });
+					pq.push({ d[i.e]=cur.first + i.w, i.e });
 				}
 			}
 		}

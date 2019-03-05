@@ -28,10 +28,8 @@ protected:
   };
   struct LCA_F{
     static LCA_T idT(){return LCA_T();}
-    static LCA_T idU(){return LCA_T();}
     static LCA_T q(const LCA_T& a, const LCA_T& b){return min(a,b);}
-    static LCA_T upd(const LCA_T& a, const LCA_T& b, int c){return b;}
-    static LCA_T propa(const LCA_T& a, const LCA_T& b){return b;}
+    static LCA_T upd(const LCA_T& a, const LCA_T& b){return b;}
   };
   
   SegTree<LCA_T, LCA_T, LCA_F> st;
