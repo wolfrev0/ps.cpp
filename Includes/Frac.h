@@ -7,6 +7,7 @@ struct Frac{
 	Frac(T a=0, T b=1):a(a),b(b){normalize();}
 	bool operator<(const Frac& r)const{return a*r.b<r.a*b;}
 	bool operator==(const Frac& r)const{return a*r.b==r.a*b;}
+  Frac operator+(const Frac& r)const{return {a*r.b+r.a*b, b*r.b};}
 	Frac operator*(const Frac& r)const{return {a*r.a, b*r.b};}
 	Frac operator/(const Frac& r)const{return (*this)*Frac(r.b,r.a);}
 	bool is_inf()const{return a&&!b;}
@@ -14,6 +15,7 @@ struct Frac{
   bool is_int()const{return b&&!(a%b);}
   //a is sign <if normalized>
   int sign()const{return a>=0?1:-1;}
+  T to_integer(){return a/b;}
 	f64 to_f64(){return (f64)a/b;}
   T ceil()const{return a/b+(sign()>0)*!!(a%b);}
   T floor()const{return a/b-(sign()<0)*!!(a%b);}
