@@ -76,7 +76,7 @@ struct Graph {
 		ub[s] = 0;
 		inq[s] = true;
 		q.push(s);
-		trav(i, 0, i < n&&q.size()) {
+		for(int i=0; i<n&&q.size(); i++) {
 			int qsz = q.size();
 			while (qsz--) {
 				int j = q.front();

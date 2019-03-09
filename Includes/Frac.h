@@ -5,8 +5,14 @@ template<typename T>
 struct Frac{
 	T a,b;
 	Frac(T a=0, T b=1):a(a),b(b){normalize();}
-	bool operator<(const Frac& r)const{return a*r.b<r.a*b;}
-	bool operator==(const Frac& r)const{return a*r.b==r.a*b;}
+	bool operator<(const Frac& r)const{
+    if(r.is_nan())
+      return false;
+    if(is_nan())
+      return true;
+    return a*r.b<r.a*b;
+  }
+	bool operator==(const Frac& r)const{return a==r.a && b==r.b;}
   Frac operator+(const Frac& r)const{return {a*r.b+r.a*b, b*r.b};}
 	Frac operator*(const Frac& r)const{return {a*r.a, b*r.b};}
 	Frac operator/(const Frac& r)const{return (*this)*Frac(r.b,r.a);}
