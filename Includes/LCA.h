@@ -5,7 +5,7 @@
 template<typename T>
 struct LCA:public RootedTree<T>{
   using P=RootedTree<T>;
-  
+
   LCA(const Tree<T>& t, int r)
   :P(t, r), st(n*2),lpos(n)
   {int segi=0; dfs_lca(r, segi);}
@@ -31,7 +31,7 @@ protected:
     static LCA_T q(const LCA_T& a, const LCA_T& b){return min(a,b);}
     static LCA_T upd(const LCA_T& a, const LCA_T& b){return b;}
   };
-  
+
   SegTree<LCA_T, LCA_T, LCA_F> st;
   vector<int> lpos;
 

@@ -3,9 +3,9 @@
 
 template<typename T, typename U>
 struct SegFDefault{
-	static T idT(){return T();}
-	static T q(const T& a, const T& b){return a+b;}
-	static T upd(const T& a, const U& b){return a+b;}
+  static T idT(){return T();}
+  static T q(const T& a, const T& b){return a+b;}
+  static T upd(const T& a, const U& b){return a+b;}
 };
 
 template<typename T, typename U, typename F=SegFDefault<T,U>>

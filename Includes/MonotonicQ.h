@@ -5,7 +5,7 @@ template<typename T>
 struct MonotonicQ{
   MonotonicQ():MonotonicQ([](const T& a, const T& b){return a<b;}){}
   MonotonicQ(const function<bool(const T&, const T&)>& cmp):cmp(cmp){}
-  
+
   void push(const T& val){
     while(q.size() && cmp(val,q.back().first))
       q.pop_back();

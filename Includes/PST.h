@@ -23,7 +23,7 @@ private:
     cur=new Node();
     if(e-s==1)
       return;
-    
+
     int m=(s+e)/2;
     build(cur->l,s,m);
     build(cur->r,m,e);

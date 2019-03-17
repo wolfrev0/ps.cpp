@@ -68,7 +68,6 @@
 			"type_traits": "cpp",
 			"typeindex": "cpp",
 			"typeinfo": "cpp"
-		},
-		"files.eol": "\n"
+		}
 	}
 }

@@ -35,7 +35,7 @@ struct SplayTree:public DynamicTree{
     root=new_node();
     root->adoptR(new_node());
     renew(root);
-    
+
     //real nodes
     forh(i,0,n)
       insert(0);
@@ -52,7 +52,7 @@ struct SplayTree:public DynamicTree{
     x->lazy=F::propa(x->lazy,val);
     renew(x,true);
   }
-  
+
   T query(int s, int e){
     if(s==e)
       return F::idT();
@@ -95,7 +95,7 @@ protected:
   void renew(Node* x, bool with_ancestor=false){
     if(!x)
       return;
-    
+
     propagate(x);
     propagate(x->l);
     propagate(x->r);
@@ -131,7 +131,7 @@ protected:
   void rotate(Node* x){
     if(!x->p)
       return;
-    
+
     auto p=x->p;
     propagate(p);
     propagate(p->l);
@@ -165,13 +165,13 @@ protected:
     splay(b,a);
     return root->r->l;
   }
-  
+
   void propagate(Node* x){
     if(!x)
       return;
     if(x->lazy==F::idU())
       return;
-    
+
     F::upd(x);
     if(x->l)
       x->l->lazy=F::propa(x->l->lazy,x->lazy);
