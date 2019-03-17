@@ -12,7 +12,9 @@ struct Frac{
       return true;
     return a*r.b<r.a*b;
   }
-	bool operator==(const Frac& r)const{return a==r.a && b==r.b;}
+	bool operator>(const Frac& r)const{return r<*this;}
+	bool operator==(const Frac& r)const{return !(*this<r)&&!(*this>r);}
+  bool operator<=(const Frac& r)const{return *this<r||*this==r;}
   Frac operator+(const Frac& r)const{return {a*r.b+r.a*b, b*r.b};}
 	Frac operator*(const Frac& r)const{return {a*r.a, b*r.b};}
 	Frac operator/(const Frac& r)const{return (*this)*Frac(r.b,r.a);}

@@ -5,7 +5,7 @@ template<typename T, typename U>
 struct SegFDefault{
 	static T idT(){return T();}
 	static T q(const T& a, const T& b){return a+b;}
-	static T upd(const T& a, const U& b){return a+b;}
+	static T upd(const T& a, const U& b){return b;}
 };
 
 //upperbound of 2^(ceil(log2(n))+1)/n is 4. (plot floor(2^(ceil(log2(x))+1)/x) from x=0 to 100000000)
@@ -16,6 +16,7 @@ struct SegTree{
 	{}
 
 	void update(int p, U val){update(1,0,n,p,val);}
+	T query(int i){return query(i,i+1);}
 	T query(int s, int e){return query(1,0,n,s,e);}
 private:
 	const int n;
