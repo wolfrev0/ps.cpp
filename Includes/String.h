@@ -92,6 +92,7 @@ bool cmp(int i, int j, const vector<int> &g, int t){
   return g[i]<g[j];
 }
 
+//sa[i]: 사전순으로 i번째인 접미사의 시작인덱스
 vector<int> suffix_array(const string &s){
   int n = s.size();
   vector<int> sa(n), ord(n+1), nord(n+1);
@@ -110,6 +111,7 @@ vector<int> suffix_array(const string &s){
   return sa;
 }
 
+//lcp[i]: 사전순 i번째 접미사와 i−1번째 접미사의 가장 긴 공통 접두사의 길이
 //plzrun's code
 vector<int> get_lcp(const string &s, const vector<int> &sa){
   int n = s.size();

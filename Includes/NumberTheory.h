@@ -11,6 +11,25 @@ T fastpow(const T& a, int p) {
 	return tmp*tmp;
 }
 
+/*
+Adjust Formaula
+xgcd(a,b) solves ax+by=gcd(a,b)=g
+ax+by=c satisfied iff c=g*k
+so, do x*=k and y*=k.
+
+if (x,y) is one of root, (x+t*b/g, y-t*a/g) is also root.(t is arbitary integer)
+if x and y have bounds, solve that inequalities.
+For example, I have one lbx(lower bound x) and one lby(lower bound y).
+I will find the root which is the closest to lbx.
+solve x+t*b/g<lbx and x+t*b/g>=lbx consecutively.
+then, all of big x go to small, and next all small thing go to big|equal to lbx
+now, we got proper t for lbx, and check if y-t*a/g>=lby.(cuz (x,y)->(x+t*b/g, y-t*a/g))
+if it is not satisfied, solve inequality for y similarly.
+if adjusted x for satisfying y is not satisfied, this formula has no solution.
+
+Maybe simpler solution exist. see	(jung2381187, koosaga)'s code at boj_11661
+linearity?
+*/
 struct XGCD{i64 g; i64 x; i64 y;};
 XGCD xgcd(i64 a, i64 b) {
     if (b==0)
