@@ -81,9 +81,7 @@ vector<int> kmp2(const string &s, const string &p) {
     while (pi > 0 && s[i] != p[pi])
       pi = ff[pi - 1];
     if (s[i] == p[pi] && (ans[i] = ++pi) == (int)p.size())
-    {
       pi = ff[pi - 1];
-    }
   }
   return ans;
 }
@@ -103,10 +101,6 @@ vector<int> suffix_array(const string &s){
   ord[n]=-1;
   for(int i=1;i<n;i*=2){
     sort(sa.begin(), sa.end(), [&](const int &a, const int &b){return cmp(a, b, ord, i);});
-    //This is O(N log N) but too high constant -> slower than O(N log^2 N)
-    //counting_sort(sa, {[&](const int& x){return ord[min(i+x, (uint)n)];}});
-    //counting_sort(sa, {[&](const int& x){return ord[x];}});
-
     nord[sa[0]]=0;
     nord[n]=-1;
     forh(j, 1, n)
@@ -120,52 +114,52 @@ vector<int> suffix_array(const string &s){
 vector<int> get_lcp(const string &s, const vector<int> &sa){
   int n = s.size();
   vector<int> lcp(n), psa(n+1), plcp(n+1);
-    psa[sa[0]]=-1;
-    forh(i, 1, n)
-    psa[sa[i]]=sa[i-1];
-  int common = 0;
-    forh(i, 0, n) {
-        if(psa[i]==-1)
+  psa[sa[0]]=-1;
+  forh(i,1,n)
+  psa[sa[i]]=sa[i-1];
+  int common=0;
+  forh(i,0,n){
+    if(psa[i]==-1)
       plcp[i]=0;
-        else {
-            while(s[i+common] == s[psa[i] + common])
+    else{
+      while(s[i+common] == s[psa[i] + common])
         common++;
-            plcp[i]=common;
-            common = max(common-1,0);
-        }
+      plcp[i]=common;
+      common = max(common-1,0);
     }
-    forh(i, 0, n)
+  }
+  forh(i,0,n)
     lcp[i]=plcp[sa[i]];
   return lcp;
 }
 
 //jh05013's code, O(NlogN)
 vector<int> suffix_array2(const string &s){
-    int n = s.size(), c = 0;
-    vector<int> temp(n), pos2bckt(n), bckt(n), bpos(n), out(n);
-    for(int i=0; i<n; i++) out[i] = i;
-    sort(out.begin(), out.end(), [&](int a, int b){return s[a] < s[b];});
-    for(int i=0; i<n; i++) {
-        bckt[i] = c;
-        if (i + 1 == n || s[out[i]] != s[out[i + 1]]) c++;
+  int n = s.size(), c = 0;
+  vector<int> temp(n), pos2bckt(n), bckt(n), bpos(n), out(n);
+  for(int i=0; i<n; i++) out[i] = i;
+  sort(out.begin(), out.end(), [&](int a, int b){return s[a] < s[b];});
+  for(int i=0; i<n; i++) {
+    bckt[i] = c;
+    if (i + 1 == n || s[out[i]] != s[out[i + 1]]) c++;
+  }
+  for (int h = 1; h < n && c < n; h <<= 1) {
+    for (int i=0; i<n; i++) pos2bckt[out[i]] = bckt[i];
+    for (int i=n-1; i>=0; i--) bpos[bckt[i]] = i;
+    for (int i=0; i<n; i++) if (out[i] >= n-h)
+      temp[bpos[bckt[i]]++] = out[i];
+    for (int i=0; i<n; i++) if (out[i] >= h)
+      temp[bpos[pos2bckt[out[i] - h]]++] = out[i] - h;
+    c = 0;
+    forh(i,0,n-1){
+      int a=bckt[i]!=bckt[i+1] || temp[i]>=n-h || pos2bckt[temp[i+1]+h]!=pos2bckt[temp[i]+h];
+      bckt[i]=c;
+      c+=a;
     }
-    for (int h = 1; h < n && c < n; h <<= 1) {
-        for (int i=0; i<n; i++) pos2bckt[out[i]] = bckt[i];
-        for (int i=n-1; i>=0; i--) bpos[bckt[i]] = i;
-        for (int i=0; i<n; i++) if (out[i] >= n-h)
-            temp[bpos[bckt[i]]++] = out[i];
-        for (int i=0; i<n; i++) if (out[i] >= h)
-            temp[bpos[pos2bckt[out[i] - h]]++] = out[i] - h;
-        c = 0;
-        for (int i = 0; i + 1 < n; i++) {
-            int a = (bckt[i] != bckt[i+1]) || (temp[i] >= n-h)
-                    || (pos2bckt[temp[i+1]+h] != pos2bckt[temp[i]+h]);
-            bckt[i] = c; c += a;
-        }
-        bckt[n - 1] = c++;
-        temp.swap(out);
-    }
-    return out;
+    bckt[n-1]=c++;
+    temp.swap(out);
+  }
+  return out;
 }
 
 //comet's code
