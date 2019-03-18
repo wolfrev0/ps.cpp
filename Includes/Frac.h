@@ -23,10 +23,12 @@ struct Frac{
   bool is_int()const{return b&&!(a%b);}
   //a is sign <if normalized>
   int sign()const{return a>=0?1:-1;}
-  T to_integer(){return a/b;}
+  T to_integer()const{return a/b;}
   f64 to_f64(){return (f64)a/b;}
   T ceil()const{return a/b+(sign()>0)*!!(a%b);}
   T floor()const{return a/b-(sign()<0)*!!(a%b);}
+  T smaller_int()const{return is_int()?to_integer()-1:floor();}
+  T larger_int()const{return is_int()?to_integer()+1:ceil();}
   void normalize(){
     if(is_nan())
       return;
