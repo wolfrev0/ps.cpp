@@ -6,9 +6,10 @@
       "intelliSenseMode": "gcc-x64",
       "includePath": [
         "C:/Users/lobo_/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc/LocalState/rootfs/usr/include/",
-        "C:/Users/lobo_/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc/LocalState/rootfs/usr/include/c++/7/",
+        "C:/Users/lobo_/AppData/Local/Packages/CanonicalGroupLimited.Ubuntu18.04onWindows_79rhkp1fndgsc/LocalState/rootfs/usr/include/x86_64-linux-gnu/c++/7/",
         "${workspaceFolder}/Includes/*"
-      ]
+      ],
+      "forcedInclude": [""]
     }
   ],
   "version": 4
