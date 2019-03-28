@@ -7,3 +7,4 @@ xcuter.out
 input
 output
 .vscode/c_cpp_properties.json
+.vscode/ipch/
