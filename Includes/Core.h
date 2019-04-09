@@ -23,16 +23,6 @@ template<typename T> T inf() { return numeric_limits<T>::max() / 2; }
 #define forco(var, s, e) int var=s; for(; int(s)<=var && var<=int(e); ++var)//out declaration
 #define forcoi(var, s, e) int var=e; for(; int(s)<=var && var<=int(e); --var)
 
-string itos(int i){
-  if(!i)
-    return "0";
-  string ret;
-  while(i)
-    ret.push_back(i%10+'0'), i/=10;
-  reverse(ret.begin(), ret.end());
-  return ret;
-}
-
 //Extensions: gp_hash_table, XSet
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>

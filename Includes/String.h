@@ -13,6 +13,16 @@ vector<string> split(string s, char p){
   return ret;
 }
 
+string itos(int i){
+  if(!i)
+    return "0";
+  string ret;
+  while(i)
+    ret.push_back(i%10+'0'), i/=10;
+  reverse(ret.begin(), ret.end());
+  return ret;
+}
+
 //a.k.a. partial match table, pi
 vector<int> failure_function(const string &p) {
   vector<int> ret(p.size());

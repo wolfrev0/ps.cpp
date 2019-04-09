@@ -9,6 +9,8 @@ struct FenwickTree{
 
   T query(int i){return query(i, i+1);}
   T query(int s, int e){
+    if(s>=e)
+      return 0;
     s++, e++;//ft idx base = 1
     return sum(e-1)-sum(s-1);
   }

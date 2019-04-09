@@ -4,7 +4,7 @@
 template<typename T>
 T fastpow(const T& a, int p) {
 	if (p==0)
-		return a.one();
+		return T(1);
 	T tmp=fastpow(a, p/2);
 	if (p%2)
 		return tmp*tmp*a;
@@ -148,9 +148,7 @@ vector<vector<T>> binom_dp(T n, T k){
 
 vector<int> to_digits(i64 n){
   vector<int> ret;
-  while(n){
-    ret.push_back(n%10);
-    n/=10;
-  }
+  while(n)
+    ret.push_back(n%10), n/=10;
   return ret;
 }
