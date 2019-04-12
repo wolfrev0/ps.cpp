@@ -2,7 +2,7 @@
 #include "Core.h"
 
 template<typename T, typename U>
-struct SegLazyFDefault{
+struct LazyFSumAdd{
   static T idT(){return T();}
   static T idU(){return U();}
   static T q(const T& a, const T& b){return a+b;}
@@ -10,8 +10,17 @@ struct SegLazyFDefault{
   static U propa(const U& a, const U& b){return a+b;}
 };
 
+template<typename T, typename U>
+struct LazyFMaxAdd{
+  static T idT(){return T();}
+  static T idU(){return U();}
+  static T q(const T& a, const T& b){return max(a,b);}
+  static T upd(const T& a, const U& b, int c){return a+b;}
+  static U propa(const U& a, const U& b){return a+b;}
+};
+
 //upperbound of 2^(ceil(log2(n))+1)/n is 4. (plot floor(2^(ceil(log2(x))+1)/x) from x=0 to 100000000)
-template<typename T, typename U=T, typename F=SegLazyFDefault<T, U>>
+template<typename T, typename U=T, typename F=LazyFSumAdd<T, U>>
 struct SegTreeLazy{
   SegTreeLazy(int n)
   :n(n),tree(4*n,F::idT()),lazy(4*n,F::idU())

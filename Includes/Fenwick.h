@@ -2,15 +2,15 @@
 #include "Core.h"
 
 template<typename T>
-struct FenwickTree{
+struct Fenwick{
   int n;
-  FenwickTree(int n):n(n+1), tree(n+2, T()){}
+  Fenwick(int n):n(n+1), tree(n+2, T()){}
   vector<T> tree;
 
   T query(int i){return query(i, i+1);}
   T query(int s, int e){
     if(s>=e)
-      return 0;
+      return T();
     s++, e++;//ft idx base = 1
     return sum(e-1)-sum(s-1);
   }
@@ -22,6 +22,12 @@ struct FenwickTree{
       i+=(i&-i);
     }
   }
+
+  void RUPQu(int s, int e, T d){
+    update(s,d);
+    update(e,-d);
+  }
+  T RUPQq(int i){return sum(i+1);}
 
 private:
   T sum(int i){
