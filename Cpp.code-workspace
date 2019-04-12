@@ -68,7 +68,8 @@
       "type_traits": "cpp",
       "typeindex": "cpp",
       "typeinfo": "cpp",
-      "algorithm": "cpp"
+      "algorithm": "cpp",
+      "rope": "cpp"
     }
 	}
 }
