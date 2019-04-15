@@ -3,24 +3,23 @@
 
 template<typename T, int n>
 struct Mat{
-  int a[n][n];
+  array<array<int,n>,n> a{0,};
   Mat(){
     forh(i,0,n)
-      forh(j,0,n)
-        a[i][j]=i==j;
+      a[i][i]=1;
   }
-  Mat(const int arr[][n]){memcpy(a, arr, sizeof a);}
+  Mat(const array<array<int,n>,n>& a):a(a){}
 
   Mat operator*(const Mat& r)const{
-    int ret[n][n]={0,};
+    array<array<int,n>,n> ret{0,};
     forh(i,0,n)
       forh(j,0,n)
         forh(k,0,n)
           ret[i][j]+=a[i][k]*r.a[k][j];
     return ret;
   }
-  vector<int> operator*(const vector<int>& r)const{
-    vector<int> ret(n);
+  array<int, n> operator*(const array<int, n>& r)const{
+    array<int, n> ret{0,};
     forh(i,0,n)
       forh(j,0,n)
         ret[i]+=a[i][j]*r[j];
