@@ -13,7 +13,7 @@ const f64 pi=acos(-1);
 const f64 eps=1e-12;
 const i32 prime=i32(2e9 + 11);
 i32 mod=i32(1e9 + 7);
-template<typename T> T inf() { return numeric_limits<T>::max() / 2; }
+template<typename T=int> T inf() { return numeric_limits<T>::max() / 2; }
 #define forh(var, s, e) for(int var=s; int(s)<=var && var<int(e); ++var)//for: half-opened range
 #define forhi(var, s, e) for(int var=e-1; int(s)<=var && var<int(e); --var)//inversion
 #define forho(var, s, e) int var=s; for(; int(s)<=var && var<int(e); ++var)//out declaration
