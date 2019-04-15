@@ -1,64 +1,32 @@
 #pragma once
 #include "Core.h"
 
-template<typename T>
-struct Mat
-{
-  vector<vector<T>> arr;
-  explicit Mat(int r, int c) :arr(r, vector<T>(c)) {}
-  explicit Mat(vector<vector<T>> arr) :arr(arr) {
-    for (auto& i : arr)
-      assert(i.size() == c());
+template<typename T, int n>
+struct Mat{
+  int a[n][n];
+  Mat(){
+    forh(i,0,n)
+      forh(j,0,n)
+        a[i][j]=i==j;
   }
-  Mat(const Mat& r) :arr(r.arr) {	}
+  Mat(const int arr[][n]){memcpy(a, arr, sizeof a);}
 
-  int r()const { return arr.size(); }
-  int c()const { return arr[0].size(); }
-
-  Mat operator*(const Mat& o)const {
-    assert(c() == o.r());
-
-    Mat ret(r(), o.c());
-    forh(i, 0, r()) {
-      forh(j, 0, o.c()) {
-        forh(k, 0, c())
-          ret.arr[i][j] += arr[i][k] * o.arr[k][j];
-      }
-    }
+  Mat operator*(const Mat& r)const{
+    int ret[n][n]={0,};
+    forh(i,0,n)
+      forh(j,0,n)
+        forh(k,0,n)
+          ret[i][j]+=a[i][k]*r.a[k][j];
+    return ret;
+  }
+  vector<int> operator*(const vector<int>& r)const{
+    vector<int> ret(n);
+    forh(i,0,n)
+      forh(j,0,n)
+        ret[i]+=a[i][j]*r[j];
     return ret;
   }
 
-  Mat transpose() const{
-    Mat ret(r(), c());
-    forh(i, 0, r()) {
-      forh(j, 0, c()) {
-        ret.arr[i][j]=arr[j][i];
-      }
-    }
-    return ret;
-  }
-
-  Mat gaussian_elim()const{
-    Mat ret(r(), c());
-    return ret;
-  }
-};
-
-template<typename T>
-struct SqMat : public Mat<T>{
-  explicit SqMat(int n) :Mat<T>(n, n) {}
-  explicit SqMat(const Mat<T>& m) :Mat<T>(m) { assert(m.r() == m.c()); }
-
-  int n()const { return Mat<T>::r(); }
-
-
-  SqMat one() const {
-    SqMat ret(n());
-    forh(i, 0, n())
-      ret.arr[i][i] = 1;
-    return ret;
-  }
-
-  Mat<T> operator*(const Mat<T>& o)const { return Mat<T>::operator*(o); }
-  SqMat operator*(const SqMat& o)const { return SqMat(Mat<T>::operator*(o)); }
+  void transpose(){}
+  void gauss_elim(){}
 };
