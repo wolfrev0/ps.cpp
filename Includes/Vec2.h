@@ -24,6 +24,7 @@ struct Vec2 {
   bool operator>=(const Vec2& r)const { return *this==r || *this>r; }
   f64 size()const { return hypot(x.n, y.n); }
   T sizesq()const { return dot(*this); }
+  T taxi()const{return abs(x)+abs(y);}
   Vec2 normalize()const { return *this/size(); }
   T dot(const Vec2& r) const { return x*r.x + y*r.y; }
   T dot(const Vec2& a, const Vec2& b) const { return (a-*this).dot(b-*this); }
