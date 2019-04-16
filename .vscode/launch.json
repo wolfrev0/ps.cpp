@@ -1,35 +1,35 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "(gdb) Launch",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "a.out",
-      "args": ["<./input",">./output"],
-      "stopAtEntry": false,
-      "cwd": ".",
-      "environment": [],
-      "externalConsole": true,
-      "pipeTransport": {
-        "pipeCwd": "${workspaceFolder}",
-        "pipeProgram": "C:/Windows/System32/bash.exe",
-        "pipeArgs": ["-c"],
-        "debuggerPath": "gdb"
-      },
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        }
-      ],
-      "sourceFileMap": {
-        "/mnt/c": "C:\\"
-      }
-    }
-  ]
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "(gdb) Launch",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "a.out",
+			"args": ["<./input",">./output"],
+			"stopAtEntry": false,
+			"cwd": ".",
+			"environment": [],
+			"externalConsole": true,
+			"pipeTransport": {
+				"pipeCwd": "${workspaceFolder}",
+				"pipeProgram": "C:/Windows/System32/bash.exe",
+				"pipeArgs": ["-c"],
+				"debuggerPath": "gdb"
+			},
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"sourceFileMap": {
+				"/mnt/c": "C:\\"
+			}
+		}
+	]
 }

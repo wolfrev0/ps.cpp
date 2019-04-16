@@ -8,9 +8,9 @@ int main() {
 	cout << fixed << setprecision(11);
 	srand((u32)time(0));
 
-  int n, k;
-  cin>>n>>k;
-  cout<<binom(ModNum(n), ModNum(k))<<endl;
+	int n, k;
+	cin>>n>>k;
+	cout<<binom(ModNum(n), ModNum(k))<<endl;
 
 	return 0;
 }

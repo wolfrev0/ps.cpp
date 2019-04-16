@@ -33,7 +33,7 @@ struct Solver:public HLD<A,A,F>{
 		parent[v].w.b=!parent[v].w.b;
 	}
 
-  A query(int v){return query(0, v, false);}
+	A query(int v){return query(0, v, false);}
 };
 
 int main() {
