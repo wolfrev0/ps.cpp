@@ -39,7 +39,7 @@ struct Vec2 {
 
 	static Vec2 inf(){ return {T::inf(),T::inf()}; }
 	static bool cmpccw(const Vec2& l, const Vec2& r, const Vec2& base) {
-	T val = base.ccw(l, r);
+		T val = base.ccw(l, r);
 		assert(base <= l && base <= r);
 		if (val == 0)
 			//need some thinking but ok. because base should be left-bottom element.
@@ -47,3 +47,6 @@ struct Vec2 {
 		return val > 0;
 	}
 };
+
+template<typename T>
+bool ccw(const Vec2<T>& a, const Vec2<T>& b, const Vec2<T>& c){return a.ccw(b,c)<0;}
