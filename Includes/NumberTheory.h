@@ -69,7 +69,7 @@ vector<i64> divisors(i64 n){
 vector<bool> sieve_prime(int ub){
 	vector<bool> ret(ub, true);
 	ret[0]=ret[1]=false;
-	for (i64 i=2; i*i<=ub; i++) {
+	for (i64 i=2; i*i<ub; i++) {
 		if (!ret[i])
 			continue;
 		for (i64 j=i*i; j<ub; j+=i)
@@ -79,10 +79,10 @@ vector<bool> sieve_prime(int ub){
 }
 
 //nlogn (harmony series)
-vector<vector<int>> sieve_divs(int n){
-	vector<vector<int>> ret(n);
-	for (i64 i=2; i*i<=n; i++) {
-		for (i64 j=i+i; j<n; j+=i)
+vector<vector<int>> sieve_divs(int ub){
+	vector<vector<int>> ret(ub);
+	for (i64 i=4; i<ub; i++) {
+		for (i64 j=i; j<ub; j+=i)
 			ret[j].push_back(i);
 	}
 	return ret;
