@@ -29,15 +29,6 @@ struct SegTreeLazy{
 	void update(int p, U val){update(1,0,n,p,p+1,val);}
 	void update(int s, int e, U val){update(1,0,n,s,e,val);}
 	T query(int s, int e){return query(1,0,n,s,e);}
-
-	T tmp(int cur, int cs, int ce, int s, int e){
-		propagate(cur,cs,ce);
-		if (s>=ce||e<=cs)
-			return F::idT();
-		if (s<=cs&&ce<=e)
-			return tree[cur]==-1?inf():tree[cur];
-		return F::q(tmp(cur*2,cs,(cs+ce)/2,s,e)==-1?inf():tmp(cur*2,cs,(cs+ce)/2,s,e),tmp(cur*2+1,(cs+ce)/2,ce,s,e)==-1?inf():tmp(cur*2+1,(cs+ce)/2,ce,s,e));
-	}
 private:
 	const int n;
 	vector<T> tree;
