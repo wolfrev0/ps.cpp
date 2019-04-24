@@ -1,99 +1,16 @@
-# Common Interface
-<ol>
-  <li>[s, e) (half-opened range)</li>
-  <li>0-based index</li>
-</ol>
-
-# Index
-<h3>Monotonic Queue</h3>
-<h3>Graph</h3>
-  <h4>Directed Graph</h4>
-    <ol><li>Topological Sort</li>
-    <li>SCC(Tarjan)</li></ol>
-  <h4>Simple Graph</h4>
-    <ol><li>Articulation Points(Cut Vertex)</li>
-    <li>Bridges(Cut Edge)</li>
-    <li>BCC(comming soon)</li></ol>
-  <h4>Graph</h4>
-    <ol><li>SPFA</li>
-    <li>Dijkstra</li>
-    <li>Dijkstra V^2(comming soon)</li>
-    <li>Floyd</li>
-    <li>MST(Prim)</li>
-    <li>MST(Kruskal)</li></ol>
-  <h4>Flow Graph</h4>
-    <ol><li>Max Flow(Ford–Fulkerson)</li>
-    <li>Max Flow(Dinic)(comming soon)</li>
-    <li>MCMF(Cycle Canceling is working)</li></ol>
-<h3>Tree</h3>
-  <ol><li>Diameter</li>
-  <li>Centroid Decomposition(comming soon)</li></ol>
-  <h4>Rooted Tree</h4>
-    <ol><li>LCA</li>
-    <li>HLD</li></ol>
- <h4>Dynamic Tree</h4>
-    <ol><li>Splay Tree(Lazy)</li></ol>
-  <h4>Balanced Binary Search Tree(BBST)</h4>
-    <ol><li>Extended Set(Xset)</li></ol>
-  <h4>Segment Tree</h4>
-    <ol><li>Lazy Propagation</li>
-    <li>Persistent Segment Tree(PST)</li>
-    <li>Fenwick</li>
-    <li>Merge Sort Tree(not abstracted yet)</li></ol>
-  <h4>Disjoint Set</h4>
-    <ol><li>Path Compression</li>
-    <li>Union by Rank(comming soon)</li></ol>
-<h3>Matrix</h3><ol>
-  <li>General Multiplication</li>  
-  <li>Strassen Multiplication(comming soon)</li>
-  <li>Gaussian Elimination(comming soon)</li></ol>
-<h3>Number Theory</h3><ol>
-  <li>Fast Power</li>
-  <li>Extended GCD</li>
-  <li>Modular Number</li>
-  <li>Fractional</li>
-  <li>Integer Arithmetic(More accurate)</li>
-  <li>Berlekamp Massey Algorithm(comming soon)</li></ol>
-<h3>DP Optimization</h3>
-  <ol><li>Knuth Opt</li>
-  <li>DnC Opt(comming soon)</li>
-  <li>Convex Opt(comming soon)</li>
-  <li>Kitamasa(comming soon)</li></ol>
-<h3>2D Geometry</h3>
-  <h4>Vector</h4><ol>
-    <li>Basic Vector Operations</li>
-  </ol>
-  <h4>Segment</h4><ol>
-    <li>Line & Segment intersection</li>
-    <li>Perpendicular Foot</li>
-    <li>Contain Determine</li>
-  </ol>
-  <h4>Polygon</h4><ol>
-    <li>Area</li>
-    <li>Circum</li>
-    <li>Contain Determine</li>
-    <li>Polygon Intersection(comming soon)</li>
-    <li>Convex Hull(Graham Scan Algorithm)</li>
-  </ol>
-  <h4>Rectangle</h4><ol>
-    <li>Intersection</li>
-  </ol>
-<h3>String</h3>
-  <ol><li>KMP</li>
-  <li>Suffix Array & LCP</li>
-  <li>Suffix Tree(comming soon)</li>
-  <li>Trie(comming soon)</li>
-  <li>Ahocorasick(comming soon)</li></ol>
-<h3>Convolution(comming soon)</h3><ol>
-  <li>FFT & NTT</li>
-  <li>Karatsuba</li>
-</ol>
-<h3>Linear Programming(comming soon)</h3>
-  <ol><li>Simplex Method(Randomized)</li>
-  <li>Inner Point Method</li></ol>
-
-# Help
-Examples are in ./Project/Examples directory.
-
-# See Also
-If you are interested in convenient submission to online judge, see <a href="https://github.com/Lobo-Prix/CppProject21File">CppProject21File(C++ project to one file)</a>.
+# 인터페이스
+  1. [s, e) 반열린구간
+  2. 0-based index
+  
+# 목차
+  ## Examples
+    다양한 클래스들의 사용 예시가 있습니다.
+  ## Includes
+    알고리즘 문제해결에 자주 사용되는 코드들이 추상화되어 있습니다.
+    ### 
+   ## Tools
+    라이브러리를 편리하게 사용할 수 있게 도와주는 도구들의 코드가 있습니다.
+    ### merger.cpp
+      main.cpp의 헤더의존성을 분석하여 자동으로 하나의 .cpp파일(output.cpp)로 만들어 줍니다. 라이브러리를 사용하는 경우, Online Judge에 제출할 때 헤더를 일일히 코드로 치환해줘야하는 수고를 없애줍니다. 에디터에서 컴파일후 자동으로 실행하게 설정하면 편리합니다. 소스코드상의 경로는 개발환경에 따라 조정해야될 수도 있습니다.
+    ### xcuter.cpp
+      인자로 받은 경로상의 파일을 실행합니다. 실행한 프로그램이 종료하면 측정한 실행시간을 standard output으로 표시해줍니다. 시간제한이 빡빡한 문제를 풀 때 유용할 수 있습니다.
