@@ -56,7 +56,6 @@
   단순그래프(undirected & unweighted)를 나타냅니다.
 ## SimpleTree.h
   단순트리(unrooted & unweighted)를 나타냅니다.
-## Sort.h
 ## SplayTree.h
 ## String.h
   문자열 관련 함수(kmp, suffix array, lcp, int to string, split)들이 있습니다.
