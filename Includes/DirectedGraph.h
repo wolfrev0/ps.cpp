@@ -27,7 +27,30 @@ struct DirectedGraph: public Graph<int>{
 				if (--in[i.e] == 0)
 					q.push(i.e);
 		}
-		reverse(ret.begin(), ret.end());
+		//reverse(ret.begin(), ret.end());
+		return ret;
+	}
+
+	vector<int> topo_sort_lex() {
+		vector<int> in(n);
+		forh(i, 0, n){
+			for(auto &j:g[i])
+				in[j.e]++;
+		}
+		priority_queue<int, vector<int>, greater<int>> q;
+		forh(i, 0, n)
+			if (!in[i])
+				q.push(i);
+		vector<int> ret;
+		while (q.size()) {
+			auto cur = q.top();
+			ret.push_back(cur);
+			q.pop();
+			for (auto &i : g[cur])
+				if (--in[i.e] == 0)
+					q.push(i.e);
+		}
+		//reverse(ret.begin(), ret.end());
 		return ret;
 	}
 
