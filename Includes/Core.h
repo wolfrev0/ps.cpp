@@ -24,6 +24,7 @@ template<typename T> T inf() { return numeric_limits<T>::max() / 2; }
 #define forcoi(var, s, e) int var=e; for(; int(s)<=var && var<=int(e); --var)
 #define rep(x) forh(repi,0,x)
 #define all(x) x.begin(),x.end()
+#define acc(a,b) accumulate(a,b,0ll)
 
 //Extensions: gp_hash_table, XSet
 #include <ext/pb_ds/assoc_container.hpp>
@@ -33,4 +34,3 @@ using namespace __gnu_pbds;
 //Extensions: rope
 #include <ext/rope>
 using namespace __gnu_cxx;
-
