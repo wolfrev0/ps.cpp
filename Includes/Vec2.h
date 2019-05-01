@@ -32,7 +32,7 @@ struct Vec2 {
 	T cross(const Vec2& a, const Vec2& b) const { return (a-*this).cross(b-*this); }
 	T ccw(const Vec2& a, const Vec2& b) const { return cross(a, b) ? cross(a, b)/abs(cross(a, b)) : 0; }
 	f64 angle()const { auto ret=atan2(y, x); return fmod(ret+2*pi, 2*pi); }
-	Frac<T> tan()const { return {y, x}; }
+	Frac tan()const { return {y, x}; }
 	Vec2 project(const Vec2& p)const { Vec2 base = normalize(); return base*base.dot(p); }
 	Vec2 ortho()const{ return Vec2(y, -x); }
 	Vec2 rot(double rad)const{ throw 0; }

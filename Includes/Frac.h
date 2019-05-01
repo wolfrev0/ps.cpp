@@ -46,7 +46,7 @@ struct Frac{
 	}
 };
 
-template<typename T>
+template<>
 Frac inf(){return {1,0};}
 
 template<typename T>

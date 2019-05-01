@@ -30,8 +30,7 @@ struct Graph {
 		priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> pq;//dest, v
 		d = vector<T>(n, inf<T>());
 		p = vector<pair<int, int>>(n, { inf<T>(), inf<T>() });
-		d[s] = 0;
-		pq.push({ 0, s });
+		pq.push({ d[s]=0, s });
 		while (!pq.empty())
 		{
 			auto cur = pq.top();
