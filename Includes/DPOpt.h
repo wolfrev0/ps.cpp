@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include "Frac.h"
 
 vector<vector<i64>> knuth_opt(const vector<i64>& init, const function<i64(int,int)>& c){
 	int n=init.size();
@@ -20,3 +21,68 @@ vector<vector<i64>> knuth_opt(const vector<i64>& init, const function<i64(int,in
 	}
 	return dp;
 }
+
+//max should be (tan,yic)-increase order
+//min should be (tan,yic)-decrease order
+//d[i] = min{j<i, a[j]*b[i]+d[j]}
+//min, max, j<i, i<j<n 모두 가능하다. 그림을 잘 생각해서 써라.
+struct CHTStack{
+	struct Line{
+		i64 tan, yic;
+		Frac px;
+		Line(i64 tan, i64 yic, Frac px):tan(tan), yic(yic), px(px){}
+		Frac intersectX(const Line& r)const{return {r.yic-yic, tan-r.tan};}
+	};
+	vector<Line> st;
+	
+	void push(i64 tan, i64 yic){
+		Line f(tan, yic, {0,0});
+		while(st.size()){
+			f.px=st.back().intersectX(f);
+			if(f.px.is_singular() || f.px<st.back().px)
+				st.pop_back();
+			else
+				break;
+		}
+		st.push_back(f);
+	}
+
+	i64 get(i64 x){
+		int s=0, e=st.size();
+		while(e-s>1){
+			int m=(s+e)/2;
+			(Frac(x,1)<st[m].px?e:s)=m;
+		}
+		return st[s].tan*x + st[s].yic;
+	}
+};
+struct CHTStack2{
+	struct Line{
+		i64 tan, yic;
+		f64 px;
+		Line(i64 tan, i64 yic, f64 px):tan(tan), yic(yic), px(px){}
+		f64 intersectX(const Line& r)const{return (r.yic-yic)/f64(tan-r.tan);}
+	};
+	vector<Line> st;
+	
+	void push(i64 tan, i64 yic){
+		Line f(tan, yic, 0);
+		while(st.size()){
+			f.px=st.back().intersectX(f);
+			if(tan==st.back().tan || f.px<st.back().px)
+				st.pop_back();
+			else
+				break;
+		}
+		st.push_back(f);
+	}
+
+	i64 get(i64 x){
+		int s=0, e=st.size();
+		while(e-s>1){
+			int m=(s+e)/2;
+			(x<st[m].px?e:s)=m;
+		}
+		return st[s].tan*x + st[s].yic;
+	}
+};
