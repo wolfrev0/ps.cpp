@@ -6,6 +6,10 @@ struct Pair{
 	T a; U b;
 	Pair():Pair(T(), U()){}
 	Pair(T a, T b):a(a), b(b){}
+	bool operator<(const Pair& r)const{return a==r.a?b<r.b:a<r.a;}
+	bool operator>(const Pair& r)const{return r<*this;}
+	bool operator<=(const Pair& r)const{return !(*this>r);}
+	bool operator>=(const Pair& r)const{return !(*this<r);}
 	bool operator==(const Pair& r)const{return a==r.a&&b==r.b;}
 	bool operator!=(const Pair& r)const{return !(*this==r);}
 };
