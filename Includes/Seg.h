@@ -10,8 +10,8 @@ struct SegFDefault{
 
 //upperbound of 2^(ceil(log2(n))+1)/n is 4. (plot floor(2^(ceil(log2(x))+1)/x) from x=0 to 100000000)
 template<typename T, typename U=T, typename F=SegFDefault<T, U>>
-struct SegTree{
-	SegTree(int n)
+struct Seg{
+	Seg(int n)
 	:n(n),tree(4*n,F::idT())
 	{}
 

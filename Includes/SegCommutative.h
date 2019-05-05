@@ -9,8 +9,8 @@ struct SegFDefault{
 };
 
 template<typename T, typename U, typename F=SegFDefault<T,U>>
-struct SegTreeCommutative{
-	SegTreeCommutative(int n):n(n),tree(4*n, F::idT()){}
+struct SegCommutative{
+	SegCommutative(int n):n(n),tree(4*n, F::idT()){}
 	int n;
 	vector<T> tree;
 
