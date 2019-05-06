@@ -36,8 +36,6 @@ struct A{
 using Node = SplayNode<A, A>;
 
 struct F{
-	static A idT(){return A();}
-	static A idU(){return A();}
 	static A q(const auto& a, const auto& b){return a+b;}
 	static void upd(Node* x){x->val=x->acc=x->lazy;}
 	static A propa(const auto& a, const auto& b){return b;}

@@ -70,14 +70,14 @@ private:
 
 	Vec2<i64> process_mcmf(i64 flow) {
 		vector<FlowWeight> ub;
-		vector<pair<int, int>> p;
-		if (!spfa(ub, p, src) || p[snk].first == inf<int>())
+		vector<Pair<int, int>> p;
+		if (!spfa(ub, p, src) || p[snk].a == inf<int>())
 			return {};
-		for (int cur = snk; p[cur].first != inf<int>(); cur = p[cur].first)
-			flow = min(flow, g[p[cur].first][p[cur].second].w.cap);
+		for (int cur = snk; p[cur].a != inf<int>(); cur = p[cur].a)
+			flow = min(flow, g[p[cur].a][p[cur].b].w.cap);
 		i64 cost = 0;
-		for (int cur = snk; p[cur].first != inf<int>(); cur = p[cur].first) {
-			auto& e = g[p[cur].first][p[cur].second];
+		for (int cur = snk; p[cur].a != inf<int>(); cur = p[cur].a) {
+			auto& e = g[p[cur].a][p[cur].b];
 			e.w.cap -= flow;
 			g[e.e][e.w.si].w.cap += flow;
 			cost += e.w.cost*flow;

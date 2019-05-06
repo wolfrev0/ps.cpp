@@ -24,7 +24,7 @@ int main() {
 		forh(j, 0, n) {
 			int cost;
 			cin >> cost;
-			g.add_edge(j, n + i, I32::inf(), cost);
+			g.add_edge(j, n + i, inf<int>(), cost);
 		}
 	}
 

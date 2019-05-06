@@ -11,7 +11,7 @@ int main() {
 	int s;
 	cin >> s;
 	s--;
-	Graph<I32> g(v);
+	Graph<int> g(v);
 	forh(i, 0, e)
 	{
 		int a, b, c;
@@ -19,11 +19,11 @@ int main() {
 		a--, b--;
 		g.add_edge(a, b, c);
 	}
-	vector<I32> d;
-	vector<pair<int, int>> p;
+	vector<int> d;
+	vector<Pair<int, int>> p;
 	g.dijkstra(d, p, s);
 	forh(i, 0, v)
-		if (d[i] == I32::inf())
+		if (d[i] == inf<int>())
 			cout << "INF" << endl;
 		else
 			cout << d[i] << endl;

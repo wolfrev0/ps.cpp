@@ -19,7 +19,7 @@ int main()
 	sort(v.begin(), v.end(), [](auto &a, auto &b){return min(a.first, a.second-1) < min(b.first, b.second-1); });
 
 	u64 a = 0;
-	Xmultiset<int> s;
+	XMultiset<int> s;
 	vector<int> q;
 	forh(i, 0, n){
 		if(!i || min(v[i-1].first, v[i-1].second-1) < min(v[i].first, v[i].second-1)){

@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include "Pair.h"
 #include "DisjointSet.h"
 
 template<typename T>
@@ -26,30 +27,29 @@ struct Graph {
 			g[e].push_back(Edge(e, s, g[e].size(), w));
 	}
 
-	void dijkstra(vector<T>& d, vector<pair<int, int>>& p, int s) {
-		priority_queue<pair<T, int>, vector<pair<T, int>>, greater<pair<T, int>>> pq;//dest, v
+	void dijkstra(vector<T>& d, vector<Pair<int, int>>& p, int s) {
+		priority_queue<Pair<T, int>, vector<Pair<T, int>>, greater<Pair<T, int>>> pq;//dest, v
 		d = vector<T>(n, inf<T>());
-		p = vector<pair<int, int>>(n, { inf<T>(), inf<T>() });
+		p = vector<Pair<int, int>>(n, { inf<T>(), inf<T>() });
 		pq.push({ d[s]=0, s });
-		while (!pq.empty())
-		{
+		while (!pq.empty()){
 			auto cur = pq.top();
 			pq.pop();
 
-			if (cur.first != d[cur.second])
+			if (cur.a != d[cur.b])
 				continue;
 
-			auto& cg = g[cur.second];
+			auto& cg = g[cur.b];
 			for (auto &i : cg) {
-				if (d[i.e] > cur.first + i.w) {
-					p[i.e] = { cur.second, i.ei };
-					pq.push({ d[i.e]=cur.first + i.w, i.e });
+				if (d[i.e] > cur.a + i.w) {
+					p[i.e] = { cur.b, i.ei };
+					pq.push({ d[i.e]=cur.a + i.w, i.e });
 				}
 			}
 		}
 	}
 
-	void dijkstra_vsq(vector<T>& d, vector<pair<int, int>>& p, int s) {
+	void dijkstra_vsq(vector<T>& d, vector<Pair<int, int>>& p, int s) {
 
 	}
 
@@ -66,11 +66,11 @@ struct Graph {
 		return ret = min(floyd(s, e, m+1, memo), floyd(s, m, m+1, memo)+floyd(m, e, m+1, memo));
 	}
 
-	bool spfa(vector<T>& ub, vector<pair<int, int>>& p, int s) {
+	bool spfa(vector<T>& ub, vector<Pair<int, int>>& p, int s) {
 		queue<int> q;
 		vector<bool> inq(n);
 		ub = vector<T>(n, inf<T>());
-		p = vector<pair<int, int>>(n, { inf<int>(), inf<int>() });
+		p = vector<Pair<int, int>>(n, { inf<int>(), inf<int>() });
 
 		ub[s] = 0;
 		inq[s] = true;
@@ -101,19 +101,19 @@ struct Graph {
 		vector<Edge> ret;
 		vector<bool> vis(n);
 		priority_queue<Edge, vector<Edge>, greater<Edge>> q;
-		q.push({ 0, inf<T>(), 0 });
+		for(auto i:g[0])
+			q.push(i);
+		vis[0]=true;
 		while (q.size()) {
 			auto cur = q.top();
 			q.pop();
 
-			auto curv = cur.s == inf<T>() ? 0 : g[cur.s][cur.ei].e;
-			if (vis[curv])
+			if (vis[cur.e])
 				continue;
-			vis[curv] = true;
-			if (cur.s != -1)
-				ret.push_back(cur);
+			vis[cur.e] = true;
 
-			for (auto &i : g[curv]) {
+			ret.push_back(cur);
+			for (auto &i : g[cur.e]) {
 				if (!vis[i.e]) {
 					q.push(i);
 				}
@@ -132,9 +132,8 @@ struct Graph {
 		DisjointSet djs(n);
 		vector<Edge> ret;
 		for (auto &i : e) {
-			int ie = g[i.s][i.ei].e;
-			if (djs.find(i.s) != djs.find(ie)) {
-				djs.uni(i.s, ie);
+			if (djs.find(i.s) != djs.find(i.e)) {
+				djs.uni(i.s, i.e);
 				ret.push_back(i);
 			}
 		}

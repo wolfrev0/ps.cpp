@@ -18,8 +18,6 @@ struct SplayNode{
 
 template<typename T, typename U>
 struct SplayFDefault{
-	static T idT(){return T();}
-	static U idU(){return U();}
 	static T q(const T& a, const T& b){return a+b;}
 	static void upd(SplayNode<T,U>* x){x->val+=x->lazy; x->acc+=x->lazy*x->sz;}
 	static U propa(const U& clazy, const U& lazy){return clazy+lazy;}
@@ -55,11 +53,11 @@ struct SplayTree:public DynamicTree{
 
 	T query(int s, int e){
 		if(s==e)
-			return F::idT();
+			return T();
 		return acc(interval(s+1,e+1));
 	}
 
-	void insert(int ord, T val=F::idT()){
+	void insert(int ord, T val=T()){
 		splay(ord);
 		auto r=root->r;
 		root->adoptR(new_node(val));
@@ -82,12 +80,12 @@ protected:
 	Node* root=nullptr;
 
 	int size(Node* x)const{return x?x->sz:0;}
-	T acc(Node* x)const{return x?x->acc:F::idT();}
+	T acc(Node* x)const{return x?x->acc:T();}
 
-	Node* new_node(T val=F::idT()){
+	Node* new_node(T val=T()){
 		auto ret=new Node();
 		ret->val=ret->acc=val;
-		ret->lazy=F::idU();
+		ret->lazy=U();
 		return ret;
 	}
 
@@ -169,7 +167,7 @@ protected:
 	void propagate(Node* x){
 		if(!x)
 			return;
-		if(x->lazy==F::idU())
+		if(x->lazy==U())
 			return;
 
 		F::upd(x);
@@ -177,6 +175,6 @@ protected:
 			x->l->lazy=F::propa(x->l->lazy,x->lazy);
 		if(x->r)
 			x->r->lazy=F::propa(x->r->lazy,x->lazy);
-		x->lazy=F::idU();
+		x->lazy=U();
 	}
 };

@@ -8,7 +8,7 @@ int main() {
 
 	int n, m;
 	cin >> n >> m;
-	Graph<I32> g(n);
+	Graph<int> g(n);
 	forh(i, 0, m) {
 		int a, b, c;
 		cin >> a >> b >> c;
@@ -17,16 +17,16 @@ int main() {
 		g.add_edge(b, a, c);
 	}
 	forh(i, 0, n) {
-		vector<I32> d;
-		vector<pair<int, int>> p;
+		vector<int> d;
+		vector<Pair<int, int>> p;
 		g.dijkstra(d, p, i);
 		forh(j, 0, n) {
 			if (i == j)
 				cout << '-' << ' ';
 			else {
 				int v = j;
-				while (p[v].first != i)
-					v = p[v].first;
+				while (p[v].a != i)
+					v = p[v].a;
 				cout << v + 1 << ' ';
 			}
 		}
