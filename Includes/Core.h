@@ -7,13 +7,15 @@
 //Syntax Sugars
 using namespace std;
 using f64 = double;
-using i8=char;using i16=short;using i32=int;using i64=long long;
-using u8=unsigned char;using u16=unsigned short;using u32=unsigned;using u64=unsigned long long;
+using i64=long long;
+using u64=unsigned long long;
+
 const f64 pi=acos(-1);
 const f64 eps=1e-12;
-const i32 prime=998244353;//1073741783 1073741789 i32(2e9+11) i32(1e9+9)
-i32 mod=i32(1e9+7);
+const int prime=998244353;//1073741783 1073741789 int(2e9+11) int(1e9+9)
+int mod=int(1e9+7);
 template<typename T> T inf() { return numeric_limits<T>::max() / 2; }
+
 #define forh(var, s, e) for(int var=s; int(s)<=var && var<int(e); ++var)//for: half-opened range
 #define forhi(var, s, e) for(int var=e-1; int(s)<=var && var<int(e); --var)//inversion
 #define forho(var, s, e) int var=s; for(; int(s)<=var && var<int(e); ++var)//out declaration
