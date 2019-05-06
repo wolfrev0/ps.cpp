@@ -1,13 +1,21 @@
 #include "Core.h"
-#include "SegTree.h"
+#include "Seg.h"
 #define endl '\n'//do not use when solving interactive problem!!!
 
+struct A{
+	i64 a;
+	A(i64 a=1):a(a){}
+	bool operator==(const A& r)const{return a==r.a;}
+};
+struct B{
+	i64 a;
+	B(i64 a=987654321):a(a){}
+	bool operator==(const B& r)const{return a==r.a;}
+};
+
 struct Func{
-	static i64 idT(){return 1;}
-	static i64 idU(){return 987654321;}
-	static i64 q(i64 a, i64 b){return a*b%mod;};
-	static i64 upd(i64 a, i64 b, int cnt){return b;};
-	static i64 propa(i64 a, i64 b){return b;}
+	static A q(A a, A b){return a.a*b.a%mod;};
+	static A upd(A a, B b){return b.a;};
 };
 
 int main() {
@@ -17,7 +25,7 @@ int main() {
 	
 	int n, m, k;
 	cin>>n>>m>>k;
-	SegTree<i64, i64, Func> st(n);
+	Seg<A, B, Func> st(n);
 	forh(i,0,n){
 		i64 x;
 		cin>>x;
@@ -31,12 +39,12 @@ int main() {
 			i64 c;
 			cin>>b>>c;
 			b--;
-			st.update(b, b+1, c);
+			st.update(b, c);
 		}else{
 			int b, c;
 			cin>>b>>c;
 			b--, c--;
-			cout<<st.query(b, c+1)<<endl;
+			cout<<st.query(b, c+1).a<<endl;
 		}
 	}
 
