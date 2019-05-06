@@ -14,13 +14,17 @@ struct DisjointSet {
 		a=find(a), b=find(b);
 		if(a==b)
 			return;
-		par[b]=a;
-		sz[a]+=sz[b];
+		//union by size
+		if(sz[a]>sz[b])
+			swap(a,b);
+		par[a]=b;
+		sz[b]+=sz[a];
 	}
 
 	int find(int a){
 		if(par[a]==a)
 			return a;
+		//path compression
 		return par[a]=find(par[a]);
 	}
 
