@@ -13,7 +13,7 @@ struct PST{
 
 	PST(int n, function<T(const T&, const T&)> q):n(n), q(q){}
 	void build(Node*& cur){ build(cur, 0, n); }
-	void upgrade(Node*& tree, Node*& base, int idx, int val){ upgrade(tree, base, 0, n, idx, val); }
+	void upgrade(Node*& tree, Node*& base, int idx, T val){ upgrade(tree, base, 0, n, idx, val); }
 	T query(Node* tree, int s, int e){ return query(tree, 0, n, s, e); }
 
 private:
