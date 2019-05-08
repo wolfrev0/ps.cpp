@@ -39,7 +39,7 @@ protected:
 	using P::parent;
 	using P::children;
 	using P::lca;
-	SegTree<T, U, F> st;
+	Seg<T, U, F> st;
 	vector<int> chain;
 	vector<int> head;
 	vector<int> segidx;

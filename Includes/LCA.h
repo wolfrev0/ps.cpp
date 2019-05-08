@@ -1,6 +1,6 @@
 #pragma once
 #include "RootedTree.h"
-#include "SegTree.h"
+#include "Seg.h"
 
 template<typename T>
 struct LCA:public RootedTree<T>{
@@ -32,7 +32,7 @@ protected:
 		static LCA_T upd(const LCA_T& a, const LCA_T& b){return b;}
 	};
 
-	SegTree<LCA_T, LCA_T, LCA_F> st;
+	Seg<LCA_T, LCA_T, LCA_F> st;
 	vector<int> lpos;
 
 	void dfs_lca(int cur, int& segi){

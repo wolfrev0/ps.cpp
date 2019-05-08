@@ -4,7 +4,7 @@
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 
 	int v, e;
 	cin >> v >> e;
@@ -20,7 +20,7 @@ int main() {
 		g.add_edge(a, b, c);
 	}
 	vector<int> d;
-	vector<Pair<int, int>> p;
+	vector<Graph<int>::Edge> p;
 	g.dijkstra(d, p, s);
 	forh(i, 0, v)
 		if (d[i] == inf<int>())

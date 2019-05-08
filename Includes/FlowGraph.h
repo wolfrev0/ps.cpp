@@ -1,6 +1,5 @@
 #pragma once
 #include "Graph.h"
-#include "Vec2.h"
 
 struct FlowWeight {
 	int si;
@@ -39,12 +38,13 @@ struct FlowGraph : public Graph<FlowWeight> {
 		return sum;
 	}
 
-	Vec2<i64> mcmf(i64 flow = inf<i64>()) {
-		Vec2<i64> ret;
+	pair<i64, i64> mcmf(i64 flow = inf<i64>()) {
+		pair<i64, i64> ret;
 		while (true) {
-			auto res = process_mcmf(flow-ret.y);
-			ret += res;
-			if (!res.x && !res.y)
+			auto res = process_mcmf(flow-ret.second);
+			ret.first += res.first;
+			ret.second += res.second;
+			if (!res.first && !res.second)
 				break;
 		}
 		return ret;
@@ -68,16 +68,16 @@ private:
 		return 0;
 	}
 
-	Vec2<i64> process_mcmf(i64 flow) {
+	pair<i64, i64> process_mcmf(i64 flow) {
 		vector<FlowWeight> ub;
-		vector<Pair<int, int>> p;
-		if (!spfa(ub, p, src) || p[snk].a == inf<int>())
+		vector<Graph<FlowWeight>::Edge> p;
+		if (!spfa(ub, p, src) || p[snk].s == -1)
 			return {};
-		for (int cur = snk; p[cur].a != inf<int>(); cur = p[cur].a)
-			flow = min(flow, g[p[cur].a][p[cur].b].w.cap);
+		for (int cur = snk; p[cur].s != -1; cur = p[cur].s)
+			flow = min(flow, g[p[cur].s][p[cur].ei].w.cap);
 		i64 cost = 0;
-		for (int cur = snk; p[cur].a != inf<int>(); cur = p[cur].a) {
-			auto& e = g[p[cur].a][p[cur].b];
+		for (int cur = snk; p[cur].s != -1; cur = p[cur].s) {
+			auto& e = g[p[cur].s][p[cur].ei];
 			e.w.cap -= flow;
 			g[e.e][e.w.si].w.cap += flow;
 			cost += e.w.cost*flow;

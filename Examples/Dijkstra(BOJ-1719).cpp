@@ -4,7 +4,7 @@
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 
 	int n, m;
 	cin >> n >> m;
@@ -18,15 +18,15 @@ int main() {
 	}
 	forh(i, 0, n) {
 		vector<int> d;
-		vector<Pair<int, int>> p;
+		vector<Graph<int>::Edge> p;
 		g.dijkstra(d, p, i);
 		forh(j, 0, n) {
 			if (i == j)
 				cout << '-' << ' ';
 			else {
 				int v = j;
-				while (p[v].a != i)
-					v = p[v].a;
+				while (p[v].s != i)
+					v = p[v].s;
 				cout << v + 1 << ' ';
 			}
 		}

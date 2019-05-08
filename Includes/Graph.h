@@ -1,6 +1,5 @@
 #pragma once
 #include "Core.h"
-#include "Pair.h"
 #include "DisjointSet.h"
 
 template<typename T>
@@ -27,29 +26,30 @@ struct Graph {
 			g[e].push_back(Edge(e, s, g[e].size(), w));
 	}
 
-	void dijkstra(vector<T>& d, vector<Pair<int, int>>& p, int s) {
-		priority_queue<Pair<T, int>, vector<Pair<T, int>>, greater<Pair<T, int>>> pq;//dest, v
+	struct DNV{T dist; int v; bool operator<(const DNV& r)const{return dist>r.dist;}};
+	void dijkstra(vector<T>& d, vector<Edge>& p, int s) {
+		priority_queue<DNV> pq;
 		d = vector<T>(n, inf<T>());
-		p = vector<Pair<int, int>>(n, { inf<T>(), inf<T>() });
+		p = vector<Edge>(n, {-1,-1,-1,-1});
 		pq.push({ d[s]=0, s });
 		while (!pq.empty()){
-			auto cur = pq.top();
+			auto c = pq.top();
 			pq.pop();
 
-			if (cur.a != d[cur.b])
+			if (c.dist != d[c.v])
 				continue;
 
-			auto& cg = g[cur.b];
+			auto& cg = g[c.v];
 			for (auto &i : cg) {
-				if (d[i.e] > cur.a + i.w) {
-					p[i.e] = { cur.b, i.ei };
-					pq.push({ d[i.e]=cur.a + i.w, i.e });
+				if (d[i.e] > c.dist + i.w) {
+					p[i.e] = i;
+					pq.push({ d[i.e]=c.dist + i.w, i.e });
 				}
 			}
 		}
 	}
 
-	void dijkstra_vsq(vector<T>& d, vector<Pair<int, int>>& p, int s) {
+	void dijkstra_vsq(vector<T>& d, vector<Edge>& p, int s) {
 
 	}
 
@@ -66,11 +66,11 @@ struct Graph {
 		return ret = min(floyd(s, e, m+1, memo), floyd(s, m, m+1, memo)+floyd(m, e, m+1, memo));
 	}
 
-	bool spfa(vector<T>& ub, vector<Pair<int, int>>& p, int s) {
+	bool spfa(vector<T>& ub, vector<Edge>& p, int s) {
 		queue<int> q;
 		vector<bool> inq(n);
 		ub = vector<T>(n, inf<T>());
-		p = vector<Pair<int, int>>(n, { inf<int>(), inf<int>() });
+		p = vector<Edge>(n,{-1,-1,-1,-1});
 
 		ub[s] = 0;
 		inq[s] = true;
@@ -83,7 +83,7 @@ struct Graph {
 				q.pop();
 				for (auto k : g[j]) {
 					if (valid_spfa_edge(k) && ub[j] + k.w < ub[k.e]) {
-						p[k.e] = { j, k.ei };
+						p[k.e] = k;
 						ub[k.e] = ub[j] + k.w;
 						if (!inq[k.e]) {
 							inq[k.e] = true;
@@ -105,15 +105,15 @@ struct Graph {
 			q.push(i);
 		vis[0]=true;
 		while (q.size()) {
-			auto cur = q.top();
+			auto c = q.top();
 			q.pop();
 
-			if (vis[cur.e])
+			if (vis[c.e])
 				continue;
-			vis[cur.e] = true;
+			vis[c.e] = true;
 
-			ret.push_back(cur);
-			for (auto &i : g[cur.e]) {
+			ret.push_back(c);
+			for (auto &i : g[c.e]) {
 				if (!vis[i.e]) {
 					q.push(i);
 				}
