@@ -1,12 +1,16 @@
 ## Core.h
   ps코드를 간결하게 짜기 위해 자주 사용되는 상수들과 구문들이 있습니다.
 ## DPOpt.h
-  DP 최적화 함수들이 있습니다.
+  CHT(Stack, Dynamic), KnuthOpt등의 DP 최적화 함수들이 있습니다.
 ## DirectedGraph.h
   위상정렬, SCC등을 할 수 있습니다.
 ## DisjointSet.h
 ## DynamicTree.h
   reserved.
+## FastIO.h
+  버퍼를 통한 빠른 입출력 관련 코드가 있습니다.
+## FastIOSimple.h
+  빠른 입출력 관련 코드가 있습니다. include만 해도 cin과 cout에 빠른 입출력이 적용됩니다.
 ## Fenwick.h
   역연산이 존재하는 연산들에 대해 Segment Tree보다 더 빠르게 동작합니다. (시간복잡도는 동일)
 ## FlowGraph.h
