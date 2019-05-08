@@ -3,8 +3,6 @@
 #define endl '\n'//do not use when solving interactive problem!!!
 
 struct F{
-	static int idT(){return int();}
-	static bool idU(){return bool();}
 	static int q(const int& a, const int& b) {return a+b; }
 	static void upd(SplayNode<int, bool>* x) {swap(x->l, x->r);}
 	static bool propa(const bool& clazy, const bool& lazy) { return clazy ^ lazy; }
@@ -28,7 +26,7 @@ struct Solver:public SplayTree<int, bool, F>{
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(11);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 
 	while(true){
 		int n;

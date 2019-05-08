@@ -7,7 +7,7 @@ i64 cnt[200001] = { 0, };
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 
 	cin >> n >> k;
 	forh(i, 0, n) {

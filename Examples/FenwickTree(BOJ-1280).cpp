@@ -5,11 +5,11 @@
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 
 	int n;
 	cin >> n;
-	FenwickTree<ModNum> st(200001), st2(200001);
+	Fenwick<ModNum> st(200001), st2(200001);
 	ModNum ans = 1;
 	forh(i, 0, n)
 	{

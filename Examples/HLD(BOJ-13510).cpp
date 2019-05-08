@@ -3,10 +3,8 @@
 #define endl '\n'//do not use when solving interactive problem!!!
 
 struct F{
-	static int idT(){return 0;}
-	static int idU(){return 0;}
 	static int q(const int& a, const int& b){return max(a,b);}
-	static int upd(const int& a, const int& b, int c){return b;}
+	static int upd(const int& a, const int& b){return b;}
 	static int propa(const int& a, const int& b){return b;}
 };
 
@@ -25,7 +23,7 @@ struct Solver:public HLD<int, int, F>{
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(11);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 	
 	int n;
 	cin>>n;

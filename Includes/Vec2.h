@@ -22,7 +22,7 @@ struct Vec2 {
 	bool operator<=(const Vec2& r)const { return *this==r || *this<r; }
 	bool operator>(const Vec2& r)const { return x== r.x ? y>r.y : x>r.x; }
 	bool operator>=(const Vec2& r)const { return *this==r || *this>r; }
-	f64 size()const { return hypot(x.n, y.n); }
+	f64 size()const { return hypot(x, y); }
 	T sizesq()const { return dot(*this); }
 	T taxi()const{return abs(x)+abs(y);}
 	Vec2 normalize()const { return *this/size(); }
@@ -37,7 +37,7 @@ struct Vec2 {
 	Vec2 ortho()const{ return Vec2(y, -x); }
 	Vec2 rot(double rad)const{ throw 0; }
 
-	static Vec2 inf(){ return {T::inf(),T::inf()}; }
+	static Vec2 inf(){ return {::inf<T>(),::inf<T>()}; }
 	static bool cmpccw(const Vec2& l, const Vec2& r, const Vec2& base) {
 		T val = base.ccw(l, r);
 		assert(base <= l && base <= r);

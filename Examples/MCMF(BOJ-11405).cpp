@@ -28,7 +28,7 @@ int main() {
 		}
 	}
 
-	cout << g.mcmf().x << endl;
+	cout << g.mcmf().first << endl;
 
 	return 0;
 }

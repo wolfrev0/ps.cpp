@@ -7,11 +7,11 @@ char pattern[1000010];
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 
 	cin.getline(text, 1000010);
 	cin.getline(pattern, 1000010);
-	auto len = strlen(pattern);
+	int len = strlen(pattern);
 	auto res = kmp2(text, pattern);
 	vector<int> ans;
 	forh(i, 0, res.size())

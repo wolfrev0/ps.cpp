@@ -12,7 +12,7 @@ i64 f(int n)
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 
 	int n, k;
 	cin >> n >> k;

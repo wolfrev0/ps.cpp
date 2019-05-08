@@ -5,14 +5,14 @@
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(10);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 
 	int n;
 	cin >> n;
-	Segment<I64> arr[3000];
+	Segment<i64> arr[3000];
 	forh(i, 0, n){
-		Vec2<I64> s, e;
-		cin >> s.x.a >> s.y.a >> e.x.a >> e.y.a;
+		Vec2<i64> s, e;
+		cin >> s.x >> s.y >> e.x >> e.y;
 		arr[i]=Segment{s, e};
 	}
 	DisjointSet djs(n);

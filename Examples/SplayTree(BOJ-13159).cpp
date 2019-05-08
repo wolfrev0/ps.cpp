@@ -11,8 +11,6 @@ struct A{
 using Node = SplayNode<A, bool>;
 
 struct F{
-	static A idT(){return A();}
-	static bool idU(){return false;}
 	static A q(const auto& a, const auto& b){return a+b;}
 	static void upd(Node* x){if(x->lazy) swap(x->l, x->r);}
 	static bool propa(const auto& a, const auto& b){return a^b;}
@@ -21,7 +19,7 @@ struct F{
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(11);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 
 	int n, q;
 	cin>>n>>q;

@@ -13,23 +13,30 @@ struct A{
 	bool operator==(const A&r)const{return b==r.b && n==r.n;}
 };
 
-struct F{
-	static A idT(){return {false, -1};}
-	static A idU(){return {false, -2};}
-	static A q(const A& a, const A& b){return a+b;}
-	static A upd(const A& a, const A& b, int c){return b;}
-	static A propa(const A& a, const A& b){return b;}
+struct B{
+	bool b=false;
+	int n=-2;
+	B(bool b, int n):b(b), n(n){}
+	B(A a):b(a.b), n(a.n){}
+	operator A()const{return {b,n};}
+	bool operator==(const B&r)const{return b==r.b && n==r.n;}
 };
 
-struct Solver:public HLD<A,A,F>{
-	Solver(const Tree<A>&t, int r):HLD<A,A,F>(t,r){}
+struct F{
+	static A q(const A& a, const A& b){return a+b;}
+	static A upd(const A& a, const B& b){return b;}
+	static B propa(const B& a, const B& b){return b;}
+};
 
-	using HLD<A,A,F>::parent;
-	using HLD<A,A,F>::update;
-	using HLD<A,A,F>::query;
+struct Solver:public HLD<A,B,F>{
+	Solver(const Tree<A>&t, int r):HLD<A,B,F>(t,r){}
+
+	using HLD<A,B,F>::parent;
+	using HLD<A,B,F>::update;
+	using HLD<A,B,F>::query;
 
 	void update(int v){
-		update(v, {!parent[v].w.b, !parent[v].w.b?v:-1});
+		update(v, B(!parent[v].w.b, !parent[v].w.b?v:-1));
 		parent[v].w.b=!parent[v].w.b;
 	}
 
@@ -39,7 +46,7 @@ struct Solver:public HLD<A,A,F>{
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(11);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 	
 	int n;
 	cin>>n;
@@ -48,7 +55,7 @@ int main() {
 		int a, b;
 		cin>>a>>b;
 		a--, b--;
-		t.add_edge(a,b,F::idT());
+		t.add_edge(a,b,A());
 	}
 	Solver s(t, 0);
 	int m;

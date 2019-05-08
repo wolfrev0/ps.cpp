@@ -30,7 +30,7 @@ int main() {
 			g.add_edge(100 + i, g.snk, 1, 0);
 		}
 
-		if (g.mcmf().y != n)
+		if (g.mcmf().second != n)
 			cout << -1 << endl;
 		else
 		{

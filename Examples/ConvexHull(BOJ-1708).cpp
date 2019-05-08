@@ -5,7 +5,7 @@ int main()
 {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(12);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 
 	int n;
 	cin >> n;

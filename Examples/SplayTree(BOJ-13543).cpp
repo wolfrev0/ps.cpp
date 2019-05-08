@@ -2,13 +2,13 @@
 #include "SplayTree.h"
 #define endl '\n'//do not use when solving interactive problem!!!
 
-u32 bino[11][11]={1,};
+unsigned bino[11][11]={1,};
 
 struct A{
-	u32 arr[11]={0,};
+	unsigned arr[11]={0,};
 	int cnt;
 
-	A(u32 n=0, int cnt=0):cnt(cnt){
+	A(unsigned n=0, int cnt=0):cnt(cnt){
 		forh(i, 0, 11){
 			arr[i]=n;
 		}
@@ -44,7 +44,7 @@ struct F{
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 	cout << fixed << setprecision(11);
-	srand((u32)time(0));
+	srand((unsigned)time(0));
 	
 	forh(i, 1, 11){
 		bino[i][0]=1;
@@ -57,7 +57,7 @@ int main() {
 	cin>>n;
 	SplayTree<A,A,F> st;
 	forh(i,0,n){
-		u32 x;
+		unsigned x;
 		cin>>x;
 		st.insert(i,{x, 1});
 	}
@@ -67,15 +67,15 @@ int main() {
 		int type;
 		cin>>type;
 		if(type==1){
-			u32 p, v;
+			unsigned p, v;
 			cin>>p>>v;
 			st.insert(p, {v, 1});
 		}else if(type==2){
-			u32 p;
+			unsigned p;
 			cin>>p;
 			st.erase(p);
 		}else if(type==3){
-			u32 p,v;
+			unsigned p,v;
 			cin>>p>>v;
 			st.update(p, {v, 1});
 		}else{

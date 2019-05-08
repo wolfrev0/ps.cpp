@@ -14,7 +14,7 @@ struct HLD:public LCA<T>{
 
 	//commutativeness free
 	T query(int u, int v, bool edge_w=true){
-		T ret = F::idT();
+		T ret = T();
 		int w = lca(u, v);
 		while(chain[w]!=chain[u])
 			ret = F::q(ret, st.query(segidx[head[chain[u]]], segidx[u]+1)), u = parent[head[chain[u]]].e;
