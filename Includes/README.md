@@ -1,7 +1,7 @@
 ## Core.h
   ps코드를 간결하게 짜기 위해 자주 사용되는 상수들과 구문들이 있습니다.
 ## DPOpt.h
-  DP 최적화 함수들이 있습니다.
+  CHT(Stack, Dynamic), KnuthOpt등의 DP 최적화 함수들이 있습니다.
 ## DirectedGraph.h
   위상정렬, SCC등을 할 수 있습니다.
 ## DisjointSet.h
