@@ -1,6 +1,15 @@
 #pragma once
 #include "Core.h"
 
+//Extensions: gp_hash_table, XSet
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+
+//Extensions: rope
+#include <ext/rope>
+using namespace __gnu_cxx;
+
 template<typename T>
 using XSet = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
