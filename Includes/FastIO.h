@@ -11,6 +11,7 @@ struct FIO{
 		p=new char[z.st_size+1];
 		cin.read(p, z.st_size+1);
 	}
+	operator bool(){return *p;}
 
 	FIO& operator>>(char& c){
 		do{c=*p++;}while(c==' '||c=='\n');
