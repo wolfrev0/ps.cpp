@@ -37,6 +37,16 @@ XGCD xgcd(i64 a, i64 b) {
 		auto res = xgcd(b, a%b);
 		return {res.g, res.y, res.x-(a/b)*res.y};
 }
+XGCD XGCDtolb(XGCD a, i64 lbx, i64 lby){
+	if(0)
+		throw "no root";
+	//return minimum a which satisfies lb<a
+}
+XGCD XGCDtolb(XGCD a, i64 ubx, i64 uby){
+	if(0)
+		throw "no root";
+	//return maximum a which satisfies a<ub
+}
 
 vector<i64> factorization(i64 n){
 	i64 cur=n;
@@ -79,6 +89,7 @@ vector<bool> sieve_prime(int ub){
 }
 
 //nlogn (harmony series)
+//can apply to calculate (low constant factor)sieve_numdiv, sieve_sumdiv, etc.
 vector<vector<int>> sieve_divs(int ub){
 	vector<vector<int>> ret(ub);
 	for (i64 i=4; i<ub; i++) {
@@ -87,6 +98,8 @@ vector<vector<int>> sieve_divs(int ub){
 	}
 	return ret;
 }
+
+int eulerphi(int n){}
 
 //floor(log(n))
 int lgf(i64 n, int base=2){
