@@ -43,6 +43,5 @@ struct FIO{
 		}
 		return *this;
 	}
-	void tie(void* x){}
 }fcin;
 #define cin fcin
