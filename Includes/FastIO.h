@@ -3,22 +3,23 @@
 
 #include <sys/stat.h>
 
-struct FI{
+struct FIO{
 	char* p;
-	FI(){
+	FIO(){
 		tie(0);
-		struct stat z;
-		fstat(0, &z);
+		struct stat64 z;
+		fstat64(0, &z);
+		setvbuf(stdout, 0, 0, z.st_blksize);
 		p=new char[z.st_size+1];
 		cin.read(p, z.st_size+1);
 	}
 
-	FI& operator>>(char& c){
+	FIO& operator>>(char& c){
 		do{c=*p++;}while(c==' '||c=='\n');
 		return *this;
 	}
 	template<typename T>
-	FI& operator>>(T& n){
+	FIO& operator>>(T& n){
 		n=0;
 		bool neg = false; 
 		int c=*p++;
@@ -34,7 +35,7 @@ struct FI{
 			n *= -1;
 		return *this;
 	}
-	FI& operator>>(string& s){
+	FIO& operator>>(string& s){
 		int c=*p++;
 		while(c==' '||c=='\n')
 			c=*p++;
