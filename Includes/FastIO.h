@@ -1,12 +1,10 @@
 #pragma once
 #include "Core.h"
-
 #include <sys/stat.h>
 
 struct FIO{
 	char* p;
 	FIO(){
-		tie(0);
 		struct stat64 z;
 		fstat64(0, &z);
 		setvbuf(stdout, 0, 0, z.st_blksize);
@@ -45,6 +43,6 @@ struct FIO{
 		}
 		return *this;
 	}
-	void tie(void* x){cin.tie(0);}
+	void tie(void* x){}
 }fcin;
 #define cin fcin
