@@ -8,9 +8,7 @@
 ## DynamicTree.h
   reserved.
 ## FastIO.h
-  버퍼를 통한 빠른 입출력 관련 코드가 있습니다.
-## FastIOSimple.h
-  빠른 입출력 관련 코드가 있습니다. include만 해도 cin과 cout에 빠른 입출력이 적용됩니다.
+  include하면 cin의 속도가 매우 향상됩니다.
 ## Fenwick.h
   역연산이 존재하는 연산들에 대해 Segment Tree보다 더 빠르게 동작합니다. (시간복잡도는 동일)
 ## FlowGraph.h
