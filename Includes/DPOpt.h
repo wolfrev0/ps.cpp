@@ -1,29 +1,13 @@
 #pragma once
 #include "Core.h"
 
-vector<vector<i64>> knuth_opt(const vector<i64>& init, const function<i64(int,int)>& c){
-	int n=init.size();
-	vector<vector<i64>> dp(n+1,vector<i64>(n+1));
-	vector<vector<int>> a(n,vector<int>(n+1));
-	forh(i, 0, n)
-		a[i][i+1]=i;
-	forc(d, 2, n){
-		forc(i, 0, n-d){
-			dp[i][i+d]=inf<i64>();
-			forc(k, a[i][i+d-1], a[i+1][i+d]){
-				if(dp[i][k+1] + dp[k+1][i+d]+c(i,i+d) < dp[i][i+d]){
-					dp[i][i+d]=dp[i][k+1] + dp[k+1][i+d]+c(i,i+d);
-					a[i][i+d]=k;
-				}
-			}
-		}
-	}
-	return dp;
-}
-
+//Formula:
+//d[i] = min{j<i, a[j]*b[i]+c[j]}+e[i]
+//Constraints:(StackCHT Only)
 //max should be (tan,yic)-increase order
 //min should be (tan,yic)-decrease order
-//d[i] = min{j<i, a[j]*b[i]+c[j]}+e[i]
+//Note:
+//b[i]를 x, a[j]를 기울기로 생각하면 그려진다.
 //min, max, j<i, i<j<n 모두 가능하다. 그림을 잘 생각해서 써라.
 //정밀도가 문제가 된다면 x좌표 말고 ccw로 처리하는 방법도 있다. 아래링크 참고
 //https://cp-algorithms.com/geometry/convex_hull_trick.html
@@ -38,7 +22,6 @@ struct Line{
 	f64 intersectX(const Line& r)const{return (r.yic-yic)/f64(tan-r.tan);} 
 	i64 f(i64 x)const{return tan*x+yic;}
 };
-
 struct CHTStack{
 	vector<Line> st;
 	
@@ -63,7 +46,6 @@ struct CHTStack{
 		return st[s].tan*x + st[s].yic;
 	}
 };
-
 struct DynCHT{
 	void insert(i64 a, i64 b){
 		auto it=s.find({a, b});
@@ -92,3 +74,35 @@ struct DynCHT{
 private:
 	set<Line, less<>> s;
 };
+
+//Formula:
+//연쇄행렬곱꼴인데 formal한 표현이 뭐더라?
+//Constraints:
+//사각부등식? 뭐더라 W[a][b]+W[c][d]<=W[a][d]+W[b][c]인가?
+//Note:
+vector<vector<i64>> knuth_opt(const vector<i64>& init, const function<i64(int,int)>& c){
+	int n=init.size();
+	vector<vector<i64>> dp(n+1,vector<i64>(n+1));
+	vector<vector<int>> a(n,vector<int>(n+1));
+	forh(i, 0, n)
+		a[i][i+1]=i;
+	forc(d, 2, n){
+		forc(i, 0, n-d){
+			dp[i][i+d]=inf<i64>();
+			forc(k, a[i][i+d-1], a[i+1][i+d]){
+				if(dp[i][k+1] + dp[k+1][i+d]+c(i,i+d) < dp[i][i+d]){
+					dp[i][i+d]=dp[i][k+1] + dp[k+1][i+d]+c(i,i+d);
+					a[i][i+d]=k;
+				}
+			}
+		}
+	}
+	return dp;
+}
+
+//Formula:
+//cht랑 비슷했던거같은데...
+//Constraints:
+//사각부등식? 뭐더라 W[a][b]+W[c][d]<=W[a][d]+W[b][c]인가?
+//Note:
+void dnc_opt(){}
