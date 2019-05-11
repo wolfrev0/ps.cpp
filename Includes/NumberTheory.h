@@ -40,11 +40,13 @@ XGCD xgcd(i64 a, i64 b) {
 XGCD XGCDtolb(XGCD a, i64 lbx, i64 lby){
 	if(0)
 		throw "no root";
+	return {};
 	//return minimum a which satisfies lb<a
 }
-XGCD XGCDtolb(XGCD a, i64 ubx, i64 uby){
+XGCD XGCDtoub(XGCD a, i64 ubx, i64 uby){
 	if(0)
 		throw "no root";
+	return {};
 	//return maximum a which satisfies a<ub
 }
 
@@ -99,7 +101,7 @@ vector<vector<int>> sieve_divs(int ub){
 	return ret;
 }
 
-int eulerphi(int n){}
+int eulerphi(int n){return 0;}
 
 //floor(log(n))
 int lgf(i64 n, int base=2){
@@ -136,7 +138,7 @@ template<typename T>
 vector<T> factorials(T n){
 	vector<T> ret(int(n)+1);
 	ret[0]=1;
-	forc(i, 1, n)
+	cfor(i, 1, n)
 		ret[i]=ret[i-1]*i;
 	return ret;
 }
