@@ -13,7 +13,7 @@ using namespace std;
 #define cfori(var, s, e) hfori(var, s, e+1)
 #define cforo(var, s, e) hforo(var, s, e+1)
 #define cforoi(var, s, e) hforoi(var, s, e+1)
-#define rep(x) forh(repi,0,x)
+#define rep(x) hfor(repi,0,x)
 #define all(x) x.begin(),x.end()
 #define sum_in(s,e) accumulate(s,e,0ll)
 #define mri(it) make_reverse_iterator(it)//*mri(it) == *prev(it)
