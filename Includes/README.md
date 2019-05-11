@@ -1,5 +1,7 @@
 ## Core.h
   ps코드를 간결하게 짜기 위해 자주 사용되는 상수들과 구문들이 있습니다.
+## CumulQ.h
+  역연산을 지원하는 f에 대해 누적값을 FIFO로 관리할 수 있습니다. rabin-karp 해싱 등에 사용합니다.
 ## DPOpt.h
   CHT(Stack, Dynamic), KnuthOpt등의 DP 최적화 함수들이 있습니다.
 ## DirectedGraph.h
@@ -26,8 +28,8 @@
 ## Matrix.h
   정사각행렬 클래스입니다. 직사각행렬은 추후에 사용할 일이 있다면 추가해볼 예정
 ## MergeSortTree.h
-## ModNum.h
-  Modular Number. mod(전역변수)를 법으로 합니다.
+## Mod.h
+  Modular Number입니다. a mod m을 나타냅니다.
 ## MonotonicQ.h
   슬라이딩윈도 하며 최소(최대)값을 구할 수 있습니다.
 ## NumberTheory.h
