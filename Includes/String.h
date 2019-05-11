@@ -74,7 +74,7 @@ vector<int> kmp(const string &s, const string &p) {
 vector<int> failure_function2(const string &p) {
 	int pi = 0;
 	vector<int> ret(p.size());
-	forh(i, 1, p.size()) {
+	hfor(i, 1, p.size()) {
 		while (pi > 0 && p[i] != p[pi])
 			pi = ret[pi - 1];
 		if (p[i] == p[pi])
@@ -87,7 +87,7 @@ vector<int> kmp2(const string &s, const string &p) {
 	const auto &ff = failure_function2(p);
 	vector<int> ans(s.size());
 	int pi = 0;
-	forh(i, 0, s.size()) {
+	hfor(i, 0, s.size()) {
 		while (pi > 0 && s[i] != p[pi])
 			pi = ff[pi - 1];
 		if (s[i] == p[pi] && (ans[i] = ++pi) == (int)p.size())
@@ -106,7 +106,7 @@ bool cmp(int i, int j, const vector<int> &g, int t){
 vector<int> suffix_array(const string &s){
 	int n = s.size();
 	vector<int> sa(n), ord(n+1), nord(n+1);
-	forh(i, 0, s.size())
+	hfor(i, 0, s.size())
 		sa[i]=i, ord[i]=s[i];
 
 	ord[n]=-1;
@@ -114,7 +114,7 @@ vector<int> suffix_array(const string &s){
 		sort(sa.begin(), sa.end(), [&](const int &a, const int &b){return cmp(a, b, ord, i);});
 		nord[sa[0]]=0;
 		nord[n]=-1;
-		forh(j, 1, n)
+		hfor(j, 1, n)
 			nord[sa[j]]=nord[sa[j-1]]+cmp(sa[j-1], sa[j], ord, i);
 		ord=nord;
 	}
@@ -127,10 +127,10 @@ vector<int> get_lcp(const string &s, const vector<int> &sa){
 	int n = s.size();
 	vector<int> lcp(n), psa(n+1), plcp(n+1);
 	psa[sa[0]]=-1;
-	forh(i,1,n)
+	hfor(i,1,n)
 	psa[sa[i]]=sa[i-1];
 	int common=0;
-	forh(i,0,n){
+	hfor(i,0,n){
 		if(psa[i]==-1)
 			plcp[i]=0;
 		else{
@@ -140,7 +140,7 @@ vector<int> get_lcp(const string &s, const vector<int> &sa){
 			common = max(common-1,0);
 		}
 	}
-	forh(i,0,n)
+	hfor(i,0,n)
 		lcp[i]=plcp[sa[i]];
 	return lcp;
 }
@@ -163,7 +163,7 @@ vector<int> suffix_array2(const string &s){
 		for (int i=0; i<n; i++) if (out[i] >= h)
 			temp[bpos[pos2bckt[out[i] - h]]++] = out[i] - h;
 		c = 0;
-		forh(i,0,n-1){
+		hfor(i,0,n-1){
 			int a=bckt[i]!=bckt[i+1] || temp[i]>=n-h || pos2bckt[temp[i+1]+h]!=pos2bckt[temp[i]+h];
 			bckt[i]=c;
 			c+=a;
@@ -179,10 +179,10 @@ vector<int> get_lcp2(const string &s, const vector<int> &sa){
 	int h=0;
 	int n=s.size();
 	vector<int> rank(n);
-	forh(i, 0, sa.size())
+	hfor(i, 0, sa.size())
 		rank[sa[i]]=i;
 	vector<int> lcp(n);
-	forh(i,0,n){
+	hfor(i,0,n){
 		if(rank[i]){
 			int j=sa[rank[i]-1];
 			while(s[i+h]==s[j+h])
