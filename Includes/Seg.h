@@ -44,12 +44,14 @@ protected:
 };
 
 struct SegSumAss:public Seg<int,int>{
+	SegSumAss(int n):Seg<int,int>(n){}
 	using T=int; using U=int;
 	T q(const T& a, const T& b)override{return a+b;};
 	T upd(const T& a, const U& b)override{return b;};
 };
 
 struct SegMaxAdd:public Seg<int,int>{
+	SegMaxAdd(int n):Seg<int,int>(n){}
 	using T=int; using U=int;
 	T q(const T& a, const T& b)override{return max(a,b);};
 	T upd(const T& a, const U& b)override{return a+b;};
