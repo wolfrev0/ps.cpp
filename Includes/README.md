@@ -38,8 +38,6 @@
   Persistent 한 Segment Tree입니다.
 ## PSTLazy.h
   reserved
-## Pair.h
-  두 값 a, b를 하나의 쌍으로 표현합니다.
 ## Polygon.h
   다각형을 나타냅니다. area, is intersect, Convex Hull등을 구할 수 있습니다.
 ## Range.h
