@@ -11,7 +11,7 @@ struct SimpleGraph: public DirectedGraph{
 	vector<int> articul_points(){
 		vector<int> ord(n, -1), ret;
 		int o=0;
-		forh(i, 0, n){
+		hfor(i, 0, n){
 			if(ord[i] != -1)
 				continue;
 			dfs_ap(i, -1, o, ord, ret);
@@ -23,7 +23,7 @@ struct SimpleGraph: public DirectedGraph{
 		vector<int> ord(n, -1);
 		vector<pair<int,int>> ret;
 		int o=0;
-		forh(i, 0, n){
+		hfor(i, 0, n){
 			if(ord[i] != -1)
 				continue;
 			dfs_bridge(i, -1, o, ord, ret);

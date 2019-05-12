@@ -1,11 +1,12 @@
 #pragma once
 #include "LCA.h"
 
-template<typename T, typename U=T, typename F=SegFDefault<T, U>>
-struct HLD:public LCA<T>{
-	using P=LCA<T>;
+template<typename T, typename U=T>
+struct HLD:public LCA<T>, public Seg<T, U>{
+	using L=LCA<T>;
+	using S=Seg<T, U>;
 	HLD(const Tree<T>& t, int r)
-	:P(t, r), st(n), chain(n), head(n), segidx(n), sz(n){
+	:L(t, r), S(n), chain(n), head(n), segidx(n), sz(n){
 		dfs_size(r);
 		int segi=0, cur_chain=0;
 		dfs_hld(r, segi, cur_chain);
@@ -17,8 +18,8 @@ struct HLD:public LCA<T>{
 		T ret = T();
 		int w = lca(u, v);
 		while(chain[w]!=chain[u])
-			ret = F::q(ret, st.query(segidx[head[chain[u]]], segidx[u]+1)), u = parent[head[chain[u]]].e;
-		ret = F::q(ret, st.query(segidx[w]+edge_w, segidx[u]+1));
+			ret = S::q(ret, S::query(segidx[head[chain[u]]], segidx[u]+1)), u = parent[head[chain[u]]].e;
+		ret = S::q(ret, S::query(segidx[w]+edge_w, segidx[u]+1));
 
 		vector<pair<int,int>> ranges;
 		while(chain[w]!=chain[v])
@@ -26,20 +27,19 @@ struct HLD:public LCA<T>{
 		ranges.emplace_back(segidx[w]+1, segidx[v]+1);
 		reverse(ranges.begin(), ranges.end());
 		for(const auto&i:ranges)
-			ret = F::q(ret, st.query(i.first, i.second));
+			ret = S::q(ret, S::query(i.first, i.second));
 
 		return ret;
 	}
 
-	void update(int cur, U w){return st.update(segidx[cur], w);}
+	void update(int cur, U w){return S::update(segidx[cur], w);}
 	void update(int s, int e, U w){}
 protected:
-	using P::n;
-	using P::r;
-	using P::parent;
-	using P::children;
-	using P::lca;
-	Seg<T, U, F> st;
+	using L::n;
+	using L::r;
+	using L::parent;
+	using L::children;
+	using L::lca;
 	vector<int> chain;
 	vector<int> head;
 	vector<int> segidx;
@@ -54,10 +54,10 @@ protected:
 	}
 
 	void dfs_hld(int cur, int& segi, int& cur_chain){
-		st.update(segidx[cur]=segi++, parent[cur].w);
+		S::update(segidx[cur]=segi++, parent[cur].w);
 		chain[cur]=cur_chain;
 		auto c = children[cur];
-		forh(i, 0, c.size()){
+		hfor(i, 0, c.size()){
 			if(i)
 				head[++cur_chain]=c[i].e;
 			dfs_hld(c[i].e, segi, cur_chain);

@@ -24,20 +24,20 @@ signed main(){
   int n,q,w;
   int a[250000];
   cin>>n>>q>>w;
-  forh(i,0,n)
+  hfor(i,0,n)
     cin>>a[i];
   array<int,3> v={0,0,1};
 
   Seg<T, Mat<int,3>, F> st(n);
   st.update(n-1-0, Mat<int, 3>({{{0,1,0},{0,1,1},{0,0,1}}}));
-  forh(i,1,n)
+  hfor(i,1,n)
     st.update(n-1-i, Mat<int, 3>({{{0,1,0},{a[i]+a[i-1]<=w,!(a[i]+a[i-1]<=w),1},{0,0,1}}}));
   int ans=(st.query(0, n).a*v)[1];
   if(a[0]+a[n-1]<=w)
     ans=min(ans, (st.query(1, n-1).a*v)[1]+1);
   cout<<ans<<endl;
 
-  forh(i,0,q){
+  hfor(i,0,q){
     int x,y;
     cin>>x>>y;
     x--;

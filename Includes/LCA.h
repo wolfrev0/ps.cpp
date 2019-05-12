@@ -7,7 +7,7 @@ struct LCA:public RootedTree<T>{
 	using P=RootedTree<T>;
 
 	LCA(const Tree<T>& t, int r)
-	:P(t, r), st(n*2),lpos(n)
+	:P(t, r), st(n*2), lpos(n)
 	{int segi=0; dfs_lca(r, segi);}
 
 	int lca(int a, int b){
@@ -26,13 +26,13 @@ protected:
 		bool operator<(const LCA_T& r)const{return ord<r.ord;}
 		bool operator==(const LCA_T& r)const{return ord==r.ord && idx==r.idx;}
 	};
-	struct LCA_F{
-		static LCA_T idT(){return LCA_T();}
-		static LCA_T q(const LCA_T& a, const LCA_T& b){return min(a,b);}
-		static LCA_T upd(const LCA_T& a, const LCA_T& b){return b;}
+	struct SegLCA:public Seg<LCA_T>{
+		SegLCA(int n):Seg<LCA_T>(n){}
+		LCA_T q(const LCA_T& a, const LCA_T& b)override{return min(a,b);};
+		LCA_T upd(const LCA_T& a, const LCA_T& b)override{return b;};
 	};
 
-	Seg<LCA_T, LCA_T, LCA_F> st;
+	SegLCA st;
 	vector<int> lpos;
 
 	void dfs_lca(int cur, int& segi){

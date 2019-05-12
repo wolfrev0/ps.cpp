@@ -10,12 +10,12 @@ struct DirectedGraph: public Graph<int>{
 
 	vector<int> topo_sort() {
 		vector<int> in(n);
-		forh(i, 0, n){
+		hfor(i, 0, n){
 			for(auto &j:g[i])
 				in[j.e]++;
 		}
 		queue<int> q;
-		forh(i, 0, n)
+		hfor(i, 0, n)
 			if (!in[i])
 				q.push(i);
 		vector<int> ret;
@@ -33,12 +33,12 @@ struct DirectedGraph: public Graph<int>{
 
 	vector<int> topo_sort_lex() {
 		vector<int> in(n);
-		forh(i, 0, n){
+		hfor(i, 0, n){
 			for(auto &j:g[i])
 				in[j.e]++;
 		}
 		priority_queue<int, vector<int>, greater<int>> q;
-		forh(i, 0, n)
+		hfor(i, 0, n)
 			if (!in[i])
 				q.push(i);
 		vector<int> ret;
@@ -58,16 +58,16 @@ struct DirectedGraph: public Graph<int>{
 		vector<int> state(n), ord(n), scc_id(n, -1);
 		stack<int> stk;
 		int o=0, scc_cnt=0;
-		forh(i, 0, n){
+		hfor(i, 0, n){
 			if(!state[i])
 				dfs_scc(i, o, scc_cnt, state, ord, scc_id, stk);
 		}
 
 		auto group=vector<vector<int>>(scc_cnt);
-		forh(i, 0, n)
+		hfor(i, 0, n)
 			group[scc_id[i]].push_back(i);
 		DirectedGraph sccg(scc_cnt);
-		forh(i, 0, n){
+		hfor(i, 0, n){
 			for(auto& j:g[i])
 				if(scc_id[i]!=scc_id[j.e])
 					sccg.add_edge(scc_id[i], scc_id[j.e]);

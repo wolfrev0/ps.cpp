@@ -85,7 +85,7 @@ vector<vector<i64>> knuth_opt(const vector<i64>& init, const function<i64(int,in
 	int n=init.size();
 	vector<vector<i64>> dp(n+1,vector<i64>(n+1));
 	vector<vector<int>> a(n,vector<int>(n+1));
-	forh(i, 0, n)
+	hfor(i, 0, n)
 		a[i][i+1]=i;
 	forc(d, 2, n){
 		forc(i, 0, n-d){

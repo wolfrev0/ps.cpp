@@ -6,7 +6,7 @@ struct DisjointSet {
 	vector<int> sz;
 
 	DisjointSet(int n): par(n),sz(n,1){
-		forh(i,0,n)
+		hfor(i,0,n)
 			par[i]=i;
 	}
 

@@ -16,14 +16,14 @@ struct Polygon
 
 	f64 area() {
 		f64 ans = 0;
-		forh(i, 1, size() - 1)
+		hfor(i, 1, size() - 1)
 			ans += vtx[0].cross(vtx[i], vtx[i + 1]);
 		return ans / 2;
 	}
 
 	vector<Segment<T>> to_segments()const {
 		vector<Segment<T>> ret;
-		forh(i, 0, vtx.size())
+		hfor(i, 0, vtx.size())
 			ret.emplace_back(vtx[i], vtx[(i + 1) % vtx.size()]);
 		return ret;
 	}
@@ -64,7 +64,7 @@ struct Convex :public Polygon<T>{
 		auto me = *min_element(vtx.begin(), vtx.end());
 		sort(vtx.begin(), vtx.end(), [&](auto &a, auto &b){return Vec2<T>::cmpccw(a,b, me);});
 		vector<Vec2<T>> res;
-		forh(i, 0, vtx.size()) {
+		hfor(i, 0, vtx.size()) {
 			while (res.size() >= 2) {
 				auto ltop = res[res.size() - 1] - res[res.size() - 2];
 				auto lcandi = vtx[i] - res[res.size() - 2];
@@ -80,7 +80,7 @@ struct Convex :public Polygon<T>{
 
 	virtual bool contains(const Vec2<T>& v)const override	{
 		T tmp = v.cross(vtx[0], vtx[1]);
-		forh(i, 0, vtx.size())
+		hfor(i, 0, vtx.size())
 			if (tmp*v.cross(vtx[i], vtx[(i + 1) % vtx.size()]) <= 0)
 				return false;
 		return true;

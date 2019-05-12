@@ -35,7 +35,7 @@ struct SplayTree:public DynamicTree{
 		renew(root);
 
 		//real nodes
-		forh(i,0,n)
+		hfor(i,0,n)
 			insert(0);
 	}
 	~SplayTree(){delete root;}

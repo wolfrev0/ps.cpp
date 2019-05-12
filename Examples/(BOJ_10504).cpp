@@ -27,7 +27,7 @@ int main() {
 			cout<<"IMPOSSIBLE"<<endl;
 		else{
 			cout<<n<<" = ";
-			forh(i,a,b)
+			hfor(i,a,b)
 				cout<<i<<" + ";
 			cout<<b<<endl;
 		}
