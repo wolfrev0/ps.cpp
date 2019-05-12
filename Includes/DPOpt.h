@@ -11,6 +11,7 @@
 //min, max, j<i, i<j<n 모두 가능하다. 그림을 잘 생각해서 써라.
 //정밀도가 문제가 된다면 x좌표 말고 ccw로 처리하는 방법도 있다. 아래링크 참고
 //https://cp-algorithms.com/geometry/convex_hull_trick.html
+//Line은 Line.h와 중복이니 상속받아서 잘 변형하는 식으로 개선해보자.
 struct Line{
 	i64 tan;
 	mutable i64 yic;

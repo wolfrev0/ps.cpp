@@ -1,4 +1,15 @@
 # Common Interface
+  1. [s, e) half opened range
+  2. 0 based index
+  
+# Index
+  ## Examples
+  ## Includes
+		Abstracted Algorithm and Datastructures.
+   ## Tools
+    Tools for convenience use of library.
+
+# Common Interface
 <ol>
   <li>[s, e) (half-opened range)</li>
   <li>0-based index</li>
