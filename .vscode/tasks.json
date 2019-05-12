@@ -30,6 +30,19 @@
 			"problemMatcher": []
 		},
 		{
+			"label": "Build(Simple)",
+			"type": "shell",
+			"command": "bash",
+			"args": [
+				"-c", "\"",
+				"g++","-iquote","./Includes","-D","DEBUG","-Wall","-std=c++17","'./src/${fileBasename}'",
+				//"&&","./merger.out","./src/${fileBasename}","./Includes",
+				"&&","echo","'Build(Debug)","Succeed.'",
+				"\""
+			],
+			"problemMatcher": []
+		},
+		{
 			"label": "Run",
 			"type": "shell",
 			"command": "bash -c './xcuter.out a.out' < ./input",
