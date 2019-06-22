@@ -9,10 +9,10 @@ using namespace std;
 #define hfori(var, s, e) for(int var=e-1; int(s)<=var && var<int(e); --var)//inversion
 #define hforo(var, s, e) int var=s; for(; int(s)<=var && var<int(e); ++var)//out declaration
 #define hforoi(var, s, e) int var=e-1; for(; int(s)<=var && var<int(e); --var)
-#define cfor(var, s, e) hfor(var, s, e+1)//closed range
-#define cfori(var, s, e) hfori(var, s, e+1)
-#define cforo(var, s, e) hforo(var, s, e+1)
-#define cforoi(var, s, e) hforoi(var, s, e+1)
+#define cfor(var, s, e) hfor(var, s, (e)+1)//closed range
+#define cfori(var, s, e) hfori(var, s, (e)+1)
+#define cforo(var, s, e) hforo(var, s, (e)+1)
+#define cforoi(var, s, e) hforoi(var, s, (e)+1)
 #define rep(x) hfor(repi,0,x)
 #define all(x) x.begin(),x.end()
 #define sum_in(s,e) accumulate(s,e,0ll)
