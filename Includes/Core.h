@@ -17,6 +17,7 @@ using namespace std;
 #define all(x) x.begin(),x.end()
 #define sum_in(s,e) accumulate(s,e,0ll)
 #define mri(it) make_reverse_iterator(it)//*mri(it) == *prev(it)
+#define gcd __gcd
 template<typename C, typename RI> RI rerase(C& c, RI ri){return next(mri(c.erase(prev(ri.base()))));}
 template<typename T> T inf() { return numeric_limits<T>::max() / 2; }
 using f64 = double;using i64=long long;using u64=unsigned long long;
