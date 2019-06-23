@@ -53,9 +53,9 @@ protected:
 		dirty[v]=true;
 	}
 	
-	array<T,4*n> tree;
-	array<T,4*n> lazy;
-	array<bool,4*n> dirty;
+	array<T,4*n> tree{{T(),}};
+	array<T,4*n> lazy{{T(),}};
+	array<bool,4*n> dirty{{T(),}};
 };
 
 template<int n, typename T, typename U=T>

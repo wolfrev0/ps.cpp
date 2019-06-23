@@ -32,7 +32,7 @@ protected:
 		upd(cur*2+1,m,ce,p,val);
 		tree[cur]=qf(tree[cur*2],tree[cur*2+1]);
 	}
-	array<T, 4*n> tree;
+	array<T, 4*n> tree{{0,}};
 };
 
 template<int n, typename T> struct SegAdd:public Seg<n,T>{T qf(const T& a, const T& b)override{return a+b;}};
