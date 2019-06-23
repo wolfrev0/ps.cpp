@@ -3,6 +3,8 @@
 
 template<int n, typename T>
 struct SegBU{
+	//생성자 대신 선언에{}붙여도 되는데, gcc버그로 컴파일하다 죽는다.
+	SegBU():tree(){}
 	void upd(int p, T val){
 		for (tree[p+=n]=val; p>1; p>>=1)
 			tree[p>>1]=qf(tree[p],tree[p^1]);
@@ -18,7 +20,7 @@ struct SegBU{
 	}
 protected:
 	virtual T qf(const T& a, const T& b)=0;
-	array<T, 2*n> tree{{0,}};
+	array<T, 2*n> tree;
 };
 
 template<int n, typename T> struct SegBUAdd:public SegBU<n,T>{T qf(const T& a, const T& b)override{return a+b;}};

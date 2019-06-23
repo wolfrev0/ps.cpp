@@ -3,8 +3,8 @@
 
 template<typename T, int n>
 struct Mat{
-	array<array<T,n>,n> a{0,};
-	Mat(bool is_one=0){
+	array<array<T,n>,n> a;
+	Mat(bool is_one=0):a(){
 		if(is_one){
 			hfor(i,0,n)
 				a[i][i]=1;

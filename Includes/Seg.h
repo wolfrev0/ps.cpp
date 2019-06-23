@@ -4,6 +4,8 @@
 //Upd=Assignment
 template<int n, typename T>
 struct Seg{
+	//생성자 대신 선언에{}붙여도 되는데, gcc버그로 컴파일하다 죽는다.
+	Seg():tree(){}
 	T q(int p){return q(p,p+1);}
 	T q(int s, int e){return q(1,0,n,s,e);}
 	void upd(int p, T val){upd(1,0,n,p,val);}
@@ -32,9 +34,9 @@ protected:
 		upd(cur*2+1,m,ce,p,val);
 		tree[cur]=qf(tree[cur*2],tree[cur*2+1]);
 	}
-	array<T, 4*n> tree{{0,}};
+	array<T, 4*n> tree;
 };
 
-template<int n, typename T> struct SegAdd:public Seg<n,T>{T qf(const T& a, const T& b)override{return a+b;}};
+template<int n, typename T> struct SegSum:public Seg<n,T>{T qf(const T& a, const T& b)override{return a+b;}};
 template<int n, typename T> struct SegMax:public Seg<n,T>{T qf(const T& a, const T& b)override{return max(a,b);}};
 template<int n, typename T> struct SegMin:public Seg<n,T>{T qf(const T& a, const T& b)override{return min(a,b);}};

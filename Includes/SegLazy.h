@@ -3,6 +3,8 @@
 
 template<int n, typename T, typename U=T>
 struct SegLazy{
+	//생성자 대신 선언에{}붙여도 되는데, gcc버그로 컴파일하다 죽는다.
+	SegLazy():tree(), lazy(), dirty(){}
 	T q(int p){return q(p,p+1);}
 	T q(int s, int e){return q(1,0,n,s,e);}
 	void upd(int p, U val){upd(p, p+1, val);}
@@ -53,9 +55,9 @@ protected:
 		dirty[v]=true;
 	}
 	
-	array<T,4*n> tree{{T(),}};
-	array<T,4*n> lazy{{T(),}};
-	array<bool,4*n> dirty{{T(),}};
+	array<T,4*n> tree;
+	array<U,4*n> lazy;
+	array<bool,4*n> dirty;
 };
 
 template<int n, typename T, typename U=T>
