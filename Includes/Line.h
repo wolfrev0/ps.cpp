@@ -59,13 +59,14 @@ struct Segment :public Line<T> {
 	using Line<T>::_e;
 	explicit Segment():Line<T>() {}
 	explicit Segment(const Vec2<T>& _s, const Vec2<T>& _e) :Line<T>(_s, _e) {}
+	bool is_valid(const Vec2<T>& p)const{ return _s.x<=p.x&&p.x<=_e.x && min(_s.y,_e.y)<=p.y&&p.y<=max(_s.y,_e.y); }
 	virtual bool valid_intersect(const Vec2<T>& p)const override {
-		if (abs(_s.x - _e.x) < eps && abs(p.x - _s.x) < eps)
-			return _s.y <= p.y && p.y <= _e.y;
-		if (abs(_s.y - _e.y) < eps && abs(p.y - _s.y) < eps)
+		if (abs(_s.x - _e.x) < eps)
+			return min(_s.y,_e.y)<=p.y && p.y<=max(_s.y,_e.y);
+		if (abs(_s.y - _e.y) < eps)
 			return _s.x <= p.x && p.x <= _e.x;
-		return _s <= p && p <= _e;
+		return is_valid(p);
 	}
-	virtual bool valid_foot(const Vec2<T>& p)const override { return _s <= p && p <= _e; }
-	virtual bool valid_contains(const Vec2<T>& p) const override { return _s <= p && p <= _e; }
+	virtual bool valid_foot(const Vec2<T>& p)const override { return is_valid(p); }
+	virtual bool valid_contains(const Vec2<T>& p) const override { return is_valid(p); }
 };
