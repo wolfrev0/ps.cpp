@@ -2,24 +2,23 @@
 #include "Core.h"
 
 //Upd=Assignment
-template<int n, typename T>
+template<typename T, int n, T id=T()>
 struct Seg{
 	//생성자 대신 선언에{}붙여도 되는데, gcc버그로 컴파일하다 죽는다.
-	Seg():tree(){}
+	Seg():tree(){fill(tree, tree+4*n, id);}
 	T q(int p){return q(p,p+1);}
 	T q(int s, int e){return q(1,0,n,s,e);}
 	void upd(int p, T val){upd(1,0,n,p,val);}
 protected:
-	virtual T qf(const T& a, const T& b)=0;
+	virtual T fq(const T& a, const T& b)=0;
 
 	T q(int cur, int cs, int ce, int s, int e){
 		if (s>=ce||e<=cs)
-			return T();
-		if (s<=cs&&ce<=e){
+			return id;
+		if (s<=cs&&ce<=e)
 			return tree[cur];
-		}
 		int m=(cs+ce)/2;
-		return qf(q(cur*2,cs,m,s,e),q(cur*2+1,m,ce,s,e));
+		return fq(q(cur*2,cs,m,s,e),q(cur*2+1,m,ce,s,e));
 	}
 
 	void upd(int cur, int cs, int ce, int p, T val){
@@ -32,11 +31,11 @@ protected:
 		int m=(cs+ce)/2;
 		upd(cur*2,cs,m,p,val);
 		upd(cur*2+1,m,ce,p,val);
-		tree[cur]=qf(tree[cur*2],tree[cur*2+1]);
+		tree[cur]=fq(tree[cur*2],tree[cur*2+1]);
 	}
-	array<T, 4*n> tree;
+	T tree[4*n];
 };
 
-template<int n, typename T> struct SegSum:public Seg<n,T>{T qf(const T& a, const T& b)override{return a+b;}};
-template<int n, typename T> struct SegMax:public Seg<n,T>{T qf(const T& a, const T& b)override{return max(a,b);}};
-template<int n, typename T> struct SegMin:public Seg<n,T>{T qf(const T& a, const T& b)override{return min(a,b);}};
+template<typename T, int n> struct SegSum:public Seg<T,n>{T fq(const T& a, const T& b)override{return a+b;}};
+template<typename T, int n> struct SegMax:public Seg<T,n,-inf<T>()>{T fq(const T& a, const T& b)override{return max(a,b);}};
+template<typename T, int n> struct SegMin:public Seg<T,n,inf<T>()>{T fq(const T& a, const T& b)override{return min(a,b);}};

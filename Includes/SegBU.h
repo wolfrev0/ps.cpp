@@ -20,7 +20,7 @@ struct SegBU{
 	}
 protected:
 	virtual T qf(const T& a, const T& b)=0;
-	array<T, 2*n> tree;
+	T tree[2*n];
 };
 
 template<int n, typename T> struct SegBUAdd:public SegBU<n,T>{T qf(const T& a, const T& b)override{return a+b;}};

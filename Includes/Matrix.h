@@ -3,7 +3,7 @@
 
 template<typename T, int n>
 struct Mat{
-	array<array<T,n>,n> a;
+	T a[n][n];
 	Mat(bool is_one=0):a(){
 		if(is_one){
 			hfor(i,0,n)
