@@ -62,7 +62,7 @@ struct Convex :public Polygon<T>{
 		if (vtx.empty())
 			return;
 		auto me = *min_element(vtx.begin(), vtx.end());
-		sort(vtx.begin(), vtx.end(), [&](auto &a, auto &b){return Vec2<T>::cmpccw(a,b, me);});
+		sort(vtx.begin(), vtx.end(), [&](auto &a, auto &b){return Vec2<T>::cmpccw(a,b,me);});
 		vector<Vec2<T>> res;
 		hfor(i, 0, vtx.size()) {
 			while (res.size() >= 2) {

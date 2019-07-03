@@ -23,7 +23,7 @@ template<typename T> constexpr T inf() { return numeric_limits<T>::max() / 2; }
 using f64 = double;using i64=long long;using u64=unsigned long long;
 const f64 pi=acos(-1), eps=1e-12;
 const int prime=998244353;//1073741783 int(2e9+11) int(1e9+9)
-const int mod=int(1e9+7);
+int mod=int(1e9+7);
 
 auto _dummy=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),
 (cout<<fixed<<setprecision(11)), srand((int)time(0)), 0);

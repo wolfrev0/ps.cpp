@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
 
-template<int n, typename T>
+template<typename T, int n>
 struct SegBU{
 	//생성자 대신 선언에{}붙여도 되는데, gcc버그로 컴파일하다 죽는다.
 	SegBU():tree(){}
@@ -23,6 +23,6 @@ protected:
 	T tree[2*n];
 };
 
-template<int n, typename T> struct SegBUAdd:public SegBU<n,T>{T qf(const T& a, const T& b)override{return a+b;}};
-template<int n, typename T> struct SegBUMax:public SegBU<n,T>{T qf(const T& a, const T& b)override{return max(a,b);}};
-template<int n, typename T> struct SegBUMin:public SegBU<n,T>{T qf(const T& a, const T& b)override{return min(a,b);}};
+template<typename T, int n> struct SegBUSum:public SegBU<T,n>{T qf(const T& a, const T& b)override{return a+b;}};
+template<typename T, int n> struct SegBUMax:public SegBU<T,n>{T qf(const T& a, const T& b)override{return max(a,b);}};
+template<typename T, int n> struct SegBUMin:public SegBU<T,n>{T qf(const T& a, const T& b)override{return min(a,b);}};

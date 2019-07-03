@@ -1,6 +1,8 @@
 #include "Core.h"
 #include "Fenwick.h"
-#include "ModNum.h"
+#include "Mod.h"
+#define endl '\n'//not interactive?
+//#define int i64//overflow?
 
 int main() {
 	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
@@ -9,16 +11,16 @@ int main() {
 
 	int n;
 	cin >> n;
-	Fenwick<ModNum> st(200001), st2(200001);
-	ModNum ans = 1;
-	forh(i, 0, n)
+	Fenwick<Mod<1000000007>,200001> st, st2;
+	Mod<100000007> ans = 1;
+	hfor(i, 0, n)
 	{
 		int x;
 		cin >> x;
 		if (i)
-			ans *= st2.query(x, 200001) - st.query(x, 200001)*x + st.query(0, x+1)*x - st2.query(0, x+1);
-		st.update(x, 1);
-		st2.update(x, x);
+			ans *= st2.q(x, 200001) - st.q(x, 200001)*x + st.q(0, x+1)*x - st2.q(0, x+1);
+		st.upd(x, 1);
+		st2.upd(x, x);
 	}
 	cout << ans.val() << endl;
 

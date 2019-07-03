@@ -1,11 +1,10 @@
 #pragma once
 #include "Core.h"
 
-template<typename T>
+template<typename T, int n>
 struct Fenwick{
-	int n;
-	Fenwick(int n):n(n+1), tree(n+2, T()){}
-	vector<T> tree;
+	Fenwick():tr(){}
+	T tr[n+2];
 
 	T q(int i){return q(i, i+1);}
 	T q(int s, int e){
@@ -17,8 +16,8 @@ struct Fenwick{
 
 	void upd(int i, T delta){
 		i++;
-		while(i<n){
-			tree[i]+=delta;
+		while(i<=n){
+			tr[i]+=delta;
 			i+=(i&-i);
 		}
 	}
@@ -33,7 +32,7 @@ private:
 	T sum(int i){
 		T ans=T();
 		while(i>0){
-			ans+=tree[i];
+			ans+=tr[i];
 			i-=(i&-i);
 		}
 		return ans;
