@@ -50,6 +50,20 @@ XGCD XGCDtoub(XGCD a, i64 ubx, i64 uby){
 	//return maximum a which satisfies a<ub
 }
 
+bool is_prime(i64 n){
+	if(n<2)
+		return false;
+	for(i64 i=2;i*i<=n;i++){
+		if(!(n%i))
+			return false;
+	}
+	return true;
+}
+
+bool miller_rabin(i64 n){
+	return true;
+}
+
 vector<i64> factorization(i64 n){
 	i64 cur=n;
 	vector<i64> ret;
@@ -94,7 +108,7 @@ vector<bool> sieve_prime(int ub){
 //can apply to calculate (low constant factor)sieve_numdiv, sieve_sumdiv, etc.
 vector<vector<int>> sieve_divs(int ub){
 	vector<vector<int>> ret(ub);
-	for (i64 i=4; i<ub; i++) {
+	for (i64 i=1; i<ub; i++) {
 		for (i64 j=i; j<ub; j+=i)
 			ret[j].push_back(i);
 	}
