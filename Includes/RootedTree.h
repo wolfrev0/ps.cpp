@@ -1,31 +1,69 @@
 #pragma once
-#include "SimpleTree.h"
+#include "Core.h"
 
 template<typename T>
-struct RootedTree:public Tree<T>{
-	using P=Tree<T>;
-	RootedTree(const P& tree, int r)
-	:P(tree),r(r),parent(n),children(P::g){
-		dfs_rootize(r, -1);
-		for(const auto &i:parent)
-			if(i.s!=i.e)//if not root
-				children[i.s].erase(children[i.s].begin()+i.ei);
+struct RootedTree{
+	struct Edge{ int e; T w; };
+	
+	virtual void init(const vector<int>& par, const vector<T>& pw){
+		n=par.size(), r=0;
+		hfor(i,0,n)
+			p.pb({par[i], pw[i]});
+		ch=decltype(ch)(n);
+		d=vector<int>(n);
+		anc=decltype(anc)(n);
+		for(int i=0;i<10 && p[r].e!=-1;i++)
+			r=p[r].e;
+		hfor(i,0,n)
+			if(i!=r)
+				ch[p[i].e].pb({i, p[i].w});
+		dfs_init(r);
 	}
+	
+	int lca(int a, int b){
+		if(d[a]>d[b])
+			swap(a,b);
+		int diff=d[b]-d[a];
+		while(diff){
+			b=getanc(b, __builtin_ctz(diff));
+			diff -= diff&-diff;
+		}
+		if(a==b)
+			return a;
+		hfori(i,0,32)
+			if(getanc(a,i)!=getanc(b,i))
+				a=getanc(a,i), b=getanc(b,i);
+		return getanc(a,0);
+	}
+	
+	//vector<int> pre_tour(){}
+	//vector<int> in_tour(){}
+	//vector<int> post_tour(){}
+	//vector<int> euler_tour(){}
 protected:
-	using P::n;
-	using P::g;
-	using typename Graph<T>::Edge;
+	int n, r;
+	vector<Edge> p;
+	vector<vector<Edge>> ch;
+	//anc[i][j] = (2^j)th ancestor of i
+	vector<int> d;
+	vector<vector<int>> anc;
+	int getanc(int i, int j){
+		if(j<0)
+			return i;
+		if((int)anc[i].size()<=j)
+			return -1;
+		return anc[i][j];
+	}
 
-	int r;
-	vector<Edge> parent;
-	decltype(g)& children;
-
-	//O(N log N)
-	void dfs_rootize(int cur, int p){
-		for(const auto &i:children[cur])
-			if(i.e==p)
-				parent[cur]=i;
-			else
-				dfs_rootize(i.e, cur);
+	vector<int> pbuf;
+	void dfs_init(int cur){
+		d[cur] = p[cur].e>=0 ? d[p[cur].e]+1 : 0;
+		for(int i=1;i<=(int)pbuf.size();i*=2)
+			anc[cur].push_back(*(pbuf.end()-i));
+		for(const auto &i:ch[cur]){
+			pbuf.push_back(cur);
+			dfs_init(i.e);
+			pbuf.pop_back();
+		}
 	}
 };

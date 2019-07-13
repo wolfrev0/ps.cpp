@@ -1,21 +1,26 @@
 #pragma once
-#include "Graph.h"
+#include "RootedTree.h"
 
 template<typename T>
-struct Tree: public Graph<T>{
-	Tree(int n=0):Graph<T>(n){}
-	Tree(const Tree& r):Graph<T>(r){}
-	using Graph<T>::n;
-	using Graph<T>::g;
+struct Tree{
+	struct Edge{ int e; T w; };
+	Tree(int n=0):n(n), g(n){}
 
-	void add_edge(int s, int e, T w){
-		Graph<T>::add_edge(s, e, w, false);
-	}
-
-	T diameter()const {
-		return dfs_diameter(0, -1).first;
+	void add_edge(int s, int e, T w){ g[s].pb({e,w}); g[e].pb({s,w}); }
+	T diameter()const {	return dfs_diameter(0, -1).fi; }
+	
+	RootedTree<T> rootize(int r){
+		RootedTree<T> ret;
+		vector<int> pv(n);
+		vector<T> pwv(n);
+		parvec(r, -1, 0, pv, pwv);
+		ret.init(pv, pwv);
+		return ret;
 	}
 private:
+	int n;
+	vector<vector<Edge>> g;
+	
 	pair<T, T> dfs_diameter(int v, int p)const{
 		T diam = 0;
 		vector<int> lens;
@@ -23,8 +28,8 @@ private:
 			if(i.e==p)
 				continue;
 			auto res=dfs_diameter(i.e, v);
-			diam=max(diam, res.first);
-			lens.push_back(res.second + i.w);
+			diam=max(diam, res.fi);
+			lens.pb(res.se + i.w);
 		}
 		int len=0;
 		if(lens.size()==1){
@@ -38,4 +43,17 @@ private:
 		}
 		return {diam,len};
 	}
+	
+	void parvec(int c, int p, T pw, vector<int>& pv, vector<T>& pwv){
+		pv[c]=p;
+		pwv[c]=pw;
+		for(auto i:g[c])
+			if(i.e!=p)
+				parvec(i.e, c, i.w, pv, pwv);
+	}
+};
+
+struct SimpleTree: public Tree<int>{
+	SimpleTree(int n=0):Tree(n){}
+	void add_edge(int s, int e) { Tree<int>::add_edge(s, e, 1); }
 };
