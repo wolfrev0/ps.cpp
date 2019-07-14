@@ -30,7 +30,7 @@ auto mri(auto it){ return make_reverse_iterator(it); }//*mri(it) == *prev(it)
 auto rerase(auto& c, auto ri){ return next(mri(c.erase(prev(ri.base())))); }
 auto accumulate(auto a, auto b, int c=0){ return std::accumulate(a,b,i64(c)); }
 auto sum(auto a, auto b){return accumulate(a,b);}
-int sz(auto x){ return (int)x.size(); }
+int sz(const auto& x){ return (int)x.size(); }
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
 #define random rd
