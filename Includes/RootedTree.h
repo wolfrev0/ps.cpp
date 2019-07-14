@@ -5,14 +5,11 @@ template<typename T>
 struct RootedTree{
 	struct Edge{ int e; T w; };
 	
-	virtual void init(const vector<int>& par, const vector<T>& pw){
-		n=par.size(), r=0;
+	RootedTree(const vector<int>& par, const vector<T>& pw):n(par.size()), ch(n), d(n), anc(n){
 		hfor(i,0,n)
 			p.pb({par[i], pw[i]});
-		ch=decltype(ch)(n);
-		d=vector<int>(n);
-		anc=decltype(anc)(n);
-		for(int i=0;i<10 && p[r].e!=-1;i++)
+		r=0;
+		while(p[r].e!=-1)
 			r=p[r].e;
 		hfor(i,0,n)
 			if(i!=r)

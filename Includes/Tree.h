@@ -10,12 +10,10 @@ struct Tree{
 	T diameter()const {	return dfs_diameter(0, -1).fi; }
 	
 	RootedTree<T> rootize(int r){
-		RootedTree<T> ret;
 		vector<int> pv(n);
 		vector<T> pwv(n);
 		parvec(r, -1, 0, pv, pwv);
-		ret.init(pv, pwv);
-		return ret;
+		return RootedTree<T>(pv, pwv);
 	}
 private:
 	int n;
