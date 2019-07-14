@@ -32,7 +32,7 @@ struct Graph {
 		d = vector<T>(n, inf<T>());
 		p = vector<Edge>(n, {-1,-1,-1,-1});
 		pq.push({ d[s]=0, s });
-		while (!pq.empty()){
+		while (size(pq)){
 			auto c = pq.top();
 			pq.pop();
 
