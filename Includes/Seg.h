@@ -4,9 +4,7 @@
 //Upd=Assignment
 template<typename T, int n>
 struct Seg{
-	T id;
-	//생성자 대신 선언에{}붙여도 되는데, gcc버그로 컴파일하다 죽는다.
-	Seg(const T& id=T()):tree(), id(id) {fill(tree, tree+4*n, id);}
+	Seg(const T& id=T()):id(id) {fill(tree, tree+4*n, id);}
 	T q(int p){return q(p,p+1);}
 	T q(int s, int e){return q(1,0,n,s,e);}
 	void upd(int p, T val){upd(1,0,n,p,val);}
@@ -34,7 +32,7 @@ protected:
 		upd(cur*2+1,m,ce,p,val);
 		tree[cur]=fq(tree[cur*2],tree[cur*2+1]);
 	}
-	T tree[4*n];
+	T tree[4*n], id;
 };
 
 template<typename T, int n> struct SegSum:public Seg<T,n>{T fq(const T& a, const T& b)override{return a+b;}};
