@@ -1,30 +1,27 @@
-#include "Core.h"
-#include "LCA.h"
-#define endl '\n'//do not use when solving interactive problem!!!
+#include "Tree.h"
+#include "FastIO.h"
+#define endl '\n'//not interactive?
+//#define int i64//overflow?
 
-int main() {
-	ios::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-	cout << fixed << setprecision(10);
-	srand((unsigned)time(0));
-
+signed main(){
 	int n;
 	cin>>n;
-	Tree<int> t(n);
-	forh(i, 0, n-1){
-		int a, b;
-		cin>>a>>b;
-		a--, b--;
-		t.add_edge(a,b,1);
-	}
-	LCA<int> rt(t, 0);
-	int m;
-	cin>>m;
-	forh(i, 0, m){
-		int	a, b;
+	SimpleTree t(n);
+	hfor(i,0,n-1){
+		int a,b;
 		cin>>a>>b;
 		a--,b--;
-		cout<<rt.lca(a, b)+1<<endl;
+		t.add_edge(a,b);
 	}
-
+	auto rt=t.rootize(0);
+	int m;
+	cin>>m;
+	hfor(i,0,m){
+		int a,b;
+		cin>>a>>b;
+		a--,b--;
+		cout<<rt.lca(a,b)+1<<endl;
+	}
+	
 	return 0;
 }
