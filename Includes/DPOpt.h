@@ -28,18 +28,18 @@ struct CHTStack{
 	
 	void push(i64 tan, i64 yic){
 		Line f{tan, yic, 0};
-		while(st.size()){
+		while(sz(st)){
 			f.lx=st.back().intersectX(f);
 			if(tan==st.back().tan || f.lx<st.back().lx)
-				st.pop_back();
+				st.eb();
 			else
 				break;
 		}
-		st.push_back(f);
+		st.pb(f);
 	}
 
 	i64 get(i64 x){
-		int s=0, e=st.size();
+		int s=0, e=sz(st);
 		while(e-s>1){
 			int m=(s+e)/2;
 			(x<st[m].lx?e:s)=m;
@@ -82,15 +82,15 @@ private:
 //사각부등식? 뭐더라 W[a][b]+W[c][d]<=W[a][d]+W[b][c]인가?
 //Note:
 vector<vector<i64>> knuth_opt(const vector<i64>& init, const function<i64(int,int)>& c){
-	int n=init.size();
+	int n=sz(init);
 	vector<vector<i64>> dp(n+1,vector<i64>(n+1));
 	vector<vector<int>> a(n,vector<int>(n+1));
 	hfor(i, 0, n)
 		a[i][i+1]=i;
-	forc(d, 2, n){
-		forc(i, 0, n-d){
+	cfor(d, 2, n){
+		cfor(i, 0, n-d){
 			dp[i][i+d]=inf<i64>();
-			forc(k, a[i][i+d-1], a[i+1][i+d]){
+			cfor(k, a[i][i+d-1], a[i+1][i+d]){
 				if(dp[i][k+1] + dp[k+1][i+d]+c(i,i+d) < dp[i][i+d]){
 					dp[i][i+d]=dp[i][k+1] + dp[k+1][i+d]+c(i,i+d);
 					a[i][i+d]=k;

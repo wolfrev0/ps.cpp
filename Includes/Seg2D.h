@@ -5,7 +5,7 @@
 #include "Core.h"
 
 const int L = (1<<10);
-​
+
 struct seg1d {
 	int v[2*L];
 	void upd (int P, int V) {
@@ -26,7 +26,7 @@ struct seg1d {
 		return R;
 	}
 };
-​
+
 struct seg2d {
 	seg1d v[2*L];
 	void upd (int X, int Y, int V) {

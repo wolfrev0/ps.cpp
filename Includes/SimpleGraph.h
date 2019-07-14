@@ -51,7 +51,7 @@ private:
 			ret = min(ret, res);
 		}
 		if(isAP && (p!=-1 || subcnt>1))
-				ans.push_back(v);
+				ans.pb(v);
 		return ret;
 	}
 	int dfs_bridge(int v, int p, int& o, vector<int>& ord, vector<pair<int, int>>& ans){
@@ -70,7 +70,7 @@ private:
 			ret = min(ret, res);
 		}
 		if(!conn && p!=-1)
-				ans.push_back({min(v, p), max(v, p)});
+				ans.pb({min(v, p), max(v, p)});
 		return ret;
 	}
 };

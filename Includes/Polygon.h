@@ -9,9 +9,9 @@ struct Polygon
 	Polygon() {}
 	explicit Polygon(int n) :vtx(n) {}
 	explicit Polygon(const vector<Vec2<T>>& v) :vtx(v) {}
-	int size()const { return vtx.size(); }
-	void pushb(const Vec2<T>& v) { vtx.push_back(v); }
-	void popb() { vtx.pop_back(); }
+	int size()const { return sz(vtx); }
+	void pb(const Vec2<T>& v) { vtx.pb(v); }
+	void eb() { vtx.eb(); }
 	Vec2<T>& operator[](int idx) { return vtx[idx]; }
 
 	f64 area() {
@@ -23,8 +23,8 @@ struct Polygon
 
 	vector<Segment<T>> to_segments()const {
 		vector<Segment<T>> ret;
-		hfor(i, 0, vtx.size())
-			ret.emplace_back(vtx[i], vtx[(i + 1) % vtx.size()]);
+		hfor(i, 0, sz(vtx))
+			ret.emplace_back(vtx[i], vtx[(i + 1) % sz(vtx)]);
 		return ret;
 	}
 
@@ -61,27 +61,27 @@ struct Convex :public Polygon<T>{
 	void normalize() {
 		if (vtx.empty())
 			return;
-		auto me = *min_element(vtx.begin(), vtx.end());
-		sort(vtx.begin(), vtx.end(), [&](auto &a, auto &b){return Vec2<T>::cmpccw(a,b,me);});
+		auto me = *min_element(all(vtx));
+		sort(all(vtx), [&](auto &a, auto &b){return Vec2<T>::cmpccw(a,b,me);});
 		vector<Vec2<T>> res;
-		hfor(i, 0, vtx.size()) {
-			while (res.size() >= 2) {
-				auto ltop = res[res.size() - 1] - res[res.size() - 2];
-				auto lcandi = vtx[i] - res[res.size() - 2];
+		hfor(i, 0, sz(vtx)) {
+			while (sz(res) >= 2) {
+				auto ltop = res[sz(res) - 1] - res[sz(res) - 2];
+				auto lcandi = vtx[i] - res[sz(res) - 2];
 				if (ltop.cross(lcandi) <= 0)
-					res.pop_back();
+					res.eb();
 				else
 					break;
 			}
-			res.push_back(vtx[i]);
+			res.pb(vtx[i]);
 		}
 		vtx = res;
 	}
 
 	virtual bool contains(const Vec2<T>& v)const override	{
 		T tmp = v.cross(vtx[0], vtx[1]);
-		hfor(i, 0, vtx.size())
-			if (tmp*v.cross(vtx[i], vtx[(i + 1) % vtx.size()]) <= 0)
+		hfor(i, 0, sz(vtx))
+			if (tmp*v.cross(vtx[i], vtx[(i + 1) % sz(vtx)]) <= 0)
 				return false;
 		return true;
 	}
@@ -90,10 +90,10 @@ struct Convex :public Polygon<T>{
 		vector<Vec2<T>> ret;
 		for (auto i : vtx)
 			if (r.contains(i))
-				ret.push_back(i);
+				ret.pb(i);
 		for (auto i : r.vtx)
 			if (contains(i))
-				ret.push_back(i);
+				ret.pb(i);
 		auto s1 = to_segments();
 		auto s2 = r.to_segments();
 		for (auto i : s1)
@@ -101,7 +101,7 @@ struct Convex :public Polygon<T>{
 				try {
 					Vec2<T> res;
 					if (i.intersect(j, res))
-						ret.push_back(res);
+						ret.pb(res);
 				}
 				catch (...) {}
 			}

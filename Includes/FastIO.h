@@ -39,7 +39,7 @@ struct FIO{
 		while(c==' '||c=='\n')
 			c=*p++;
 		while(c&&c!=' '&&c!='\n'){
-			s.push_back(c);
+			s.pb(c);
 			c=*p++;
 		}
 		return *this;

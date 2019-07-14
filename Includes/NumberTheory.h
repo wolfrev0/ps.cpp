@@ -70,10 +70,10 @@ vector<i64> factorization(i64 n){
 	for(i64 i=2; i*i<=n; i++)
 		while (!(cur%i)){
 			cur/=i;
-			ret.push_back(i);
+			ret.pb(i);
 		}
 	if (cur>1)
-		ret.push_back(cur);
+		ret.pb(cur);
 	return ret;
 }
 
@@ -81,13 +81,13 @@ vector<i64> divisors(i64 n){
 	vector<i64> ret, tmp;
 	for(i64 i=1; i*i<=n; i++){
 		if (n%i==0){
-			ret.push_back(i);
+			ret.pb(i);
 			if (i!=n/i)
-				tmp.push_back(n/i);
+				tmp.pb(n/i);
 		}
 	}
-	reverse(tmp.begin(), tmp.end());
-	ret.insert(ret.end(), tmp.begin(), tmp.end());
+	reverse(all(tmp));
+	ret.insert(ret.end(), all(tmp));
 	return ret;
 }
 
@@ -110,7 +110,7 @@ vector<vector<int>> sieve_divs(int ub){
 	vector<vector<int>> ret(ub);
 	for (i64 i=1; i<ub; i++) {
 		for (i64 j=i; j<ub; j+=i)
-			ret[j].push_back(i);
+			ret[j].pb(i);
 	}
 	return ret;
 }
@@ -178,6 +178,6 @@ vector<vector<T>> binom_dp(T n, T k){
 vector<int> to_digits(i64 n){
 	vector<int> ret;
 	while(n)
-		ret.push_back(n%10), n/=10;
+		ret.pb(n%10), n/=10;
 	return ret;
 }

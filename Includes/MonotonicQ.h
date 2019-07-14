@@ -9,9 +9,9 @@ struct MonotonicQ{
 	int size(){return e-s;}
 
 	void push(const T& val){
-		while(q.size() && ((val<q.back().w) ^ ismax))
-			q.pop_back();
-		q.push_back({val, e++});
+		while(sz(q) && ((val<q.back().w) ^ ismax))
+			q.eb();
+		q.pb({val, e++});
 	}
 
 	void pop(){

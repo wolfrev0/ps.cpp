@@ -30,13 +30,13 @@ private:
 			lens.pb(res.se + i.w);
 		}
 		int len=0;
-		if(lens.size()==1){
+		if(sz(len)==1){
 			diam=max(diam, len=lens.back());
 		}
-		else if(lens.size()>1){
-			auto it = max_element(lens.begin(), lens.end());
+		else if(sz(len)>1){
+			auto it = max_element(all(lens));
 			len=*it; lens.erase(it);
-			it=max_element(lens.begin(), lens.end());
+			it=max_element(all(lens));
 			diam=max(diam, len+*it);
 		}
 		return {diam,len};

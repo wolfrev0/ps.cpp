@@ -21,9 +21,9 @@ struct Graph {
 	Graph(const Graph& r) :n(r.n), g(r.g) {}
 
 	void add_edge(int s, int e, T w, bool dir=true){
-		g[s].push_back(Edge(s, e, g[s].size(), w));
+		g[s].pb({s, e, sz(g[s]), w});
 		if(!dir)
-			g[e].push_back(Edge(e, s, g[e].size(), w));
+			g[e].pb({e, s, sz(g[e]), w});
 	}
 
 	struct DNV{T dist; int v; bool operator<(const DNV& r)const{return dist>r.dist;}};
@@ -75,8 +75,8 @@ struct Graph {
 		ub[s] = 0;
 		inq[s] = true;
 		q.push(s);
-		for(int i=0; i<n&&q.size(); i++) {
-			int qsz = q.size();
+		for(int i=0; i<n&&sz(q); i++) {
+			int qsz = sz(q);
 			while (qsz--) {
 				int j = q.front();
 				inq[j] = false;
@@ -104,7 +104,7 @@ struct Graph {
 		for(auto i:g[0])
 			q.push(i);
 		vis[0]=true;
-		while (q.size()) {
+		while (sz(q)) {
 			auto c = q.top();
 			q.pop();
 
@@ -112,7 +112,7 @@ struct Graph {
 				continue;
 			vis[c.e] = true;
 
-			ret.push_back(c);
+			ret.pb(c);
 			for (auto &i : g[c.e]) {
 				if (!vis[i.e]) {
 					q.push(i);
@@ -126,15 +126,15 @@ struct Graph {
 		vector<Edge> e;
 		for (auto &i : g)
 			for (auto &j : i)
-				e.push_back(j);
-		sort(e.begin(), e.end());
+				e.pb(j);
+		sort(all(e));
 
 		DisjointSet djs(n);
 		vector<Edge> ret;
 		for (auto &i : e) {
 			if (djs.find(i.s) != djs.find(i.e)) {
 				djs.uni(i.s, i.e);
-				ret.push_back(i);
+				ret.pb(i);
 			}
 		}
 		return ret;

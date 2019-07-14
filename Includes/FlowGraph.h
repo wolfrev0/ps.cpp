@@ -19,8 +19,8 @@ struct FlowGraph : public Graph<FlowWeight> {
 	FlowGraph(int n) :Graph(n + 2), src(n), snk(n + 1) {}
 
 	void add_edge(int s, int e, i64 cap, i64 cost) {
-		Graph::add_edge(s, e, FlowWeight(g[e].size(), cap, cost));
-		Graph::add_edge(e, s, FlowWeight(g[s].size() - 1, 0, -cost));
+		Graph::add_edge(s, e, FlowWeight(sz(g[e]), cap, cost));
+		Graph::add_edge(e, s, FlowWeight(sz(g[s])-1, 0, -cost));
 	}
 
 	i64 mf(i64 flow = inf<i64>()) {
@@ -41,10 +41,10 @@ struct FlowGraph : public Graph<FlowWeight> {
 	pair<i64, i64> mcmf(i64 flow = inf<i64>()) {
 		pair<i64, i64> ret;
 		while (true) {
-			auto res = process_mcmf(flow-ret.second);
-			ret.first += res.first;
-			ret.second += res.second;
-			if (!res.first && !res.second)
+			auto res = process_mcmf(flow-ret.se);
+			ret.fi += res.fi;
+			ret.se += res.se;
+			if (!res.fi && !res.se)
 				break;
 		}
 		return ret;

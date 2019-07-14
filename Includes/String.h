@@ -8,7 +8,7 @@ vector<string> split(string s, char p){
 		ret.push_back(s.substr(0, c));
 		s=s.substr(c+1);
 	}
-	if(s.size())
+	if(sz(s))
 		ret.push_back(s);
 	return ret;
 }
@@ -25,9 +25,9 @@ string itos(int i){
 
 //a.k.a. partial match table, pi
 vector<int> failure_function(const string &p) {
-	vector<int> ret(p.size());
+	vector<int> ret(sz(p));
 	int si = 1, pi = 0;
-	int psz=p.size();
+	int psz=sz(p);
 	while (si + pi < psz) {
 		if (pi < psz && p[si + pi] == p[pi]) {
 			pi++;
@@ -46,8 +46,8 @@ vector<int> failure_function(const string &p) {
 }
 
 vector<int> kmp(const string &s, const string &p) {
-	int ssz=s.size();
-	int psz=p.size();
+	int ssz=sz(s);
+	int psz=sz(p);
 	if (ssz < psz)
 		return {};
 	vector<int> ret;
@@ -73,8 +73,8 @@ vector<int> kmp(const string &s, const string &p) {
 
 vector<int> failure_function2(const string &p) {
 	int pi = 0;
-	vector<int> ret(p.size());
-	hfor(i, 1, p.size()) {
+	vector<int> ret(sz(p));
+	hfor(i, 1, sz(p)) {
 		while (pi > 0 && p[i] != p[pi])
 			pi = ret[pi - 1];
 		if (p[i] == p[pi])
@@ -85,12 +85,12 @@ vector<int> failure_function2(const string &p) {
 
 vector<int> kmp2(const string &s, const string &p) {
 	const auto &ff = failure_function2(p);
-	vector<int> ans(s.size());
+	vector<int> ans(sz(s));
 	int pi = 0;
-	hfor(i, 0, s.size()) {
+	hfor(i, 0, sz(s)) {
 		while (pi > 0 && s[i] != p[pi])
 			pi = ff[pi - 1];
-		if (s[i] == p[pi] && (ans[i] = ++pi) == (int)p.size())
+		if (s[i] == p[pi] && (ans[i] = ++pi) == sz(p))
 			pi = ff[pi - 1];
 	}
 	return ans;
@@ -104,9 +104,9 @@ bool cmp(int i, int j, const vector<int> &g, int t){
 
 //sa[i]: 사전순으로 i번째인 접미사의 시작인덱스
 vector<int> suffix_array(const string &s){
-	int n = s.size();
+	int n = sz(s);
 	vector<int> sa(n), ord(n+1), nord(n+1);
-	hfor(i, 0, s.size())
+	hfor(i, 0, sz(s))
 		sa[i]=i, ord[i]=s[i];
 
 	ord[n]=-1;
@@ -124,7 +124,7 @@ vector<int> suffix_array(const string &s){
 //lcp[i]: 사전순 i번째 접미사와 i−1번째 접미사의 가장 긴 공통 접두사의 길이
 //plzrun's code
 vector<int> get_lcp(const string &s, const vector<int> &sa){
-	int n = s.size();
+	int n = sz(s);
 	vector<int> lcp(n), psa(n+1), plcp(n+1);
 	psa[sa[0]]=-1;
 	hfor(i,1,n)
@@ -147,7 +147,7 @@ vector<int> get_lcp(const string &s, const vector<int> &sa){
 
 //jh05013's code, O(NlogN)
 vector<int> suffix_array2(const string &s){
-	int n = s.size(), c = 0;
+	int n = sz(s), c = 0;
 	vector<int> temp(n), pos2bckt(n), bckt(n), bpos(n), out(n);
 	for(int i=0; i<n; i++) out[i] = i;
 	sort(out.begin(), out.end(), [&](int a, int b){return s[a] < s[b];});
@@ -177,9 +177,9 @@ vector<int> suffix_array2(const string &s){
 //comet's code
 vector<int> get_lcp2(const string &s, const vector<int> &sa){
 	int h=0;
-	int n=s.size();
+	int n=sz(s);
 	vector<int> rank(n);
-	hfor(i, 0, sa.size())
+	hfor(i, 0, sz(sa))
 		rank[sa[i]]=i;
 	vector<int> lcp(n);
 	hfor(i,0,n){

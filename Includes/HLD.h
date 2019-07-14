@@ -25,9 +25,9 @@ struct HLD:public LCA<T>, public Seg<T, U>{
 		while(chain[w]!=chain[v])
 			ranges.emplace_back(segidx[head[chain[v]]], segidx[v]+1), v = parent[head[chain[v]]].e;
 		ranges.emplace_back(segidx[w]+1, segidx[v]+1);
-		reverse(ranges.begin(), ranges.end());
+		reverse(all(ranges));
 		for(const auto&i:ranges)
-			ret = S::q(ret, S::query(i.first, i.second));
+			ret = S::q(ret, S::query(i.fi, i.se));
 
 		return ret;
 	}
@@ -49,7 +49,7 @@ protected:
 		sz[cur]=1;
 		for(const auto& i:children[cur])
 			sz[cur]+=dfs_size(i.e);
-		sort(children[cur].begin(), children[cur].end(), [&](auto a, auto b){return sz[a.e]>sz[b.e];});
+		sort(all(children[cur]), [&](auto a, auto b){return sz[a.e]>sz[b.e];});
 		return sz[cur];
 	}
 
@@ -57,7 +57,7 @@ protected:
 		S::update(segidx[cur]=segi++, parent[cur].w);
 		chain[cur]=cur_chain;
 		auto c = children[cur];
-		hfor(i, 0, c.size()){
+		hfor(i, 0, sz(c)){
 			if(i)
 				head[++cur_chain]=c[i].e;
 			dfs_hld(c[i].e, segi, cur_chain);

@@ -6,7 +6,7 @@ template<typename T>
 struct CumulQ{
 	T acc;
 	CumulQ(T init=T()):acc(init){}
-	int size(){return q.size();}
+	int size(){return sz(q);}
 	void push(const T& x){f(acc, x);q.push(x);}
 	void pop(){finv(acc, q.front());q.pop();}
 private:
@@ -33,8 +33,8 @@ private:
 	T ppow(int x){
 		if(!x)
 			return 1;
-		while((int)dp.size()<=x)
-			dp.resize(dp.size()*2);
+		while(sz(dp)<=x)
+			dp.resize(sz(dp)*2);
 		auto& ret=dp[x];
 		if(ret)
 			return ret;

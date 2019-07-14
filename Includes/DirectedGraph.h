@@ -19,15 +19,14 @@ struct DirectedGraph: public Graph<int>{
 			if (!in[i])
 				q.push(i);
 		vector<int> ret;
-		while (q.size()) {
+		while (sz(q)) {
 			auto cur = q.front();
-			ret.push_back(cur);
+			ret.pb(cur);
 			q.pop();
 			for (auto &i : g[cur])
 				if (--in[i.e] == 0)
 					q.push(i.e);
 		}
-		//reverse(ret.begin(), ret.end());
 		return ret;
 	}
 
@@ -42,15 +41,14 @@ struct DirectedGraph: public Graph<int>{
 			if (!in[i])
 				q.push(i);
 		vector<int> ret;
-		while (q.size()) {
+		while (sz(q)) {
 			auto cur = q.top();
-			ret.push_back(cur);
+			ret.pb(cur);
 			q.pop();
 			for (auto &i : g[cur])
 				if (--in[i.e] == 0)
 					q.push(i.e);
 		}
-		//reverse(ret.begin(), ret.end());
 		return ret;
 	}
 
@@ -65,7 +63,7 @@ struct DirectedGraph: public Graph<int>{
 
 		auto group=vector<vector<int>>(scc_cnt);
 		hfor(i, 0, n)
-			group[scc_id[i]].push_back(i);
+			group[scc_id[i]].pb(i);
 		DirectedGraph sccg(scc_cnt);
 		hfor(i, 0, n){
 			for(auto& j:g[i])
@@ -107,7 +105,7 @@ private:
 				cur = stk.top();
 				stk.pop();
 				scc_id[cur]=scc_cnt;
-			}while(stk.size() && cur!=v);
+			}while(sz(stk) && cur!=v);
 			scc_cnt++;
 		}
 

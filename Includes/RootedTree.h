@@ -5,7 +5,7 @@ template<typename T>
 struct RootedTree{
 	struct Edge{ int e; T w; };
 	
-	RootedTree(const vector<int>& par, const vector<T>& pw):n(par.size()), ch(n), d(n), anc(n){
+	RootedTree(const vector<int>& par, const vector<T>& pw):n(sz(par)), ch(n), d(n), anc(n){
 		hfor(i,0,n)
 			p.pb({par[i], pw[i]});
 		r=0;
@@ -47,7 +47,7 @@ protected:
 	int getanc(int i, int j){
 		if(j<0)
 			return i;
-		if((int)anc[i].size()<=j)
+		if(sz(anc[i])<=j)
 			return -1;
 		return anc[i][j];
 	}
@@ -55,12 +55,12 @@ protected:
 	vector<int> pbuf;
 	void dfs_init(int cur){
 		d[cur] = p[cur].e>=0 ? d[p[cur].e]+1 : 0;
-		for(int i=1;i<=(int)pbuf.size();i*=2)
-			anc[cur].push_back(*(pbuf.end()-i));
+		for(int i=1;i<=sz(pbuf);i*=2)
+			anc[cur].pb(*(pbuf.end()-i));
 		for(const auto &i:ch[cur]){
-			pbuf.push_back(cur);
+			pbuf.pb(cur);
 			dfs_init(i.e);
-			pbuf.pop_back();
+			pbuf.eb();
 		}
 	}
 };

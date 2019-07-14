@@ -1,12 +1,11 @@
 #pragma once
 #include "Core.h"
-#include "Xset.h"
 
 struct MergeSortTree{
 	MergeSortTree(int n)
 	:n(n), tree(4*n){}
 
-	MergeSortTree(const vector<int>& v):MergeSortTree(v.size()){build(1, 0, n, v);}
+	MergeSortTree(const vector<int>& v):MergeSortTree(sz(v)){build(1, 0, n, v);}
 
 	//void update(int p, int val) {update2(1, 0, n, p, val);}
 	int query(int s, int e, int k) {return query2(1, 0, n, s, e, k);}
@@ -16,13 +15,13 @@ private:
 
 	void build(int cur, int cs, int ce, const vector<int>& v) {
 		if(ce-cs==1){
-			tree[cur].push_back(v[cs]);
+			tree[cur].pb(v[cs]);
 			return;
 		}
 		build(cur * 2, cs, (cs + ce) / 2, v);
 		build(cur * 2 + 1, (cs + ce) / 2, ce, v);
 		tree[cur].resize(ce-cs);
-		merge(tree[cur*2].begin(), tree[cur*2].end(), tree[cur*2+1].begin(), tree[cur*2+1].end(), tree[cur].begin());
+		merge(all(tree[cur*2]), all(tree[cur*2+1]), tree[cur].begin());
 	}
 
 	// void update2(int cur, int cs, int ce, int p, int val) {
@@ -45,7 +44,7 @@ private:
 		if (s >= ce || e <= cs)
 			return 0;
 		if (s <= cs && ce <= e){
-			return ce-cs - distance(tree[cur].begin(), upper_bound(tree[cur].begin(), tree[cur].end(), k));
+			return ce-cs - distance(tree[cur].begin(), upper_bound(all(tree[cur]), k));
 		}
 		return query2(cur * 2, cs, (cs + ce) / 2, s, e, k) + query2(cur * 2 + 1, (cs + ce) / 2, ce, s, e, k);
 	}

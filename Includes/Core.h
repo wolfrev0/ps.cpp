@@ -18,7 +18,9 @@ using f64 = double;using i64=long long;using u64=unsigned long long;
 #define rep(x) hfor(repi,0,x)
 #define all(x) x.begin(),x.end()
 #define pb push_back
-#define eb emplace_back
+#define eb pop_back
+#define pf push_front
+#define ef pop_front
 #define fi first
 #define se second
 #define gcd __gcd
@@ -28,7 +30,7 @@ auto mri(auto it){ return make_reverse_iterator(it); }//*mri(it) == *prev(it)
 auto rerase(auto& c, auto ri){ return next(mri(c.erase(prev(ri.base())))); }
 auto accumulate(auto a, auto b, int c=0){ return std::accumulate(a,b,i64(c)); }
 auto sum(auto a, auto b){return accumulate(a,b);}
-int size(auto x){ return (int)x.size(); }
+int sz(auto x){ return (int)x.size(); }
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
 #define random rd
