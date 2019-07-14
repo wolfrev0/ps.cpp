@@ -1,10 +1,9 @@
 #pragma once
 #include "Core.h"
 
-template<typename T, int n>
+template<typename T>
 struct Fenwick{
-	Fenwick():tr(){}
-	T tr[n+2];
+	Fenwick(int n=0):n(n), tr(n+1){}
 
 	T q(int i){return q(i, i+1);}
 	T q(int s, int e){
@@ -27,8 +26,11 @@ struct Fenwick{
 		upd(e,-d);
 	}
 	T RUPQq(int i){return sum(i+1);}
-
+	
 private:
+	int n;
+	vector<T> tr;
+	
 	T sum(int i){
 		T ans=T();
 		while(i>0){

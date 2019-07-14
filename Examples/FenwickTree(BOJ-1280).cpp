@@ -11,8 +11,8 @@ int main() {
 
 	int n;
 	cin >> n;
-	Fenwick<Mod<1000000007>,200001> st, st2;
-	Mod<100000007> ans = 1;
+	Fenwick<Mod<mod>> st(200001), st2(200001);
+	Mod<mod> ans = 1;
 	hfor(i, 0, n)
 	{
 		int x;
