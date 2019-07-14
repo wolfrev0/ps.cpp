@@ -8,11 +8,11 @@
 
 //Static Rooted Tree
 template<typename T>
-struct RootedTree:private SegBU<int, 200000>{
+struct RootedTree:private SegBU<int, inf<int>()>{
 	struct Edge{ int e; T w; };
 	
 	RootedTree(const vector<int>& par, const vector<T>& pw)
-		:SegBU<int, 200000>(inf<int>()), n(sz(par)), ch(n), d(n), rpos(n){
+		:SegBU<int, inf<int>()>(sz(par)*2), n(sz(par)), ch(n), d(n), rpos(n){
 		hfor(i,0,n)
 			p.pb({par[i], pw[i]});
 		r=0;
