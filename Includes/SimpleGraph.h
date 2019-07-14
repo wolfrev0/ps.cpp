@@ -4,9 +4,7 @@
 struct SimpleGraph: public DirectedGraph{
 	SimpleGraph(int n=0):DirectedGraph(n){}
 
-	void add_edge(int s, int e) {
-		DirectedGraph::add_edge(s, e, false);
-	}
+	void add_edge(int s, int e){ DirectedGraph::add_edge(s, e, false); }
 
 	vector<int> articul_points(){
 		vector<int> ord(n, -1), ret;

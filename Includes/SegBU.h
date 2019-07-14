@@ -3,7 +3,6 @@
 
 template<typename T, int n>
 struct SegBU{
-	//생성자 대신 선언에{}붙여도 되는데, gcc버그로 컴파일하다 죽는다.
 	SegBU(const T& id=T()):id(id) {fill(tree, tree+2*n, id);}
 	void upd(int p, T val){
 		for (tree[p+=n]=val; p>1; p>>=1)
