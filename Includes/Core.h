@@ -6,6 +6,7 @@
 
 using namespace std;
 using f64 = double;using i64=long long;using u64=unsigned long long;
+template<typename T> using arr=vector<T>;
 
 #define hfor(var, s, e) for(int var=s; s<=var && var<e; ++var)//half-opened range
 #define hfori(var, s, e) for(int var=e-1; s<=var && var<e; --var)//inversion
@@ -28,8 +29,8 @@ using f64 = double;using i64=long long;using u64=unsigned long long;
 template<typename T> constexpr T inf() { return numeric_limits<T>::max() / 2; }
 auto mri(auto it){ return make_reverse_iterator(it); }//*mri(it) == *prev(it)
 auto rerase(auto& c, auto ri){ return next(mri(c.erase(prev(ri.base())))); }
-auto accumulate(auto a, auto b, int c=0){ return std::accumulate(a,b,i64(c)); }
-auto sum(auto a, auto b){return accumulate(a,b);}
+auto fold(auto a, auto b, int c=0, auto f=[](auto a, auto b){return a+b;}){ return accumulate(a,b,i64(c),f); }
+auto mapp(auto a, auto f){for(auto& x:a)x=f(x); return a;}
 int sz(const auto& x){ return (int)x.size(); }
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
