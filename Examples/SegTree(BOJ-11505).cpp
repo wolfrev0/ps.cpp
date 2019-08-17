@@ -3,15 +3,16 @@
 #define endl '\n'//not interactive?
 //#define int i64//overflow?
 
-struct A:public Seg<int, 1>{
-	A(int n):Seg<int,1>(n){}
-	int fq(const int& a, const int& b)override{return i64(a)*b%mod;}
+using T=int;
+struct F{
+	static T id(){return 1;}
+	static T q(const T& a, const T& b){return i64(a)*b%mod;}
 };
 
 signed main(){
 	int n,m,k;
 	cin>>n>>m>>k;
-	A st(n);
+	Seg<T, F> st(n);
 	hfor(i,0,n){
 		int x;cin>>x;
 		st.upd(i,x);

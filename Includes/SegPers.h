@@ -1,11 +1,11 @@
 #pragma once
 #include "Core.h"
 
-template<typename T, T id=T()>
+template<typename T, typename F>
 struct SegPers{
 	struct Node{
 		Node *l=0, *r=0;
-		T val=id;
+		T val=F::id();
 	};
 
 	SegPers(int n):n(n){}
@@ -19,8 +19,6 @@ struct SegPers{
 	}
 private:
 	int n;
-	
-	virtual T fq(const T& a, const T& b)=0;
 
 	void build(Node* cur, int s, int e, const vector<T>& a){
 		if(e-s==1){
@@ -33,7 +31,7 @@ private:
 		cur->r=new Node();
 		build(cur->l,s,m,a);
 		build(cur->r,m,e,a);
-		cur->val=fq(cur->l->val, cur->r->val);
+		cur->val=F::q(cur->l->val, cur->r->val);
 	}
 
 	void upd(Node* cur, Node* bs, int s, int e, int idx, T v){
@@ -49,28 +47,15 @@ private:
 		cur->r= idx<m?bs->r:new Node();
 		upd(cur->l, bs->l, s, m, idx, v);
 		upd(cur->r, bs->r, m, e, idx, v);
-		cur->val=fq(cur->l->val, cur->r->val);
+		cur->val=F::q(cur->l->val, cur->r->val);
 	}
 
 	T q(Node* cur, int cs, int ce, int s, int e){
 		if(ce<=s or e<=cs or e<=s)
-			return id;
+			return F::id();
 		if(s<=cs and ce<=e)
 			return cur->val;
 		int m=(cs+ce)/2;
-		return fq(q(cur->l, cs, m, s, e), q(cur->r, m, ce, s, e));
+		return F::q(q(cur->l, cs, m, s, e), q(cur->r, m, ce, s, e));
 	}
-};
-
-template<typename T> struct SegPersSum:public SegPers<T>{
-	SegPersSum(int n=0):SegPers<T>(n){}
-	T fq(const T& a, const T& b)override{return a+b;}
-};
-template<typename T> struct SegPersMax:public SegPers<T,-inf<T>()>{
-	SegPersMax(int n=0):SegPers<T>(n){}
-	T fq(const T& a, const T& b)override{return max(a,b);}
-};
-template<typename T> struct SegPersMin:public SegPers<T,-inf<T>()>{
-	SegPersMin(int n=0):SegPers<T>(n){}
-	T fq(const T& a, const T& b)override{return min(a,b);}
 };

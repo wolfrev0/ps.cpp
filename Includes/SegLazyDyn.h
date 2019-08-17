@@ -1,11 +1,11 @@
 #pragma once
 #include "Core.h"
 
-template<typename T, typename U, T id=T()>
+template<typename T, typename F, typename U=T>
 struct SegLazyDyn{
 	struct Node{
 		Node *l=0, *r=0;
-		T val=id;
+		T val=F::id();
 		U lz=inf<U>();//lz_id=inf
 	};
 	SegLazyDyn(int n):n(n){}
@@ -16,19 +16,15 @@ struct SegLazyDyn{
 protected:
 	int n;
 	Node* r=new Node();
-	
-	virtual T fq(const T& a, const T& b)=0;
-	virtual T fupd(const T& a, const U& b, signed c)=0;
-	virtual U fpropa(const U& a, const U& b)=0;
 
 	T q(Node* cur, int cs, int ce, int s, int e){
 		propa(cur, cs, ce);
 		if (s>=ce||e<=cs)
-			return id;
+			return F::id();
 		if (s<=cs&&ce<=e)
 			return cur->val;
 		int m=(cs+ce)/2;
-		return fq(q(cur->l,cs,m,s,e),q(cur->r,m,ce,s,e));
+		return F::q(q(cur->l,cs,m,s,e),q(cur->r,m,ce,s,e));
 	}
 
 	void upd(Node* cur, int cs, int ce, int s, int e, U val){
@@ -43,14 +39,14 @@ protected:
 		int m=(cs+ce)/2;
 		upd(cur->l,cs,m,s,e,val);
 		upd(cur->r,m,ce,s,e,val);
-		cur->val=fq(cur->l->val,cur->r->val);
+		cur->val=F::q(cur->l->val,cur->r->val);
 	}
 	
 	void propa(Node* cur, int cs, int ce){
 		if(!cur->l)	cur->l=new Node();
 		if(!cur->r) cur->r=new Node();
 		if(cur->lz!=inf<U>()){
-			cur->val=fupd(cur->val,cur->lz,ce-cs);
+			cur->val=F::upd(cur->val,cur->lz,ce-cs);
 			if(ce-cs>1){
 				addlz(cur->l, cur->lz);
 				addlz(cur->r, cur->lz);
@@ -59,27 +55,5 @@ protected:
 		}
 	}
 	
-	void addlz(Node* v, U val){v->lz=v->lz==inf<U>()?val:fpropa(v->lz,val);}
-};
-
-template<typename T, typename U>
-struct SegLazyDynSumAdd:public SegLazyDyn<T,U>{
-	SegLazyDynSumAdd(int n=0):SegLazyDyn<T,U>(n){}
-	T fq(const T& a, const T& b)override{return a+b;}
-	T fupd(const T& a, const U& b, signed c)override{return a+b*c;}
-	U fpropa(const U& a, const U& b)override{return a+b;}
-};
-template<typename T, typename U>
-struct SegLazyDynMaxAdd:public SegLazyDyn<T,U,-inf<T>()>{
-	SegLazyDynMaxAdd(int n=0):SegLazyDyn<T,U,-inf<T>()>(n){}
-	T fq(const T& a, const T& b)override{return max(a,b);}
-	T fupd(const T& a, const U& b, signed c)override{return a+b;}
-	U fpropa(const U& a, const U& b)override{return a+b;}
-};
-template<typename T, typename U>
-struct SegLazyDynMinAss:public SegLazyDyn<T,U,inf<T>()>{
-	SegLazyDynMinAss(int n=0):SegLazyDyn<T,U,inf<T>()>(n){}
-	T fq(const T& a, const T& b)override{return min(a,b);}
-	T fupd(const T& a, const U& b, signed c)override{return b;}
-	U fpropa(const U& a, const U& b)override{return b;}
+	void addlz(Node* v, U val){v->lz=v->lz==inf<U>()?val:F::propa(v->lz,val);}
 };

@@ -1,5 +1,5 @@
 #include "Core.h"
-#include "Line.h"
+#include "SegPredefs.h"
 #include "SegLazy.h"
 
 const int N = 100000;
@@ -13,19 +13,19 @@ int main(){
 	int n,m;
 	cin>>n>>m;
 	i64 arr[M];
-	forh(i,0,m){
+	hfor(i,0,m){
 		cin>>arr[i];
 		arr[i]--;
 	}
 	i64 a[N],b[N],c[N];
-	forh(i,0,n-1)
+	hfor(i,0,n-1)
 		cin>>a[i]>>b[i]>>c[i];
-	SegLazy<i64> st(n);
-	forh(i,1,m)
-		st.update(min(arr[i-1],arr[i]),max(arr[i-1],arr[i]),1);
+	SegLazy<i64,SegfSumAdd<i64>> st(n);
+	hfor(i,1,m)
+		st.upd(min(arr[i-1],arr[i]),max(arr[i-1],arr[i]),1);
 	i64 ans=0;
-	forh(i,0,n-1){
-		i64 cnt=st.query(i,i+1);
+	hfor(i,0,n-1){
+		i64 cnt=st.q(i,i+1);
 		ans+=min(cnt*b[i]+c[i],cnt*a[i]);
 	}
 	cout<<ans<<endl;

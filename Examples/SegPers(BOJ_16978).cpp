@@ -1,4 +1,5 @@
 #include "Core.h"
+#include "SegPredefs.h"
 #include "SegPers.h"
 #include "XArr.h"
 #define endl '\n'//not interactive?
@@ -13,8 +14,8 @@ signed main(){
 	int m;
 	cin>>m;
 		
-	SegPersSum<int> pst(n);
-	using Node=SegPers<int>::Node;
+	SegPers<int, SegfSumAdd<int>> pst(n);
+	using Node=SegPers<int, SegfSumAdd<int>>::Node;
 	XArr<Node*> vers(m);
 	pst.build(vers[-1]=new Node(), arr);
 
