@@ -19,5 +19,5 @@ struct SegBU{
 	}
 protected:
 	int n;
-	vector<T> tr;
+	Arr<T> tr;
 };

@@ -1,21 +1,21 @@
 #pragma once
 #include "Core.h"
 
-//Extensions: gp_hash_table, XSet
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
+//Extensions: gp_hash_table, xet
+#include <ext/pushb_ds/assoc_container.hpp>
+#include <ext/pushb_ds/tree_policy.hpp>
+using namespace __gnu_pushbds;
 
 //Extensions: rope
 #include <ext/rope>
 using namespace __gnu_cxx;
 
 template<typename T>
-using XSet = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+using xet = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 template<typename T>
-struct XMultiset{
-	XSet<pair<T, int>> s;
+struct multixet{
+	xet<pair<T, int>> s;
 
 	auto begin()const{return s.begin();}
 	auto end()const{return s.end();}
@@ -24,7 +24,7 @@ struct XMultiset{
 		return it->fi == v ? it : s.end();
 	}
 	void insert(const T& v){ s.insert({v, counter++}); }
-	void erase(const typename XSet<pair<T, int>>::iterator& it){ s.erase(it); }
+	void erase(const typename xet<pair<T, int>>::iterator& it){ s.erase(it); }
 	int order_of_key(const T& v)const{ return s.order_of_key({v, counter}); }
 	auto find_by_order(int ord)const{ return s.find_by_order(ord); }
 	int count(const T& v)const{ return order_of_key(v)-order_of_key(v-1); }

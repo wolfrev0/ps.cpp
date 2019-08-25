@@ -8,8 +8,8 @@ struct DirectedGraph: public Graph<int>{
 		Graph::add_edge(s, e, 1, dir);
 	}
 
-	vector<int> topo_sort() {
-		vector<int> in(n);
+	Arr<int> topo_sort() {
+		Arr<int> in(n);
 		hfor(i, 0, n){
 			for(auto &j:g[i])
 				in[j.e]++;
@@ -18,10 +18,10 @@ struct DirectedGraph: public Graph<int>{
 		hfor(i, 0, n)
 			if (!in[i])
 				q.push(i);
-		vector<int> ret;
+		Arr<int> ret;
 		while (sz(q)) {
 			auto cur = q.front();
-			ret.pb(cur);
+			ret.pushb(cur);
 			q.pop();
 			for (auto &i : g[cur])
 				if (--in[i.e] == 0)
@@ -30,20 +30,20 @@ struct DirectedGraph: public Graph<int>{
 		return ret;
 	}
 
-	vector<int> topo_sort_lex() {
-		vector<int> in(n);
+	Arr<int> topo_sort_lex() {
+		Arr<int> in(n);
 		hfor(i, 0, n){
 			for(auto &j:g[i])
 				in[j.e]++;
 		}
-		priority_queue<int, vector<int>, greater<int>> q;
+		priority_queue<int, Arr<int>, greater<int>> q;
 		hfor(i, 0, n)
 			if (!in[i])
 				q.push(i);
-		vector<int> ret;
+		Arr<int> ret;
 		while (sz(q)) {
 			auto cur = q.top();
-			ret.pb(cur);
+			ret.pushb(cur);
 			q.pop();
 			for (auto &i : g[cur])
 				if (--in[i.e] == 0)
@@ -52,8 +52,8 @@ struct DirectedGraph: public Graph<int>{
 		return ret;
 	}
 
-	pair<vector<vector<int>>, DirectedGraph> scc(){
-		vector<int> state(n), ord(n), scc_id(n, -1);
+	pair<Arr<Arr<int>>, DirectedGraph> scc(){
+		Arr<int> state(n), ord(n), scc_id(n, -1);
 		stack<int> stk;
 		int o=0, scc_cnt=0;
 		hfor(i, 0, n){
@@ -61,9 +61,9 @@ struct DirectedGraph: public Graph<int>{
 				dfs_scc(i, o, scc_cnt, state, ord, scc_id, stk);
 		}
 
-		auto group=vector<vector<int>>(scc_cnt);
+		auto group=Arr<Arr<int>>(scc_cnt);
 		hfor(i, 0, n)
-			group[scc_id[i]].pb(i);
+			group[scc_id[i]].pushb(i);
 		DirectedGraph sccg(scc_cnt);
 		hfor(i, 0, n){
 			for(auto& j:g[i])
@@ -75,7 +75,7 @@ struct DirectedGraph: public Graph<int>{
 	}
 
 private:
-	int dfs_scc(int v, int& o, int &scc_cnt, vector<int>& state, vector<int>& ord, vector<int>& scc_id, stack<int>& stk){
+	int dfs_scc(int v, int& o, int &scc_cnt, Arr<int>& state, Arr<int>& ord, Arr<int>& scc_id, stack<int>& stk){
 		state[v]=1;
 		stk.push(v);
 		int ret = ord[v]=o++;

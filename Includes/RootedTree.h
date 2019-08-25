@@ -1,5 +1,5 @@
 #pragma once
-#include "Core.h"
+#include "Tree.h"
 #include "SegBU.h"
 
 //Is Dynamic Rooted Tree Useful??
@@ -7,20 +7,28 @@
 //But I think it doesn't need now.
 
 //Static Rooted Tree
+
+#define LCA 1
+#define HLD 1
+
 template<typename T>
 struct RootedTree:private SegBU<int, inf<int>()>{
-	struct Edge{ int e; T w; };
+	struct N{
+		N *p;
+		Arr<N*> ch;
+		T w;
+	};
 	
-	RootedTree(const vector<int>& par, const vector<T>& pw)
-		:SegBU<int, inf<int>()>(sz(par)*2), n(sz(par)), ch(n), d(n), rpos(n){
+	RootedTree(const Arr<E>& pinfo)
+		:SegBU<int, inf<int>()>(sz(pinfo)*2), n(sz(pinfo)), d(n), tsz(n), rpos(n){
+		
+		int ri=0;
+		while(p[ri].e!=-1)
+			ri=p[ri].e;
 		hfor(i,0,n)
-			p.pb({par[i], pw[i]});
-		r=0;
-		while(p[r].e!=-1)
-			r=p[r].e;
-		hfor(i,0,n)
-			if(i!=r)
-				ch[p[i].e].pb({i, p[i].w});
+			if(i!=r){
+				ch[p[i].e].pushb({i, p[i].w});
+			}
 		dfs_init(r);
 	}
 	
@@ -31,24 +39,22 @@ struct RootedTree:private SegBU<int, inf<int>()>{
 	}
 	
 protected:
-	int n,r;
-	vector<Edge> p;
-	vector<vector<Edge>> ch;
-	vector<int> d;
-	vector<int> rpos;
-	vector<int> etour;
-	//vector<int> pre_tour, post_tour; cant define infix
+	int n; N *r=new N();
+	Arr<int> d, tsz, rpos, etour;
+	//Arr<int> pre_tour, post_tour; cant define infix
 	int fq(const int& a, const int& b)override{
 		if(a==inf<int>())return b;
 		if(b==inf<int>())return a;
 		return d[a]<d[b]?a:b;
 	}
-	void dfs_init(int cur){
+	int dfs_init(int cur){
 		d[cur] = p[cur].e>=0 ? d[p[cur].e]+1 : 0;
-		upd(rpos[cur]=sz(etour), cur), etour.pb(cur);
+		tsz[cur]=1;
+		upd(rpos[cur]=sz(etour), cur), etour.pushb(cur);
 		for(const auto &i:ch[cur]){
-			dfs_init(i.e);
-			upd(rpos[cur]=sz(etour), cur), etour.pb(cur);
+			tsz[cur]+=dfs_init(i.e);
+			upd(rpos[cur]=sz(etour), cur), etour.pushb(cur);
 		}
+		return tsz[cur];
 	}
 };

@@ -11,7 +11,7 @@ struct MonotonicQ{
 	void push(const T& val){
 		while(sz(q) && ((val<q.back().w) ^ ismax))
 			q.eb();
-		q.pb({val, e++});
+		q.pushb({val, e++});
 	}
 
 	void pop(){

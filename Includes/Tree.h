@@ -1,33 +1,28 @@
 #pragma once
-#include "RootedTree.h"
+
+#include "Core.h"
 
 template<typename T>
 struct Tree{
-	struct Edge{ int e; T w; };
+	struct E{ int e; T w; };
+	
 	Tree(int n=0):n(n), g(n){}
 
-	void add_edge(int s, int e, T w){ g[s].pb({e,w}); g[e].pb({s,w}); }
+	void add_edge(int s, int e, T w){ g[s].pushb({e,w}); g[e].pushb({s,w}); }
 	T diameter()const {	return dfs_diameter(0, -1).fi; }
-	
-	RootedTree<T> rootize(int r){
-		vector<int> pv(n);
-		vector<T> pwv(n);
-		parvec(r, -1, 0, pv, pwv);
-		return RootedTree<T>(pv, pwv);
-	}
 private:
 	int n;
-	vector<vector<Edge>> g;
+	Arr<Arr<E>> g;
 	
 	pair<T, T> dfs_diameter(int v, int p)const{
 		T diam = 0;
-		vector<int> lens;
+		Arr<int> lens;
 		for(auto i:g[v]){
 			if(i.e==p)
 				continue;
 			auto res=dfs_diameter(i.e, v);
 			diam=max(diam, res.fi);
-			lens.pb(res.se + i.w);
+			lens.pushb(res.se + i.w);
 		}
 		int len=0;
 		if(sz(len)==1){
@@ -40,14 +35,6 @@ private:
 			diam=max(diam, len+*it);
 		}
 		return {diam,len};
-	}
-	
-	void parvec(int c, int p, T pw, vector<int>& pv, vector<T>& pwv){
-		pv[c]=p;
-		pwv[c]=pw;
-		for(auto i:g[c])
-			if(i.e!=p)
-				parvec(i.e, c, i.w, pv, pwv);
 	}
 };
 

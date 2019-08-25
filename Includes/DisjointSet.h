@@ -2,8 +2,8 @@
 #include "Core.h"
 
 struct DisjointSet {
-	vector<int> par;
-	vector<int> sz;
+	Arr<int> par;
+	Arr<int> sz;
 
 	DisjointSet(int n): par(n),sz(n,1){
 		hfor(i,0,n)

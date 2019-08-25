@@ -9,8 +9,8 @@ struct SegPers{
 	};
 
 	SegPers(int n):n(n){}
-	void build(Node* cur){ vector<T> tmp(n); build(cur, tmp); }
-	void build(Node* cur, const vector<T>& a){ build(cur, 0, n, a); }
+	void build(Node* cur){ Arr<T> tmp(n); build(cur, tmp); }
+	void build(Node* cur, const Arr<T>& a){ build(cur, 0, n, a); }
 	T q(Node* tr, int s, int e){ return q(tr, 0, n, s, e); }
 	Node *upd(Node* tr, int idx, T val){
 		auto ret=new Node();
@@ -20,7 +20,7 @@ struct SegPers{
 private:
 	int n;
 
-	void build(Node* cur, int s, int e, const vector<T>& a){
+	void build(Node* cur, int s, int e, const Arr<T>& a){
 		if(e-s==1){
 			cur->val=a[s];
 			return;

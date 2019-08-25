@@ -24,7 +24,7 @@ struct Line{
 	i64 f(i64 x)const{return tan*x+yic;}
 };
 struct CHTStack{
-	vector<Line> st;
+	Arr<Line> st;
 	
 	void push(i64 tan, i64 yic){
 		Line f{tan, yic, 0};
@@ -35,7 +35,7 @@ struct CHTStack{
 			else
 				break;
 		}
-		st.pb(f);
+		st.pushb(f);
 	}
 
 	i64 get(i64 x){
@@ -81,10 +81,10 @@ private:
 //Constraints:
 //사각부등식? 뭐더라 W[a][b]+W[c][d]<=W[a][d]+W[b][c]인가?
 //Note:
-vector<vector<i64>> knuth_opt(const vector<i64>& init, const function<i64(int,int)>& c){
+Arr<Arr<i64>> knuth_opt(const Arr<i64>& init, const function<i64(int,int)>& c){
 	int n=sz(init);
-	vector<vector<i64>> dp(n+1,vector<i64>(n+1));
-	vector<vector<int>> a(n,vector<int>(n+1));
+	Arr<Arr<i64>> dp(n+1,Arr<i64>(n+1));
+	Arr<Arr<int>> a(n,Arr<int>(n+1));
 	hfor(i, 0, n)
 		a[i][i+1]=i;
 	cfor(d, 2, n){

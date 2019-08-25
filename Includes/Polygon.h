@@ -4,13 +4,13 @@
 template<typename T>
 struct Polygon
 {
-	vector<Vec2<T>> vtx;
+	Arr<Vec2<T>> vtx;
 
 	Polygon() {}
 	explicit Polygon(int n) :vtx(n) {}
-	explicit Polygon(const vector<Vec2<T>>& v) :vtx(v) {}
+	explicit Polygon(const Arr<Vec2<T>>& v) :vtx(v) {}
 	int size()const { return sz(vtx); }
-	void pb(const Vec2<T>& v) { vtx.pb(v); }
+	void pushb(const Vec2<T>& v) { vtx.pushb(v); }
 	void eb() { vtx.eb(); }
 	Vec2<T>& operator[](int idx) { return vtx[idx]; }
 
@@ -21,8 +21,8 @@ struct Polygon
 		return ans / 2;
 	}
 
-	vector<Segment<T>> to_segments()const {
-		vector<Segment<T>> ret;
+	Arr<Segment<T>> to_segments()const {
+		Arr<Segment<T>> ret;
 		hfor(i, 0, sz(vtx))
 			ret.emplace_back(vtx[i], vtx[(i + 1) % sz(vtx)]);
 		return ret;
@@ -55,7 +55,7 @@ struct Convex :public Polygon<T>{
 	using Polygon<T>::to_segments;
 	Convex():Polygon<T>() {}
 	explicit Convex(int n) :Polygon<T>(n) {}
-	explicit Convex(const vector<Vec2<T>>& v) :Polygon<T>(v) { normalize(); }
+	explicit Convex(const Arr<Vec2<T>>& v) :Polygon<T>(v) { normalize(); }
 
 	//graham scan
 	void normalize() {
@@ -63,7 +63,7 @@ struct Convex :public Polygon<T>{
 			return;
 		auto me = *min_element(all(vtx));
 		sort(all(vtx), [&](auto &a, auto &b){return Vec2<T>::cmpccw(a,b,me);});
-		vector<Vec2<T>> res;
+		Arr<Vec2<T>> res;
 		hfor(i, 0, sz(vtx)) {
 			while (sz(res) >= 2) {
 				auto ltop = res[sz(res) - 1] - res[sz(res) - 2];
@@ -73,7 +73,7 @@ struct Convex :public Polygon<T>{
 				else
 					break;
 			}
-			res.pb(vtx[i]);
+			res.pushb(vtx[i]);
 		}
 		vtx = res;
 	}
@@ -87,13 +87,13 @@ struct Convex :public Polygon<T>{
 	}
 
 	virtual Polygon<T> intersect(const Polygon<T>& r)const override {
-		vector<Vec2<T>> ret;
+		Arr<Vec2<T>> ret;
 		for (auto i : vtx)
 			if (r.contains(i))
-				ret.pb(i);
+				ret.pushb(i);
 		for (auto i : r.vtx)
 			if (contains(i))
-				ret.pb(i);
+				ret.pushb(i);
 		auto s1 = to_segments();
 		auto s2 = r.to_segments();
 		for (auto i : s1)
@@ -101,7 +101,7 @@ struct Convex :public Polygon<T>{
 				try {
 					Vec2<T> res;
 					if (i.intersect(j, res))
-						ret.pb(res);
+						ret.pushb(res);
 				}
 				catch (...) {}
 			}

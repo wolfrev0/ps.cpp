@@ -29,7 +29,7 @@ template<typename T>
 struct HashQ:public CumulQ<T>{
 	using P=CumulQ<T>;
 private:
-	vector<T> dp{1};
+	Arr<T> dp{1};
 	T ppow(int x){
 		if(!x)
 			return 1;

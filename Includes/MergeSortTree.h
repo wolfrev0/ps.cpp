@@ -5,17 +5,17 @@ struct MergeSortTree{
 	MergeSortTree(int n)
 	:n(n), tree(4*n){}
 
-	MergeSortTree(const vector<int>& v):MergeSortTree(sz(v)){build(1, 0, n, v);}
+	MergeSortTree(const Arr<int>& v):MergeSortTree(sz(v)){build(1, 0, n, v);}
 
 	//void update(int p, int val) {update2(1, 0, n, p, val);}
 	int query(int s, int e, int k) {return query2(1, 0, n, s, e, k);}
 private:
 	const int n;
-	vector<vector<int>> tree;
+	Arr<Arr<int>> tree;
 
-	void build(int cur, int cs, int ce, const vector<int>& v) {
+	void build(int cur, int cs, int ce, const Arr<int>& v) {
 		if(ce-cs==1){
-			tree[cur].pb(v[cs]);
+			tree[cur].pushb(v[cs]);
 			return;
 		}
 		build(cur * 2, cs, (cs + ce) / 2, v);

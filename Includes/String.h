@@ -1,9 +1,9 @@
 #pragma once
 #include "Core.h"
 
-vector<string> split(string s, char p){
+Arr<string> split(string s, char p){
 	int c;
-	vector<string> ret;
+	Arr<string> ret;
 	while((c=s.find(p)) != -1){
 		ret.push_back(s.substr(0, c));
 		s=s.substr(c+1);
@@ -24,8 +24,8 @@ string itos(int i){
 }
 
 //a.k.a. partial match table, pi
-vector<int> failure_function(const string &p) {
-	vector<int> ret(sz(p));
+Arr<int> failure_function(const string &p) {
+	Arr<int> ret(sz(p));
 	int si = 1, pi = 0;
 	int psz=sz(p);
 	while (si + pi < psz) {
@@ -45,12 +45,12 @@ vector<int> failure_function(const string &p) {
 	return ret;
 }
 
-vector<int> kmp(const string &s, const string &p) {
+Arr<int> kmp(const string &s, const string &p) {
 	int ssz=sz(s);
 	int psz=sz(p);
 	if (ssz < psz)
 		return {};
-	vector<int> ret;
+	Arr<int> ret;
 	auto ff = failure_function(p);
 	int si = 0, pi = 0;
 	while (si <= ssz - psz) {
@@ -71,9 +71,9 @@ vector<int> kmp(const string &s, const string &p) {
 	return ret;
 }
 
-vector<int> failure_function2(const string &p) {
+Arr<int> failure_function2(const string &p) {
 	int pi = 0;
-	vector<int> ret(sz(p));
+	Arr<int> ret(sz(p));
 	hfor(i, 1, sz(p)) {
 		while (pi > 0 && p[i] != p[pi])
 			pi = ret[pi - 1];
@@ -83,9 +83,9 @@ vector<int> failure_function2(const string &p) {
 	return ret;
 }
 
-vector<int> kmp2(const string &s, const string &p) {
+Arr<int> kmp2(const string &s, const string &p) {
 	const auto &ff = failure_function2(p);
-	vector<int> ans(sz(s));
+	Arr<int> ans(sz(s));
 	int pi = 0;
 	hfor(i, 0, sz(s)) {
 		while (pi > 0 && s[i] != p[pi])
@@ -96,16 +96,16 @@ vector<int> kmp2(const string &s, const string &p) {
 	return ans;
 }
 
-bool cmp(int i, int j, const vector<int> &g, int t){
+bool cmp(int i, int j, const Arr<int> &g, int t){
 	if(g[i]==g[j])
 		return g[i+t] < g[j+t];
 	return g[i]<g[j];
 }
 
 //sa[i]: 사전순으로 i번째인 접미사의 시작인덱스
-vector<int> suffix_array(const string &s){
+Arr<int> suffix_array(const string &s){
 	int n = sz(s);
-	vector<int> sa(n), ord(n+1), nord(n+1);
+	Arr<int> sa(n), ord(n+1), nord(n+1);
 	hfor(i, 0, sz(s))
 		sa[i]=i, ord[i]=s[i];
 
@@ -123,9 +123,9 @@ vector<int> suffix_array(const string &s){
 
 //lcp[i]: 사전순 i번째 접미사와 i−1번째 접미사의 가장 긴 공통 접두사의 길이
 //plzrun's code
-vector<int> get_lcp(const string &s, const vector<int> &sa){
+Arr<int> get_lcp(const string &s, const Arr<int> &sa){
 	int n = sz(s);
-	vector<int> lcp(n), psa(n+1), plcp(n+1);
+	Arr<int> lcp(n), psa(n+1), plcp(n+1);
 	psa[sa[0]]=-1;
 	hfor(i,1,n)
 	psa[sa[i]]=sa[i-1];
@@ -146,9 +146,9 @@ vector<int> get_lcp(const string &s, const vector<int> &sa){
 }
 
 //jh05013's code, O(NlogN)
-vector<int> suffix_array2(const string &s){
+Arr<int> suffix_array2(const string &s){
 	int n = sz(s), c = 0;
-	vector<int> temp(n), pos2bckt(n), bckt(n), bpos(n), out(n);
+	Arr<int> temp(n), pos2bckt(n), bckt(n), bpos(n), out(n);
 	for(int i=0; i<n; i++) out[i] = i;
 	sort(out.begin(), out.end(), [&](int a, int b){return s[a] < s[b];});
 	for(int i=0; i<n; i++) {
@@ -175,13 +175,13 @@ vector<int> suffix_array2(const string &s){
 }
 
 //comet's code
-vector<int> get_lcp2(const string &s, const vector<int> &sa){
+Arr<int> get_lcp2(const string &s, const Arr<int> &sa){
 	int h=0;
 	int n=sz(s);
-	vector<int> rank(n);
+	Arr<int> rank(n);
 	hfor(i, 0, sz(sa))
 		rank[sa[i]]=i;
-	vector<int> lcp(n);
+	Arr<int> lcp(n);
 	hfor(i,0,n){
 		if(rank[i]){
 			int j=sa[rank[i]-1];

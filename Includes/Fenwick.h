@@ -29,7 +29,7 @@ struct Fenwick{
 	
 private:
 	int n;
-	vector<T> tr;
+	Arr<T> tr;
 	
 	T sum(int i){
 		T ans=T();

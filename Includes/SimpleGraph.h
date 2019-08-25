@@ -6,8 +6,8 @@ struct SimpleGraph: public DirectedGraph{
 
 	void add_edge(int s, int e){ DirectedGraph::add_edge(s, e, false); }
 
-	vector<int> articul_points(){
-		vector<int> ord(n, -1), ret;
+	Arr<int> articul_points(){
+		Arr<int> ord(n, -1), ret;
 		int o=0;
 		hfor(i, 0, n){
 			if(ord[i] != -1)
@@ -17,9 +17,9 @@ struct SimpleGraph: public DirectedGraph{
 		return ret;
 	}
 
-	vector<pair<int,int>> bridges(){
-		vector<int> ord(n, -1);
-		vector<pair<int,int>> ret;
+	Arr<pair<int,int>> bridges(){
+		Arr<int> ord(n, -1);
+		Arr<pair<int,int>> ret;
 		int o=0;
 		hfor(i, 0, n){
 			if(ord[i] != -1)
@@ -33,7 +33,7 @@ struct SimpleGraph: public DirectedGraph{
 
 	}
 private:
-	int dfs_ap(int v, int p, int& o, vector<int>& ord, vector<int>& ans){
+	int dfs_ap(int v, int p, int& o, Arr<int>& ord, Arr<int>& ans){
 		int ret = ord[v]=o++;
 		int subcnt=0;
 		bool isAP = false;
@@ -49,10 +49,10 @@ private:
 			ret = min(ret, res);
 		}
 		if(isAP && (p!=-1 || subcnt>1))
-				ans.pb(v);
+				ans.pushb(v);
 		return ret;
 	}
-	int dfs_bridge(int v, int p, int& o, vector<int>& ord, vector<pair<int, int>>& ans){
+	int dfs_bridge(int v, int p, int& o, Arr<int>& ord, Arr<pair<int, int>>& ans){
 		int ret = ord[v]=o++;
 		bool conn = false;
 		for(auto i: g[v]){
@@ -68,7 +68,7 @@ private:
 			ret = min(ret, res);
 		}
 		if(!conn && p!=-1)
-				ans.pb({min(v, p), max(v, p)});
+				ans.pushb({min(v, p), max(v, p)});
 		return ret;
 	}
 };

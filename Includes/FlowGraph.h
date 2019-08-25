@@ -25,10 +25,10 @@ struct FlowGraph : public Graph<FlowWeight> {
 
 	i64 mf(i64 flow = inf<i64>()) {
 		i64 sum = 0;
-		auto vis=vector<bool>(n+2);
+		auto vis=Arr<bool>(n+2);
 		while (i64 f = process_mf(src, flow-sum, vis)){
 			sum += f;
-			vis=vector<bool>(n+2);
+			vis=Arr<bool>(n+2);
 		}
 		return sum;
 	}
@@ -50,7 +50,7 @@ struct FlowGraph : public Graph<FlowWeight> {
 		return ret;
 	}
 private:
-	i64 process_mf(int v, i64 mf, vector<bool>& vis) {
+	i64 process_mf(int v, i64 mf, Arr<bool>& vis) {
 		if (v == snk)
 			return mf;
 
@@ -69,8 +69,8 @@ private:
 	}
 
 	pair<i64, i64> process_mcmf(i64 flow) {
-		vector<FlowWeight> ub;
-		vector<Edge> p;
+		Arr<FlowWeight> ub;
+		Arr<Edge> p;
 		if (!spfa(ub, p, src) || p[snk].s == -1)
 			return {};
 		for (int cur = snk; p[cur].s != -1; cur = p[cur].s)

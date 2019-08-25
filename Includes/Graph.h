@@ -15,22 +15,22 @@ struct Graph {
 		bool operator>(const Edge &r)const { return w > r.w; }
 	};
 	int n;
-	vector<vector<Edge>> g;
+	Arr<Arr<Edge>> g;
 
 	Graph(int n=0) :n(n), g(n) {}
 	Graph(const Graph& r) :n(r.n), g(r.g) {}
 
 	void add_edge(int s, int e, T w, bool dir=true){
-		g[s].pb({s, e, sz(g[s]), w});
+		g[s].pushb({s, e, sz(g[s]), w});
 		if(!dir)
-			g[e].pb({e, s, sz(g[e]), w});
+			g[e].pushb({e, s, sz(g[e]), w});
 	}
 
 	struct DNV{T dist; int v; bool operator<(const DNV& r)const{return dist>r.dist;}};
-	void dijkstra(vector<T>& d, vector<Edge>& p, int s) {
+	void dijkstra(Arr<T>& d, Arr<Edge>& p, int s) {
 		priority_queue<DNV> pq;
-		d = vector<T>(n, inf<T>());
-		p = vector<Edge>(n, {-1,-1,-1,-1});
+		d = Arr<T>(n, inf<T>());
+		p = Arr<Edge>(n, {-1,-1,-1,-1});
 		pq.push({ d[s]=0, s });
 		while (size(pq)){
 			auto c = pq.top();
@@ -49,11 +49,11 @@ struct Graph {
 		}
 	}
 
-	void dijkstra_vsq(vector<T>& d, vector<Edge>& p, int s) {
+	void dijkstra_vsq(Arr<T>& d, Arr<Edge>& p, int s) {
 
 	}
 
-	int floyd(int s, int e, int m, vector<vector<vector<int>>>& memo){
+	int floyd(int s, int e, int m, Arr<Arr<Arr<int>>>& memo){
 		if(m==n){
 			for(auto& i:g[s])
 				if(i.e==e)
@@ -66,11 +66,11 @@ struct Graph {
 		return ret = min(floyd(s, e, m+1, memo), floyd(s, m, m+1, memo)+floyd(m, e, m+1, memo));
 	}
 
-	bool spfa(vector<T>& ub, vector<Edge>& p, int s) {
+	bool spfa(Arr<T>& ub, Arr<Edge>& p, int s) {
 		queue<int> q;
-		vector<bool> inq(n);
-		ub = vector<T>(n, inf<T>());
-		p = vector<Edge>(n,{-1,-1,-1,-1});
+		Arr<bool> inq(n);
+		ub = Arr<T>(n, inf<T>());
+		p = Arr<Edge>(n,{-1,-1,-1,-1});
 
 		ub[s] = 0;
 		inq[s] = true;
@@ -96,11 +96,11 @@ struct Graph {
 		return q.empty();
 	}
 
-	vector<Edge> mst_prim() {
+	Arr<Edge> mst_prim() {
 
-		vector<Edge> ret;
-		vector<bool> vis(n);
-		priority_queue<Edge, vector<Edge>, greater<Edge>> q;
+		Arr<Edge> ret;
+		Arr<bool> vis(n);
+		priority_queue<Edge, Arr<Edge>, greater<Edge>> q;
 		for(auto i:g[0])
 			q.push(i);
 		vis[0]=true;
@@ -112,7 +112,7 @@ struct Graph {
 				continue;
 			vis[c.e] = true;
 
-			ret.pb(c);
+			ret.pushb(c);
 			for (auto &i : g[c.e]) {
 				if (!vis[i.e]) {
 					q.push(i);
@@ -122,19 +122,19 @@ struct Graph {
 		return ret;
 	}
 
-	vector<Edge> mst_kruskal() {
-		vector<Edge> e;
+	Arr<Edge> mst_kruskal() {
+		Arr<Edge> e;
 		for (auto &i : g)
 			for (auto &j : i)
-				e.pb(j);
+				e.pushb(j);
 		sort(all(e));
 
 		DisjointSet djs(n);
-		vector<Edge> ret;
+		Arr<Edge> ret;
 		for (auto &i : e) {
 			if (djs.find(i.s) != djs.find(i.e)) {
 				djs.uni(i.s, i.e);
-				ret.pb(i);
+				ret.pushb(i);
 			}
 		}
 		return ret;

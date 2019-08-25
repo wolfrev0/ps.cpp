@@ -64,26 +64,26 @@ bool miller_rabin(i64 n){
 	return true;
 }
 
-vector<i64> factorization(i64 n){
+Arr<i64> factorization(i64 n){
 	i64 cur=n;
-	vector<i64> ret;
+	Arr<i64> ret;
 	for(i64 i=2; i*i<=n; i++)
 		while (!(cur%i)){
 			cur/=i;
-			ret.pb(i);
+			ret.pushb(i);
 		}
 	if (cur>1)
-		ret.pb(cur);
+		ret.pushb(cur);
 	return ret;
 }
 
-vector<i64> divisors(i64 n){
-	vector<i64> ret, tmp;
+Arr<i64> divisors(i64 n){
+	Arr<i64> ret, tmp;
 	for(i64 i=1; i*i<=n; i++){
 		if (n%i==0){
-			ret.pb(i);
+			ret.pushb(i);
 			if (i!=n/i)
-				tmp.pb(n/i);
+				tmp.pushb(n/i);
 		}
 	}
 	reverse(all(tmp));
@@ -92,8 +92,8 @@ vector<i64> divisors(i64 n){
 }
 
 //nloglog(n)
-vector<bool> sieve_prime(int ub){
-	vector<bool> ret(ub, true);
+Arr<bool> sieve_prime(int ub){
+	Arr<bool> ret(ub, true);
 	ret[0]=ret[1]=false;
 	for (i64 i=2; i*i<ub; i++) {
 		if (!ret[i])
@@ -106,11 +106,11 @@ vector<bool> sieve_prime(int ub){
 
 //nlogn (harmony series)
 //can apply to calculate (low constant factor)sieve_numdiv, sieve_sumdiv, etc.
-vector<vector<int>> sieve_divs(int ub){
-	vector<vector<int>> ret(ub);
+Arr<Arr<int>> sieve_divs(int ub){
+	Arr<Arr<int>> ret(ub);
 	for (i64 i=1; i<ub; i++) {
 		for (i64 j=i; j<ub; j+=i)
-			ret[j].pb(i);
+			ret[j].pushb(i);
 	}
 	return ret;
 }
@@ -149,8 +149,8 @@ int sqrt_c(i64 n){
 }
 
 template<typename T>
-vector<T> factorials(T n){
-	vector<T> ret(int(n)+1);
+Arr<T> factorials(T n){
+	Arr<T> ret(int(n)+1);
 	ret[0]=1;
 	cfor(i, 1, n)
 		ret[i]=ret[i-1]*i;
@@ -169,15 +169,15 @@ T binom(T n, T k){
 }
 
 template<typename T>
-vector<vector<T>> binom_dp(T n, T k){
-	vector<vector<T>> ret(n, vector<T>(k));
+Arr<Arr<T>> binom_dp(T n, T k){
+	Arr<Arr<T>> ret(n, Arr<T>(k));
 
 	return ret;
 }
 
-vector<int> to_digits(i64 n){
-	vector<int> ret;
+Arr<int> to_digits(i64 n){
+	Arr<int> ret;
 	while(n)
-		ret.pb(n%10), n/=10;
+		ret.pushb(n%10), n/=10;
 	return ret;
 }

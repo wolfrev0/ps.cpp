@@ -10,7 +10,7 @@ struct Seg{
 	void upd(int p, T val){upd(1,0,n,p,val);}
 protected:
 	int n;
-	vector<T> tr;
+	Arr<T> tr;
 
 	T q(int cur, int cs, int ce, int s, int e){
 		if (s>=ce||e<=cs)

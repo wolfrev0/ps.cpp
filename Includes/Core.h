@@ -6,7 +6,7 @@
 
 using namespace std;
 using f64 = double;using i64=long long;using u64=unsigned long long;
-template<typename T> using arr=vector<T>;
+template<typename T> using Arr=vector<T>;
 
 #define hfor(var, s, e) for(int var=s; s<=var && var<e; ++var)//half-opened range
 #define hfori(var, s, e) for(int var=e-1; s<=var && var<e; --var)//inversion
@@ -18,10 +18,13 @@ template<typename T> using arr=vector<T>;
 #define cforoi(var, s, e) hforoi(var, s, (e)+1)
 #define rep(x) hfor(repi,0,x)
 #define all(x) x.begin(),x.end()
-#define pb push_back
-#define eb pop_back
-#define pf push_front
-#define ef pop_front
+#define pushb push_back
+#define pushf push_front
+#define popb pop_back
+#define popf pop_front
+#define emplb emplace_back
+#define emplf emplace_front
+#define empl emplace
 #define fi first
 #define se second
 #define gcd __gcd
@@ -29,7 +32,8 @@ template<typename T> using arr=vector<T>;
 template<typename T> constexpr T inf() { return numeric_limits<T>::max() / 2; }
 auto mri(auto it){ return make_reverse_iterator(it); }//*mri(it) == *prev(it)
 auto rerase(auto& c, auto ri){ return next(mri(c.erase(prev(ri.base())))); }
-auto fold(auto a, auto b, int c=0, auto f=[](auto a, auto b){return a+b;}){ return accumulate(a,b,i64(c),f); }
+auto fold(auto a, auto b, auto c){ return accumulate(a,b,c,[](auto acc, auto x){return acc+x;}); }
+auto fold(auto a, auto b, auto c, auto f){ return accumulate(a,b,c,f); }
 auto mapp(auto a, auto f){for(auto& x:a)x=f(x); return a;}
 int sz(const auto& x){ return (int)x.size(); }
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}

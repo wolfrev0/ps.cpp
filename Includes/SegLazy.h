@@ -4,17 +4,17 @@
 template<typename T, typename F, typename U=T>
 struct SegLazy{
 	SegLazy(int n):n(n), tr(4*n, F::id()), lz(4*n, inf<U>()){}
-	SegLazy(int n, const vector<T>& arr):n(n), tr(4*n, F::id()), lz(4*n, inf<U>()){ build(1,0,n,arr); }
+	SegLazy(int n, const Arr<T>& arr):n(n), tr(4*n, F::id()), lz(4*n, inf<U>()){ build(1,0,n,arr); }
 	T q(int p){ return q(p,p+1); }
 	T q(int s, int e){ return q(1,0,n,s,e); }
 	void upd(int p, U val){ upd(p, p+1, val); }
 	void upd(int s, int e, U val){ upd(1,0,n,s,e,val); }
 protected:
 	int n;
-	vector<T> tr;
-	vector<U> lz;//lz_id=inf
+	Arr<T> tr;
+	Arr<U> lz;//lz_id=inf
 	
-	void build(int cur, int cs, int ce, const vector<T>& arr){
+	void build(int cur, int cs, int ce, const Arr<T>& arr){
 		if(ce-cs==1)
 			tr[cur]=arr[cs];
 		else{
