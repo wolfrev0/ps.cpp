@@ -2,9 +2,9 @@
 #include "Core.h"
 
 //Extensions: gp_hash_table, xet
-#include <ext/pushb_ds/assoc_container.hpp>
-#include <ext/pushb_ds/tree_policy.hpp>
-using namespace __gnu_pushbds;
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
 
 //Extensions: rope
 #include <ext/rope>
