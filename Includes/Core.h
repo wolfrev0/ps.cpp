@@ -5,8 +5,12 @@
 #include<bits/extc++.h>
 
 using namespace std;
+using namespace __gnu_pbds;
+using namespace __gnu_cxx;
+
 using f64 = double;using i64=long long;using u64=unsigned long long;
 template<typename T> using Arr=vector<T>;
+template<typename T> using Xet = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define hfor(var, s, e) for(int var=s; s<=var && var<e; ++var)//half-opened range
 #define hfori(var, s, e) for(int var=e-1; s<=var && var<e; --var)//inversion
