@@ -1,13 +1,7 @@
 #pragma once
 #include "Core.h"
 
-//Extensions: gp_hash_table, xet
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
-//Extensions: rope
-#include <ext/rope>
 using namespace __gnu_cxx;
 
 template<typename T>
@@ -15,7 +9,7 @@ using Xet = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_
 
 template<typename T>
 struct Multixet{
-	xet<pair<T, int>> s;
+	Xet<pair<T, int>> s;
 
 	auto begin()const{return s.begin();}
 	auto end()const{return s.end();}

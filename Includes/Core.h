@@ -2,7 +2,7 @@
 #ifndef DEBUG 
 	#pragma GCC optimize ("Ofast")
 #endif
-#include <bits/stdc++.h>
+#include<bits/extc++.h>
 
 using namespace std;
 using f64 = double;using i64=long long;using u64=unsigned long long;
