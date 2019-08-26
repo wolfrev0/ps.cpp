@@ -2,7 +2,7 @@
 #ifndef DEBUG 
 	#pragma GCC optimize ("Ofast")
 #endif
-#include<bits/extc++.h>
+#include <bits/extc++.h>
 
 using namespace std;
 using namespace __gnu_pbds;
