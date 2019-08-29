@@ -31,7 +31,7 @@ struct CHTStack{
 		while(sz(st)){
 			f.lx=st.back().intersectX(f);
 			if(tan==st.back().tan || f.lx<st.back().lx)
-				st.eb();
+				st.popb();
 			else
 				break;
 		}

@@ -36,7 +36,7 @@ struct DirectedGraph: public Graph<int>{
 			for(auto &j:g[i])
 				in[j.e]++;
 		}
-		priority_queue<int, Arr<int>, greater<int>> q;
+		PQm<int> q;
 		hfor(i, 0, n)
 			if (!in[i])
 				q.push(i);

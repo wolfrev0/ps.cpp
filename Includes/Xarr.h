@@ -8,5 +8,5 @@ struct Xarr{
 	auto begin(){return a.begin();}
 	auto end(){return a.end();}
 	int offset;
-	arr<T> a;
+	Arr<T> a;
 };

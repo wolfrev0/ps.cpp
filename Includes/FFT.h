@@ -1,16 +1,8 @@
 #pragma once
 #include "Core.h"
+#include "NumberTheory.h"
 
 using C=complex<f64>;
-
-//ceil(log(n))
-int lgc(i64 n, int base=2) {
-	int ret=0;
-	int rem=0;
-	while (n)
-		rem+=n%base, n/=base, ret++;
-	return ret-(rem<=1);
-}
 
 Arr<C> toC(const Arr<i64>& a){
 	Arr<C> ret;

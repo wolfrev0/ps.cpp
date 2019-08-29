@@ -28,7 +28,7 @@ struct Graph {
 
 	struct DNV{T dist; int v; bool operator<(const DNV& r)const{return dist>r.dist;}};
 	void dijkstra(Arr<T>& d, Arr<Edge>& p, int s) {
-		priority_queue<DNV> pq;
+		PQ<DNV> pq;
 		d = Arr<T>(n, inf<T>());
 		p = Arr<Edge>(n, {-1,-1,-1,-1});
 		pq.push({ d[s]=0, s });
@@ -97,10 +97,9 @@ struct Graph {
 	}
 
 	Arr<Edge> mst_prim() {
-
 		Arr<Edge> ret;
 		Arr<bool> vis(n);
-		priority_queue<Edge, Arr<Edge>, greater<Edge>> q;
+		PQm<Edge> q;
 		for(auto i:g[0])
 			q.push(i);
 		vis[0]=true;
