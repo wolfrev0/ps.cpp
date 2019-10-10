@@ -9,7 +9,7 @@
 			"command": "bash",
 			"args": [
 				"-c", "\"",
-				"g++","-iquote","./Includes","-g","-O0","-D","DEBUG","-Wall","-std=c++17","'./src/${fileBasename}'",
+				"g++","-iquote","./Includes","-g","-O0","-D","DEBUG","-Wall","-std=c++2a","'./src/${fileBasename}'",
 				"&&","./merger.out","./src/${fileBasename}","./Includes",
 				"&&","echo","'Build(Debug)","Succeed.'",
 				"\""
@@ -22,7 +22,7 @@
 			"command": "bash",
 			"args": [
 				"-c", "\"",
-				"g++","-iquote","./Includes","-O3","-Wall","-std=c++17","'./src/${fileBasename}'",
+				"g++","-iquote","./Includes","-O3","-Wall","-std=c++2a","'./src/${fileBasename}'",
 				"&&","./merger.out","./src/${fileBasename}","./Includes",
 				"&&","echo","'Build(Opt)","Succeed.'",
 				"\""
@@ -35,7 +35,7 @@
 			"command": "bash",
 			"args": [
 				"-c", "\"",
-				"g++","-iquote","./Includes","-D","DEBUG","-Wall","-std=c++17","'./src/${fileBasename}'",
+				"g++","-iquote","./Includes","-D","DEBUG","-Wall","-std=c++2a","'./src/${fileBasename}'",
 				//"&&","./merger.out","./src/${fileBasename}","./Includes",
 				"&&","echo","'Build(Debug)","Succeed.'",
 				"\""
