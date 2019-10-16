@@ -22,7 +22,7 @@ void solve(const string &fname, const string &hdir)
 	regi(fname);
 	auto tmp = (fname.substr(fname.size()-2, 2) == ".h"?hdir:"") + fname;
 	ifstream in((fname.substr(fname.size()-2, 2) == ".h"?hdir:"") + fname);
-	char buf[10000];
+	char buf[1000];
 	while (in.getline(buf, sizeof buf))
 	{
 		if (string(buf, 8) == "#include")
@@ -72,13 +72,13 @@ int main(int argc, char ** argv){
 	solve(fn, hdir);
 	auto ord = g.topo_sort();
 	reverse(all(ord));
-	ofstream out("src/output.cpp");
+	ofstream out("src/merged.cpp");
 	for (auto i : ord)
 	{
 				if(!im[i])
 						continue;
 		ifstream in((i2s[i].substr(i2s[i].size()-2, 2) == ".h"?hdir:"") + i2s[i]);
-		char buf[10000];
+		char buf[1000];
 		while (in.getline(buf, sizeof buf))
 		{
 			if (string(buf, strlen("#pragma once")) == "#pragma once")

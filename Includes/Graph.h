@@ -99,7 +99,7 @@ struct Graph {
 	Arr<Edge> mst_prim() {
 		Arr<Edge> ret;
 		Arr<bool> vis(n);
-		PQm<Edge> q;
+		PQ<Edge, Arr<Edge>, greater<Edge>> q;
 		for(auto i:g[0])
 			q.push(i);
 		vis[0]=true;

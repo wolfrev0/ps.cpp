@@ -1,5 +1,5 @@
 #pragma once
-#include "Core.h"
+#include "GccExts.h"
 
 template<typename T>
 struct Multixet{

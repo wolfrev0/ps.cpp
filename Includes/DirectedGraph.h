@@ -36,7 +36,7 @@ struct DirectedGraph: public Graph<int>{
 			for(auto &j:g[i])
 				in[j.e]++;
 		}
-		PQm<int> q;
+		PQ<int,Arr<int>,greater<int>> q;
 		hfor(i, 0, n)
 			if (!in[i])
 				q.push(i);
