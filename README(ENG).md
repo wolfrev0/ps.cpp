@@ -95,9 +95,9 @@
   <li>Suffix Tree(comming soon)</li>
   <li>Trie(comming soon)</li>
   <li>Ahocorasick(comming soon)</li></ol>
-<h3>Convolution(comming soon)</h3><ol>
+<h3>Convolution</h3><ol>
   <li>FFT & NTT</li>
-  <li>Karatsuba</li>
+  <li>Karatsuba?(comming soon)</li>
 </ol>
 <h3>Linear Programming(comming soon)</h3>
   <ol><li>Simplex Method(Randomized)</li>
