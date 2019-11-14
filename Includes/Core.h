@@ -7,7 +7,6 @@
 using namespace std;
 
 using f64 = double;using i64=long long;using u64=unsigned long long;
-using pii = pair<int,int>;
 template<typename T> using Arr=vector<T>;
 #define PQ std::priority_queue
 
@@ -20,6 +19,7 @@ template<typename T> using Arr=vector<T>;
 #define cforo(v, s, e) hforo(v, s, (e)+1)
 #define cforoi(v, s, e) hforoi(v, s, (e)+1)
 #define rep(v,x) hfor(v,0,x)
+#define repi(v,x) hfori(v,0,x)
 #define all(x) x.begin(),x.end()
 #define pushb push_back
 #define pushf push_front

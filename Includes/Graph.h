@@ -1,6 +1,6 @@
 #pragma once
 #include "Core.h"
-#include "DisjointSet.h"
+#include "UnionFind.h"
 
 template<typename T>
 struct Graph {
@@ -128,11 +128,11 @@ struct Graph {
 				e.pushb(j);
 		sort(all(e));
 
-		DisjointSet djs(n);
+		UF uf(n);
 		Arr<Edge> ret;
 		for (auto &i : e) {
-			if (djs.find(i.s) != djs.find(i.e)) {
-				djs.uni(i.s, i.e);
+			if (uf.find(i.s) != uf.find(i.e)) {
+				uf.uni(i.s, i.e);
 				ret.pushb(i);
 			}
 		}

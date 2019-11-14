@@ -10,7 +10,11 @@ struct Mat{
 				a[i][i]=1;
 		}
 	}
-	Mat(const array<array<T,n>,n>& a):a(a){}
+	Mat(const array<array<T,n>,n>& a){
+		hfor(i,0,n)
+			hfor(j,0,n)
+				this->a[i][j]=a[i][j];
+	}
 
 	Mat operator*(const Mat& r)const{
 		Mat<T, n> ret;

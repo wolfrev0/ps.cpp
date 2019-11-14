@@ -69,7 +69,7 @@ struct Convex :public Polygon<T>{
 				auto ltop = res[sz(res) - 1] - res[sz(res) - 2];
 				auto lcandi = vtx[i] - res[sz(res) - 2];
 				if (ltop.cross(lcandi) <= 0)
-					res.eb();
+					res.popb();
 				else
 					break;
 			}

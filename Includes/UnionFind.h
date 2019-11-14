@@ -1,11 +1,11 @@
 #pragma once
 #include "Core.h"
 
-struct DisjointSet {
+struct UF {
 	Arr<int> par;
 	Arr<int> sz;
 
-	DisjointSet(int n): par(n),sz(n,1){
+	UF(int n): par(n),sz(n,1){
 		hfor(i,0,n)
 			par[i]=i;
 	}

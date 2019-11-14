@@ -93,3 +93,6 @@ Arr<i64> conv_cir(Arr<i64> a, Arr<i64> b){
 	auto res=conv(a,b);
 	return {res.end()-n, res.end()};
 }
+
+void walsh_hadamard(){
+}

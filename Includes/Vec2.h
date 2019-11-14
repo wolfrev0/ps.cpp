@@ -35,7 +35,7 @@ struct Vec2 {
 	Frac tan()const { return {y, x}; }
 	Vec2 project(const Vec2& p)const { Vec2 base = normalize(); return base*base.dot(p); }
 	Vec2 ortho()const{ return Vec2(y, -x); }
-	Vec2 rot(double rad)const{ throw 0; }
+	Vec2 rot(double rad)const{ return Vec2(cos(rad)*x-sin(rad)*y, sin(rad)*x+cos(rad)*y); }
 
 	static Vec2 inf(){ return {::inf<T>(),::inf<T>()}; }
 	static bool cmpccw(const Vec2& l, const Vec2& r, const Vec2& base) {

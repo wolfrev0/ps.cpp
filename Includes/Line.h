@@ -40,6 +40,8 @@ struct Line {
 
 	bool perpend_foot(const Vec2<T>& p, Vec2<T>& res) const { return valid_foot(res=sv+dir().project(p - sv)); }
 	bool contains(const Vec2<T>& v) const { return valid_contains(v) && v.ccw(sv, ev) == 0; }
+	
+	T dist(const Vec2<T>& p)const{return abs((ev-p).cross(sv-p)/(ev-sv).size());}
 protected:
 	Vec2<T> sv, ev;
 private:

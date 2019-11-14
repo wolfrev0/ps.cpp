@@ -29,9 +29,10 @@ struct SimpleGraph: public DirectedGraph{
 		return ret;
 	}
 
-	void bcc(){
-
-	}
+	void bcc(){}
+	
+	void blossom(){}
+	
 private:
 	int dfs_ap(int v, int p, int& o, Arr<int>& ord, Arr<int>& ans){
 		int ret = ord[v]=o++;

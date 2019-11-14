@@ -181,3 +181,7 @@ Arr<int> to_digits(i64 n){
 		ret.pushb(n%10), n/=10;
 	return ret;
 }
+
+//chinese remainder theorem
+void crt(){
+}

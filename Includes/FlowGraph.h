@@ -49,6 +49,14 @@ struct FlowGraph : public Graph<FlowWeight> {
 		}
 		return ret;
 	}
+	
+	//primal-dual
+	pair<i64, i64> mcmf_fast(i64 flow = inf<i64>()){
+		
+	}
+	
+	void gomory_hu(){
+	}
 private:
 	i64 process_mf(int v, i64 mf, Arr<bool>& vis) {
 		if (v == snk)
