@@ -192,3 +192,7 @@ Arr<int> to_digits(i64 n){
 //chinese remainder theorem
 void crt(){
 }
+
+//baby step giant step
+void discrete_log(){
+}

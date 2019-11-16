@@ -97,7 +97,7 @@ struct Graph {
 						if (!inq[k.e]) {
 							inq[k.e] = true;
 							if(sz(q) && ub[k.e]<ub[q.front()])
-								q.pushf(k.e);
+								q.pushf(k.e), qsz++;
 							else
 								q.pushb(k.e);
 						}
