@@ -30,6 +30,13 @@ if adjusted x for satisfying y is not satisfied, this formula has no solution.
 Maybe simpler solution exist. see	(jung2381187, koosaga)'s code at boj_11661
 linearity?
 */
+
+//Multivariable Linear Deophantine:
+//ax+by+cz=k
+//=> gcd(a,b)w+cz=k && ax+by=gcd(a,b)w
+//(extend it recursively)
+
+//recommand to use python
 struct XGCD{i64 g; i64 x; i64 y;};
 XGCD xgcd(i64 a, i64 b) {
 		if (b==0)

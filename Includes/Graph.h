@@ -67,27 +67,39 @@ struct Graph {
 	}
 
 	bool spfa(Arr<T>& ub, Arr<Edge>& p, int s) {
-		queue<int> q;
+		deque<int> q;
 		Arr<bool> inq(n);
 		ub = Arr<T>(n, inf<T>());
 		p = Arr<Edge>(n,{-1,-1,-1,-1});
 
 		ub[s] = 0;
 		inq[s] = true;
-		q.push(s);
+		q.pushb(s);
 		for(int i=0; i<n&&sz(q); i++) {
 			int qsz = sz(q);
+
+			//cutting like bubble
+			repi(i,qsz-1)
+				if(ub[q[i]]>ub[q[i+1]])
+					swap(q[i], q[i+1]);
+			
 			while (qsz--) {
+				//cutting like bubble
+				if(qsz && ub[q[0]]>ub[q[1]])
+					swap(q[0],q[1]);
 				int j = q.front();
 				inq[j] = false;
-				q.pop();
+				q.popf();
 				for (auto k : g[j]) {
 					if (valid_spfa_edge(k) && ub[j] + k.w < ub[k.e]) {
 						p[k.e] = k;
 						ub[k.e] = ub[j] + k.w;
 						if (!inq[k.e]) {
 							inq[k.e] = true;
-							q.push(k.e);
+							if(sz(q) && ub[k.e]<ub[q.front()])
+								q.pushf(k.e);
+							else
+								q.pushb(k.e);
 						}
 					}
 				}

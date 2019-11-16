@@ -7,6 +7,7 @@ struct FlowWeight {
 	FlowWeight(i64 cost) :cost(cost) {}
 	FlowWeight(int si, i64 cap, i64 cost) :si(si), cap(cap), cost(cost) {}
 	bool operator< (const FlowWeight& r)const { return cost < r.cost; }
+	bool operator> (const FlowWeight& r)const { return cost > r.cost; }
 	FlowWeight operator+(const FlowWeight& r)const { return cost + r.cost; }
 };
 
@@ -50,7 +51,7 @@ struct FlowGraph : public Graph<FlowWeight> {
 		return ret;
 	}
 	
-	//primal-dual
+	//successive shortest path || primal-dual
 	pair<i64, i64> mcmf_fast(i64 flow = inf<i64>()){
 		
 	}

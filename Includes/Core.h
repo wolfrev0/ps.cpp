@@ -20,6 +20,7 @@ template<typename T> using Arr=vector<T>;
 #define cforoi(v, s, e) hforoi(v, s, (e)+1)
 #define rep(v,x) hfor(v,0,x)
 #define repi(v,x) hfori(v,0,x)
+#define repo(v,x) hforo(v,0,x)
 #define all(x) x.begin(),x.end()
 #define pushb push_back
 #define pushf push_front
@@ -44,8 +45,8 @@ int rd(int ub=inf<int>()){return rd(0,ub);}
 #define random rd
 
 const f64 pi=acos(-1), eps=1e-12;
-const int prime=998244353;//1073741783 int(2e9+11) int(1e9+9)
-const int mod=int(1e9+7);
+const int prime=int(2e9+11);//1073741783//int(1e9+9)
+const int mod=int(1e9+7);//998244353
 #ifndef DEBUG
 	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(11)), 0);
 #endif
