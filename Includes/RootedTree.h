@@ -1,59 +1,51 @@
 #pragma once
 #include "Tree.h"
 #include "SegBU.h"
+#include "SegPredefs.h"
 
 //Is Dynamic Rooted Tree Useful??
 //Disjoint Set, BBST, Link Cut Tree belongs to it.
 //But I think it doesn't need now.
 
 //Static Rooted Tree
-
-#define LCA 1
-#define HLD 1
-
 template<typename T>
-struct RootedTree:private SegBU<int, inf<int>()>{
-	struct N{
-		N *p;
-		Arr<N*> ch;
-		T w;
+struct RootedTree{
+	struct F{
+		static pair<int,int> id(){return {inf<int>(),-1};}
+		static pair<int,int> q(const pair<int,int>& a, const pair<int,int>& b){return min(a,b);}
 	};
 	
-	RootedTree(const Arr<E>& pinfo)
-		:SegBU<int, inf<int>()>(sz(pinfo)*2), n(sz(pinfo)), d(n), tsz(n), rpos(n){
-		
-		int ri=0;
-		while(p[ri].e!=-1)
-			ri=p[ri].e;
+	RootedTree(const Arr<pair<int,T>>& p)
+	:n(sz(p)), r(0),
+	ch(n), p(p), dpt(n), tsz(n), rpos(n), seg(n*2){
+		while(p[r].fi!=-1)
+			r=p[r].fi;
 		hfor(i,0,n)
-			if(i!=r){
-				ch[p[i].e].pushb({i, p[i].w});
-			}
+			if(i!=r)
+				ch[p[i].fi].pushb({i, p[i].se});
 		dfs_init(r);
 	}
 	
 	int lca(int a, int b){
 		if(rpos[a]>rpos[b])
 			swap(a,b);
-		return q(rpos[a], rpos[b]+1);
+		return seg.q(rpos[a], rpos[b]+1).se;
 	}
 	
-protected:
-	int n; N *r=new N();
-	Arr<int> d, tsz, rpos, etour;
+	int n, r;
+	Arr<Arr<pair<int,T>>> ch;
+	Arr<pair<int,T>> p;
+	Arr<int> dpt, tsz, rpos, etour;
+	SegBU<pair<int,int>,F> seg;
 	//Arr<int> pre_tour, post_tour; cant define infix
-	int fq(const int& a, const int& b)override{
-		if(a==inf<int>())return b;
-		if(b==inf<int>())return a;
-		return d[a]<d[b]?a:b;
-	}
+	
 	int dfs_init(int cur){
-		d[cur] = p[cur].e>=0 ? d[p[cur].e]+1 : 0;
+		dpt[cur] = p[cur].fi>=0 ? dpt[p[cur].fi]+1 : 0;
 		tsz[cur]=1;
-		upd(rpos[cur]=sz(etour), cur), etour.pushb(cur);
+		seg.upd(rpos[cur]=sz(etour), {dpt[cur],cur}), etour.pushb(cur);
 		for(const auto &i:ch[cur]){
-			tsz[cur]+=dfs_init(i.e);
-			upd(rpos[cur]=sz(etour), cur), etour.pushb(cur);
+			tsz[cur]+=dfs_init(i.fi);
+			seg.upd(rpos[cur]=sz(etour), {dpt[cur],cur}), etour.pushb(cur);
 		}
 		return tsz[cur];
 	}

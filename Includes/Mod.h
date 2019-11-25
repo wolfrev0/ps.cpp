@@ -3,7 +3,7 @@
 
 class NoModInv {};
 
-template<int m=mod>
+template<int m>
 struct Mod {
 	Mod(i64 n=0) :n((n%m+m)%m){}
 	explicit operator int()const{return n;}

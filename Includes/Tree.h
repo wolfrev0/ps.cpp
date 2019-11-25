@@ -4,23 +4,29 @@
 
 template<typename T>
 struct Tree{
-	struct E{ int e; T w; };
-	
 	Tree(int n=0):n(n), g(n){}
 
 	void add_edge(int s, int e, T w){ g[s].pushb({e,w}); g[e].pushb({s,w}); }
 	T diameter()const {	return dfs_diameter(0, -1).fi; }
+	void rootize(int r, Arr<pair<int,T>>& res, int p=-1)const{
+		for(auto i:g[r]){
+			if(i.fi==p)
+				continue;
+			res[i.fi]={r,i.se};
+			rootize(i.fi,res,r);
+		}
+	}
 private:
 	int n;
-	Arr<Arr<E>> g;
+	Arr<Arr<pair<int,T>>> g;
 	
 	pair<T, T> dfs_diameter(int v, int p)const{
 		T diam = 0;
 		Arr<int> lens;
 		for(auto i:g[v]){
-			if(i.e==p)
+			if(i.fi==p)
 				continue;
-			auto res=dfs_diameter(i.e, v);
+			auto res=dfs_diameter(i.fi, v);
 			diam=max(diam, res.fi);
 			lens.pushb(res.se + i.w);
 		}
