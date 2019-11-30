@@ -4,7 +4,7 @@
 template<typename T>
 struct Mat{
 	const int n,m;
-	Arr<Arr<T>> a{};
+	Arr<Arr<T>> a;
 	
 	Mat(int n, int m, bool one=false):n(n),m(m),a(n,Arr<T>(m)){
 		if(!one)
@@ -13,8 +13,6 @@ struct Mat{
 			rep(j,min(n,m))
 				a[i][j]=1;
 	}
-	
-	Mat(const Arr<Arr<T>>& a):n(a.size()),m(a.front().size()),a(a){}
 	
 	Mat<T> operator*(const Mat<T>& r)const{
 		assert(m==r.n);
@@ -38,7 +36,7 @@ struct Mat{
 	
 	void REF(bool pv_fix){
 		int pi=0;
-		rep(i,n){
+		repo(i,n){
 			while(pi<m && a[i][pi]==0){
 				if(!pv_fix){
 					hforo(j,i+1,n)
@@ -71,21 +69,23 @@ struct Mat{
 			}
 			pi++;
 		}
+		rank=i;
 	}
+	int rank=-1;
 	
 	void RREF(int rm){
 		REF(false);
-		flipX();
+		flipX(rank);
 		flipY(rm);
 		REF(true);
-		flipX();
 		flipY(rm);
+		flipX(rank);
 	}
 	
-	void flipX(){
-		rep(i,n/2)
+	void flipX(int rn){
+		rep(i,rn/2)
 			rep(j,m)
-				swap(a[i][j],a[n-1-i][j]);
+				swap(a[i][j],a[rn-1-i][j]);
 	}
 	
 	void flipY(int rm){

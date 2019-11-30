@@ -1,3 +1,4 @@
+#pragma once
 #include "Core.h"
 
 template<typename T, typename U=T>
@@ -34,7 +35,7 @@ struct SegfSumAdd{
 
 template<typename T, typename U=T>
 struct SegfMinAdd{
-	static T id(){return inf<T>();}
+	static T id(){return T();}
 	static T q(const T& a, const T& b){return min(a,b);}
 	static T upd(const T& a, const U& b, int c){return a+b;}
 	static U propa(const U& a, const U& b){return a+b;}
@@ -42,7 +43,7 @@ struct SegfMinAdd{
 
 template<typename T, typename U=T>
 struct SegfMaxAdd{
-	static T id(){return -inf<T>();}
+	static T id(){return T();}
 	static T q(const T& a, const T& b){return max(a,b);}
 	static T upd(const T& a, const U& b, int c){return a+b;}
 	static U propa(const U& a, const U& b){return a+b;}

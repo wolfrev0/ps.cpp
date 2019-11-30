@@ -8,8 +8,7 @@ Arr<string> split(string s, char p){
 		ret.push_back(s.substr(0, c));
 		s=s.substr(c+1);
 	}
-	if(sz(s))
-		ret.push_back(s);
+	ret.push_back(s);
 	return ret;
 }
 

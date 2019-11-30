@@ -1,131 +1,54 @@
 #pragma once
 #include "RootedTree.h"
 
-template<typenaem T, T id=T()>
+template<typename T, typename F>
 struct HLD:public RootedTree<T>{
-	using E=typename Tree<T>::E;
 	using P=RootedTree<T>;
-	using P::n, P::r;
-	struct S:public SegBU<T>{
-		S(int n):SegBU<T>(n){}
-		T fq(const T& a, const T& b)override{return HLD::fq(a, b);}
-	};
-	
-	RootedTree(const Arr<E>& pinfo)
-	:RootedTree<T>(pinfo),v2seg(n),v2i(n),v2sv(n)
-	{ dfs(r); }
-	
-	//Can make commutativeness free, but too complex.
-	//wtype: (F=edge, T=vertex) weighted.
-	T q(int u, int v, bool wtype){
-		T ret=id;
-		int l=lca(u,v);
-		
-		
-		// T ret = T();
-		// int w = lca(u, v);
-		// while(chain[w]!=chain[u])
-		// 	ret = S::q(ret, S::query(segidx[head[chain[u]]], segidx[u]+1)), u = parent[head[chain[u]]].e;
-		// ret = S::q(ret, S::query(segidx[w]+edge_w, segidx[u]+1));
-
-		// Arr<pair<int,int>> ranges;
-		// while(chain[w]!=chain[v])
-		// 	ranges.emplace_back(segidx[head[chain[v]]], segidx[v]+1), v = parent[head[chain[v]]].e;
-		// ranges.emplace_back(segidx[w]+1, segidx[v]+1);
-		// reverse(all(ranges));
-		// for(const auto&i:ranges)
-		// 	ret = S::q(ret, S::query(i.fi, i.se));
-
-		// return ret;
-	}
-	
-	Arr<S> segv;
-	Arr<int> v2seg, v2i, seg2tv;
-
-	Arr<int> buf;
-	void dfs(int cur){
-		sort(all(ch), [](auto a, auto b){return sz[a.e]>sz[b.e];});
-		buf.pushb(cur);
-		
-		dfs(ch[0].e);
-		hfor(i,1,sz(ch))
-			dfs(ch[i].e);
-		
-		if(!sz(ch)){
-			int sn=sz(buf);
-			segv.pushb({sn});
-			seg2tv[sz(segv)-1]=buf.front();
-			
-			reverse(all(buf));
-			hfor(i,0,sn){
-				v2seg[buf[i]]=sz(segv)-1;
-				segv.back().upd(v2i[buf[i]]=i, buf[i]);
-			}
-			buf.clear();
-		}
-	}
-};
-
-template<typename T, typename U=T>
-struct HLD:public LCA<T>, public Seg<T, U>{
-	using L=LCA<T>;
-	using S=Seg<T, U>;
-	HLD(const Tree<T>& t, int r)
-	:L(t, r), S(n), chain(n), head(n), segidx(n), sz(n){
+	HLD(const Arr<pair<int,T>>& pi)
+	:P(pi), st(n), cn(n), top(n), si(n), tsz(n){
 		dfs_size(r);
-		int segi=0, cur_chain=0;
-		dfs_hld(r, segi, cur_chain);
-		head[0]=0;
+		int csi=0, ccn=0;
+		dfs_hld(r, csi, ccn);
+		top[0]=0;
 	}
 
-	//commutativeness free
-	T query(int u, int v, bool edge_w=true){
+	T q(int u, int v, bool edge_w=true){
 		T ret = T();
 		int w = lca(u, v);
-		while(chain[w]!=chain[u])
-			ret = S::q(ret, S::query(segidx[head[chain[u]]], segidx[u]+1)), u = parent[head[chain[u]]].e;
-		ret = S::q(ret, S::query(segidx[w]+edge_w, segidx[u]+1));
-
-		Arr<pair<int,int>> ranges;
-		while(chain[w]!=chain[v])
-			ranges.emplace_back(segidx[head[chain[v]]], segidx[v]+1), v = parent[head[chain[v]]].e;
-		ranges.emplace_back(segidx[w]+1, segidx[v]+1);
-		reverse(all(ranges));
-		for(const auto&i:ranges)
-			ret = S::q(ret, S::query(i.fi, i.se));
+		while(cn[w]!=cn[u])
+			ret = F::q(ret, st.q(si[top[cn[u]]], si[u]+1)), u = p[top[cn[u]]].fi;
+		ret = F::q(ret, st.q(si[w]+edge_w, si[u]+1));
+		
+		while(cn[w]!=cn[v])
+			ret = F::q(ret, st.q(si[top[cn[v]]], si[v]+1)), v = p[top[cn[v]]].fi;
+		ret = F::q(ret, st.q(si[w]+edge_w, si[v]+1));
 
 		return ret;
 	}
+	T q_non_commutative(){return T();}
 
-	void update(int cur, U w){return S::update(segidx[cur], w);}
-	void update(int s, int e, U w){}
+	void upd(int cur, T w){return st.upd(si[cur], w);}
+	void upd(int s, int e, T w){}
 protected:
-	using L::n;
-	using L::r;
-	using L::parent;
-	using L::children;
-	using L::lca;
-	Arr<int> chain;
-	Arr<int> head;
-	Arr<int> segidx;
-	Arr<int> sz;
+	using P::n;using P::r;using P::p;using P::ch;using P::lca;
+	SegBU<T, F> st;
+	Arr<int> cn,top,si,tsz;
 
 	int dfs_size(int cur){
-		sz[cur]=1;
-		for(const auto& i:children[cur])
-			sz[cur]+=dfs_size(i.e);
-		sort(all(children[cur]), [&](auto a, auto b){return sz[a.e]>sz[b.e];});
-		return sz[cur];
+		tsz[cur]=1;
+		for(const auto& i:ch[cur])
+			tsz[cur]+=dfs_size(i.fi);
+		sort(all(ch[cur]), [&](auto a, auto b){return tsz[a.fi]>tsz[b.fi];});
+		return tsz[cur];
 	}
 
-	void dfs_hld(int cur, int& segi, int& cur_chain){
-		S::update(segidx[cur]=segi++, parent[cur].w);
-		chain[cur]=cur_chain;
-		auto c = children[cur];
-		hfor(i, 0, sz(c)){
+	void dfs_hld(int cur, int& csi, int& ccn){
+		st.upd(si[cur]=csi++, p[cur].se);
+		cn[cur]=ccn;
+		rep(i,sz(ch[cur])){
 			if(i)
-				head[++cur_chain]=c[i].e;
-			dfs_hld(c[i].e, segi, cur_chain);
+				top[++ccn]=ch[cur][i].fi;
+			dfs_hld(ch[cur][i].fi, csi, ccn);
 		}
 	}
 };
