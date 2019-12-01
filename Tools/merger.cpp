@@ -72,7 +72,7 @@ int main(int argc, char ** argv){
 	solve(fn, hdir);
 	auto ord = g.topo_sort();
 	reverse(all(ord));
-	ofstream out("src/merged.cpp");
+	ofstream out("bin/merged.cpp");
 	for (auto i : ord)
 	{
 				if(!im[i])

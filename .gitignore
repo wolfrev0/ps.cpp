@@ -1,11 +1,6 @@
-Debug/
+bin/
 src/
-output.cpp
-a.out
-merger.out
-xcuter.out
 input
 output
-.vscode/c_cpp_properties.json
-.vscode/ipch/
 *.gch
+*.manifest
