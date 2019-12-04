@@ -4,6 +4,7 @@
 //Upd=Assignment
 template<typename T, typename F>
 struct Seg{
+	static_assert(F::q(F::id(),F::id())==F::id());
 	Seg(int n=0, T init=F::id()):n(n), tr(4*n, init){}
 	T q(int p){return q(p,p+1);}
 	T q(int s, int e){return q(1,0,n,s,e);}
