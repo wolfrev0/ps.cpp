@@ -3,7 +3,7 @@
 
 template<typename T, typename F>
 struct SegBU{
-	SegBU(int n=0):n(n), tr(2*n, F::id()){}
+	SegBU(int n=0, T init=F::id()):n(n), tr(2*n, init){}
 	void upd(int p, T val){
 		for (tr[p+=n]=val; p>1; p>>=1)
 			tr[p>>1]=F::q(tr[p],tr[p^1]);
