@@ -71,41 +71,42 @@ struct Graph {
 		Arr<bool> inq(n);
 		ub = Arr<T>(n, inf<T>());
 		p = Arr<Edge>(n,{-1,-1,-1,-1});
+		int c[n]{};
 
 		ub[s] = 0;
 		inq[s] = true;
 		q.pushb(s);
-		for(int i=0; i<n&&sz(q); i++) {
-			int qsz = sz(q);
-
-			//cutting like bubble
-			repi(i,qsz-1)
-				if(ub[q[i]]>ub[q[i+1]])
-					swap(q[i], q[i+1]);
-			
-			while (qsz--) {
-				//cutting like bubble
-				if(qsz && ub[q[0]]>ub[q[1]])
-					swap(q[0],q[1]);
-				int j = q.front();
-				inq[j] = false;
-				q.popf();
-				for (auto k : g[j]) {
-					if (valid_spfa_edge(k) && ub[j] + k.w < ub[k.e]) {
-						p[k.e] = k;
-						ub[k.e] = ub[j] + k.w;
-						if (!inq[k.e]) {
-							inq[k.e] = true;
-							if(sz(q) && ub[k.e]<ub[q.front()])
-								q.pushf(k.e), qsz++;
-							else
-								q.pushb(k.e);
-						}
+		while(sz(q)){
+			int j = q.front();
+			inq[j] = false;
+			q.popf();
+			for (auto k : g[j]) {
+				if (valid_spfa_edge(k) && ub[j] + k.w < ub[k.e]) {
+					p[k.e] = k;
+					ub[k.e] = ub[j] + k.w;
+					if(++c[k.e]>n)
+						return false;
+					if (!inq[k.e]) {
+						inq[k.e] = true;
+						if(sz(q) && ub[k.e]<ub[q.front()])
+							q.pushf(k.e);
+						else
+							q.pushb(k.e);
 					}
 				}
 			}
 		}
+		
 		return q.empty();
+	}
+
+	Arr<Edge> cons_path(const Arr<T>& d, const Arr<Edge>& p, int dest){
+		Arr<Edge> ret;
+		while(p[dest].s!=-1){
+			ret.pushb(g[p[dest].s][p[dest].ei]);
+			dest=p[dest].s;
+		}
+		return ret;
 	}
 
 	Arr<Edge> mst_prim() {

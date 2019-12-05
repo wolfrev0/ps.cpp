@@ -78,17 +78,16 @@ private:
 	}
 
 	pair<i64, i64> process_mcmf(i64 flow) {
-		Arr<FlowWeight> ub;
+		Arr<FlowWeight> d;
 		Arr<Edge> p;
-		if (!spfa(ub, p, src) || p[snk].s == -1)
+		if (!spfa(d, p, src) || p[snk].s == -1)
 			return {};
 		for (int cur = snk; p[cur].s != -1; cur = p[cur].s)
 			flow = min(flow, g[p[cur].s][p[cur].ei].w.cap);
 		i64 cost = 0;
-		for (int cur = snk; p[cur].s != -1; cur = p[cur].s) {
-			auto& e = g[p[cur].s][p[cur].ei];
-			e.w.cap -= flow;
-			g[e.e][e.w.si].w.cap += flow;
+		for(auto& e:cons_path(d,p,snk)){
+			g[e.s][e.ei].w.cap-=flow;
+			g[e.e][e.w.si].w.cap+=flow;
 			cost += e.w.cost*flow;
 		}
 
