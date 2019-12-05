@@ -1,8 +1,5 @@
 bin/
-src/
 input
 output
 *.gch
-*.manifest
-
-GDB_Usage.md
+main.cpp
