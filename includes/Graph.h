@@ -49,10 +49,6 @@ struct Graph {
 		}
 	}
 
-	void dijkstra_vsq(Arr<T>& d, Arr<Edge>& p, int s) {
-
-	}
-
 	int floyd(int s, int e, int m, Arr<Arr<Arr<int>>>& memo){
 		if(m==n){
 			for(auto& i:g[s])
