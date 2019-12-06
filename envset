@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+alias build='source build.sh'
+ulimit -s unlimited
+mkdir -p ./bin && g++ -std=c++17 -O3 -Wall -fconcepts -iquote ./includes -o ./bin/merger.out ./tools/merger.cpp
