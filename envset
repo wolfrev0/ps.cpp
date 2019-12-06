@@ -2,3 +2,6 @@
 alias build='source build.sh'
 ulimit -s unlimited
 mkdir -p ./bin && g++ -std=c++17 -O3 -Wall -fconcepts -iquote ./includes -o ./bin/merger.out ./tools/merger.cpp
+
+git config --global user.name "0xc0def"
+git config --global user.email lobo_prix@naver.com
