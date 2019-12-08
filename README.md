@@ -11,5 +11,6 @@
     라이브러리를 편리하게 사용할 수 있게 도와주는 도구들의 코드가 있습니다.
 
 # 사용법
-source envset //자동 환경설정
-build main.cpp //bin에 실행파일 a.out과 병합된코드 merged.cpp가 생성된다.
+source envset //자동 환경설정  
+build main.cpp //bin에 실행파일 a.out과 병합된코드 merged.cpp가 생성된다.  
+

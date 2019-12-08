@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-alias build='source build.sh'
+alias build='source ./tools/build.sh'
 ulimit -s unlimited
 mkdir -p ./bin && g++ -std=c++17 -O3 -Wall -fconcepts -iquote ./includes -o ./bin/merger.out ./tools/merger.cpp
 
 git config --global user.name "0xc0def"
 git config --global user.email lobo_prix@naver.com
+git config --global core.editor vim
+
+printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s" 'set nocompatible' 'set nu' 'set title' 'set ruler' 'set shiftwidth=2' 'set tabstop=2' 'set cindent' 'set autoindent' 'set smartindent' 'set hlsearch' 'set incsearch' 'set smartcase' 'set showmatch' 'set laststatus=2' > ~/.vimrc
