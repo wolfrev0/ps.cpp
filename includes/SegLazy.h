@@ -3,7 +3,7 @@
 
 template<typename T, typename F>
 struct SegLazy{
-	SegLazy(int n):n(n), tr(4*n, F::id()), lz(4*n, inf<T>()){}
+	SegLazy(int n=0):n(n), tr(4*n, F::id()), lz(4*n, inf<T>()){}
 	SegLazy(int n, const Arr<T>& arr):n(n), tr(4*n, F::id()), lz(4*n, inf<T>()){ build(1,0,n,arr); }
 	T q(int p){ return q(p,p+1); }
 	T q(int s, int e){ return q(1,0,n,s,e); }
@@ -52,7 +52,7 @@ protected:
 	
 	void propa(int cur, int cs, int ce){
 		if(lz[cur]!=inf<T>()){
-			tr[cur]=F::upd(tr[cur],lz[cur],ce-cs);
+			tr[cur]=F::upd(tr[cur],lz[cur],cs,ce);
 			if(ce-cs>1){
 				addlz(cur*2, lz[cur]);
 				addlz(cur*2+1, lz[cur]);
