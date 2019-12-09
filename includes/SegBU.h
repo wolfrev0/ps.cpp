@@ -1,6 +1,7 @@
 #pragma once
 #include "Core.h"
 
+//Warning: no F::upd, always assignment update.
 template<typename T, typename F>
 struct SegBU{
 	SegBU(int n=0, T init=F::id()):n(n), tr(2*n, init){}

@@ -26,7 +26,7 @@ protected:
 		if (p>=ce||p+1<=cs)
 			return;
 		if (p<=cs&&ce<=p+1){
-			tr[cur]=val;
+			F::upd(tr[cur],val,cs,ce);
 			return;
 		}
 		int m=(cs+ce)/2;

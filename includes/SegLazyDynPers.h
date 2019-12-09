@@ -2,19 +2,19 @@
 #include "Core.h"
 
 //Not Tested
-template<typename T, typename F, typename U=T>
+template<typename T, typename F>
 struct SegLazyDynPers{
 	struct Node{
 		Node *l=0, *r=0;
 		T val=F::id();
-		U lz=inf<U>();//lz_id=inf
+		T lz=inf<T>();//lz_id=inf
 	};
 	SegLazyDynPers(int n=0):n(n){}
 	
 	T q(int p, Node* base){return q(base,p,p+1);}
 	T q(int s, int e, Node* base){return q(base,0,n,s,e);}
-	Node* upd(int p, U val, Node* base){return upd(p, p+1, val, base);}
-	Node* upd(int s, int e, U val, Node* base/*=new Node()*/){
+	Node* upd(int p, T val, Node* base){return upd(p, p+1, val, base);}
+	Node* upd(int s, int e, T val, Node* base/*=new Node()*/){
 		Node* ret=new Node(*base);
 		upd(ret,0,n,s,e,val,base);
 		return ret;
@@ -26,13 +26,13 @@ protected:
 		bool nl=false, nr=false;
 		if(!cur->l) cur->l=new Node(), nl=true;
 		if(!cur->r) cur->r=new Node(), nr=true;
-		if(cur->lz!=inf<U>()){
+		if(cur->lz!=inf<T>()){
 			cur->val=F::upd()(cur->val,cur->lz,ce-cs);
 			if(ce-cs>1){
 				addlz(cur->l, cur->lz);
 				addlz(cur->r, cur->lz);
 			}
-			cur->lz=inf<U>();
+			cur->lz=inf<T>();
 		}
 	
 		if (s>=ce||e<=cs){
@@ -52,7 +52,7 @@ protected:
 		return ret;
 	}
 
-	void upd(Node* cur, int cs, int ce, int s, int e, U val, Node* base){
+	void upd(Node* cur, int cs, int ce, int s, int e, T val, Node* base){
 		propa(cur, cs, ce);
 		propa(base, cs, ce);
 		cur->l=new Node(*base->l);
@@ -73,15 +73,15 @@ protected:
 	void propa(Node* cur, int cs, int ce){
 		if(!cur->l)	cur->l=new Node();
 		if(!cur->r) cur->r=new Node();
-		if(cur->lz!=inf<U>()){
+		if(cur->lz!=inf<T>()){
 			cur->val=F::upd()(cur->val,cur->lz,ce-cs);
 			if(ce-cs>1){
 				addlz(cur->l, cur->lz);
 				addlz(cur->r, cur->lz);
 			}
-			cur->lz=inf<U>();
+			cur->lz=inf<T>();
 		}
 	}
 	
-	void addlz(Node* v, U val){v->lz=v->lz==inf<U>()?val:F::propa()(v->lz,val);}
+	void addlz(Node* v, T val){v->lz=v->lz==inf<T>()?val:F::propa()(v->lz,val);}
 };

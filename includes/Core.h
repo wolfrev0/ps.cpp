@@ -3,7 +3,6 @@
 
 using namespace std;using f64 = double;using i64=long long;using u64=unsigned long long;
 template<typename T> using Arr=vector<T>;
-#define PQ std::priority_queue
 #define hfor(v, s, e) for(int v=(s);(s)<=v&&v<(e);++v)//half-opened range
 #define hfori(v, s, e) for(int v=(e)-1;(s)<=v&&v<(e);--v)//inversion
 #define hforo(v, s, e) int v=(s);for(;(s)<=v&&v<(e);++v)//out declaration
@@ -23,14 +22,16 @@ template<typename T> using Arr=vector<T>;
 #define fi first
 #define se second
 #define cxp constexpr
+#define PQ std::priority_queue
+
+#ifndef DEBUG
+	#pragma GCC optimize ("Ofast")
+	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(11)), 0);
+#endif
 
 template<typename T> cxp T inf() { return numeric_limits<T>::max() / 2; }
 auto&& mapf(auto a, auto f){for(auto& x:a)x=f(x); return move(a);}
 int sz(const auto& x){ return (int)x.size(); }
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
-
-#ifndef DEBUG
-	#pragma GCC optimize ("Ofast")
-	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(11)), 0);
-#endif
+const f64 pi=acosl(-1);

@@ -1,50 +1,50 @@
 #pragma once
 #include "Core.h"
 
-template<typename T, typename U=T>
+template<typename T>
 struct SegfSumAss{
 	static T id(){return T();}
-	static T q(const T& a, const T& b){return a+b;}
-	static T upd(const T& a, const U& b, int c){return b*c;}
-	static U propa(const U& a, const U& b){return b;}
+	static T q(T a, T b){return a+b;}
+	static void upd(T& tv, T uv, int cs, int ce){tv=uv*(ce-cs);}
+	static T propa(T a, T b){return b;}
 };
 
-template<typename T, typename U=T>
+template<typename T>
 struct SegfMinAss{
 	static T id(){return inf<T>();}
-	static T q(const T& a, const T& b){return min(a,b);}
-	static T upd(const T& a, const U& b, int c){return b;}
-	static U propa(const U& a, const U& b){return b;}
+	static T q(T a, T b){return min(a,b);}
+	static void upd(T& tv, T uv, int cs, int ce){tv=uv;}
+	static T propa(T a, T b){return b;}
 };
 
-template<typename T, typename U=T>
+template<typename T>
 struct SegfMaxAss{
 	static T id(){return -inf<T>();}
-	static T q(const T& a, const T& b){return max(a,b);}
-	static T upd(const T& a, const U& b, int c){return b;}
-	static U propa(const U& a, const U& b){return b;}
+	static T q(T a, T b){return max(a,b);}
+	static void upd(T& tv, T uv, int cs, int ce){tv=uv;}
+	static T propa(T a, T b){return b;}
 };
 
-template<typename T, typename U=T>
+template<typename T>
 struct SegfSumAdd{
 	static T id(){return T();}
-	static T q(const T& a, const T& b){return a+b;}
-	static T upd(const T& a, const U& b, int c){return a+b*c;}
-	static U propa(const U& a, const U& b){return a+b;}
+	static T q(T a, T b){return a+b;}
+	static void upd(T& tv, T uv, int cs, int ce){tv=tv+uv*(ce-cs);}
+	static T propa(T a, T b){return a+b;}
 };
 
-template<typename T, typename U=T>
+template<typename T>
 struct SegfMinAdd{
-	static T id(){return T();}
-	static T q(const T& a, const T& b){return min(a,b);}
-	static T upd(const T& a, const U& b, int c){return a+b;}
-	static U propa(const U& a, const U& b){return a+b;}
+	static T id(){return inf<T>();}
+	static T q(T a, T b){return min(a,b);}
+	static void upd(T& tv, T uv, int cs, int ce){tv=tv+uv;}
+	static T propa(T a, T b){return a+b;}
 };
 
-template<typename T, typename U=T>
+template<typename T>
 struct SegfMaxAdd{
-	static T id(){return T();}
-	static T q(const T& a, const T& b){return max(a,b);}
-	static T upd(const T& a, const U& b, int c){return a+b;}
-	static U propa(const U& a, const U& b){return a+b;}
+	static T id(){return -inf<T>();}
+	static T q(T a, T b){return max(a,b);}
+	static void upd(T& tv, T uv, int cs, int ce){tv=tv+uv;}
+	static T propa(T a, T b){return a+b;}
 };

@@ -22,7 +22,7 @@ private:
 
 	void build(Node* cur, int s, int e, const Arr<T>& a){
 		if(e-s==1){
-			cur->val=a[s];
+			F::upd(cur->val,a[s],s,e);
 			return;
 		}
 
@@ -38,7 +38,7 @@ private:
 		if(e<=idx or idx<s)
 			return;
 		if(e-s==1){
-			cur->val=v;
+			F::upd(cur->val,v,s,e);
 			return;
 		}
 
