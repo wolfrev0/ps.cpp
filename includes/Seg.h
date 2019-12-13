@@ -2,13 +2,13 @@
 #include "Core.h"
 
 //Upd=Assignment
-template<typename T, typename F>
+template<typename T, typename F, typename U=T>
 struct Seg{
 	static_assert(F::q(F::id(),F::id())==F::id());
 	Seg(int n=0, T init=F::id()):n(n), tr(4*n, init){}
 	T q(int p){return q(p,p+1);}
 	T q(int s, int e){return q(1,0,n,s,e);}
-	void upd(int p, T val){upd(1,0,n,p,val);}
+	void upd(int p, U val){upd(1,0,n,p,val);}
 protected:
 	int n;
 	Arr<T> tr;
@@ -22,7 +22,7 @@ protected:
 		return F::q(q(cur*2,cs,m,s,e),q(cur*2+1,m,ce,s,e));
 	}
 
-	void upd(int cur, int cs, int ce, int p, T val){
+	void upd(int cur, int cs, int ce, int p, U val){
 		if (p>=ce||p+1<=cs)
 			return;
 		if (p<=cs&&ce<=p+1){

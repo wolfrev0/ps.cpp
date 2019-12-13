@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
 
-template<typename T, typename F>
+template<typename T, typename F, typename U=T>
 struct SegPers{
 	struct Node{
 		Node *l=0, *r=0;
@@ -12,7 +12,7 @@ struct SegPers{
 	void build(Node* cur){ Arr<T> tmp(n); build(cur, tmp); }
 	void build(Node* cur, const Arr<T>& a){ build(cur, 0, n, a); }
 	T q(Node* tr, int s, int e){ return q(tr, 0, n, s, e); }
-	Node *upd(Node* tr, int idx, T val){
+	Node *upd(Node* tr, int idx, U val){
 		auto ret=new Node();
 		upd(ret, tr, 0, n, idx, val);
 		return ret;
@@ -34,7 +34,7 @@ private:
 		cur->val=F::q(cur->l->val, cur->r->val);
 	}
 
-	void upd(Node* cur, Node* bs, int s, int e, int idx, T v){
+	void upd(Node* cur, Node* bs, int s, int e, int idx, U v){
 		if(e<=idx or idx<s)
 			return;
 		if(e-s==1){
