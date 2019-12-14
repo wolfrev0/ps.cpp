@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 alias build='source ./tools/build.sh'
-ulimit -s unlimited
+ulimit -s 524288
 mkdir -p ./bin && g++ -std=c++17 -O3 -Wall -fconcepts -iquote ./includes -o ./bin/merger.out ./tools/merger.cpp
 
 git config --global user.name "0xc0def"
