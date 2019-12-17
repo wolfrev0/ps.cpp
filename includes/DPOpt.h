@@ -1,6 +1,9 @@
 #pragma once
 #include "Core.h"
 
+auto mri(auto it){ return make_reverse_iterator(it); }//*mri(it) == *prev(it) 
+auto rerase(auto& c, auto ri){ return next(mri(c.erase(prev(ri.base())))); } 
+
 //Formula:
 //d[i] = min{j<i, a[j]*b[i]+c[j]}+e[i]
 //Constraints:(StackCHT Only)
@@ -47,8 +50,10 @@ struct CHTStack{
 		return st[s].tan*x + st[s].yic;
 	}
 };
+
+//max
 struct DynCHT{
-	void insert(i64 a, i64 b){
+	void add(i64 a, i64 b){
 		auto it=s.find({a, b});
 		if(it!=s.end())
 			b=max(b, it->yic), s.erase(it);
@@ -68,7 +73,7 @@ struct DynCHT{
 		s.insert(f);
 	}
 
-	i64 query(i64 x){
+	i64 q(i64 x){
 		auto it=s.lower_bound(x);
 		return it->tan*x+it->yic;
 	}
