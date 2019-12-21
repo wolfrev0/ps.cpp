@@ -14,7 +14,8 @@ template<typename T> using Arr=vector<T>;
 #define rep(v,x) hfor(v,0,(x))
 #define repi(v,x) hfori(v,0,(x))
 #define repo(v,x) hforo(v,0,(x))
-#define all(x) x.begin(),x.end()
+#define all(x) (x).begin(),(x).end()
+#define sz(x) ((int)(x).size())
 #define pushb push_back
 #define pushf push_front
 #define popb pop_back
@@ -31,7 +32,6 @@ template<typename T> using Arr=vector<T>;
 
 template<typename T> cxp T inf() { return numeric_limits<T>::max() / 2; }
 auto&& mapf(auto a, auto f){for(auto& x:a)x=f(x); return move(a);}
-int sz(const auto& x){ return (int)x.size(); }
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
 const f64 pi=acosl(-1);
