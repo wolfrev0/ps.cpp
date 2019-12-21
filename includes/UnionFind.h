@@ -3,9 +3,9 @@
 
 struct UF {
 	Arr<int> p;
-	Arr<int> sz;
+	Arr<int> s;
 
-	UF(int n=0, bool f=false): p(n),sz(n,1){
+	UF(int n=0, bool f=false): p(n),s(n,1){
 		hfor(i,0,n)
 			p[i]=i;
 	}
@@ -15,13 +15,13 @@ struct UF {
 		if(a==b)
 			return;
 		//union by size
-		if(sz[a]<sz[b])
+		if(s[a]<s[b])
 			swap(a,b);
 		p[b]=a;
-		sz[a]+=sz[b];
+		s[a]+=s[b];
 	}
 
 	int find(int a){return p[a]==a?a:p[a]=find(p[a]);}
 
-	int size(int a){return sz[find(a)];}
+	int size(int a){return s[find(a)];}
 };
