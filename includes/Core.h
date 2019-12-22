@@ -20,6 +20,9 @@ template<typename T> using Arr=vector<T>;
 #define pushf push_front
 #define popb pop_back
 #define popf pop_front
+#define empl emplace
+#define emplb emplace_back
+#define emplf emplace_front
 #define fi first
 #define se second
 #define cxp constexpr
@@ -31,7 +34,7 @@ template<typename T> using Arr=vector<T>;
 #endif
 
 template<typename T> cxp T inf() { return numeric_limits<T>::max() / 2; }
-auto&& mapf(auto a, auto f){for(auto& x:a)x=f(x); return move(a);}
+auto mapf(auto a, auto f){for(auto& x:a)x=f(x); return a;}
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
 const f64 pi=acosl(-1);
