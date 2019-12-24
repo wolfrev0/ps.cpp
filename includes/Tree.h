@@ -31,10 +31,10 @@ private:
 			lens.pushb(res.se + i.w);
 		}
 		int len=0;
-		if(sz(len)==1){
+		if(sz(lens)==1){
 			diam=max(diam, len=lens.back());
 		}
-		else if(sz(len)>1){
+		else if(sz(lens)>1){
 			auto it = max_element(all(lens));
 			len=*it; lens.erase(it);
 			it=max_element(all(lens));

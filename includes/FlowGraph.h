@@ -53,7 +53,7 @@ struct FlowGraph : public Graph<FlowWeight> {
 	
 	//successive shortest path || primal-dual
 	pair<i64, i64> mcmf_fast(i64 flow = inf<i64>()){
-		
+		return {};
 	}
 	
 	void gomory_hu(){
