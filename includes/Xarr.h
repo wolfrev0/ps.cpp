@@ -2,11 +2,11 @@
 #include "Core.h"
 
 template<typename T>
-struct Xarr{
-	Xarr(int n=0, const T& init=T(), int offset=1):offset(offset), a(n+offset, init){}
-	T& operator[](int idx){return a[idx+offset];}
-	auto begin(){return a.begin();}
-	auto end(){return a.end();}
-	int offset;
-	Arr<T> a;
+struct Xarr: public Arr<T>{
+	Xarr(int n=0, const T& init=T(), int offset=1):Arr<T>(n+offset, init), o(offset){}
+	T& operator[](int i){return at(i);}
+	T& at(int i){return Arr<T>::at(i+o);}
+	const T& operator[](int i)const{return at(i);}
+	const T& at(int i)const{return Arr<T>::at(i+o);}
+	int o;
 };

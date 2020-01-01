@@ -1,49 +1,37 @@
 //not my code
-//I got this code from BOJ slack, but I forgot who wrote it.
 
 #pragma once
 #include "Core.h"
 
-const int L = (1<<10);
-
-struct seg1d {
-	int v[2*L];
-	void upd (int P, int V) {
-		P += L;
-		while(P) {
-			v[P] += V;
-			P /= 2;
-		}
-	}
-	int get (int S, int E) {
-		int R = 0;
-		S += L; E += L;
-		while(S <= E) {
-			if(S % 2 == 1) R += v[S++];
-			if(E % 2 == 0) R += v[E--];
-			S /= 2; E /= 2;
-		}
-		return R;
-	}
-};
-
 struct seg2d {
-	seg1d v[2*L];
-	void upd (int X, int Y, int V) {
-		X += L;
-		while(X) {
-			v[X].upd(Y, V);
-			X /= 2;
+	static const int N=1<<10;
+	struct Seg{
+		int tr[2*N];
+		void upd(int i, int v) {
+			for(i+=N;i;i/=2)
+				tr[i] += v;
 		}
+		int get(int s, int e) {
+			int r=0;
+			for(s+=N,e+=N; s<=e; s/=2,e/=2){
+				if(s%2) r+=tr[s++];
+				if(e%2==0) r+=tr[e--];
+			}
+			return r;
+		}
+	} tr[2*N];
+
+	void upd(int x, int y, int v) {
+		for(x+=N;x;x/=2)
+			tr[x].upd(y,v);
 	}
-	int get (int XS, int XE, int YS, int YE) {
-		int R = 0;
-		XS += L; XE += L;
-		while(XS <= XE) {
-			if(XS % 2 == 1) R += v[XS++].get(YS, YE);
-			if(XE % 2 == 0) R += v[XE--].get(YS, YE);
-			XS /= 2; XE /= 2;
+	
+	int get(int xs, int xe, int ys, int ye) {
+		int r=0;
+		for(xs+=N,xe+=N; xs<=xe; xs/=2,xe/=2){
+			if(xs%2) r+=tr[xs++].get(ys,ye);
+			if(xe%2==0) r+=tr[xe--].get(ys,ye);
 		}
-		return R;
+		return r;
 	}
 };
