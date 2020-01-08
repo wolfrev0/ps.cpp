@@ -5,7 +5,7 @@ struct UF {
 	Arr<int> p;
 	Arr<int> s;
 
-	UF(int n=0, bool f=false): p(n),s(n,1){
+	UF(int n=0): p(n),s(n,1){
 		hfor(i,0,n)
 			p[i]=i;
 	}
