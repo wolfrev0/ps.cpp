@@ -2,7 +2,7 @@
 #include "Core.h"
 
 auto mri(auto it){ return make_reverse_iterator(it); }//*mri(it) == *prev(it) 
-auto rerase(auto& c, auto ri){ return next(mri(c.erase(prev(ri.base())))); } 
+auto rerase(auto& c, auto ri){ return mri(c.erase(prev(ri.base()))); } 
 
 //Formula:
 //d[i] = min{j<i, a[j]*b[i]+c[j]}+e[i]
@@ -16,29 +16,28 @@ auto rerase(auto& c, auto ri){ return next(mri(c.erase(prev(ri.base())))); }
 //https://cp-algorithms.com/geometry/convex_hull_trick.html
 //Line은 Line.h와 중복이니 상속받아서 잘 변형하는 식으로 개선해보자.
 struct Line{
-	i64 tan;
-	mutable i64 yic;
+	i64 tan, yic;
 	mutable f64 lx=-1/0.0, rx=1/0.0;
 
 	bool operator<(const Line& r)const{return tan<r.tan;}
 	bool operator<(const i64 x)const{return rx<x;}
 
-	f64 intersectX(const Line& r)const{return (r.yic-yic)/f64(tan-r.tan);} 
+	f64 cpx(const Line& r)const{return (r.yic-yic)/f64(tan-r.tan);} 
 	i64 f(i64 x)const{return tan*x+yic;}
 };
 struct CHTStack{
 	Arr<Line> st;
 	
 	void push(i64 tan, i64 yic){
-		Line f{tan, yic, 0};
+		Line z{tan, yic, 0};
 		while(sz(st)){
-			f.lx=st.back().intersectX(f);
-			if(tan==st.back().tan || f.lx<st.back().lx)
+			z.lx=st.back().cpx(z);
+			if(tan==st.back().tan || z.lx<st.back().lx)
 				st.popb();
 			else
 				break;
 		}
-		st.pushb(f);
+		st.pushb(z);
 	}
 
 	i64 get(i64 x){
@@ -57,20 +56,22 @@ struct DynCHT{
 		auto it=s.find({a, b});
 		if(it!=s.end())
 			b=max(b, it->yic), s.erase(it);
-		Line f={a,b};
-
-		auto r=s.upper_bound({a,b});
-		while(r!=s.end() && f.intersectX(*r)>r->rx)
+		
+		Line z={a,b};
+		auto r=s.upper_bound(z);
+		while(r!=s.end() && z.cpx(*r)>=r->rx)
 			r=s.erase(r);
-		auto l=mri(s.lower_bound({a,b}));
-		while(l!=s.rend() && f.intersectX(*l)<l->lx)
+		auto l=mri(s.lower_bound(z));
+		while(l!=s.rend() && z.cpx(*l)<=l->lx)
 			l=rerase(s, l);
 		
-		if(r!=s.end())
-			f.rx=r->lx=f.intersectX(*r);
-		if(l!=s.rend())
-			f.lx=l->rx=f.intersectX(*l);
-		s.insert(f);
+		z.rx = r!=s.end()?z.cpx(*r):1/0.;
+		z.lx = l!=s.rend()?z.cpx(*l):-1/0.;
+		if(z.lx>z.rx)
+			return;
+		s.insert(z);
+		if(r!=s.end()) r->lx=z.rx;
+		if(l!=s.rend()) l->rx=z.lx;
 	}
 
 	i64 q(i64 x){
