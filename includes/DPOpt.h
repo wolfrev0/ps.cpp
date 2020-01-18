@@ -40,7 +40,7 @@ struct CHTStack{
 		st.pushb(z);
 	}
 
-	i64 get(i64 x){
+	i64 q(i64 x){
 		int s=0, e=sz(st);
 		while(e-s>1){
 			int m=(s+e)/2;
