@@ -4,17 +4,6 @@
 auto mri(auto it){ return make_reverse_iterator(it); }//*mri(it) == *prev(it) 
 auto rerase(auto& c, auto ri){ return mri(c.erase(prev(ri.base()))); } 
 
-//Formula:
-//d[i] = min{j<i, a[j]*b[i]+c[j]}+e[i]
-//Constraints:(StackCHT Only)
-//max should be (tan,yic)-increase order
-//min should be (tan,yic)-decrease order
-//Note:
-//b[i]를 x, a[j]를 기울기로 생각하면 그려진다.
-//min, max, j<i, i<j<n 모두 가능하다. 그림을 잘 생각해서 써라.
-//정밀도가 문제가 된다면 x좌표 말고 ccw로 처리하는 방법도 있다. 아래링크 참고
-//https://cp-algorithms.com/geometry/convex_hull_trick.html
-//Line은 Line.h와 중복이니 상속받아서 잘 변형하는 식으로 개선해보자.
 struct Line{
 	i64 tan, yic;
 	mutable f64 lx=-1/0.0, rx=1/0.0;
@@ -25,7 +14,16 @@ struct Line{
 	f64 cpx(const Line& r)const{return (r.yic-yic)/f64(tan-r.tan);} 
 	i64 f(i64 x)const{return tan*x+yic;}
 };
-struct CHTStack{
+
+//Formula:
+//d[i] = min{j<i}(a[j]*b[i]+c[j])+e[i]
+//Constraints:
+//max should be (tan,yic)-increase order
+//min should be (tan,yic)-decrease order
+//Note:
+//b[i]를 x, a[j]를 기울기로 생각하면 그려진다.
+//min, max, j<i, i<j<n 모두 가능하다. 그림을 잘 생각해서 써라.
+struct CHT{
 	Arr<Line> st;
 	
 	void push(i64 tan, i64 yic){
@@ -50,7 +48,8 @@ struct CHTStack{
 	}
 };
 
-//max
+//max query
+//추가하는 직선들 기울기에 단조성이 없다면 이걸 써야함
 struct DynCHT{
 	void add(i64 a, i64 b){
 		auto it=s.find({a, b});
@@ -83,9 +82,9 @@ private:
 };
 
 //Formula:
-//연쇄행렬곱꼴인데 formal한 표현이 뭐더라?
+//d[i][j]=min{i<k<j}(d[i][k]+d[k][j])+c[i][j]
 //Constraints:
-//사각부등식? 뭐더라 W[a][b]+W[c][d]<=W[a][d]+W[b][c]인가?
+//c는 사각부등식{c[a][c]+c[b][d]≤c[a][d]+c[b][c] where a≤b≤c≤d}을 만족해야함
 //Note:
 Arr<Arr<i64>> knuth_opt(const Arr<i64>& init, const function<i64(int,int)>& c){
 	int n=sz(init);
@@ -108,8 +107,10 @@ Arr<Arr<i64>> knuth_opt(const Arr<i64>& init, const function<i64(int,int)>& c){
 }
 
 //Formula:
-//cht랑 비슷했던거같은데...
+//d[i][j]=min{k<j}(d[i−1][k]+c[k][j])
 //Constraints:
-//사각부등식? 뭐더라 W[a][b]+W[c][d]<=W[a][d]+W[b][c]인가?
+//a[t][i]는 d[t][i] Formula가 minimum이 되는 k들중 최소값이라 할때
+//a[t][i]≤a[t][i+1]
 //Note:
+//사각부등식을 만족하면 위 제약조건이 성립됨
 void dnc_opt(){}
