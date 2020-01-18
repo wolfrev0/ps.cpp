@@ -4,14 +4,14 @@
 auto mri(auto it){ return make_reverse_iterator(it); }//*mri(it) == *prev(it) 
 auto rerase(auto& c, auto ri){ return mri(c.erase(prev(ri.base()))); } 
 
-struct Line{
+struct L{
 	i64 tan, yic;
 	mutable f64 lx=-1/0.0, rx=1/0.0;
 
-	bool operator<(const Line& r)const{return tan<r.tan;}
+	bool operator<(const L& r)const{return tan<r.tan;}
 	bool operator<(const i64 x)const{return rx<x;}
 
-	f64 cpx(const Line& r)const{return (r.yic-yic)/f64(tan-r.tan);} 
+	f64 cpx(const L& r)const{return (r.yic-yic)/f64(tan-r.tan);} 
 	i64 f(i64 x)const{return tan*x+yic;}
 };
 
@@ -23,11 +23,12 @@ struct Line{
 //Note:
 //b[i]를 x, a[j]를 기울기로 생각하면 그려진다.
 //min, max, j<i, i<j<n 모두 가능하다. 그림을 잘 생각해서 써라.
-struct CHT{
-	Arr<Line> st;
+//쿼리하는 x값도 단조증가하면 이분탐색없이, static변수로 amortized O(n) 가능
+struct CHTStack{
+	Arr<L> st;
 	
 	void push(i64 tan, i64 yic){
-		Line z{tan, yic, 0};
+		L z{tan, yic, 0};
 		while(sz(st)){
 			z.lx=st.back().cpx(z);
 			if(tan==st.back().tan || z.lx<st.back().lx)
@@ -50,13 +51,13 @@ struct CHT{
 
 //max query
 //추가하는 직선들 기울기에 단조성이 없다면 이걸 써야함
-struct DynCHT{
+struct CHTSet{
 	void add(i64 a, i64 b){
 		auto it=s.find({a, b});
 		if(it!=s.end())
 			b=max(b, it->yic), s.erase(it);
 		
-		Line z={a,b};
+		L z={a,b};
 		auto r=s.upper_bound(z);
 		while(r!=s.end() && z.cpx(*r)>=r->rx)
 			r=s.erase(r);
@@ -78,7 +79,7 @@ struct DynCHT{
 		return it->tan*x+it->yic;
 	}
 private:
-	set<Line, less<>> s;
+	set<L, less<>> s;
 };
 
 //Formula:
