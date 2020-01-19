@@ -23,7 +23,6 @@ struct L{
 //Note:
 //b[i]를 x, a[j]를 기울기로 생각하면 그려진다.
 //min, max, j<i, i<j<n 모두 가능하다. 그림을 잘 생각해서 써라.
-//쿼리하는 x값도 단조증가하면 이분탐색없이, static변수로 amortized O(n) 가능
 struct CHTStack{
 	Arr<L> st;
 	
@@ -46,6 +45,11 @@ struct CHTStack{
 			(x<st[m].lx?e:s)=m;
 		}
 		return st[s].tan*x + st[s].yic;
+		//쿼리하는 x값도 단조증가하면 O(n) 가능
+		/*static int s=0;
+		while(s<sz(st) and x>=st[s].lx)
+			s++;
+		return st[s-1].tan*x + st[s-1].yic;*/
 	}
 };
 
