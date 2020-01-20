@@ -1,8 +1,8 @@
-#include "DirectedGraph.h"
+#include "DirGraph.h"
 
 using namespace std;
 
-DirectedGraph g(200);
+DirGraph g(200);
 unordered_map<int, bool> im;
 map<string, int> s2i;
 map<int, string> i2s;
