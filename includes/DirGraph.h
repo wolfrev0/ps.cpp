@@ -27,7 +27,6 @@ struct DirGraph: public Graph<int>{
 		}
 		return ret;
 	}
-
 	Arr<int> topo_sort_lex() {
 		Arr<int> in(n);
 		hfor(i, 0, n){
@@ -50,41 +49,73 @@ struct DirGraph: public Graph<int>{
 		return ret;
 	}
 
-	tuple<Arr<int>, Arr<Arr<int>>, DirGraph> scc(){
-		Arr<int> stat(n), ord(n), scc_id(n, -1);
+	tuple<Arr<Arr<int>>, Arr<int>, DirGraph> scc_tarjan(){
+		Arr<int> stat(n), ord(n), sccid(n, -1);
 		stack<int> stk;
 		int oi=0, scci=0;
 		rep(i,n)
 			if(!stat[i])
-				dfs_scc(i, stat, ord, stk, oi, scci, scc_id);
+				dfs_tj(i, stat, ord, stk, oi, scci, sccid);
 
 		auto grp=Arr<Arr<int>>(scci);
 		rep(i,n)
-			grp[scc_id[i]].pushb(i);
+			grp[sccid[i]].pushb(i);
 		DirGraph sccg(scci);
 		rep(i,n)
 			for(auto& j:g[i])
-				if(scc_id[i]!=scc_id[j.e])
-					sccg.add_edge(scc_id[i], scc_id[j.e]);
+				if(sccid[i]!=sccid[j.e])
+					sccg.add_edge(sccid[i], sccid[j.e]);
 
-		return {scc_id, grp, sccg};
+		return {grp, sccid, sccg};
 	}
+	DirGraph reversed(){
+		DirGraph ret(n);
+		for(auto& i:g)
+			for(auto j:i)
+				ret.add_edge(j.e, j.s);
+		return ret;
+	}
+	tuple<Arr<Arr<int>>, Arr<int>, DirGraph> scc_kosaraju(){
+		Arr<int> post_ord;
+		Arr<bool> vis(n);
+		rep(i,n)
+			if(!vis[i])
+				dfs_ksrj(i, post_ord, vis, *this);
+				
+		auto rg=reversed();
+		Arr<Arr<int>> grp;
+		fill(all(vis), false);
+		reverse(all(post_ord));
+		for(auto i:post_ord)
+			if(!vis[i])
+				grp.pushb({}), dfs_ksrj(i, grp.back(), vis, rg);
 
+		Arr<int> sccid(n);
+		rep(i,sz(grp))
+			for(auto j:grp[i])
+				sccid[j]=i;
+		DirGraph sccg(sz(grp));
+		for(auto& i:g)
+			for(auto j:i)
+				if(sccid[j.s] != sccid[j.e])
+					sccg.add_edge(sccid[j.s], sccid[j.e]);
+		return {grp, sccid, sccg};
+	}
 private:
-	int dfs_scc(int v, Arr<int>& stat, Arr<int>& ord, stack<int>& stk, int& oi, int &scci, Arr<int>& scc_id){
+	int dfs_tj(int v, Arr<int>& stat, Arr<int>& ord, stack<int>& stk, int& oi, int &scci, Arr<int>& sccid){
 		stat[v]=1;
 		stk.push(v);
 		int ret = ord[v]=oi++;
 		for(auto i: g[v]){
 			if(stat[i.e]==0)//tree edge
-				ret = min(ret, dfs_scc(i.e, stat, ord, stk, oi, scci, scc_id));
+				ret = min(ret, dfs_tj(i.e, stat, ord, stk, oi, scci, sccid));
 			else if(stat[i.e]==1)//bwd edge
 				ret = min(ret, ord[i.e]);
 			else if(stat[i.e]==2){
 				if(ord[i.e]>ord[v])//fwd edge
 					;
 				else//cross edge
-					if(scc_id[i.e]==-1)
+					if(sccid[i.e]==-1)
 						ret=min(ret, ord[i.e]);
 			}
 		}
@@ -94,12 +125,20 @@ private:
 			do{
 				cur = stk.top();
 				stk.pop();
-				scc_id[cur]=scci;
+				sccid[cur]=scci;
 			}while(sz(stk) && cur!=v);
 			scci++;
 		}
 
 		stat[v]=2;
 		return ret;
+	}
+
+	void dfs_ksrj(int v, Arr<int>& out, Arr<bool>& vis, DirGraph& g){
+		vis[v]=true;
+		for(auto i:g.g[v])
+			if(!vis[i.e])
+				dfs_ksrj(i.e, out, vis, g);
+		out.pushb(v);
 	}
 };
