@@ -25,7 +25,7 @@ struct Vec2 {
 	f64 len()const { return hypot(x, y); }
 	T lensq()const { return dot(*this); }
 	T taxi()const{return abs(x)+abs(y);}
-	Vec2 normalize()const { return *this/len(); }
+	Vec2 normalized()const { return *this/len(); }
 	T dot(const Vec2& r) const { return x*r.x + y*r.y; }
 	T dot(const Vec2& a, const Vec2& b) const { return (a-*this).dot(b-*this); }
 	T cross(const Vec2& r)const { return x*r.y - y*r.x; }
@@ -33,7 +33,7 @@ struct Vec2 {
 	T ccw(const Vec2& a, const Vec2& b) const { return cross(a, b) ? cross(a, b)/abs(cross(a, b)) : 0; }
 	f64 angle()const { auto ret=atan2(y, x); return fmod(ret+2*pi, 2*pi); }
 	Frac tan()const { return {y, x}; }
-	Vec2 project(const Vec2& p)const { Vec2 base = normalize(); return base*base.dot(p); }
+	Vec2 project(const Vec2& p)const { Vec2 base = normalized(); return base*base.dot(p); }
 	Vec2 ortho()const{ return Vec2(y, -x); }
 	Vec2 rot(double rad)const{ return Vec2(cos(rad)*x-sin(rad)*y, sin(rad)*x+cos(rad)*y); }
 	Vec2 rot(double s, double c)const{ return Vec2(c*x-s*y, s*x+c*y); }
