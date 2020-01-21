@@ -6,6 +6,14 @@ struct DirGraph: public Graph<int>{
 
 	void add_edge(int s, int e, bool dir=true) {Graph::add_edge(s, e, 1, dir);}
 
+	DirGraph reversed(){
+		DirGraph ret(n);
+		for(auto& i:g)
+			for(auto j:i)
+				ret.add_edge(j.e, j.s);
+		return ret;
+	}
+
 	Arr<int> topo_sort() {
 		Arr<int> in(n);
 		hfor(i, 0, n){
@@ -27,6 +35,7 @@ struct DirGraph: public Graph<int>{
 		}
 		return ret;
 	}
+
 	Arr<int> topo_sort_lex() {
 		Arr<int> in(n);
 		hfor(i, 0, n){
@@ -53,38 +62,19 @@ struct DirGraph: public Graph<int>{
 		Arr<Arr<int>> scc;
 		Arr<int> stat(n), ord(n);
 		stack<int> stk;
-		int oi=0;
+		int ordi=0;
 		rep(i,n)
 			if(!stat[i])
-				dfs_tj(i, stat, ord, stk, oi, scc);
-
-		Arr<int> v2scc(n);
-		rep(i,sz(scc))
-			for(auto j:scc[i])
-				v2scc[j]=i;
-		
-		DirGraph sccg(sz(scc));
-		rep(i,n)
-			for(auto& j:g[i])
-				if(v2scc[i]!=v2scc[j.e])
-					sccg.add_edge(v2scc[i], v2scc[j.e]);
-
-		return {scc, v2scc, sccg};
+				dfs_tj(i, stat, ord, ordi, stk, scc);
+		return scc_util(scc);
 	}
-	DirGraph reversed(){
-		DirGraph ret(n);
-		for(auto& i:g)
-			for(auto j:i)
-				ret.add_edge(j.e, j.s);
-		return ret;
-	}
+
 	tuple<Arr<Arr<int>>, Arr<int>, DirGraph> scc_kosaraju(){
 		Arr<int> post_ord;
 		Arr<bool> vis(n);
 		rep(i,n)
 			if(!vis[i])
 				dfs_ksrj(i, post_ord, vis, *this);
-				
 		auto rg=reversed();
 		Arr<Arr<int>> scc;
 		fill(all(vis), false);
@@ -92,27 +82,16 @@ struct DirGraph: public Graph<int>{
 		for(auto i:post_ord)
 			if(!vis[i])
 				scc.pushb({}), dfs_ksrj(i, scc.back(), vis, rg);
-
-		Arr<int> v2scc(n);
-		rep(i,sz(scc))
-			for(auto j:scc[i])
-				v2scc[j]=i;
-
-		DirGraph sccg(sz(scc));
-		for(auto& i:g)
-			for(auto j:i)
-				if(v2scc[j.s] != v2scc[j.e])
-					sccg.add_edge(v2scc[j.s], v2scc[j.e]);
-		return {scc, v2scc, sccg};
+		return scc_util(scc);
 	}
 private:
-	int dfs_tj(int v, Arr<int>& stat, Arr<int>& ord, stack<int>& stk, int& oi, Arr<Arr<int>>& scc){
+	int dfs_tj(int v, Arr<int>& stat, Arr<int>& ord, int& ordi, stack<int>& stk, Arr<Arr<int>>& scc){
 		stat[v]=1;
 		stk.push(v);
-		int ret = ord[v]=oi++;
+		int ret = ord[v]=ordi++;
 		for(auto i: g[v]){
 			if(stat[i.e]==0)//tree edge
-				ret = min(ret, dfs_tj(i.e, stat, ord, stk, oi, scc));
+				ret = min(ret, dfs_tj(i.e, stat, ord, ordi, stk, scc));
 			else if(stat[i.e]==1)//bwd edge
 				ret = min(ret, ord[i.e]);
 			else if(stat[i.e]==2){
@@ -143,5 +122,19 @@ private:
 			if(!vis[i.e])
 				dfs_ksrj(i.e, out, vis, g);
 		out.pushb(v);
+	}
+
+	tuple<Arr<Arr<int>>, Arr<int>, DirGraph> scc_util(Arr<Arr<int>> scc){
+		Arr<int> v2scc(n);
+		rep(i,sz(scc))
+			for(auto j:scc[i])
+				v2scc[j]=i;
+		
+		DirGraph sccg(sz(scc));
+		rep(i,n)
+			for(auto& j:g[i])
+				if(v2scc[i]!=v2scc[j.e])
+					sccg.add_edge(v2scc[i], v2scc[j.e]);
+		return {scc, v2scc, sccg};
 	}
 };
