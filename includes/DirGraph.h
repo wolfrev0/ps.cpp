@@ -50,23 +50,26 @@ struct DirGraph: public Graph<int>{
 	}
 
 	tuple<Arr<Arr<int>>, Arr<int>, DirGraph> scc_tarjan(){
-		Arr<int> stat(n), ord(n), sccid(n, -1);
+		Arr<Arr<int>> scc;
+		Arr<int> stat(n), ord(n);
 		stack<int> stk;
-		int oi=0, scci=0;
+		int oi=0;
 		rep(i,n)
 			if(!stat[i])
-				dfs_tj(i, stat, ord, stk, oi, scci, sccid);
+				dfs_tj(i, stat, ord, stk, oi, scc);
 
-		auto grp=Arr<Arr<int>>(scci);
-		rep(i,n)
-			grp[sccid[i]].pushb(i);
-		DirGraph sccg(scci);
+		Arr<int> v2scc(n);
+		rep(i,sz(scc))
+			for(auto j:scc[i])
+				v2scc[j]=i;
+		
+		DirGraph sccg(sz(scc));
 		rep(i,n)
 			for(auto& j:g[i])
-				if(sccid[i]!=sccid[j.e])
-					sccg.add_edge(sccid[i], sccid[j.e]);
+				if(v2scc[i]!=v2scc[j.e])
+					sccg.add_edge(v2scc[i], v2scc[j.e]);
 
-		return {grp, sccid, sccg};
+		return {scc, v2scc, sccg};
 	}
 	DirGraph reversed(){
 		DirGraph ret(n);
@@ -83,54 +86,54 @@ struct DirGraph: public Graph<int>{
 				dfs_ksrj(i, post_ord, vis, *this);
 				
 		auto rg=reversed();
-		Arr<Arr<int>> grp;
+		Arr<Arr<int>> scc;
 		fill(all(vis), false);
 		reverse(all(post_ord));
 		for(auto i:post_ord)
 			if(!vis[i])
-				grp.pushb({}), dfs_ksrj(i, grp.back(), vis, rg);
+				scc.pushb({}), dfs_ksrj(i, scc.back(), vis, rg);
 
-		Arr<int> sccid(n);
-		rep(i,sz(grp))
-			for(auto j:grp[i])
-				sccid[j]=i;
-		DirGraph sccg(sz(grp));
+		Arr<int> v2scc(n);
+		rep(i,sz(scc))
+			for(auto j:scc[i])
+				v2scc[j]=i;
+
+		DirGraph sccg(sz(scc));
 		for(auto& i:g)
 			for(auto j:i)
-				if(sccid[j.s] != sccid[j.e])
-					sccg.add_edge(sccid[j.s], sccid[j.e]);
-		return {grp, sccid, sccg};
+				if(v2scc[j.s] != v2scc[j.e])
+					sccg.add_edge(v2scc[j.s], v2scc[j.e]);
+		return {scc, v2scc, sccg};
 	}
 private:
-	int dfs_tj(int v, Arr<int>& stat, Arr<int>& ord, stack<int>& stk, int& oi, int &scci, Arr<int>& sccid){
+	int dfs_tj(int v, Arr<int>& stat, Arr<int>& ord, stack<int>& stk, int& oi, Arr<Arr<int>>& scc){
 		stat[v]=1;
 		stk.push(v);
 		int ret = ord[v]=oi++;
 		for(auto i: g[v]){
 			if(stat[i.e]==0)//tree edge
-				ret = min(ret, dfs_tj(i.e, stat, ord, stk, oi, scci, sccid));
+				ret = min(ret, dfs_tj(i.e, stat, ord, stk, oi, scc));
 			else if(stat[i.e]==1)//bwd edge
 				ret = min(ret, ord[i.e]);
 			else if(stat[i.e]==2){
-				if(ord[i.e]>ord[v])//fwd edge
-					;
-				else//cross edge
-					if(sccid[i.e]==-1)
-						ret=min(ret, ord[i.e]);
+				if(ord[i.e]<=ord[v])//cross edge which not scc grouped
+					ret=min(ret, ord[i.e]);
+				//else fwd edge
 			}
+			//else state==3 (scc grouped)
 		}
 		//nothing goes to ancestor => root of scc
 		if(ret == ord[v]){
-			int cur;
-			do{
-				cur = stk.top();
+			scc.pushb({});
+			int prv=-1;
+			while(sz(stk) && prv!=v){
+				scc.back().pushb(prv=stk.top());
+				stat[prv]=3;
 				stk.pop();
-				sccid[cur]=scci;
-			}while(sz(stk) && cur!=v);
-			scci++;
+			}
 		}
-
-		stat[v]=2;
+		else
+			stat[v]=2;
 		return ret;
 	}
 
