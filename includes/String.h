@@ -1,9 +1,10 @@
 #pragma once
 #include "Core.h"
 
-Arr<string> split(string s, char p){
+template<typename T>
+Arr<Str<T>> split(Str<T> s, char p){
 	int c;
-	Arr<string> ret;
+	Arr<Str<T>> ret;
 	while((c=s.find(p)) != -1){
 		ret.push_back(s.substr(0, c));
 		s=s.substr(c+1);
@@ -12,10 +13,11 @@ Arr<string> split(string s, char p){
 	return ret;
 }
 
-string itos(int i){
+template<typename T>
+Str<T> itos(int i){
 	if(!i)
 		return "0";
-	string ret;
+	Str<T> ret;
 	while(i)
 		ret.push_back(i%10+'0'), i/=10;
 	reverse(ret.begin(), ret.end());
@@ -23,7 +25,8 @@ string itos(int i){
 }
 
 //a.k.a. partial match table, pi
-Arr<int> failure_function(const string &p) {
+template<typename T>
+Arr<int> failure_function(const Str<T> &p) {
 	Arr<int> ret(sz(p));
 	int si = 1, pi = 0;
 	int psz=sz(p);
@@ -44,7 +47,22 @@ Arr<int> failure_function(const string &p) {
 	return ret;
 }
 
-Arr<int> kmp(const string &s, const string &p) {
+template<typename T>
+Arr<int> failure_function2(const Str<T> &p) {
+	int pi = 0;
+	Arr<int> ret(sz(p));
+	hfor(i, 1, sz(p)) {
+		while (pi > 0 && p[i] != p[pi])
+			pi = ret[pi - 1];
+		if (p[i] == p[pi])
+			ret[i] = ++pi;
+	}
+	return ret;
+}
+
+//return: full matched pattern's start indexs
+template<typename T>
+Arr<int> kmp(const Str<T> &s, const Str<T> &p) {
 	int ssz=sz(s);
 	int psz=sz(p);
 	if (ssz < psz)
@@ -70,19 +88,9 @@ Arr<int> kmp(const string &s, const string &p) {
 	return ret;
 }
 
-Arr<int> failure_function2(const string &p) {
-	int pi = 0;
-	Arr<int> ret(sz(p));
-	hfor(i, 1, sz(p)) {
-		while (pi > 0 && p[i] != p[pi])
-			pi = ret[pi - 1];
-		if (p[i] == p[pi])
-			ret[i] = ++pi;
-	}
-	return ret;
-}
-
-Arr<int> kmp2(const string &s, const string &p) {
+//return: partial matched length of that index
+template<typename T>
+Arr<int> kmp2(const Str<T> &s, const Str<T> &p) {
 	const auto &ff = failure_function2(p);
 	Arr<int> ans(sz(s));
 	int pi = 0;
@@ -102,7 +110,8 @@ bool cmp(int i, int j, const Arr<int> &g, int t){
 }
 
 //sa[i]: 사전순으로 i번째인 접미사의 시작인덱스
-Arr<int> suffix_array(const string &s){
+template<typename T>
+Arr<int> suffix_array(const Str<T> &s){
 	int n = sz(s);
 	Arr<int> sa(n), ord(n+1), nord(n+1);
 	hfor(i, 0, sz(s))
@@ -122,7 +131,8 @@ Arr<int> suffix_array(const string &s){
 
 //lcp[i]: 사전순 i번째 접미사와 i−1번째 접미사의 가장 긴 공통 접두사의 길이
 //plzrun's code
-Arr<int> get_lcp(const string &s, const Arr<int> &sa){
+template<typename T>
+Arr<int> get_lcp(const Str<T> &s, const Arr<int> &sa){
 	int n = sz(s);
 	Arr<int> lcp(n), psa(n+1), plcp(n+1);
 	psa[sa[0]]=-1;
@@ -145,7 +155,8 @@ Arr<int> get_lcp(const string &s, const Arr<int> &sa){
 }
 
 //jh05013's code, O(NlogN)
-Arr<int> suffix_array2(const string &s){
+template<typename T>
+Arr<int> suffix_array2(const Str<T> &s){
 	int n = sz(s), c = 0;
 	Arr<int> temp(n), pos2bckt(n), bckt(n), bpos(n), out(n);
 	for(int i=0; i<n; i++) out[i] = i;
@@ -174,7 +185,8 @@ Arr<int> suffix_array2(const string &s){
 }
 
 //comet's code
-Arr<int> get_lcp2(const string &s, const Arr<int> &sa){
+template<typename T>
+Arr<int> get_lcp2(const Str<T> &s, const Arr<int> &sa){
 	int h=0;
 	int n=sz(s);
 	Arr<int> rank(n);
