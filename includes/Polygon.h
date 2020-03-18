@@ -34,7 +34,7 @@ struct Polygon
 			if (i.contains(v))
 				return true;
 		int cnt = 0;
-		auto l = Segment<T>(v, v + Vec2<T>(prime, 1));
+		auto l = Segment<T>(v, v + Vec2<T>(int(1e9+9), 1));
 		for (auto i : arr) {
 			if (i.intersect_det(l))
 				cnt++;

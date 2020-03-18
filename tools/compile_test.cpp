@@ -2,7 +2,7 @@
 #include "Core.h"
 //#include "CumulQ.h"
 //#include "DPOpt.h"
-#include "DirectedGraph.h"
+#include "DirGraph.h"
 #include "FastIO.h"
 #include "Fenwick.h"
 #include "FFT.h"
@@ -17,7 +17,7 @@
 #include "MatGF2.h"
 #include "MergeSortTree.h"
 #include "Mod.h"
-#include "MonotonicQ.h"
+#include "MonoQ.h"
 #include "NumberTheory.h"
 #include "SegPers.h"
 //#include "Polygon.h"
@@ -36,7 +36,7 @@
 #include "Tree.h"
 #include "UnionFind.h"
 #include "Vec2.h"
-#include "Xarr.h"
+#include "XArr.h"
 
 signed main(){
 	
