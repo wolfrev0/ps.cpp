@@ -13,5 +13,4 @@
 # 사용법
 source envset //자동 환경설정  
 cp tpl.cpp main.cpp //main.cpp에 템플릿코드 복사  
-build main.cpp //bin에 실행파일 a.out과 병합된코드 merged.cpp가 생성된다.  
-
+build main.cpp [DEBUG or RELEASE] //bin에 실행파일 a.out과 병합된코드 merged.cpp가 생성된다.  
