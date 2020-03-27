@@ -31,7 +31,7 @@ template<typename T> using Str=basic_string<T>;
 #define PQ std::priority_queue
 
 #ifndef DEBUG
-	#pragma GCC optimize ("Ofast")
+	//#pragma GCC optimize ("Ofast") //경우에 따라 오히려 느려질수 있음
 	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(11)), 0);
 #endif
 
