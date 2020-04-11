@@ -34,13 +34,13 @@ int main() {
 		if(!n)
 			break;
 		Solver s;
-		forh(i, 0, n){
+		hfor(i, 0, n){
 			int x;
 			cin>>x;
 			s.insert(i, x-1);
 		}
 		stable_sort(s.nodes.begin(), s.nodes.end(), [](auto& a, auto& b){return a.first<b.first;});
-		forh(i,0,n){
+		hfor(i,0,n){
 			int idx=s.getidx(i);
 			cout<<idx+1<<' ';
 			s.update(i, idx+1, true);

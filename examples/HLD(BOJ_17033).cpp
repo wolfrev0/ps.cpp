@@ -18,17 +18,17 @@ int main(){
 	cin>>n>>q;
 	int c[100000];
 	Tree<int> t(n);
-	forh(i,0,n)
+	hfor(i,0,n)
 		cin>>c[i];
-	forh(i,0,n-1){
+	hfor(i,0,n-1){
 		int a,b;
 		cin>>a>>b;
 		t.add_edge(--a,--b, 1);
 	}
 	HLD<int,int,F> hld(t, 0);
-	forh(i,0,n)
+	hfor(i,0,n)
 		hld.update(i, c[i]);
-	forh(i,0,q){
+	hfor(i,0,q){
 		int a,b,c;
 		cin>>a>>b>>c;
 		if(a==1){

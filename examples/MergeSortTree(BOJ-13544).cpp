@@ -10,14 +10,14 @@ int main() {
 	int n;
 	cin>>n;
 	int arr[100000];
-	forh(i, 0, n){
+	hfor(i, 0, n){
 		cin>>arr[i];
 	}
 	MergeSortTree t({arr, arr+n});
 	int m;
 	cin>>m;
 	int la=0;
-	forh(i, 0, m){
+	hfor(i, 0, m){
 		int a, b, c;
 		cin>>a>>b>>c;
 		int d=a^la;

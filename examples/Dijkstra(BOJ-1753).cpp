@@ -12,7 +12,7 @@ int main() {
 	cin >> s;
 	s--;
 	Graph<int> g(v);
-	forh(i, 0, e)
+	hfor(i, 0, e)
 	{
 		int a, b, c;
 		cin >> a >> b >> c;
@@ -22,7 +22,7 @@ int main() {
 	vector<int> d;
 	vector<Graph<int>::Edge> p;
 	g.dijkstra(d, p, s);
-	forh(i, 0, v)
+	hfor(i, 0, v)
 		if (d[i] == inf<int>())
 			cout << "INF" << endl;
 		else

@@ -11,20 +11,20 @@ int main() {
 		int n, m;
 		cin >> n >> m;
 		FlowGraph g(200);
-		forh(i, 0, m)
+		hfor(i, 0, m)
 		{
 			int s, e, a;
 			cin >> s >> e>>a;
-			forh(j, 0, a)
+			hfor(j, 0, a)
 			{
 				int q;
 				cin >> q;
 				q--;
-				forh(k, s, e)
+				hfor(k, s, e)
 					g.add_edge(k, 100 + q, 1, k*k*k);
 			}
 		}
-		forh(i, 0, 100)
+		hfor(i, 0, 100)
 		{
 			g.add_edge(g.src, i, 1, 0);
 			g.add_edge(100 + i, g.snk, 1, 0);
@@ -35,7 +35,7 @@ int main() {
 		else
 		{
 			int ans = 0;
-			forh(i, 0, 100)
+			hfor(i, 0, 100)
 				for (auto j : g.g[i])
 					if (j.e < 200 && !j.w.cap)
 						ans = i + 1;

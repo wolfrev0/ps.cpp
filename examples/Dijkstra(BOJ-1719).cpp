@@ -9,18 +9,18 @@ int main() {
 	int n, m;
 	cin >> n >> m;
 	Graph<int> g(n);
-	forh(i, 0, m) {
+	hfor(i, 0, m) {
 		int a, b, c;
 		cin >> a >> b >> c;
 		a--, b--;
 		g.add_edge(a, b, c);
 		g.add_edge(b, a, c);
 	}
-	forh(i, 0, n) {
+	hfor(i, 0, n) {
 		vector<int> d;
 		vector<Graph<int>::Edge> p;
 		g.dijkstra(d, p, i);
-		forh(j, 0, n) {
+		hfor(j, 0, n) {
 			if (i == j)
 				cout << '-' << ' ';
 			else {

@@ -10,7 +10,7 @@ int main() {
 	srand((unsigned)time(0));
 
 	cin >> n >> k;
-	forh(i, 0, n) {
+	hfor(i, 0, n) {
 		cin >> arr[i];
 		cnt[arr[i]]++;
 	}
@@ -19,7 +19,7 @@ int main() {
 		v.push_back({ { cnt[i], 1 }, i });
 	sort(v.begin(), v.end());
 	multiset<pair<Frac, i64>> ans;
-	forh(i, v.size() - k, v.size())
+	hfor(i, v.size() - k, v.size())
 		ans.insert(v[i]);
 	while (ans.begin()->first < Frac{ (--ans.end())->first.a, (--ans.end())->first.b + ans.begin()->first.b }) {
 
@@ -29,7 +29,7 @@ int main() {
 		ans.erase(it);
 	}
 	for (auto &i : ans)
-		forh(j, 0, i.first.b)
+		hfor(j, 0, i.first.b)
 		cout << i.second << ' ';
 
 	return 0;

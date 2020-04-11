@@ -9,7 +9,7 @@ int main() {
 	int n, m;
 	cin>>n>>m;
 	DirectedGraph g(n*2);
-	forh(i, 0, m){
+	hfor(i, 0, m){
 		int a, b;
 		cin>>a>>b;
 		g.add_edge((abs(a)-1)*2+(a<0), (abs(b)-1)*2+!(b<0));
@@ -18,7 +18,7 @@ int main() {
 
 	auto scc = g.scc().first;
 	vector<int> tmp(n*2, -1);
-	forh(i, 0, scc.size()){
+	hfor(i, 0, scc.size()){
 		for(auto& j:scc[i]){
 			tmp[j]=i;
 			if(tmp[j/2*2]==tmp[j/2*2+1]){
@@ -28,7 +28,7 @@ int main() {
 		}
 	}
 	vector<int> val(n, -1);
-	forh(i, 0, scc.size()){
+	hfor(i, 0, scc.size()){
 		bool v;
 		if(val[scc[i].back()/2]==-1)
 			v=false;

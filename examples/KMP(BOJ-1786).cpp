@@ -14,7 +14,7 @@ int main() {
 	int len = strlen(pattern);
 	auto res = kmp2(text, pattern);
 	vector<int> ans;
-	forh(i, 0, res.size())
+	hfor(i, 0, res.size())
 		if(res[i]==len)
 			ans.push_back(i-len+1);
 	cout << ans.size() << endl;

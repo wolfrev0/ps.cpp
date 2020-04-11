@@ -10,13 +10,13 @@ int main()
 	int n, m;
 	cin >> n >> m;
 	Convex<f64> p1, p2;
-	forh(i, 0, n)
+	hfor(i, 0, n)
 	{
 		Vec2<f64> v;
 		cin >> v.x >> v.y;
 		p1.pushb(v);
 	}
-	forh(i, 0, m)
+	hfor(i, 0, m)
 	{
 		Vec2<f64> v;
 		cin >> v.x >> v.y;

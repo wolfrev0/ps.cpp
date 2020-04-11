@@ -9,18 +9,18 @@ struct A{
 	int cnt;
 
 	A(unsigned n=0, int cnt=0):cnt(cnt){
-		forh(i, 0, 11){
+		hfor(i, 0, 11){
 			arr[i]=n;
 		}
 	}
 
 	A operator+(const A& r)const{
 		int p[11]={1,};
-		forh(i, 1, 11)
+		hfor(i, 1, 11)
 			p[i]=p[i-1]*cnt;
 		
 		A ret = *this;
-		forh(i, 0, 11){
+		hfor(i, 0, 11){
 			forc(j, 0, i){
 				ret.arr[i]+=p[j]*bino[i][j]*r.arr[i-j];
 			}
@@ -46,7 +46,7 @@ int main() {
 	cout << fixed << setprecision(11);
 	srand((unsigned)time(0));
 	
-	forh(i, 1, 11){
+	hfor(i, 1, 11){
 		bino[i][0]=1;
 		forc(j, 1, i){
 			bino[i][j]=bino[i-1][j-1]+bino[i-1][j];
@@ -56,14 +56,14 @@ int main() {
 	int n;
 	cin>>n;
 	SplayTree<A,A,F> st;
-	forh(i,0,n){
+	hfor(i,0,n){
 		unsigned x;
 		cin>>x;
 		st.insert(i,{x, 1});
 	}
 	int m;
 	cin>>m;
-	forh(i, 0, m){
+	hfor(i, 0, m){
 		int type;
 		cin>>type;
 		if(type==1){

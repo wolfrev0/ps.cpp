@@ -10,14 +10,14 @@ int main() {
 	int n;
 	cin >> n;
 	Segment<i64> arr[3000];
-	forh(i, 0, n){
+	hfor(i, 0, n){
 		Vec2<i64> s, e;
 		cin >> s.x >> s.y >> e.x >> e.y;
 		arr[i]=Segment{s, e};
 	}
 	DisjointSet djs(n);
-	forh(i, 0, n) {
-		forh(j, i + 1, n) {
+	hfor(i, 0, n) {
+		hfor(j, i + 1, n) {
 			try {
 				if (arr[i].intersect_det(arr[j]))
 					djs.uni(i, j);

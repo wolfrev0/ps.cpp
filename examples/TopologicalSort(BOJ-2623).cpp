@@ -10,14 +10,14 @@ int main()
 	int n, m;
 	cin >> n >> m;
 	SimpleGraph g(n);
-	forh(i, 0, m)
+	hfor(i, 0, m)
 	{
 		int x;
 		cin >> x;
 		int p;
 		cin >> p;
 		p--;
-		forh(i, 1, x)
+		hfor(i, 1, x)
 		{
 			int c;
 			cin >> c;

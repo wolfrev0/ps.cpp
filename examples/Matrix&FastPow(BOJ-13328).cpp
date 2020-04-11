@@ -13,9 +13,9 @@ int main()
 	cin >> d >> t;
 
 	Mat<ModNum, 50> m;
-	forh(i,0,d){
+	hfor(i,0,d){
 		m.a[0][i]=1;
-		forh(j, 0, d)
+		hfor(j, 0, d)
 			if (i-j == 1)
 				m.a[i][j] = 1;
 	}

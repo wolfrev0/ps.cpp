@@ -29,7 +29,7 @@ int main() {
 	cin>>n;
 	pair<int,int> e[100000];
 	Tree<int> t(n);
-	forh(i, 0, n-1){
+	hfor(i, 0, n-1){
 		int a, b, c;
 		cin>>a>>b>>c;
 		a--, b--;
@@ -39,7 +39,7 @@ int main() {
 	Solver s(t, 0);
 	int m;
 	cin>>m;
-	forh(i, 0, m){
+	hfor(i, 0, m){
 		int a, b, c;
 		cin>>a>>b>>c;
 		if(a==1){

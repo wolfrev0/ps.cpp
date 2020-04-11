@@ -8,7 +8,7 @@ int main() {
 	int n, m;
 	cin >> n >> m;
 	FlowGraph g(n + m);
-	forh(i, 0, n)
+	hfor(i, 0, n)
 	{
 		int cnt;
 		cin >> cnt;
@@ -21,7 +21,7 @@ int main() {
 		}
 		g.add_edge(g.src, i, 1, 0);
 	}
-	forh(i, n, n + m)
+	hfor(i, n, n + m)
 		g.add_edge(i, g.snk, 1, 0);
 
 	cout << g.mf() << endl;

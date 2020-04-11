@@ -19,9 +19,9 @@ int main() {
 	}
 	vector<vector<vector<int>>> memo(n, {(uint)n, vector<int>(n, -1)});
 	vector<pair<int,int>> tmp;
-	forh(i, 0, n){
+	hfor(i, 0, n){
 		int val = 0;
-		forh(j, 0, n){
+		hfor(j, 0, n){
 			if(i==j)
 				continue;
 			val = max(val, g.floyd(i, j, 0, memo));

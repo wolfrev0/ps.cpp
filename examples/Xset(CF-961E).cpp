@@ -10,7 +10,7 @@ int main()
 	int arr[200001];
 	vector<pair<int,int>> v;
 	cin >> n;
-	forh(i, 0, n)
+	hfor(i, 0, n)
 	{
 		cin >> arr[i];
 		arr[i] = min(arr[i], n)-1;
@@ -21,7 +21,7 @@ int main()
 	u64 a = 0;
 	XMultiset<int> s;
 	vector<int> q;
-	forh(i, 0, n){
+	hfor(i, 0, n){
 		if(!i || min(v[i-1].first, v[i-1].second-1) < min(v[i].first, v[i].second-1)){
 			for(auto j:q)
 				s.insert(j);

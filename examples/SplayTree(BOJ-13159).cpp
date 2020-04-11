@@ -24,12 +24,12 @@ int main() {
 	int n, q;
 	cin>>n>>q;
 	SplayTree<A, bool, F> st;
-	forh(i, 0, n)
+	hfor(i, 0, n)
 		st.insert(i, {i+1,i+1,i+1});
 	Node* arr[300001]={nullptr,};
-	forh(i, 0, n)
+	hfor(i, 0, n)
 		arr[i+1]=st.find_by_order(i);
-	forh(i, 0, q){
+	hfor(i, 0, q){
 		int op;
 		cin>>op;
 		if(op==1){
@@ -66,7 +66,7 @@ int main() {
 			cout<<st.order_of(arr[x])+1<<endl;
 		}
 	}
-	forh(i, 0, st.size()){
+	hfor(i, 0, st.size()){
 		cout<<st.query(i).s<<' ';
 	}
 	cout<<endl;

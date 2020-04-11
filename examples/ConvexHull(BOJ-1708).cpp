@@ -10,7 +10,7 @@ int main()
 	int n;
 	cin >> n;
 	Convex<i64> c(n);
-	forh(i, 0, n)
+	hfor(i, 0, n)
 		cin >> c[i].x >> c[i].y;
 	c.normalize();
 	cout << c.size() << endl;

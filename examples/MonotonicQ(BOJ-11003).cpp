@@ -10,7 +10,7 @@ int main() {
   int n, l;
 	cin>>n>>l;
 	MonotonicQ<int> q;
-	forh(i, 0, n){
+	hfor(i, 0, n){
 		int x;
 		cin>>x;
 		q.push(x);

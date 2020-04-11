@@ -51,7 +51,7 @@ int main() {
 	int n;
 	cin>>n;
 	Tree<A> t(n);
-	forh(i, 0, n-1){
+	hfor(i, 0, n-1){
 		int a, b;
 		cin>>a>>b;
 		a--, b--;
@@ -60,7 +60,7 @@ int main() {
 	Solver s(t, 0);
 	int m;
 	cin>>m;
-	forh(i, 0, m){
+	hfor(i, 0, m){
 		int a, b;
 		cin>>a>>b;
 		if(a==1)
