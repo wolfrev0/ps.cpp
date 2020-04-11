@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 src=${1:-"main.cpp"}
-mkdir -p ./bin
+mkdir -p ./bin >/dev/null 2>&1
 if [ "$2" == "RELEASE" ]; then
 	g++ -std=c++17 -O3 -Wall -fconcepts -iquote ./includes -o ./bin/a.out $src
 else
