@@ -9,10 +9,10 @@ struct FlowWeight {
 	bool operator< (const FlowWeight& r)const { return cost < r.cost; }
 	bool operator> (const FlowWeight& r)const { return cost > r.cost; }
 	FlowWeight operator+(const FlowWeight& r)const { return cost + r.cost; }
+	FlowWeight operator/(const FlowWeight& r)const { return cost / r.cost; }
 };
 
-template<>
-FlowWeight inf(){return inf<i64>();}
+namespace std{template<> class numeric_limits<FlowWeight>{public: static FlowWeight max() {return FlowWeight(inf<i64>());};};}
 
 struct FlowGraph : public Graph<FlowWeight> {
 	int src, snk;
