@@ -42,3 +42,5 @@ int rd(int ub=inf<int>()){return rd(0,ub);}
 const f64 pi=acosl(-1), eps=1e-10;
 struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
 #define defer(x) auto _##__COUNTER__ = defer([&](){x});
+int getint(){int x;cin>>x;return x;}
+char getchr(){char x;cin>>x;return x;}
