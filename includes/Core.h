@@ -31,7 +31,7 @@ template<typename T> using Str=basic_string<T>;
 #define PQ std::priority_queue
 
 #ifndef DEBUG
-	//#pragma GCC optimize ("Ofast") //경우에 따라 오히려 느려질수 있음
+	//#pragma GCC optimize ("Ofast") //somtimes it become more slower
 	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(11)), 0);
 #endif
 
@@ -40,3 +40,5 @@ auto mapf(auto a, auto f){for(auto& x:a)x=f(x); return a;}
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
 const f64 pi=acosl(-1), eps=1e-10;
+struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
+#define defer(x) auto _##__COUNTER__ = defer([&](){x});
