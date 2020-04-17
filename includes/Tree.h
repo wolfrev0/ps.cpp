@@ -8,13 +8,10 @@ struct Tree{
 
 	void add_edge(int s, int e, T w){ g[s].pushb({e,w}); g[e].pushb({s,w}); }
 	T diameter()const {	return dfs_diameter(0, -1).fi; }
-	void rootize(int r, Arr<pair<int,T>>& res, int p=-1)const{
-		for(auto i:g[r]){
-			if(i.fi==p)
-				continue;
-			res[i.fi]={r,i.se};
-			rootize(i.fi,res,r);
-		}
+	Arr<pair<int,T>> rootize(int r)const{
+		Arr<pair<int,T>> res(n,{-1,-1});
+		rootize_dfs(r,-1,res);
+		return res;
 	}
 private:
 	int n;
@@ -41,6 +38,11 @@ private:
 			diam=max(diam, len+*it);
 		}
 		return {diam,len};
+	}
+	void rootize_dfs(int r, int p, Arr<pair<int,T>>& res)const{
+		for(auto i:g[r])
+			if(i.fi!=p)
+				res[i.fi]={r,i.se}, rootize_dfs(i.fi,r,res);
 	}
 };
 
