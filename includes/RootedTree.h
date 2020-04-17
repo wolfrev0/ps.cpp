@@ -15,8 +15,7 @@ struct RootedTree{
 	};
 	
 	RootedTree(const Arr<pair<int,T>>& p)
-	:n(sz(p)), r(0),
-	ch(n), p(p), dpt(n), tsz(n), rpos(n), seg(n*2){
+	:n(sz(p)), r(0), ch(n), p(p), dpt(n), tsz(n), v2euler(n), v2pre(n), v2post(n), seg(n*2){
 		while(p[r].fi!=-1)
 			r=p[r].fi;
 		hfor(i,0,n)
@@ -26,26 +25,28 @@ struct RootedTree{
 	}
 	
 	int lca(int a, int b){
-		if(rpos[a]>rpos[b])
+		if(v2euler[a]>v2euler[b])
 			swap(a,b);
-		return seg.q(rpos[a], rpos[b]+1).se;
+		return seg.q(v2euler[a], v2euler[b]+1).se;
 	}
 	
 	int n, r;
 	Arr<Arr<pair<int,T>>> ch;
 	Arr<pair<int,T>> p;
-	Arr<int> dpt, tsz, rpos, etour;
+	Arr<int> dpt, tsz, euler, v2euler, pre, v2pre, post, v2post;
 	SegBU<pair<int,int>,F> seg;
-	//Arr<int> pre_tour, post_tour; cant define infix
-	
+	//cant define infix tour
+private:
 	int dfs_init(int cur){
 		dpt[cur] = p[cur].fi>=0 ? dpt[p[cur].fi]+1 : 0;
 		tsz[cur]=1;
-		seg.upd(rpos[cur]=sz(etour), {dpt[cur],cur}), etour.pushb(cur);
+		v2pre[cur]=sz(pre), pre.pushb(cur);
+		seg.upd(v2euler[cur]=sz(euler), {dpt[cur],cur}), euler.pushb(cur);
 		for(const auto &i:ch[cur]){
 			tsz[cur]+=dfs_init(i.fi);
-			seg.upd(rpos[cur]=sz(etour), {dpt[cur],cur}), etour.pushb(cur);
+			seg.upd(v2euler[cur]=sz(euler), {dpt[cur],cur}), euler.pushb(cur);
 		}
+		v2post[cur]=sz(post), post.pushb(cur);
 		return tsz[cur];
 	}
 };
