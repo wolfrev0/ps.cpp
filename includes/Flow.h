@@ -1,23 +1,23 @@
 #pragma once
 #include "Graph.h"
 
-struct FlowWeight {
+struct FlowW {
 	int si;
 	i64 cap, cost;
-	FlowWeight(i64 cost) :cost(cost) {}
-	FlowWeight(int si, i64 cap, i64 cost) :si(si), cap(cap), cost(cost) {}
-	bool operator< (const FlowWeight& r)const { return cost < r.cost; }
-	bool operator> (const FlowWeight& r)const { return cost > r.cost; }
-	FlowWeight operator+(const FlowWeight& r)const { return cost + r.cost; }
-	FlowWeight operator/(const FlowWeight& r)const { return cost / r.cost; }
+	FlowW(i64 cost) :cost(cost) {}
+	FlowW(int si, i64 cap, i64 cost) :si(si), cap(cap), cost(cost) {}
+	bool operator< (const FlowW& r)const { return cost < r.cost; }
+	bool operator> (const FlowW& r)const { return cost > r.cost; }
+	FlowW operator+(const FlowW& r)const { return cost + r.cost; }
+	FlowW operator/(const FlowW& r)const { return cost / r.cost; }
 };
 
-namespace std{template<> class numeric_limits<FlowWeight>{public: static FlowWeight max() {return FlowWeight(inf<i64>());};};}
+namespace std{template<> class numeric_limits<FlowW>{public: static FlowW max() {return FlowW(inf<i64>());};};}
 
-struct FlowGraph : public Graph<FlowWeight> {
+struct Flow : public Graph<FlowW> {
 	int src, snk;
 
-	FlowGraph(int n) :Graph(n + 2), src(n), snk(n + 1) {}
+	Flow(int n) :Graph(n + 2), src(n), snk(n + 1) {}
 
 	void add_edge(int s, int e, i64 cap, i64 cost) {
 		Graph::add_edge(s, e, {sz(g[e]), cap, cost});
@@ -78,7 +78,7 @@ private:
 	}
 
 	pair<i64, i64> process_mcmf(i64 flow) {
-		Arr<FlowWeight> d;
+		Arr<FlowW> d;
 		Arr<Edge> p;
 		if (!spfa(d, p, src) || p[snk].s == -1)
 			return {};
