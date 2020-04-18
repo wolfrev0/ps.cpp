@@ -138,3 +138,18 @@ private:
 		return {scc, v2scc, sccg};
 	}
 };
+
+struct SAT2{
+	SAT2(int n):n(n),g(n*2){}
+	void add(int a, int b, bool inva, bool invb){
+		g.add_edge(a*2+inva, b*2+!invb);
+		g.add_edge(b*2+invb, a*2+!inva);
+	}
+	bool sat(){
+		auto [_,v2scc,__]=g.scc_tarjan();
+		bool r=true; rep(i,n) r=r&&v2scc[i*2]!=v2scc[i*2+1];
+		return r;
+	}
+	int n;
+	DirGraph g;
+};
