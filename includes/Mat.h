@@ -5,14 +5,15 @@ template<typename T>
 struct Mat{
 	const int n,m;
 	Arr<Arr<T>> a;
-	
+
 	Mat(int n, int m, bool one=false):n(n),m(m),a(n,Arr<T>(m)){
 		if(!one)
 			return;
 		rep(i,min(n,m))
-			rep(j,min(n,m))
-				a[i][j]=1;
+			a[i][i]=1;
 	}
+	Mat<T> zero()const{return Mat(n,m);}
+	Mat<T> one()const{return Mat(n,m,true);}
 	
 	Mat<T> operator*(const Mat<T>& r)const{
 		assert(m==r.n);
