@@ -37,7 +37,8 @@ template<typename T> using Str=basic_string<T>;
 
 template<typename T> cxp T inf() { return numeric_limits<T>::max() / 2; }
 template<typename U> auto mapf(const auto& a, auto f){Arr<U> r; for(const auto& x:a)r.pushb(f(x)); return r;}
-template<typename T> auto reduce(const auto& a, T acc, auto f=[](T acc, auto x){return acc+x;}){ return accumulate(all(a),acc,f); }
+template<typename T> auto reduce(const auto& a, T acc){ return accumulate(all(a),acc); }
+template<typename T> auto reduce(const auto& a, T acc, auto f){ return accumulate(all(a),acc,f); }
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
 const f64 pi=acosl(-1), eps=1e-10;
