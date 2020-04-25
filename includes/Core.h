@@ -37,6 +37,7 @@ template<typename T> using Str=basic_string<T>;
 
 template<typename T> cxp T inf() { return numeric_limits<T>::max() / 2; }
 template<typename U> auto mapf(const auto& a, auto f){Arr<U> r; for(const auto& x:a)r.pushb(f(x)); return r;}
+template<typename T> auto reduce(const auto& a, T acc, auto f=[](T acc, auto x){return acc+x;}){ return accumulate(all(a),acc,f); }
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
 const f64 pi=acosl(-1), eps=1e-10;
@@ -44,3 +45,6 @@ struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
 #define defer(x) auto _##__COUNTER__ = defer([&](){x});
 int getint(){int x;cin>>x;return x;}
 char getchr(){char x;cin>>x;return x;}
+
+#define lam(expr, ...) [&](__VA_ARGS__){return expr;}
+Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
