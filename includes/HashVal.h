@@ -12,6 +12,8 @@ struct HashVal{
 	
 	void insert(HashVal x){ rep(i,2) h[i]+=fp(p[i], x.h[i]); cnt++; }
 	void erase(HashVal x){ rep(i,2) h[i]-=fp(p[i], x.h[i]); cnt--; }
+
+	int size()const{return cnt;}
 	
 	HashVal operator+(const HashVal& r)const{return HashVal(h[0]+r.h[0], h[1]+r.h[1], cnt+r.cnt);}
 	HashVal operator-(const HashVal& r)const{return HashVal(h[0]-r.h[0], h[1]-r.h[1], cnt+r.cnt);}

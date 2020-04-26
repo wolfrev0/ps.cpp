@@ -2,18 +2,6 @@
 #include "Core.h"
 
 template<typename T>
-Arr<Str<T>> split(Str<T> s, char p){
-	int c;
-	Arr<Str<T>> ret;
-	while((c=s.find(p)) != -1){
-		ret.push_back(s.substr(0, c));
-		s=s.substr(c+1);
-	}
-	ret.push_back(s);
-	return ret;
-}
-
-template<typename T>
 Str<T> itos(int i){
 	if(!i)
 		return "0";
