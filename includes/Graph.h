@@ -80,10 +80,10 @@ struct Graph {
 				if (valid_spfa_edge(k) && ub[j] + k.w < ub[k.e]) {
 					p[k.e] = k;
 					ub[k.e] = ub[j] + k.w;
-					if(++c[k.e]>n)
-						return false;
 					if (!inq[k.e]) {
 						inq[k.e] = true;
+						if(++c[k.e]>n)
+							return false;
 						if(sz(q) && ub[k.e]<ub[q.front()])
 							q.pushf(k.e);
 						else
