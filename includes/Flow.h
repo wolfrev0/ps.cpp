@@ -82,15 +82,14 @@ private:
 		Arr<Edge> p;
 		if (!spfa(d, p, src) || p[snk].s == -1)
 			return {};
-		for (int cur = snk; p[cur].s != -1; cur = p[cur].s)
-			flow = min(flow, g[p[cur].s][p[cur].ei].w.cap);
+		for(auto& e:cons_path(d,p,snk))
+			flow=min(flow, g[e.s][e.ei].w.cap);
 		i64 cost = 0;
 		for(auto& e:cons_path(d,p,snk)){
 			g[e.s][e.ei].w.cap-=flow;
 			g[e.e][e.w.si].w.cap+=flow;
 			cost += e.w.cost*flow;
 		}
-
 		return {cost, flow};
 	}
 
