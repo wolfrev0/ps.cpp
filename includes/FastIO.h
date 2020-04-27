@@ -3,44 +3,50 @@
 #include <sys/stat.h>
 
 struct FIO{
-	char* p;
+	static const int BUF_SZ=1<<20;
+	char *p,*q;
 	FIO(){
-		struct stat64 z;
-		fstat64(0, &z);
+		struct stat z;
+		fstat(0, &z);
 		setvbuf(stdout, 0, 0, z.st_blksize);
-		p=new char[z.st_size+1];
-		cin.read(p, z.st_size+1);
+		
+		p=new char[BUF_SZ]; q=p+BUF_SZ;
+		cin.read(p, BUF_SZ);
+	}
+	char get(){
+		if(p==q) cin.read(p-=BUF_SZ, BUF_SZ);
+		return *p++;
 	}
 	operator bool(){return *p;}
 
 	FIO& operator>>(char& c){
-		do{c=*p++;}while(c==' '||c=='\n');
+		do{c=get();}while(c==' '||c=='\n');
 		return *this;
 	}
 	template<typename T>
 	FIO& operator>>(T& n){
 		n=0;
 		bool neg = false; 
-		int c=*p++;
+		int c=get();
 		while(c==' '||c=='\n')
-			c=*p++;
+			c=get();
 		if (c=='-'){
 			neg=true;
-			c=*p++;
+			c=get();
 		}
 		while('0'<=c&&c<='9')
-			n=n*10+c-'0', c=*p++;
+			n=n*10+c-'0', c=get();
 		if(neg)
 			n *= -1;
 		return *this;
 	}
 	FIO& operator>>(string& s){
-		int c=*p++;
+		int c=get();
 		while(c==' '||c=='\n')
-			c=*p++;
+			c=get();
 		while(c&&c!=' '&&c!='\n'){
 			s.pushb(c);
-			c=*p++;
+			c=get();
 		}
 		return *this;
 	}
