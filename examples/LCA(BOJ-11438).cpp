@@ -1,27 +1,20 @@
-#include "Tree.h"
-#include "FastIO.h"
+#include "LCA.h"
 #define endl '\n'//not interactive?
 //#define int i64//overflow?
 
 signed main(){
-	int n;
-	cin>>n;
-	SimpleTree t(n);
-	hfor(i,0,n-1){
-		int a,b;
-		cin>>a>>b;
-		a--,b--;
-		t.add_edge(a,b);
+	int n; cin>>n;
+	Tree<int> t(n);
+	rep(i,n-1){
+		int u,v;cin>>u>>v; u--,v--;
+		t.add_edge(u,v,0);
 	}
-	auto rt=t.rootize(0);
-	int m;
-	cin>>m;
-	hfor(i,0,m){
-		int a,b;
-		cin>>a>>b;
-		a--,b--;
-		cout<<rt.lca(a,b)+1<<endl;
+	LCA<int> lca(t.rootize(0));
+	int m; cin>>m;
+	rep(i,m){
+		int a,b; cin>>a>>b; a--,b--;
+		cout<<lca.lca(a,b)+1<<endl;
 	}
-	
+
 	return 0;
 }
