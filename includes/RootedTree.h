@@ -15,38 +15,57 @@ struct RootedTree{
 	};
 	
 	RootedTree(const Arr<pair<int,T>>& p)
-	:n(sz(p)), r(0), ch(n), p(p), dpt(n), tsz(n), v2euler(n), v2pre(n), v2post(n), seg(n*2){
+	:n(sz(p)), r(0), ch(n), p(p), tsz(n), dpt(n), cost(n){
 		while(p[r].fi!=-1)
 			r=p[r].fi;
 		hfor(i,0,n)
 			if(i!=r)
 				ch[p[i].fi].pushb({i, p[i].se});
-		dfs_init(r);
+		dfs_init(r,0,0);
 	}
-	
-	int lca(int a, int b){
-		if(v2euler[a]>v2euler[b])
-			swap(a,b);
-		return seg.q(v2euler[a], v2euler[b]+1).se;
+	int dfs_init(int cur, int d, T c){
+		dpt[cur]=d, cost[cur]=c, tsz[cur]=1;
+		for(const auto &i:ch[cur])
+			tsz[cur]+=dfs_init(i.fi, d+1, c+i.se);
+		return tsz[cur];
+	}
+
+	pair<Arr<int>, Arr<int>> euler()const{
+		pair<Arr<int>,Arr<int>> ret;
+		dfs_euler(r, ret.fi, ret.se);
+		return ret;
+	}
+	void dfs_euler(int cur, Arr<int>& eu, Arr<int>& v2eu){
+		v2eu[cur]=sz(eu), eu.pushb(cur);
+		for(const auto &i:ch[cur])
+			dfs_euler(i.fi,eu,v2eu), v2eu[cur]=sz(eu), eu.pushb(cur);
+	}
+
+	pair<Arr<int>, Arr<int>> pre()const{
+		pair<Arr<int>,Arr<int>> ret;
+		dfs_pre(r, ret.fi, ret.se);
+		return ret;
+	}
+	void dfs_pre(int cur, Arr<int>& pre, Arr<int>& v2pre){
+		v2pre[cur]=sz(pre), pre.pushb(cur);
+		for(const auto &i:ch[cur])
+			dfs_pre(i.fi);
+	}
+
+	pair<Arr<int>, Arr<int>> post()const{
+		pair<Arr<int>,Arr<int>> ret;
+		dfs_post(r, ret.fi, ret.se);
+		return ret;
+	}
+	void dfs_post(int cur, Arr<int>& post, Arr<int>& v2post){
+		for(const auto &i:ch[cur])
+			dfs_post(i.fi);
+		v2post[cur]=sz(post), post.pushb(cur);
 	}
 	
 	int n, r;
 	Arr<Arr<pair<int,T>>> ch;
 	Arr<pair<int,T>> p;
-	Arr<int> dpt, tsz, euler, v2euler, pre, v2pre, post, v2post;
-	SegBU<pair<int,int>,F> seg;
-	//cant define infix tour
-private:
-	int dfs_init(int cur){
-		dpt[cur] = p[cur].fi>=0 ? dpt[p[cur].fi]+1 : 0;
-		tsz[cur]=1;
-		v2pre[cur]=sz(pre), pre.pushb(cur);
-		seg.upd(v2euler[cur]=sz(euler), {dpt[cur],cur}), euler.pushb(cur);
-		for(const auto &i:ch[cur]){
-			tsz[cur]+=dfs_init(i.fi);
-			seg.upd(v2euler[cur]=sz(euler), {dpt[cur],cur}), euler.pushb(cur);
-		}
-		v2post[cur]=sz(post), post.pushb(cur);
-		return tsz[cur];
-	}
+	Arr<int> tsz, dpt;
+	Arr<T> cost;
 };
