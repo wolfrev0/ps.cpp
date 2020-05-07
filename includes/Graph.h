@@ -49,17 +49,18 @@ struct Graph {
 		}
 	}
 
-	int floyd(int s, int e, int m, Arr<Arr<Arr<int>>>& memo){
-		if(m==n){
-			for(auto& i:g[s])
-				if(i.e==e)
-					return i.w;
-			return inf<T>();
+	Arr<Arr<int>> floyd(){
+		Arr<Arr<int>> a(n, Arr<int>(n,inf<int>()));
+		rep(i,n){
+			for(auto j:g[i])
+				a[i][j.e]=1;
+			a[i][i]=0;
 		}
-		auto& ret=memo[s][e][m];
-		if(ret!=-1)
-			return ret;
-		return ret = min(floyd(s, e, m+1, memo), floyd(s, m, m+1, memo)+floyd(m, e, m+1, memo));
+		rep(k,n)
+			rep(i,n)
+				rep(j,n)
+					a[i][j]=min(a[i][j], a[i][k]+a[k][j]);
+		return a;
 	}
 
 	bool spfa(Arr<T>& ub, Arr<Edge>& p, int s) {
