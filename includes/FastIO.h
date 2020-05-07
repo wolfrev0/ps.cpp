@@ -3,7 +3,7 @@
 #include <sys/stat.h>
 
 struct FIO{
-	static const int BUF_SZ=1<<20;
+	static const int BUF_SZ=1<<24;
 	char *p,*q;
 	FIO(){
 		struct stat z;
