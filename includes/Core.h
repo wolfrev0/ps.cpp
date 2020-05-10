@@ -46,14 +46,18 @@ char getchr(){char x;cin>>x;return x;}
 #endif
 
 //Functional
-template<typename U> auto mapf(const auto& a, auto f){Arr<U> r; for(const auto& x:a)r.pushb(f(x)); return r;}
-template<typename T> auto reduce(const auto& a, T acc){ return accumulate(all(a),acc); }
-template<typename T> auto reduce(const auto& a, T acc, auto f){ return accumulate(all(a),acc,f); }
-template<typename T> T rev(const T& a){return {a.rbegin(),a.rend()};}
-Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
-struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
-#define defer(x) auto _##__COUNTER__ = defer([&](){x});
-#define lam(expr, ...) [&](__VA_ARGS__){return expr;}
+namespace f{
+	template<typename U> auto map(const auto& a, auto f){Arr<U> r; for(const auto& x:a)r.pushb(f(x)); return r;}
+	template<typename T> auto reduce(const auto& a, T acc){ return accumulate(all(a),acc); }
+	template<typename T> auto reduce(const auto& a, T acc, auto f){ return accumulate(all(a),acc,f); }
+	template<typename T> T rev(const T& a){return {a.rbegin(),a.rend()};}
+	Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
+	struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
+	#define defer(x) auto _##__COUNTER__ = defer([&](){x});
+	#define lam(expr, ...) [&](__VA_ARGS__){return expr;}
+}
+
+//Misc
 auto split(auto s, auto p){
 	Arr<decltype(s)> ret;
 	auto it1=s.begin();
