@@ -46,7 +46,7 @@ char getchr(){char x;cin>>x;return x;}
 #endif
 
 //Functional
-namespace f{
+namespace fun{
 	template<typename U> auto map(const auto& a, auto f){Arr<U> r; for(const auto& x:a)r.pushb(f(x)); return r;}
 	template<typename T> auto reduce(const auto& a, T acc){ return accumulate(all(a),acc); }
 	template<typename T> auto reduce(const auto& a, T acc, auto f){ return accumulate(all(a),acc,f); }
