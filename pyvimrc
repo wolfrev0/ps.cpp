@@ -1,0 +1,11 @@
+set nocompatible
+set nu
+set title
+set ruler
+set shiftwidth=2
+set tabstop=2
+set hlsearch
+set incsearch
+set smartcase
+set showmatch
+set laststatus=2

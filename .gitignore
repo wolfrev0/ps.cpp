@@ -1,5 +1,7 @@
 bin/
+__pycache__/
 in
 out
 *.gch
 main.cpp
+main.py
