@@ -20,9 +20,9 @@ struct Graph {
 	Graph(int n=0) :n(n), g(n) {}
 	Graph(const Graph& r) :n(r.n), g(r.g) {}
 
-	void add_edge(int s, int e, T w, bool dir=true){
+	void add_edge(int s, int e, T w, bool bidir=false){
 		g[s].pushb({s, e, sz(g[s]), w});
-		if(!dir)
+		if(bidir)
 			g[e].pushb({e, s, sz(g[e]), w});
 	}
 

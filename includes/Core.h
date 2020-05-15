@@ -66,3 +66,4 @@ auto split(auto s, auto p){
 	ret.pushb({it1,s.end()});
 	return ret;
 }
+int pow2ceil(int x){assert(x);return 1<<(32-__builtin_clz(x-1));}

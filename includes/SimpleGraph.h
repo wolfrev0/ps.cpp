@@ -4,7 +4,7 @@
 struct SimpleGraph: public DirGraph{
 	SimpleGraph(int n=0):DirGraph(n){}
 
-	void add_edge(int s, int e){ DirGraph::add_edge(s, e, false); }
+	void add_edge(int s, int e){ DirGraph::add_edge(s, e, true); }
 
 	Arr<int> art_points(){
 		int ordi=0;

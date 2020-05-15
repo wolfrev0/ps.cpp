@@ -4,7 +4,7 @@
 struct DirGraph: public Graph<int>{
 	DirGraph(int n=0):Graph<int>(n) {}
 
-	void add_edge(int s, int e, bool dir=true) {Graph::add_edge(s, e, 1, dir);}
+	void add_edge(int s, int e, bool bidir=false) {Graph::add_edge(s, e, 1, bidir);}
 
 	DirGraph reversed(){
 		DirGraph ret(n);
