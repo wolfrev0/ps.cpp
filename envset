@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-alias build='source ./tools/build.sh'
+alias build='source ./tool/build.sh'
 ulimit -s 524288
 mkdir -p ./bin >/dev/null 2>&1
-g++ -std=c++17 -O3 -Wall -fconcepts -iquote ./includes -o ./bin/merger.out ./tools/merger.cpp
+g++ -std=c++17 -O3 -Wall -fconcepts -iquote ./incl -o ./bin/merger.out ./tool/merger.cpp
 
 git config --global user.name "0xc0def"
 git config --global user.email lobo_prix@naver.com
