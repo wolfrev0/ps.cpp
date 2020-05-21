@@ -1,180 +1,95 @@
 #pragma once
 #include "Core.h"
 
-template<typename T, typename U>
-struct SplayNode{
-	SplayNode *p=nullptr,*l=nullptr,*r=nullptr;
-	int sz=1;
-	T val,acc;
-	U lazy;
-	~SplayNode(){
-		if(l) delete l;
-		if(r) delete r;
-	}
-
-	void adoptL(SplayNode* n){l=n; if(n) n->p=this;}
-	void adoptR(SplayNode* n){r=n; if(n) n->p=this;}
-};
-
-template<typename T, typename U>
-struct SplayFDefault{
-	static T q(const T& a, const T& b){return a+b;}
-	static void upd(SplayNode<T,U>* x){x->val+=x->lazy; x->acc+=x->lazy*x->sz;}
-	static U propa(const U& clazy, const U& lazy){return clazy+lazy;}
-};
-
-//warning: implement is 1-based index(while interface is 0-based).
-//since mock nodes(idx:0, idx:n+1) for convenient interval().
-template<typename T, typename U=T, typename F=SplayFDefault<T, U>>
+//interface: 0-based half
+//implement: 1-based half
+template<typename T>
 struct SplayTree{
-	using Node=SplayNode<T,U>;
-	SplayTree(int n=0){
-		//mock nodes
-		root=new_node();
-		root->adoptR(new_node());
-		renew(root);
-
-		//real nodes
-		hfor(i,0,n)
-			insert(0);
-	}
-	~SplayTree(){delete root;}
-
-	void update(int i, U val){update(i,i+1,val);}
-	T query(int i){return query(i,i+1);}
-
-	void update(int s, int e, U val){
-		if(s==e)
-			return;
+	SplayTree():rt(new N()){bin.s=0;ins(1,0);}
+	~SplayTree(){delete rt;}
+	void upd(int s, int e, T val){
 		auto x=interval(s+1,e+1);
-		x->lazy=F::propa(x->lazy,val);
+		lz(x)+=val;
 		renew(x,true);
 	}
-
-	T query(int s, int e){
-		if(s==e)
-			return T();
-		return acc(interval(s+1,e+1));
+	T q(int s, int e){return a(interval(s+1,e+1));}
+	void ins(int i, T v){
+		splay(nth(rt,i));
+		auto rsav=r(rt);
+		setr(rt,new N(v));
+		setr(r(rt),rsav);
+		renew(r(rt), true);
 	}
-
-	void insert(int ord, T val=T()){
-		splay(ord);
-		auto r=root->r;
-		root->adoptR(new_node(val));
-		root->r->adoptR(r);
-		renew(root->r,true);
-	}
-
-	void erase(int ord){
-		auto x=interval(ord+1,ord+2);
-		auto p=x->p;
+	void rm(int i){
+		auto x=interval(i+1,i+2);
+		setl(p(x),nullptr);
+		renew(p(x),true);
 		delete x;
-		p->l=nullptr;
-		renew(p,true);
 	}
-
-	Node* find_by_order(int ord){return splay(ord+1);}
-	int order_of(Node* x){return size(splay(x)->l)-1;}
-	int size()const{return root->sz-2;}
-protected:
-	Node* root=nullptr;
-
-	int size(Node* x)const{return x?x->sz:0;}
-	T acc(Node* x)const{return x?x->acc:T();}
-
-	Node* new_node(T val=T()){
-		auto ret=new Node();
-		ret->val=ret->acc=val;
-		ret->lazy=U();
-		return ret;
-	}
-
-	//children should be renewed.
-	void renew(Node* x, bool with_ancestor=false){
-		if(!x)
-			return;
-
-		propagate(x);
-		propagate(x->l);
-		propagate(x->r);
-		x->sz=1+size(x->l)+size(x->r);
-		x->acc=F::q(F::q(acc(x->l),x->val),acc(x->r));
-
-		if(with_ancestor)
-			renew(x->p,with_ancestor);
-	}
-
-	Node* nth(Node* x, int n){
-		assert(x);
-		propagate(x);
-		int lsz=size(x->l);
-		if(lsz>n)
-			return nth(x->l,n);
-		if(lsz<n)
-			return nth(x->r,n-lsz-1);
+private:
+	struct N{
+		T v=0,a=0,lz=0; int s=1;
+		N *p=0,*l=0,*r=0;
+		N(T v=0):v(v){}
+		~N(){if(l)delete l; if(r)delete r;}
+	};
+	N *rt, bin;
+	T& v(N *x){return x?x->v:bin.v;}
+	T& a(N *x){return x?x->a:bin.a;}
+	T& lz(N *x){return x?x->lz:bin.lz;}
+	int& s(N *x){return x?x->s:bin.s;}
+	N*& p(N *x){return x?x->p:bin.p;}
+	N*& l(N *x){return x?x->l:bin.l;}
+	N*& r(N *x){return x?x->r:bin.r;}
+	void setl(N *x, N *y){if(x)x->l=y; if(y)y->p=x;}
+	void setr(N *x, N *y){if(x)x->r=y; if(y)y->p=x;}
+	
+	N* nth(N* x, int n){
+		prop(x);
+		if(s(l(x))>n) return nth(l(x),n);
+		if(s(l(x))<n) return nth(r(x),n-s(l(x))-1);
 		return x;
 	}
-
-	Node* splay(int ord){return splay(nth(root,ord));}
-	Node* splay(Node *x, Node *rp=nullptr){
-		while(x->p!=rp){
-			auto p=x->p;
-			if (p->p!=rp)
-				rotate((x==p->l)==(p==p->p->l)?p:x);
-			rotate(x);
-		}
-		return x;
+	N* interval(int s, int e){
+		auto x=nth(rt,s-1),y=nth(rt,e);
+		splay(x);
+		setr(x,p(r(x))=nullptr);
+		splay(y),rt=x;;
+		setr(x,y);
+		renew(y,true);
+		return l(r(x));
 	}
-
-	void rotate(Node* x){
-		if(!x->p)
-			return;
-
-		auto p=x->p;
-		propagate(p);
-		propagate(p->l);
-		propagate(p->r);
-		if(!p->p)
-			root=x;
-		else if(p->p->l==p)
-			p->p->l=x;
-		else
-			p->p->r=x;
-		x->p=p->p;
-
-		Node* mid;
-		if (x==p->l){
-				p->adoptL(mid=x->r);
-				x->adoptR(p);
-		} else{
-				p->adoptR(mid=x->l);
-				x->adoptL(p);
-		}
-		if (mid)
-			mid->p=p;
-		renew(p);
-		renew(x);
+	void renew(N *x, bool anc=false){
+		prop(x), prop(l(x)), prop(r(x));
+		s(x)=s(l(x))+1+s(r(x));
+		a(x)=a(l(x))+v(x)+a(r(x));
+		if(anc and p(x)) renew(p(x),anc);
 	}
-
-	Node* interval(int s, int e){
-		auto a=nth(root,s-1);
-		auto b=nth(root,e);
-		splay(a);
-		splay(b,a);
-		return root->r->l;
+	void splay(N *x){
+		if(!p(x)) return;
+		if(p(p(x))) rot((x==l(p(x)))==(p(x)==p(p(l(x))))?p(x):x);
+		rot(x);
+		splay(x);
 	}
-
-	void propagate(Node* x){
-		if(!x)
-			return;
-		if(x->lazy==U())
-			return;
-
-		F::upd(x);
-		if(x->l)
-			x->l->lazy=F::propa(x->l->lazy,x->lazy);
-		if(x->r)
-			x->r->lazy=F::propa(x->r->lazy,x->lazy);
-		x->lazy=U();
+	void rot(N *x){
+		if(!p(x)) return;
+		prop(p(x)), prop(l(p(x))), prop(r(p(x)));
+		auto psav=p(x);
+		if(auto pp=p(p(x))){
+			if(l(pp)==p(x))setl(pp,x);
+			else setr(pp,x);
+		}else
+			p(x)=nullptr,rt=x;
+		if(x==l(psav)) setl(psav,r(x)),setr(x,psav);
+		else setr(psav,l(x)),setl(x,psav);
+		renew(psav), renew(x);
+	}
+	void prop(N *x){
+		if(!lz(x)) return;
+		v(x)+=lz(x);
+		a(x)+=lz(x)*s(x);
+		lz(l(x))+=lz(x);
+		lz(r(x))+=lz(x);
+		lz(x)=0;
 	}
 };
