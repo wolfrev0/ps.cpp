@@ -58,5 +58,6 @@ int pow2ceil(int x){assert(x);return 1<<(32-__builtin_clz(x-1));}
 template<typename T> T rev(const T& a){return {a.rbegin(),a.rend()};}
 Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
 struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
-#define defer(x) auto _##__COUNTER__ = func::defer([&](){x;});
+#define defer(x) auto _##__COUNTER__ = defer([&](){x;});
 #define lam(expr, ...) [&](__VA_ARGS__){return expr;}
+#define reduce accumulate
