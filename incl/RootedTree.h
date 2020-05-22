@@ -2,10 +2,6 @@
 #include "Tree.h"
 #include "SegBU.h"
 
-//Is Dynamic Rooted Tree Useful??
-//Disjoint Set, BBST, Link Cut Tree belongs to it.
-//But I think it doesn't need now.
-
 //Static Rooted Tree
 template<typename T>
 struct RootedTree{
@@ -30,10 +26,10 @@ struct RootedTree{
 		return tsz[cur];
 	}
 
-	pair<Arr<int>, Arr<int>> euler()const{
-		pair<Arr<int>,Arr<int>> ret;
-		dfs_euler(r, ret.fi, ret.se);
-		return ret;
+	pair<Arr<int>,Arr<int>> euler(){
+		Arr<int> eu,v2eu(n*2);
+		dfs_euler(r,eu,v2eu);
+		return {eu,v2eu};
 	}
 	void dfs_euler(int cur, Arr<int>& eu, Arr<int>& v2eu){
 		v2eu[cur]=sz(eu), eu.pushb(cur);
@@ -41,25 +37,25 @@ struct RootedTree{
 			dfs_euler(i.fi,eu,v2eu), v2eu[cur]=sz(eu), eu.pushb(cur);
 	}
 
-	pair<Arr<int>, Arr<int>> pre()const{
-		pair<Arr<int>,Arr<int>> ret;
-		dfs_pre(r, ret.fi, ret.se);
-		return ret;
+	pair<Arr<int>,Arr<int>> pre(){
+		Arr<int> pre,v2pre(n);
+		dfs_pre(r,pre,v2pre);
+		return {pre,v2pre};
 	}
 	void dfs_pre(int cur, Arr<int>& pre, Arr<int>& v2pre){
 		v2pre[cur]=sz(pre), pre.pushb(cur);
 		for(const auto &i:ch[cur])
-			dfs_pre(i.fi);
+			dfs_pre(i.fi,pre,v2pre);
 	}
 
-	pair<Arr<int>, Arr<int>> post()const{
-		pair<Arr<int>,Arr<int>> ret;
-		dfs_post(r, ret.fi, ret.se);
-		return ret;
+	pair<Arr<int>,Arr<int>> post(){
+		Arr<int> po,v2po(n);
+		dfs_post(r,po,v2po);
+		return {po,v2po};
 	}
 	void dfs_post(int cur, Arr<int>& post, Arr<int>& v2post){
 		for(const auto &i:ch[cur])
-			dfs_post(i.fi);
+			dfs_post(i.fi,post,v2post);
 		v2post[cur]=sz(post), post.pushb(cur);
 	}
 	

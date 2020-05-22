@@ -14,16 +14,13 @@ struct LCA:public RootedTree<T>{
 	//(2^n)th ancestor of v
 	int panc(int v, int n){
 		int& ret=pp[v][n];
-		if(ret!=-1)
-			return ret;
-		return ret=panc(panc(v,n-1),n-1);
+		return ret!=-1?ret:ret=panc(panc(v,n-1),n-1);
 	}
 
 	//nth ancestor or v
 	int anc(int v, int n){
-		repi(i,logn)
-			if(n&(1<<i))
-				v=panc(v,i);
+		for(;k;k-=1<<lgf(k))
+			v=panc(v,i);
 		return v;
 	}
 

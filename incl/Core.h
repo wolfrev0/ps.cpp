@@ -16,7 +16,6 @@ template<typename T> using Arr=vector<T>;template<typename T> using Func=functio
 #define repi(v,x) hfori(v,0,(x))
 #define repo(v,x) hforo(v,0,(x))
 #define all(x) (x).begin(),(x).end()
-#define sz(x) ((int)(x).size())
 #define pushb push_back
 #define pushf push_front
 #define popb pop_back
@@ -32,6 +31,8 @@ template<typename T> using Arr=vector<T>;template<typename T> using Func=functio
 //Math
 template<typename T> cxp T inf() { return numeric_limits<T>::max() / 2; }
 template<typename T> inline T sq(T x){return x*x;}
+cxp int lgc(int x){return 32-__builtin_clz(x-1);}
+cxp int lgf(int x){return 31-__builtin_clz(x);}
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
 const f64 pi=acosl(-1), eps=1e-10;
@@ -46,6 +47,7 @@ char getchr(){char x;cin>>x;return x;}
 #endif
 
 //Misc
+int sz(const auto& x){return x.size();}
 auto split(auto s, auto p){
 	Arr<decltype(s)> ret;
 	auto it1=s.begin();
@@ -54,7 +56,6 @@ auto split(auto s, auto p){
 	ret.pushb({it1,s.end()});
 	return ret;
 }
-int pow2ceil(int x){assert(x);return 1<<(32-__builtin_clz(x-1));}
 template<typename T> T rev(const T& a){return {a.rbegin(),a.rend()};}
 Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
 struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
