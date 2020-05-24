@@ -145,9 +145,22 @@ struct SAT2{
 		g.add_edge(a*2+inva, b*2+!invb);
 		g.add_edge(b*2+invb, a*2+!inva);
 	}
-	bool sat(){
-		auto [_,v2scc,__]=g.scc_tarjan();
-		bool r=true; rep(i,n) r=r&&v2scc[i*2]!=v2scc[i*2+1];
+	Arr<int> sat(){
+		auto [sccs,v2scc,__]=g.scc_tarjan();
+		bool fail=false;
+		rep(i,n) fail = fail or v2scc[i*2]==v2scc[i*2+1];
+		if(fail) return {};
+		Arr<int> r(n,-1);
+		for(auto scc:sccs){
+			bool v=false;
+			for(auto j:scc)
+				if(r[j/2]!=-1){
+					v=j%2?!r[j/2]:r[j/2];
+					break;
+				}
+			for(auto j:scc)
+				r[j/2]=j%2?!v:v;
+		}
 		return r;
 	}
 	int n;
