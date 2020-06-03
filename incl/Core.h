@@ -31,8 +31,8 @@ template<typename T> using Arr=vector<T>;template<typename T> using Func=functio
 //Math
 template<typename T> cxp T inf() { return numeric_limits<T>::max() / 2; }
 template<typename T> inline T sq(T x){return x*x;}
-cxp int lgc(int x){return 32-__builtin_clzll(x-1);}
-cxp int lgf(int x){return 31-__builtin_clzll(x);}
+cxp int lgc(int x){return 64-__builtin_clzll(x-1);}
+cxp int lgf(int x){return 63-__builtin_clzll(x);}
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
 const f64 pi=acosl(-1), eps=1e-10;
