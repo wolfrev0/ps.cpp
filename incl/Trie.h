@@ -1,18 +1,16 @@
 #pragma once 
 #include "Core.h"
 
-template<int n, char base>
+template<int n, char base=0>
 struct Trie{
-	Trie(char ch):ch(ch),cnt(0){}
-	Trie* next(char c){c-=base;if(!a[c])a[c]=new Trie<n,base>(c);return a[c];}
-	void add(auto s, auto e){
-		cnt++;
-		if(s==e)return;
-		next(*s)->add(s+1,e);
-	}
-	void add(string s){add(all(s));}
+	Trie(char ch=base, Trie* p=0):ch(ch),cnt(0),p(p){}
+	Trie* next(char c){c-=base;if(!a[c])a[c]=new Trie<n,base>(c,this);return a[c];}
+	Trie* add(auto s, auto e){cnt++;return s==e?this:next(*s)->add(s+1,e);}
+	Trie* add(auto s){return add(all(s));}
+	void rem(auto s, auto e){cnt--;if(s!=e)next(*s)->rem(s+1,e);}
+	void rem(auto s){rem(all(s));}
 	char ch;
 	int cnt;
-private:
-	Trie* a[n]{};
+	Trie *p, *a[n]{};
+	int val;
 };
