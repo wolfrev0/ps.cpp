@@ -6,8 +6,8 @@ class LineSame :public LineException {};
 
 template<typename T>
 struct Line {
-	explicit Line() :Line(-Vec2<T>::inf(), Vec2<T>::inf()) {}
-	explicit Line(const Vec2<T>& s, const Vec2<T>& e) :sv(s), ev(e) { if(sv > ev) swap(sv, ev); }
+	Line() :Line(-Vec2<T>::inf(), Vec2<T>::inf()) {}
+	Line(const Vec2<T>& s, const Vec2<T>& e) :sv(s), ev(e) { if(sv > ev) swap(sv, ev); }
 	
 	bool operator==(const Line& r)const{return tan()=r.tan() && s==r.s;}
 

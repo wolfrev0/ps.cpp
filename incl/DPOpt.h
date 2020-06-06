@@ -38,18 +38,20 @@ struct CHTStack{
 		st.pushb(z);
 	}
 
+	// i64 q(i64 x){
+	// 	int s=0, e=sz(st);
+	// 	while(e-s>1){
+	// 		int m=(s+e)/2;
+	// 		(x<st[m].lx?e:s)=m;
+	// 	}
+	// 	return st[s].tan*x + st[s].yic;
+	// }
+	//쿼리하는 x값도 단조증가하면 O(n) 가능
+	int s=0;
 	i64 q(i64 x){
-		int s=0, e=sz(st);
-		while(e-s>1){
-			int m=(s+e)/2;
-			(x<st[m].lx?e:s)=m;
-		}
-		return st[s].tan*x + st[s].yic;
-		//쿼리하는 x값도 단조증가하면 O(n) 가능
-		/*static int s=0;
 		while(s<sz(st) and x>=st[s].lx)
 			s++;
-		return st[s-1].tan*x + st[s-1].yic;*/
+		return st[s-1].tan*x + st[s-1].yic;
 	}
 };
 
