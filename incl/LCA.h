@@ -6,38 +6,37 @@ struct LCA:public RootedTree<T>{
 	using P = RootedTree<T>;
 	using P::n; using P::p; using P::dpt; using P::cost;
 
-	LCA(const Arr<pair<int,T>>& p):P(p),logn(32-__builtin_clz(n-1)),pp(n,Arr<int>(logn,-1)){
+	LCA(const Arr<pair<int,T>>& p):P(p),pp(n,Arr<int>(lgc(n),-1)){
 		rep(i,n)
 			pp[i][0]=p[i].fi;
 	}
 
-	//(2^n)th ancestor of v
-	int panc(int v, int n){
-		int& ret=pp[v][n];
-		return ret!=-1?ret:ret=panc(panc(v,n-1),n-1);
+	//(2^k)th ancestor of v
+	int panc(int v, int k){
+		int& ret=pp[v][k];
+		return ret!=-1?ret:ret=panc(panc(v,k-1),k-1);
 	}
 
-	//nth ancestor or v
-	int anc(int v, int n){
-		for(;k;k-=1<<lgf(k))
-			v=panc(v,i);
+	//kth ancestor or v
+	int anc(int v, int k){
+		for(;k;k-=k&-k)
+			v=panc(v,k&-k);
 		return v;
 	}
 
 	int lca(int a, int b){
 		if(dpt[a]>dpt[b])
 			swap(a,b);
-		repi(i,logn)
+		repi(i,lgc(n))
 			if(dpt[panc(b,i)]>=dpt[a])
 				b=panc(b,i);
 		if(a==b)
 			return a;
-		repi(i,logn)
+		repi(i,lgc(n))
 			if(panc(a,i)!=panc(b,i))
 				a=panc(a,i), b=panc(b,i);
 		return panc(a,0);
 	}
 
-	int logn;
 	Arr<Arr<int>> pp;
 };

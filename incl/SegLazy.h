@@ -52,7 +52,7 @@ protected:
 	
 	void propa(int cur, int cs, int ce){
 		if(lz[cur]!=inf<U>()){
-			tr[cur]=F::upd(tr[cur],lz[cur],cs,ce);
+			F::upd(tr[cur],lz[cur],cs,ce);
 			if(ce-cs>1){
 				addlz(cur*2, lz[cur]);
 				addlz(cur*2+1, lz[cur]);
