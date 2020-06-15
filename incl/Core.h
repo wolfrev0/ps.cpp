@@ -27,6 +27,11 @@ template<typename T> using Arr=vector<T>;template<typename T> using Func=functio
 #define se second
 #define cxp constexpr
 #define PQ std::priority_queue
+template<class... A>
+auto ARR(auto n, A&&...a){
+	if constexpr(sizeof...(a)==0) return n;
+	else return vector(n,ARR(a...));
+}
 
 //Math
 template<typename T> cxp T inf() { return numeric_limits<T>::max() / 2; }
@@ -62,11 +67,3 @@ struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
 #define defer(x) auto _##__COUNTER__ = defer([&](){x;});
 #define lam(expr, ...) [&](__VA_ARGS__){return expr;}
 #define reduce accumulate
-namespace{
-	template<typename T, int i>
-	struct A{static auto f(vector<int> n, T x=T()){return A<vector<T>,i-1>::f(n, vector<T>(n[i],x));}};
-	template<typename T>
-	struct A<T,-1>{static auto f(vector<int> n, T x=T()){return x;}};
-#define ARGN(...) (sizeof((int[]){__VA_ARGS__})/sizeof(int))
-#define ARR(T,...) A<T,ARGN(__VA_ARGS__)-1>::f({__VA_ARGS__});
-}
