@@ -44,8 +44,9 @@ const f64 pi=acosl(-1), eps=1e-10;
 
 //IO
 template<typename T>ostream& operator<<(ostream& s, const Arr<T>& a) {for(auto i:a) cout<<i<<' '; return s;}
-int getint(){int x;cin>>x;return x;}
-char getchr(){char x;cin>>x;return x;}
+int cinint(){int x;cin>>x;return x;}
+char cinchr(){char x;cin>>x;return x;}
+auto cinints(int n){Arr<int> a(n);for(auto&i:a)cin>>i;return a;}
 #ifndef DEBUG
 	//#pragma GCC optimize ("Ofast") //somtimes it become more slower
 	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(11)), 0);
