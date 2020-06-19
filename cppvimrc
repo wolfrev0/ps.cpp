@@ -13,3 +13,7 @@ set smartcase
 set showmatch
 set laststatus=2
 syntax on
+
+set bg=dark
+hi! myhi ctermbg=darkgray guibg=darkgray
+match myhi /\vlam|ARR/
