@@ -5,3 +5,4 @@ out
 *.gch
 main.cpp
 main.py
+incl/testlib.h
