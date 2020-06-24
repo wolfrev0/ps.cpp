@@ -9,3 +9,5 @@ git config --global user.email lobo_prix@naver.com
 git config --global core.editor vim
 
 cp cppvimrc ~/.vimrc
+
+wget -P incl https://raw.githubusercontent.com/MikeMirzayanov/testlib/master/testlib.h
