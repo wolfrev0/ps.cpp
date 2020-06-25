@@ -26,7 +26,7 @@ template<typename T> using Arr=vector<T>;template<typename T> using Func=functio
 #define fi first
 #define se second
 #define cxp constexpr
-#define PQ std::priority_queue
+#define PQMIN(T) std::priority_queue<T,Arr<T>,greater<T>>
 template<class... A>
 auto ARR(auto n, A&&...a){
 	if constexpr(sizeof...(a)==0) return n;
