@@ -1,6 +1,5 @@
 #pragma once
 #include "Core.h"
-#include "NumberTheory.h"
 
 using C=complex<f64>;
 
