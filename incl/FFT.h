@@ -62,7 +62,9 @@ Arr<C> fft(Arr<C> a){
 Arr<C> ffti(Arr<C> a){
 	int n=sz(a);
 	reverse(a.begin()+1, a.end());
-	return mapf(fft(a), [n](auto x){return x/C(n,0);});
+	auto r=fft(a);
+	for(auto& x:r) x/=C(n,0);
+	return r;
 }
 
 Arr<i64> conv(const Arr<i64>& a, const Arr<i64>& b){
