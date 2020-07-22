@@ -122,10 +122,21 @@ Arr<Arr<int>> sieve_divs(int ub){
 	return ret;
 }
 
-int eulerphi(int n){return 0;}
+int eutot(int n){
+	int r=1, x=n;
+	for(int i=2;i*i<=n;i++){
+		if(x%i) continue;
+		while(x%i==0)
+			x/=i,r*=i;
+		r=r/i*(i-1);
+	}
+	if(x>1)
+		r*=x-1;
+	return r;
+}
 
 //floor(log(n))
-int lgf(i64 n, int base=2){
+int log_f(i64 n, int base=2){
 	int ret=0;
 	while (n)
 		n/=base, ret++;
@@ -133,7 +144,7 @@ int lgf(i64 n, int base=2){
 }
 
 //ceil(log(n))
-int lgc(i64 n, int base=2) {
+int log_c(i64 n, int base=2) {
 	int ret=0;
 	int rem=0;
 	while (n)
