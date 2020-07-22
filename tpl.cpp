@@ -6,6 +6,4 @@ using pint = pair<int,int>;
 using tint = tuple<int,int,int>;
 
 signed main(){
-	return 0;
 }
-
