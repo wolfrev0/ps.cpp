@@ -59,19 +59,33 @@ struct Flow : public Graph<FlowW> {
 	void gomory_hu(){
 	}
 
-	Arr<Edge> cuts(){
+	tuple<Arr<Edge>,Arr<int>,Arr<int>> cuts(){
 		Arr<Edge> r;
-		auto vis=Arr<bool>(n+2);
-		_cuts(src,vis,r);
-		return r;
+		auto vis=Arr<bool>(n+2), pvis=Arr<bool>(n+2);
+		_cuts_pre(src,pvis), _cuts(src,vis,pvis,r);
+		sort(all(r),lam(make_pair(x.s,x.e)<make_pair(y.s,y.e),auto x,auto y));
+		r.erase(unique(all(r),lam(make_pair(x.s,x.e)==make_pair(y.s,y.e),auto x,auto y)),r.end());
+
+		Arr<int> srcv, snkv;
+		rep(i,n-2)
+			(pvis[i]?srcv:snkv).pushb(i);
+
+		return {r,srcv,snkv};
 	}
-	void _cuts(int v, Arr<bool>& vis, Arr<Edge>& r){
+	void _cuts_pre(int v, Arr<bool>& vis){
+		if(vis[v])return;
+		vis[v]=true;
+		for(auto i:g[v])
+			if(i.w.cap)
+				_cuts_pre(i.e,vis);
+	}
+	void _cuts(int v, Arr<bool>& vis, Arr<bool>& pvis, Arr<Edge>& r){
 		if(vis[v]) return;
 		vis[v]=true;
 
 		for(auto i:g[v]){
-			if(!i.w.cap){ if(!vis[i.e]) r.pushb(i); }
-			else _cuts(i.e,vis,r);
+			if(!i.w.cap and !pvis[i.e]) r.pushb(i);
+			else _cuts(i.e,vis,pvis,r);
 		}
 	}
 private:
