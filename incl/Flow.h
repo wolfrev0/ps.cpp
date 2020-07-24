@@ -58,6 +58,22 @@ struct Flow : public Graph<FlowW> {
 	
 	void gomory_hu(){
 	}
+
+	Arr<Edge> cuts(){
+		Arr<Edge> r;
+		auto vis=Arr<bool>(n+2);
+		_cuts(src,vis,r);
+		return r;
+	}
+	void _cuts(int v, Arr<bool>& vis, Arr<Edge>& r){
+		if(vis[v]) return;
+		vis[v]=true;
+
+		for(auto i:g[v]){
+			if(!i.w.cap){ if(!vis[i.e]) r.pushb(i); }
+			else _cuts(i.e,vis,r);
+		}
+	}
 private:
 	i64 process_mf(int v, i64 mf, Arr<bool>& vis) {
 		if (v == snk)
