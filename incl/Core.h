@@ -74,3 +74,5 @@ auto ARR(auto n, A&&...a){
 	static int a[mx-mn+1];\
 	return a[i-mn];\
 }
+#define lb lower_bound
+#define ub upper_bound
