@@ -28,6 +28,7 @@ template<typename T> using Arr=vector<T>;template<typename T> using Func=functio
 #define mkp make_pair
 #define mkt make_tuple
 #define cxp constexpr
+#define PQMAX(...) std::priority_queue<__VA_ARGS__>
 #define PQMIN(...) std::priority_queue<__VA_ARGS__,Arr<__VA_ARGS__>,greater<__VA_ARGS__>>
 
 //Math
