@@ -10,4 +10,4 @@ git config --global core.editor vim
 
 cp cppvimrc ~/.vimrc
 
-wget -P incl https://raw.githubusercontent.com/MikeMirzayanov/testlib/master/testlib.h
+#wget -P incl https://raw.githubusercontent.com/MikeMirzayanov/testlib/master/testlib.h
