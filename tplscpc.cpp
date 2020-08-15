@@ -1,4 +1,5 @@
 #include "Core.h"
+#include "FastIO.h"
 
 //#define endl '\n'//disabled for partial score. When you need fastIO then turn on.
 #define int i64//MLE?
