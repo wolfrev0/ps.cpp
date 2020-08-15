@@ -1,3 +1,6 @@
+#pragma once
+#include "Core.h"
+
 template<typename T>
 struct Monoid{
 	virtual T f(T a, T b)const=0;

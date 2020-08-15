@@ -1,5 +1,5 @@
 #include "Core.h"
-#include "FastIO.h"
+//#include "FastIO.h"
 
 #define endl '\n'
 #define int i64//MLE?
