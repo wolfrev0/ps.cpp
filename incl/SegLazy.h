@@ -47,7 +47,7 @@ protected:
 	}
 	void propa(int c, int cs, int ce){
 		if(lz[c]!=mu.id()){
-			tr[c]=mu.f(tr[c], mu.fn(lz[c],ce-cs));
+			tr[c]=mu.f(tr[c], mq.fn(lz[c],ce-cs));
 			if(ce-cs>1){
 				addlz(c*2, lz[c]);
 				addlz(c*2+1, lz[c]);
