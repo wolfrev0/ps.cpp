@@ -2,6 +2,7 @@
 #include "Core.h"
 #include <sys/stat.h>
 
+#ifndef DEBUG
 struct FIO{
 	static const int BUF_SZ=1<<24;
 	char *p,*q;
@@ -52,3 +53,4 @@ struct FIO{
 	}
 }fcin;
 #define cin fcin
+#endif
