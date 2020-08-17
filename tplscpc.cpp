@@ -1,7 +1,7 @@
 #include "Core.h"
 //#include "FastIO.h"
 
-#define endl '\n'
+//#define endl '\n'//disabled for partial score
 #define int i64//MLE?
 using pint = pair<int,int>;
 using tint = tuple<int,int,int>;

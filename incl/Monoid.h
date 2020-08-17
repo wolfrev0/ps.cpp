@@ -25,3 +25,9 @@ struct MonoidMax:Monoid<T>{
 	T id()const{return -inf<T>();}
 	T fn(T a, int n)const{return a;}
 };
+template<typename T, T _id = inf<T>()>
+struct MonoidAss:Monoid<T>{
+	T f(T a, T b)const{return b;}
+	T id()const{return _id;}
+	T fn(T a, int n)const{return a;}
+};
