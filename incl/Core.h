@@ -41,14 +41,68 @@ int rd(int ub=inf<int>()){return rd(0,ub);}
 const f64 pi=acosl(-1), eps=1e-10;
 
 //IO
-template<typename T>ostream& operator<<(ostream& s, const Arr<T>& a) {for(auto i:a) cout<<i<<' '; return s;}
-auto cinint(){i64 x;cin>>x;return x;}
-auto cinchr(){char x;cin>>x;return x;}
-auto cinints(int n){Arr<i64> a(n);for(auto&i:a)cin>>i;return a;}
 #ifndef DEBUG
 	//#pragma GCC optimize ("Ofast") //somtimes it become more slower
 	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(11)), 0);
 #endif
+#include <sys/stat.h>
+
+#if FASTIO && !(DEBUG)
+struct FIO{
+	static const int BUF_SZ=1<<24;
+	char *p,*q;
+	FIO(){
+		struct stat z;
+		fstat(0, &z);
+		setvbuf(stdout, 0, 0, z.st_blksize);
+		
+		p=new char[BUF_SZ]; q=p+BUF_SZ;
+		cin.read(p, BUF_SZ);
+	}
+	char get(){
+		if(p==q) cin.read(p-=BUF_SZ, BUF_SZ);
+		return *p++;
+	}
+	operator bool(){return *p;}
+
+	FIO& operator>>(char& c){
+		do{c=get();}while(c==' '||c=='\n');
+		return *this;
+	}
+	template<typename T>
+	FIO& operator>>(T& n){
+		n=0;
+		bool neg = false; 
+		int c=get();
+		while(c==' '||c=='\n')
+			c=get();
+		if (c=='-'){
+			neg=true;
+			c=get();
+		}
+		while('0'<=c&&c<='9')
+			n=n*10+c-'0', c=get();
+		if(neg)
+			n *= -1;
+		return *this;
+	}
+	FIO& operator>>(string& s){
+		int c=get();
+		while(c==' '||c=='\n')
+			c=get();
+		while(c&&c!=' '&&c!='\n'){
+			s.pushb(c);
+			c=get();
+		}
+		return *this;
+	}
+}fcin;
+#define cin fcin
+#endif
+template<typename T>ostream& operator<<(ostream& s, const Arr<T>& a) {for(auto i:a) cout<<i<<' '; return s;}
+auto cinint(){i64 x;cin>>x;return x;}
+auto cinchr(){char x;cin>>x;return x;}
+auto cinints(int n){Arr<i64> a(n);for(auto&i:a)cin>>i;return a;}
 
 //Misc
 int sz(const auto& x){return x.size();}
