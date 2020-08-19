@@ -13,10 +13,4 @@ function f(){
 		echo $(awk -F'"' '/#include *"/{print "incl/"$2, FILENAME}' $i)
 	done | tsort
 }
-awk '//' $(f) | grep -Ev '#include *"|#pragma once' > _submit.cpp
-grep -E '#include *<' _submit.cpp > submit.cpp
-grep -Ev '#include *<' _submit.cpp > __submit.cpp
-g++ $base_arg -fdirectives-only -fmax-include-depth=0 __submit.cpp 2> /dev/null >> submit.cpp
-rm _submit.cpp __submit.cpp
-#awk  -F'#include' '//'
-#submit.cpp >> submit.cpp
+awk '//' $(f) | grep -Ev '#include *"|#pragma once' > submit.cpp
