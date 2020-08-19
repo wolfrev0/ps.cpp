@@ -1,7 +1,6 @@
-#include "Core.h"
+//#define FASTIO 1
 
-//disabled for partial score
-//#include "FastIO.h"
+#include "Core.h"
 //#define endl '\n'
 #define int i64//MLE?
 using pint = pair<int,int>;
