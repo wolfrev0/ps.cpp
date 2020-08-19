@@ -1,5 +1,3 @@
-//#define FASTIO 1
-
 #include "Core.h"
 //#define endl '\n'
 #define int i64//MLE?
