@@ -3,7 +3,7 @@ src=${1:-"main.cpp"}
 mkdir -p ./bin >/dev/null 2>&1
 base_arg=$src" -iquote ./incl -std=c++17 -Wall -fconcepts"
 if [ "$2" == "R" ]; then #release
-	g++ $base_arg -O0 -D FASTIO=1
+	g++ $base_arg -O0
 else #debug
 	g++ $base_arg -O2 -D DEBUG=1 -ggdb3
 fi
