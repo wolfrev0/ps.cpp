@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 src=${1:-"main.cpp"}
 mkdir -p ./bin >/dev/null 2>&1
-if [ "$2" == "P" ]; then #preprocess
-	#g++ -iquote ./incl -std=c++17 -MM main.cpp | 
-	#sed -i 's%#include <%//PROTECTED #include <%g' $(find . -name '*.[hc]pp')
-else if [ "$2" == "R" ]; then #release
-	g++ -iquote ./incl -std=c++17 -O3 -Wall -fconcepts -o ./bin/a.out $src
+base_arg=$src" -iquote ./incl -std=c++17 -Wall -fconcepts"
+if [ "$2" == "R" ]; then #release
+	g++ $base_arg -O0 -D FASTIO=1
 else #debug
-	g++ -iquote ./incl -std=c++17 -O0 -Wall -fconcepts -o ./bin/a.out -ggdb3 -D DEBUG=1  $src
+	g++ $base_arg -O2 -D DEBUG=1 -ggdb3
 fi
-./bin/merger.out $src ./incl
+function f(){
+	for i in $(g++ $base_arg -MM | cut -d ' ' -f2-)
+	do
+		echo $(awk -F'"' '/#include *"/{print "incl/"$2, FILENAME}' $i)
+	done | tsort
+}
+awk '//' $(f) | grep -Ev '#include *"|#pragma once' > submit.cpp
