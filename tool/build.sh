@@ -9,8 +9,9 @@ else #debug
 fi
 function f(){
 	arr=$(g++ $base_arg -MM | cut -d ' ' -f2-)
-	if [ 1<${#arr[@]} ]; then
-		for i in $arg
+	cnt=$(echo $arr | wc -w | cat)
+	if (( 1 < cnt )); then
+		for i in $arr
 		do
 			echo $(awk -F'"' '/#include *"/{print "incl/"$2, FILENAME}' $i)
 		done | tsort
