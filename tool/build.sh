@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+#build <*.cpp|*.h> <R|D|H>
+
 src=${1:-"main.cpp"}
 #mkdir -p ./bin >/dev/null 2>&1
 base_arg=$src" -iquote ./incl -std=c++17 -Wall -fconcepts"
@@ -7,6 +10,7 @@ if [ "$2" == "R" ]; then #release
 else #debug
 	g++ $base_arg -O0 -D DEBUG=1 -ggdb3
 fi
+
 function f(){
 	arr=$(g++ $base_arg -MM | cut -d ' ' -f2-)
 	cnt=$(echo $arr | wc -w | cat)
@@ -19,4 +23,6 @@ function f(){
 		echo $src
 	fi
 }
-awk '//' $(f) | grep -Ev '#include *"|#pragma once' > submit.cpp
+if [ "$2" != "H" ]; then #header
+	awk '//' $(f) | grep -Ev '#include *"|#pragma once' > submit.cpp
+fi
