@@ -1,5 +1,6 @@
 #pragma once
 #include <bits/stdc++.h>
+#include "Config.h"
 
 //Common
 using namespace std;using f64 = double;using i64=long long;using u64=unsigned long long;
