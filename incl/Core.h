@@ -33,6 +33,10 @@ template<typename T> using Arr=vector<T>;template<typename T> using Func=functio
 #define PQMIN(...) std::priority_queue<__VA_ARGS__,Arr<__VA_ARGS__>,greater<__VA_ARGS__>>
 #define lb lower_bound
 #define ub upper_bound
+int sz(const auto& x){return x.size();}
+#if INT64
+	#define int i64
+#endif
 
 //Math
 template<typename T> cxp T inf() { return numeric_limits<T>::max() / 2; }
@@ -43,12 +47,14 @@ const f64 pi=acosl(-1), eps=1e-10;
 
 //IO
 #if !(DEBUG)
-	//#pragma GCC optimize ("Ofast")
 	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(11)), 0);
+#endif
+#if !(INTERACTIVE)
+	#define endl '\n'
 #endif
 
 //Misc
-int sz(const auto& x){return x.size();}
+//#pragma GCC optimize ("Ofast")
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
 auto split(auto s, auto p){
@@ -69,8 +75,4 @@ template<class... A>
 auto ARR(auto n, A&&...a){
 	if constexpr(sizeof...(a)==0) return n;
 	else return vector(n,ARR(a...));
-}
-#define XA(name,mn,mx) int& name(int i){\
-	static int a[mx-mn+1];\
-	return a[i-mn];\
 }
