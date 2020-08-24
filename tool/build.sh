@@ -3,7 +3,13 @@
 #build <*.cpp|*.h> <R|D|H>
 
 src=${1:-"main.cpp"}
-#mkdir -p ./bin >/dev/null 2>&1
+
+if [ "incl/Core.h.gch" -ot "incl/Core.h" ]; then
+	touch incl/Core.h.gch
+	build incl/Core.h H
+	echo $src
+fi
+
 base_arg=$src" -iquote ./incl -std=c++17 -Wall -fconcepts"
 if [ "$2" == "R" ]; then #release
 	g++ $base_arg -O2
