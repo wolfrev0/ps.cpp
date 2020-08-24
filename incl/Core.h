@@ -3,8 +3,6 @@
 #include "Config.h"
 
 //Common
-using namespace std;using f64 = double;using i64=long long;using u64=unsigned long long;
-template<typename T> using Arr=vector<T>;template<typename T> using Func=function<T>;template<typename T> using Str=basic_string<T>;
 #define hfor(v, s, e) for(int v=(s);(s)<=v&&v<(e);++v)//half-opened range
 #define hfori(v, s, e) for(int v=(e)-1;(s)<=v&&v<(e);--v)//inversion
 #define hforo(v, s, e) int v=(s);for(;(s)<=v&&v<(e);++v)//out declaration
@@ -33,10 +31,14 @@ template<typename T> using Arr=vector<T>;template<typename T> using Func=functio
 #define PQMIN(...) std::priority_queue<__VA_ARGS__,Arr<__VA_ARGS__>,greater<__VA_ARGS__>>
 #define lb lower_bound
 #define ub upper_bound
-int sz(const auto& x){return x.size();}
 #if INT64
 	#define int i64
 #endif
+using namespace std;using f64 = double;using i64=long long;using u64=unsigned long long;
+template<typename T> using Arr=vector<T>;template<typename T> using Func=function<T>;template<typename T> using Str=basic_string<T>;
+using pint = pair<int,int>;
+using tint = tuple<int,int,int>;
+int sz(const auto& x){return x.size();}
 
 //Math
 template<typename T> cxp T inf() { return numeric_limits<T>::max() / 2; }
