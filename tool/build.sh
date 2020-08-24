@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
 
-#build <*.cpp|*.h> <R|D|H>
+#build <*.cpp|*.h> <R|D>
 
 src=${1:-"main.cpp"}
 
-if [ "incl/Core.h.gch" -ot "incl/Core.h" ]; then
-	touch incl/Core.h.gch
-	build incl/Core.h H
-	echo $src
-fi
-
-base_arg=$src" -iquote ./incl -std=c++17 -Wall -fconcepts"
+base_arg=" -iquote ./incl -std=c++17 -Wall -fconcepts"
 if [ "$2" == "R" ]; then #release
-	g++ $base_arg -O2
+	option="-O2"
 else #debug
-	g++ $base_arg -O0 -D DEBUG=1 -ggdb3
+	option="-O0 -D DEBUG=1 -ggdb3"
+	if [[ "$2" != "incl/Core.h" ]] && [ "incl/Core.h.gch" -ot "incl/Core.h" ]; then
+		g++ incl/Core.h $base_arg $option
+	fi
 fi
+g++ $src $base_arg $option
 
 function f(){
-	arr=$(g++ $base_arg -MM | cut -d ' ' -f2-)
+	arr=$(g++ $src $base_arg -MM | cut -d ' ' -f2-)
 	arr="${arr//\\}"
 	if (( 1 < $(echo $arr | wc -w | cat) )); then
 		for i in $arr
@@ -34,6 +32,6 @@ function f(){
 		echo $src
 	fi
 }
-if [ "$2" != "H" ]; then #header
+if ! [[ "$2" =~ ?*.h ]]; then #header
 	awk '//' $(f) | grep -Ev '#include *"|#pragma once' > submit.cpp
 fi
