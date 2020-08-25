@@ -9,7 +9,7 @@ if [ "$2" == "R" ]; then #release
 	option="-O2"
 else #debug
 	option="-O0 -D DEBUG=1 -ggdb3"
-	if [[ "$2" != "incl/Core.h" ]] && [ "incl/Core.h.gch" -ot "incl/Core.h" ]; then
+	if [ "$src" != "incl/Core.h" ] && [ "incl/Core.h.gch" -ot "incl/Core.h" ]; then
 		g++ incl/Core.h $base_arg $option
 	fi
 fi
