@@ -120,4 +120,52 @@ Arr<Arr<i64>> knuth_opt(const Arr<i64>& init, const function<i64(int,int)>& c){
 //a[t][i]≤a[t][i+1]
 //Note:
 //사각부등식을 만족하면 위 제약조건이 성립됨
-void dnc_opt(){}
+
+//Codeground SCPC2016(2회) 본선1번 재활용
+int n,m;
+Arr<int> a;
+Arr<Arr<int>> dp,c;
+
+int& f(int i, int j){
+	static int _0=0, _inf=inf<int>();
+	if(j==-1) return _0;
+	if(i==-1) return _inf;
+	return dp[i][j];
+}
+
+void dnc(int i, int s, int e, int ks, int ke){
+	int mid=(s+e)/2, kk=ks;
+	hfor(k,ks,ke){
+		if(f(i,mid) > f(i-1,k)+c[k+1][mid])
+			f(i,mid)=f(i-1,k)+c[k+1][mid], kk=k;
+	}
+	if(e-s>1){
+		dnc(i,s,mid,ks,kk+1);
+		dnc(i,mid,e,kk,ke);
+	}
+}
+
+signed main(){
+	int t; cin>>t;
+	cfor(ti,1,t){
+		cout<<"Case #"<<ti<<endl;
+		cin>>n>>m;
+		a=cinints(n);
+		sort(all(a));
+		dp=ARR(m,n,inf<int>());
+		c=ARR(n,n,0ll);
+		rep(i,n){
+			int l=0,r=0;
+			cfori(j,0,i){
+				l+=a[j];
+				if((i-j+1)%2)
+					l-=a[(i+j)/2];
+				c[j][i]=r-l;
+				if((i-j+1)%2)
+					r+=a[(i+j)/2];
+			}
+		}
+		rep(i,m) dnc(i,0,n,-1,n-1);
+		cout<<dp[m-1][n-1]<<endl;
+	}
+}
