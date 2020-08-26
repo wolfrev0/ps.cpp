@@ -2,7 +2,7 @@
 #include "Core.h"
 #include <sys/stat.h>
 
-#if !(DEBUG) && !(INTERACTIVE)
+#if !(DEBUG)
 struct FIO{
 	static const int BUF_SZ=1<<24;
 	char *p,*q;

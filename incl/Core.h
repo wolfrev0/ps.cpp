@@ -31,13 +31,8 @@
 #define PQMIN(...) std::priority_queue<__VA_ARGS__,Arr<__VA_ARGS__>,greater<__VA_ARGS__>>
 #define lb lower_bound
 #define ub upper_bound
-#if INT64
-	#define int i64
-#endif
 using namespace std;using f64 = double;using i64=long long;using u64=unsigned long long;
 template<typename T> using Arr=vector<T>;template<typename T> using Func=function<T>;template<typename T> using Str=basic_string<T>;
-using pint = pair<int,int>;
-using tint = tuple<int,int,int>;
 int sz(const auto& x){return x.size();}
 
 //Math
@@ -50,9 +45,6 @@ const f64 pi=acosl(-1), eps=1e-10;
 //IO
 #if !(DEBUG)
 	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(11)), 0);
-#endif
-#if !(INTERACTIVE)
-	#define endl '\n'
 #endif
 
 //Misc
