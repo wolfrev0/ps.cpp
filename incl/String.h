@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
 
-template<typename T>
+template<class T>
 Str<T> itos(int i){
 	if(!i)
 		return "0";
@@ -13,7 +13,7 @@ Str<T> itos(int i){
 }
 
 //a.k.a. partial match table, pi
-template<typename T>
+template<class T>
 Arr<int> failure_function(const Str<T> &p) {
 	Arr<int> ret(sz(p));
 	int si = 1, pi = 0;
@@ -35,7 +35,7 @@ Arr<int> failure_function(const Str<T> &p) {
 	return ret;
 }
 
-template<typename T>
+template<class T>
 Arr<int> failure_function2(const Str<T> &p) {
 	int pi = 0;
 	Arr<int> ret(sz(p));
@@ -49,7 +49,7 @@ Arr<int> failure_function2(const Str<T> &p) {
 }
 
 //return: full matched pattern's start indexs
-template<typename T>
+template<class T>
 Arr<int> kmp(const Str<T> &s, const Str<T> &p) {
 	int ssz=sz(s);
 	int psz=sz(p);
@@ -77,7 +77,7 @@ Arr<int> kmp(const Str<T> &s, const Str<T> &p) {
 }
 
 //return: partial matched length of that index
-template<typename T>
+template<class T>
 Arr<int> kmp2(const Str<T> &s, const Str<T> &p) {
 	const auto &ff = failure_function2(p);
 	Arr<int> ans(sz(s));
@@ -98,7 +98,7 @@ bool cmp(int i, int j, const Arr<int> &g, int t){
 }
 
 //sa[i]: 사전순으로 i번째인 접미사의 시작인덱스
-template<typename T>
+template<class T>
 Arr<int> suffix_array(const Str<T> &s){
 	int n = sz(s);
 	Arr<int> sa(n), ord(n+1), nord(n+1);
@@ -119,7 +119,7 @@ Arr<int> suffix_array(const Str<T> &s){
 
 //lcp[i]: 사전순 i번째 접미사와 i−1번째 접미사의 가장 긴 공통 접두사의 길이
 //plzrun's code
-template<typename T>
+template<class T>
 Arr<int> get_lcp(const Str<T> &s, const Arr<int> &sa){
 	int n = sz(s);
 	Arr<int> lcp(n), psa(n+1), plcp(n+1);
@@ -143,7 +143,7 @@ Arr<int> get_lcp(const Str<T> &s, const Arr<int> &sa){
 }
 
 //jh05013's code, O(NlogN)
-template<typename T>
+template<class T>
 Arr<int> suffix_array2(const Str<T> &s){
 	int n = sz(s), c = 0;
 	Arr<int> temp(n), pos2bckt(n), bckt(n), bpos(n), out(n);
@@ -173,7 +173,7 @@ Arr<int> suffix_array2(const Str<T> &s){
 }
 
 //comet's code
-template<typename T>
+template<class T>
 Arr<int> get_lcp2(const Str<T> &s, const Arr<int> &sa){
 	int h=0;
 	int n=sz(s);
@@ -191,4 +191,19 @@ Arr<int> get_lcp2(const Str<T> &s, const Arr<int> &sa){
 		h -= !!h;
 	}
 	return lcp;
+}
+
+template<class T>
+Arr<int> z(const Str<T>& a){
+	Arr<int> z(sz(a)); z[0]=sz(a);
+	int s=0,e=1;
+	hfor(i,1,sz(a)){
+		if(i<e and z[i-s] < e-i) z[i]=z[i-s];
+		else{
+			s=i; if(i>=e)e=i;
+			while(e<sz(a) and a[e-s]==a[e]) e++;
+			z[i]=e-s;
+		}
+	}
+	return z;
 }
