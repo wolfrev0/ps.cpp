@@ -12,83 +12,28 @@ Str<T> itos(int i){
 	return ret;
 }
 
-//a.k.a. partial match table, pi
+//ff[i] = longest proper (prefix==suffix) length of s[0,i]
 template<class T>
 Arr<int> failure_function(const Str<T> &p) {
-	Arr<int> ret(sz(p));
-	int si = 1, pi = 0;
-	int psz=sz(p);
-	while (si + pi < psz) {
-		if (pi < psz && p[si + pi] == p[pi]) {
-			pi++;
-			ret[si + pi - 1] = pi;
-		}
-		else {
-			if (!pi)
-				++si;
-			else {
-				si += pi - ret[pi - 1];
-				pi = ret[pi - 1];
-			}
-		}
+	Arr<int> ff(sz(p));
+	for(int i=0,j=1; j<sz(p); j++){
+		while(i>0 and p[j]!=p[i]) i=ff[i-1];
+		if(p[j]==p[i]) ff[j] = ++i;
 	}
-	return ret;
-}
-
-template<class T>
-Arr<int> failure_function2(const Str<T> &p) {
-	int pi = 0;
-	Arr<int> ret(sz(p));
-	hfor(i, 1, sz(p)) {
-		while (pi > 0 && p[i] != p[pi])
-			pi = ret[pi - 1];
-		if (p[i] == p[pi])
-			ret[i] = ++pi;
-	}
-	return ret;
-}
-
-//return: full matched pattern's start indexs
-template<class T>
-Arr<int> kmp(const Str<T> &s, const Str<T> &p) {
-	int ssz=sz(s);
-	int psz=sz(p);
-	if (ssz < psz)
-		return {};
-	Arr<int> ret;
-	auto ff = failure_function(p);
-	int si = 0, pi = 0;
-	while (si <= ssz - psz) {
-		if (pi < psz && s[si + pi] == p[pi]) {
-			if (++pi == psz)
-				ret.push_back(si);
-		}
-		else {
-			if (!pi)
-				++si;
-			else {
-				si += pi - ff[pi - 1];
-				pi = ff[pi - 1];
-			}
-		}
-	}
-
-	return ret;
+	return ff;
 }
 
 //return: partial matched length of that index
 template<class T>
-Arr<int> kmp2(const Str<T> &s, const Str<T> &p) {
-	const auto &ff = failure_function2(p);
-	Arr<int> ans(sz(s));
-	int pi = 0;
-	hfor(i, 0, sz(s)) {
-		while (pi > 0 && s[i] != p[pi])
-			pi = ff[pi - 1];
-		if (s[i] == p[pi] && (ans[i] = ++pi) == sz(p))
-			pi = ff[pi - 1];
+Arr<int> kmp(const Str<T> &s, const Str<T> &p) {
+	auto ff = failure_function(p);
+	Arr<int> ret(sz(s));
+	for(int i=0,j=0; j<sz(s); j++){
+		while(i>0 and s[j]!=p[i]) i=ff[i-1];
+		if(s[j]==p[i]) ret[j]=++i;
+		if(i==sz(p)) i=ff[i-1];
 	}
-	return ans;
+	return ret;
 }
 
 bool cmp(int i, int j, const Arr<int> &g, int t){
