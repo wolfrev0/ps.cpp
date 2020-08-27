@@ -1,6 +1,5 @@
 #pragma once
 #include <bits/stdc++.h>
-#include "Config.h"
 
 //Common
 #define hfor(v, s, e) for(int v=(s);(s)<=v&&v<(e);++v)//half-opened range
