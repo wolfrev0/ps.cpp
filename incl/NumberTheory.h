@@ -35,15 +35,6 @@ Arr<int> to_digits(i64 n){
 		ret.pushb(n%10), n/=10;
 	return ret;
 }
-template<typename T>
-T fastpow(const T& a, int p) {
-	if (p==0)
-		return T(1);
-	T tmp=fastpow(a, p/2);
-	if (p%2)
-		return tmp*tmp*a;
-	return tmp*tmp;
-}
 
 //<Adjust Formaula>
 //xgcd(a,b) solves ax+by=gcd(a,b)=g
@@ -133,17 +124,32 @@ int eutot(int n){
 	return r;
 }
 
+template<typename T>
+T fp(const T& a, int p) {
+	if(!p)return T(1);
+	T tmp=fp(a, p/2);
+	if (p%2)
+		return tmp*tmp*a;
+	return tmp*tmp;
+}
+i64 fpm(i64 x, i64 p, i64 m){
+	if(!p)return 1;
+	i64 z=fpm(x,p/2,m);
+	return z*z%m*(p%2?x:1)%m;
+}
+i64 modinv(i64 a, i64 m){return fpm(a,m-2,m);}
+
 //chinese remainder theorem
 //https://en.wikipedia.org/wiki/Chinese_remainder_theorem#Generalization_to_non-coprime_moduli
 //x = r (mod m), pair<r,m>
-pair<int,int> crt(Arr<pair<int,int>> a){
-	int r1=0, m1=1;
+pair<i64,i64> crt(Arr<pair<i64,i64>> a){
+	i64 r1=0, m1=1;
 	for(auto [r2,m2]:a){
-		int g=gcd(m1,m2);
+		i64 g=gcd(m1,m2);
 		if(r1%g != r2%g) return {-1,-1};
 		auto [_1,x,y] = xgcd(m1/g,m2/g);
-		int m3=lcm(m1,m2);
-		int r3=m2/g*r1%m3*y%m3+m1/g*r2%m3*x%m3;
+		i64 m3=lcm(m1,m2);
+		i64 r3=m2/g*r1%m3*y%m3+m1/g*r2%m3*x%m3;
 		r1=r3<0?r3+m3:r3;
 		m1=m3;
 	}
