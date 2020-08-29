@@ -1,6 +1,11 @@
 #pragma once
 #include <bits/stdc++.h>
 
+//Settings
+#define INT64 0 //MLE?
+#define INTERACTIVE 0
+#define COUT_PRECISION 11
+
 //Common
 #define hfor(v, s, e) for(int v=(s);(s)<=v&&v<(e);++v)//half-opened range
 #define hfori(v, s, e) for(int v=(e)-1;(s)<=v&&v<(e);--v)//inversion
@@ -30,7 +35,11 @@
 #define PQMIN(...) std::priority_queue<__VA_ARGS__,Arr<__VA_ARGS__>,greater<__VA_ARGS__>>
 #define lb lower_bound
 #define ub upper_bound
+#if INT64
+	#define int i64
+#endif
 using namespace std;using f64 = double;using i64=long long;using u64=unsigned long long;
+using pint = pair<int,int>; using tint = tuple<int,int,int>;
 template<typename T> using Arr=vector<T>;template<typename T> using Func=function<T>;template<typename T> using Str=basic_string<T>;
 int sz(const auto& x){return x.size();}
 
@@ -43,21 +52,16 @@ const f64 pi=acosl(-1), eps=1e-10;
 
 //IO
 #if !(DEBUG)
-	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(11)), 0);
+	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(COUT_PRECISION)), 0);
+	#if !(INTERACTIVE)
+		#define endl '\n'//interactive?
+	#endif
 #endif
 
 //Misc
 //#pragma GCC optimize ("Ofast")
 int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
-auto split(auto s, auto p){
-	Arr<decltype(s)> ret;
-	auto it1=s.begin();
-	for(auto it2=it1; (it2 = find(it1,s.end(),p)) != s.end(); it1=it2+1)
-		ret.pushb({it1, it2});
-	ret.pushb({it1,s.end()});
-	return ret;
-}
 template<typename T> T rev(const T& a){return {a.rbegin(),a.rend()};}
 Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
 struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
@@ -69,5 +73,7 @@ auto ARR(auto n, A&&...a){
 	if constexpr(sizeof...(a)==0) return n;
 	else return vector(n,ARR(a...));
 }
-template<typename... Args> void _cin_(Args&... args) { ((cin>>args),...); }
+template<typename... Args> void _cin_(Args&... arg) { ((cin>>arg),...); }
 #define CIN(T,...) T __VA_ARGS__; _cin_(__VA_ARGS__);
+template<typename... Args> void _cout_(Args... arg) { ((cout<<arg<<' '),...); }
+#define COUT(...) _cout_(__VA_ARGS__), cout<<endl;
