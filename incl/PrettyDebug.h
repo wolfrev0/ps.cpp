@@ -27,5 +27,4 @@ void print(const pair<A,B>& a, int d){cout<<endl<<string(d,' ')+'<'; print(a.fi,
 template<class TupType, size_t... I>
 void print(const TupType& _tup, index_sequence<I...>, int d){cout<<endl<<string(d,' ')+'<'; (..., print(get<I>(_tup),d+1)); cout<<'>';}
 template<class... T>
-void print (const tuple<T...>& _tup, int d)
-{print(_tup, make_index_sequence<sizeof...(T)>(), d);}
+void print(const tuple<T...>& _tup, int d){print(_tup, make_index_sequence<sizeof...(T)>(), d);}

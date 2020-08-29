@@ -69,3 +69,5 @@ auto ARR(auto n, A&&...a){
 	if constexpr(sizeof...(a)==0) return n;
 	else return vector(n,ARR(a...));
 }
+template<typename... Args> void _cin_(Args&... args) { ((cin>>args),...); }
+#define CIN(T,...) T __VA_ARGS__; _cin_(__VA_ARGS__);
