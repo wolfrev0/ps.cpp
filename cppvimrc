@@ -16,4 +16,4 @@ syntax on
 
 set bg=dark
 hi! myhi ctermbg=darkgray guibg=darkgray
-match myhi /\vlam|ARR/
+match myhi /\vlam|ARR|CIN|COUT/
