@@ -60,8 +60,11 @@ const f64 pi=acosl(-1), eps=1e-10;
 
 //Misc
 //#pragma GCC optimize ("Ofast")
-int rd(int lb, int ub){static mt19937 rng(time(0)^i64(new int)); return uniform_int_distribution<int>(lb, ub-1)(rng);}
+mt19937 _rng(i64(new int));
+int rd(int lb, int ub){static uniform_int_distribution<int> dist(lb, ub-1); return dist(_rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
+int rdf(int lb, int ub){static uniform_real_distribution<double> dist(lb, ub); return dist(_rng);}
+void shuffle(auto is, auto ie){shuffle(is,ie,_rng);}
 template<typename T> T rev(const T& a){return {a.rbegin(),a.rend()};}
 Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
 struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
