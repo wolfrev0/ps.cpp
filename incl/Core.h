@@ -2,8 +2,8 @@
 #include <bits/stdc++.h>
 
 //Settings
-#define INT64 0 //MLE?
-#define INTERACTIVE 0
+#define INT64 1 //MLE?
+#define INTERACTIVE 1
 #define COUT_PRECISION 11
 
 //Common
@@ -61,9 +61,9 @@ const f64 pi=acosl(-1), eps=1e-10;
 //Misc
 //#pragma GCC optimize ("Ofast")
 mt19937 _rng(i64(new int));
-int rd(int lb, int ub){static uniform_int_distribution<int> dist(lb, ub-1); return dist(_rng);}
+int rd(int lb, int ub){uniform_int_distribution<int> dist(lb, ub-1); return dist(_rng);}
 int rd(int ub=inf<int>()){return rd(0,ub);}
-int rdf(int lb, int ub){static uniform_real_distribution<double> dist(lb, ub); return dist(_rng);}
+int rdf(int lb, int ub){uniform_real_distribution<double> dist(lb, ub); return dist(_rng);}
 void shuffle(auto is, auto ie){shuffle(is,ie,_rng);}
 template<typename T> T rev(const T& a){return {a.rbegin(),a.rend()};}
 Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
