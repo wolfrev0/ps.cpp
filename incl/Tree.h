@@ -6,44 +6,59 @@ template<typename T>
 struct Tree{
 	Tree(int n=0):n(n), g(n){}
 
-	void add_edge(int s, int e, T w){ g[s].pushb({e,w}); g[e].pushb({s,w}); }
-	T diameter()const {	return dfs_diameter(0, -1).fi; }
+	void add_edge(int s, int e, T w){ g[s].emplb(e,w); g[e].emplb(s,w); }
+	T diameter()const {
+		auto x=furthest(0,0,0).se;
+		return furthest(x,x,0).fi;
+	}
+	pint diameterv()const{
+		auto x=furthest(0,0,0).se;
+		auto y=furthest(x,x,0).se;
+		return {x,y};
+	}
+	int center(){
+		auto x=furthest(0,0,0).se;
+		auto z=furthest(x,x,0);
+		auto [v,c,cd]=fcenter(x,x,z.se);
+		assert(v);
+		return c;
+	}
 	Arr<pair<int,T>> rootize(int r)const{
 		Arr<pair<int,T>> res(n,{-1,-1});
 		rootize_dfs(r,-1,res);
 		return res;
 	}
 private:
-	int n;
-	Arr<Arr<pair<int,T>>> g;
-	
-	pair<T, T> dfs_diameter(int v, int p)const{
-		T diam = 0;
-		Arr<int> lens;
-		for(auto i:g[v]){
-			if(i.fi==p)
-				continue;
-			auto res=dfs_diameter(i.fi, v);
-			diam=max(diam, res.fi);
-			lens.pushb(res.se + i.w);
-		}
-		int len=0;
-		if(sz(lens)==1){
-			diam=max(diam, len=lens.back());
-		}
-		else if(sz(lens)>1){
-			auto it = max_element(all(lens));
-			len=*it; lens.erase(it);
-			it=max_element(all(lens));
-			diam=max(diam, len+*it);
-		}
-		return {diam,len};
+	pint furthest(int x, int p, int d)const{
+		pint r={d,x};
+		for(auto [i,w]:g[x])
+			if(i!=p)
+				r=max(r,furthest(i,x,d+w));
+		return r;
+	}
+	tuple<bool,int,int> fcenter(int x, int p, int d, int y, int diam){
+		bool valid=x==y;
+		int center=x;
+		int centerd=max(d,diam-d);
+		for(auto [i,w]:g[x])
+			if(i!=p){
+				auto [v,c,cd]=fcenter(i);
+				if(v){
+					valid=true;
+					if(max(d,diam-d)>cd)
+						center=c, centerd=max(d,diam-d);
+				}
+			}
+		return {valid,center,centerd};
 	}
 	void rootize_dfs(int r, int p, Arr<pair<int,T>>& res)const{
-		for(auto i:g[r])
-			if(i.fi!=p)
-				res[i.fi]={r,i.se}, rootize_dfs(i.fi,r,res);
+		for(auto [i,w]:g[r])
+			if(i!=p)
+				res[i]={r,w}, rootize_dfs(i,r,res);
 	}
+
+	int n;
+	Arr<Arr<pair<int,T>>> g;
 };
 
 struct SimpleTree: public Tree<int>{
