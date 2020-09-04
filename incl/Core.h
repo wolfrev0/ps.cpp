@@ -60,10 +60,15 @@ const f64 pi=acosl(-1), eps=1e-10;
 
 //Misc
 //#pragma GCC optimize ("Ofast")
-mt19937 _rng(i64(new int));
-int rd(int lb, int ub){uniform_int_distribution<int> dist(lb, ub-1); return dist(_rng);}
-int rd(int ub=inf<int>()){return rd(0,ub);}
-int rdf(int lb, int ub){uniform_real_distribution<double> dist(lb, ub); return dist(_rng);}
+#ifdef DEBUG
+	mt19937 _rng(i64(new int)+time(0));
+#else
+	mt19937 _rng(i64(new int));
+#endif
+int rd(){static uniform_int_distribution<int> dist(0,inf<int>()); return dist(_rng);}
+int rd(int e){return rd()%e;}
+int rd(int s, int e){return rd()%(e-s)+s;}
+f64 rdf(){static uniform_real_distribution<f64> dist(0,1); return dist(_rng);}
 void shuffle(auto is, auto ie){shuffle(is,ie,_rng);}
 template<typename T> T rev(const T& a){return {a.rbegin(),a.rend()};}
 Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
