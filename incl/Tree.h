@@ -19,7 +19,7 @@ struct Tree{
 	int center(){
 		auto x=furthest(0,0,0).se;
 		auto z=furthest(x,x,0);
-		auto [v,c,cd]=fcenter(x,x,z.se);
+		auto [v,c,cd]=fcenter(x,x,0,z.se,z.fi);
 		assert(v);
 		return c;
 	}
@@ -28,6 +28,9 @@ struct Tree{
 		rootize_dfs(r,-1,res);
 		return res;
 	}
+
+	int n;
+	Arr<Arr<pair<int,T>>> g;
 private:
 	pint furthest(int x, int p, int d)const{
 		pint r={d,x};
@@ -42,7 +45,7 @@ private:
 		int centerd=max(d,diam-d);
 		for(auto [i,w]:g[x])
 			if(i!=p){
-				auto [v,c,cd]=fcenter(i);
+				auto [v,c,cd]=fcenter(i,x,d+w,y,diam);
 				if(v){
 					valid=true;
 					if(max(d,diam-d)>cd)
@@ -56,9 +59,6 @@ private:
 			if(i!=p)
 				res[i]={r,w}, rootize_dfs(i,r,res);
 	}
-
-	int n;
-	Arr<Arr<pair<int,T>>> g;
 };
 
 struct SimpleTree: public Tree<int>{
