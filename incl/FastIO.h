@@ -1,15 +1,15 @@
 #pragma once
 #include "Core.h"
-#include <sys/stat.h>
 
 #if !(DEBUG)
 struct FIO{
 	static const int BUF_SZ=1<<24;
 	char *p,*q;
 	FIO(){
-		struct stat z;
-		fstat(0, &z);
-		setvbuf(stdout, 0, 0, z.st_blksize);
+		// #include <sys/stat.h>
+		// struct stat z;
+		// fstat(0, &z);
+		// setvbuf(stdout, 0, 0, z.st_blksize);
 		
 		p=new char[BUF_SZ]; q=p+BUF_SZ;
 		cin.read(p, BUF_SZ);
