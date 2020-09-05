@@ -1,5 +1,6 @@
 <실행>
-time (./bin/a.out < input)  
+time ./a.out < in  
+/usr/bin/time -v ./a.out < in
 
 
 <디버그>
