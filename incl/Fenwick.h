@@ -13,6 +13,19 @@ struct Fenwick{
 		return sum(e-1)-sum(s-1);
 	}
 
+	//x: 1-based order
+	int binlift(int x){
+		int s=0,p=0;
+		int i=1; while(1<<(i+1)<=n)i++;
+		for(;i>=0;i--){
+			if(p+(1<<i)<n and s+tr[p+(1<<i)]<x){
+				s+=tr[p+(1<<i)];
+				p+=1<<i;
+			}
+		}
+		return p;
+	}
+
 	void upd(int i, T delta){
 		i++;
 		while(i<=n){
