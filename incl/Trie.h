@@ -1,7 +1,7 @@
 #pragma once 
 #include "Core.h"
 
-template<int n, char base=0>
+template<class T, int n, char base=0>
 struct Trie{
 	Trie(char ch=base, Trie* p=0):ch(ch),cnt(0),p(p){}
 	Trie* next(char c){c-=base;if(!a[c])a[c]=new Trie<n,base>(c,this);return a[c];}
@@ -12,5 +12,5 @@ struct Trie{
 	char ch;
 	int cnt;
 	Trie *p, *a[n]{};
-	int val;
+	T val;
 };
