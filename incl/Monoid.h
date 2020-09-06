@@ -2,32 +2,30 @@
 #include "Core.h"
 
 template<typename T>
-struct Monoid{
-	virtual T f(T a, T b)const=0;
-	virtual T id()const=0;
-	virtual T fn(T a, int n)const{if(n==0)return id(); return f(a,fn(a,n-1));}
+struct MonoidPlus{
+	cxp static T f(T a, T b){return a+b;}
+	cxp static T id(){return T(0);}
+	cxp static T fn(T a, int n){return a*n;}
+	static_assert(f(id(),id())==id());
 };
 template<typename T>
-struct MonoidPlus:Monoid<T>{
-	T f(T a, T b)const{return a+b;}
-	T id()const{return T(0);}
-	T fn(T a, int n)const{return a*n;}
+struct MonoidMin{
+	cxp static T f(T a, T b){return min(a,b);}
+	cxp static T id(){return inf<T>();}
+	cxp static T fn(T a, int n){return a;}
+	static_assert(f(id(),id())==id());
 };
 template<typename T>
-struct MonoidMin:Monoid<T>{
-	T f(T a, T b)const{return min(a,b);}
-	T id()const{return inf<T>();}
-	T fn(T a, int n)const{return a;}
-};
-template<typename T>
-struct MonoidMax:Monoid<T>{
-	T f(T a, T b)const{return max(a,b);}
-	T id()const{return -inf<T>();}
-	T fn(T a, int n)const{return a;}
+struct MonoidMax{
+	cxp static T f(T a, T b){return max(a,b);}
+	cxp static T id(){return -inf<T>();}
+	cxp static T fn(T a, int n){return a;}
+	static_assert(f(id(),id())==id());
 };
 template<typename T, T _id = inf<T>()>
-struct MonoidAss:Monoid<T>{
-	T f(T a, T b)const{return b;}
-	T id()const{return _id;}
-	T fn(T a, int n)const{return a;}
+struct MonoidAss{
+	cxp static T f(T a, T b){return b;}
+	cxp static T id(){return _id;}
+	cxp static T fn(T a, int n){return a;}
+	static_assert(f(id(),id())==id());
 };

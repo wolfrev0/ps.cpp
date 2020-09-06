@@ -3,7 +3,7 @@
 
 //Settings
 #define INT64 1 //MLE?
-#define INTERACTIVE 1
+#define INTERACTIVE 0
 #define COUT_PRECISION 11
 
 //Common
