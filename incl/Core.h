@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 
 //Settings
-#define INT64 1 //MLE?
+#define INT64 0 //MLE?
 #define INTERACTIVE 0
 #define COUT_PRECISION 11
 #define C20 0

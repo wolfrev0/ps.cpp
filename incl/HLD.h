@@ -9,7 +9,7 @@ struct HLD: public RootedTree<T>{
 	:RT(pi), cn(n), top(n), v2pre(n){
 		int cpre=0, ccn=0;
 		dfs_hld(r, cpre, ccn);
-		top[0]=0;
+		top[0]=r;
 	}
 
 	int lca(int a, int b){
