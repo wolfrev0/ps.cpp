@@ -34,7 +34,7 @@ protected:
 	Arr<int> cn,top,si;
 
 	void dfs_hld(int cur, int& csi, int& ccn){
-		sort(all(ch[cur]), [this](auto a, auto b){return this->tsz[a.fi]>this->tsz[b.fi];});
+		swap(ch[cur].front(), *max_element(all(ch[cur]),[this](auto a, auto b){return this->tsz[a.fi]>this->tsz[b.fi];}));
 		st.upd(si[cur]=csi++, p[cur].se);
 		cn[cur]=ccn;
 		rep(i,sz(ch[cur])){
