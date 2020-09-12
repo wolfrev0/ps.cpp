@@ -5,6 +5,7 @@
 #define INT64 1 //MLE?
 #define INTERACTIVE 0
 #define COUT_PRECISION 11
+#define C20 0
 
 //Common
 #define hfor(v, s, e) for(int v=(s);(s)<=v&&v<(e);++v)//half-opened range
@@ -40,12 +41,12 @@
 #endif
 using namespace std;using f64 = double;using i64=long long;using u64=unsigned long long;
 using pint = pair<int,int>; using tint = tuple<int,int,int>;
-template<typename T> using Arr=vector<T>;template<typename T> using Func=function<T>;template<typename T> using Str=basic_string<T>;
-int sz(const auto& x){return x.size();}
+template<class T> using Arr=vector<T>;template<class T> using Func=function<T>;template<class T> using Str=basic_string<T>;
+template<class T> int sz(const T& x){return x.size();}
 
 //Math
-template<typename T> cxp T inf() { return numeric_limits<T>::max() / 2; }
-template<typename T> inline T sq(T x){return x*x;}
+template<class T> cxp T inf() { return numeric_limits<T>::max() / 2; }
+template<class T> inline T sq(T x){return x*x;}
 cxp int lgc(int x){return 64-__builtin_clzll(x-1);}
 cxp int lgf(int x){return 63-__builtin_clzll(x);}
 const f64 pi=acosl(-1), eps=1e-10;
@@ -69,19 +70,21 @@ int rd(){static uniform_int_distribution<int> dist(0,inf<int>()); return dist(_r
 int rd(int e){return rd()%e;}
 int rd(int s, int e){return rd()%(e-s)+s;}
 f64 rdf(){static uniform_real_distribution<f64> dist(0,1); return dist(_rng);}
-void shuffle(auto is, auto ie){shuffle(is,ie,_rng);}
-template<typename T> T rev(const T& a){return {a.rbegin(),a.rend()};}
+template<class T> T rev(const T& a){return {a.rbegin(),a.rend()};}
 Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
-struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
-#define defer(x) auto _##__COUNTER__ = defer([&](){x;});
 #define lam(expr, ...) [&](__VA_ARGS__){return expr;}
 #define reduce accumulate
-template<class... A>
-auto ARR(auto n, A&&...a){
-	if constexpr(sizeof...(a)==0) return n;
-	else return vector(n,ARR(a...));
-}
-template<typename... Args> void _cin_(Args&... arg) { ((cin>>arg),...); }
-#define CIN(T,...) T __VA_ARGS__; _cin_(__VA_ARGS__);
-template<typename... Args> void _cout_(Args... arg) { ((cout<<arg<<' '),...); }
-#define COUT(...) _cout_(__VA_ARGS__), cout<<endl;
+#if C20
+	void shuffle(auto is, auto ie){shuffle(is,ie,_rng);}
+	struct defer{ defer(auto f):f(f){} ~defer(){f();} function<void()> f; };
+	#define defer(x) auto _##__COUNTER__ = defer([&](){x;});
+	template<class... A>
+	auto ARR(auto n, A&&...a){
+		if constexpr(sizeof...(a)==0) return n;
+		else return vector(n,ARR(a...));
+	}
+	template<class... Args> void _cin_(Args&... arg) { ((cin>>arg),...); }
+	#define CIN(T,...) T __VA_ARGS__; _cin_(__VA_ARGS__);
+	template<class... Args> void _cout_(Args... arg) { ((cout<<arg<<' '),...); }
+	#define COUT(...) _cout_(__VA_ARGS__), cout<<endl;
+#endif

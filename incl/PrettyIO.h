@@ -3,6 +3,6 @@
 //WARNING: Should be included after FastIO.h
 
 template<typename T>ostream& operator<<(ostream& s, const Arr<T>& a) {for(auto i:a) cout<<i<<' '; return s;}
-auto cinint(){int x;cin>>x;return x;}
-auto cinchr(){char x;cin>>x;return x;}
-auto cinints(int n){Arr<int> a(n);for(auto&i:a)cin>>i;return a;}
+int cinint(){int x;cin>>x;return x;}
+char cinchr(){char x;cin>>x;return x;}
+Arr<int> cinints(int n){Arr<int> a(n);for(auto&i:a)cin>>i;return a;}
