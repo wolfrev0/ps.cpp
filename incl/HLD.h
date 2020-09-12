@@ -1,49 +1,55 @@
 #pragma once
-#include "LCA.h"
-#include "Seg.h"
+#include "RootedTree.h"
 
-template<typename T, typename F>
-struct HLD: public LCA<T>{
-	using RT=RootedTree<T>;
+template<class T>
+struct HLD: public RootedTree<T>{
+	using RT=RootedTree<T>; using RT::n; using RT::r; using RT::p; using RT::ch; using RT::dpt;
+
 	HLD(const Arr<pair<int,T>>& pi)
-	:LCA<T>(pi), st(n), cn(n), top(n), si(n){
-		int csi=0, ccn=0;
-		dfs_hld(r, csi, ccn);
+	:RT(pi), cn(n), top(n), v2pre(n){
+		int cpre=0, ccn=0;
+		dfs_hld(r, cpre, ccn);
 		top[0]=0;
 	}
 
+	int lca(int a, int b){
+		while(cn[a]!=cn[b]){
+			if(dpt[top[cn[a]]]<dpt[top[cn[b]]]) b=p[top[cn[b]]].fi;
+			else a=p[top[cn[a]]].fi;
+		}
+		return dpt[a]<dpt[b]?a:b;
+	}
+protected:
+	Arr<int> cn,top,v2pre;//chain number, top of the chain, vertex to preorder
+
+	void dfs_hld(int cur, int& cpre, int& ccn){
+		if(sz(ch[cur]))
+			swap(ch[cur].front(), *max_element(all(ch[cur]),[this](auto a, auto b){return this->tsz[a.fi]>this->tsz[b.fi];}));
+		cn[cur]=ccn;
+		rep(i,sz(ch[cur])){
+			if(i)
+				top[++ccn]=ch[cur][i].fi;
+			dfs_hld(ch[cur][i].fi, cpre, ccn);
+		}
+	}
+};
+/*
 	T q(int u, int v, bool edge_w=true){
-		T ret = F::id();
+		T ret = Q::id();
 		int w = lca(u, v);
 		while(cn[w]!=cn[u])
-			ret = F::q(ret, st.q(si[top[cn[u]]], si[u]+1)), u = p[top[cn[u]]].fi;
-		ret = F::q(ret, st.q(si[w]+edge_w, si[u]+1));
+			ret = Q::f(ret, st.q(si[top[cn[u]]], si[u]+1)), u = p[top[cn[u]]].fi;
+		ret = Q::f(ret, st.q(si[w]+edge_w, si[u]+1));
 		
 		while(cn[w]!=cn[v])
-			ret = F::q(ret, st.q(si[top[cn[v]]], si[v]+1)), v = p[top[cn[v]]].fi;
-		ret = F::q(ret, st.q(si[w]+edge_w, si[v]+1));
+			ret = Q::f(ret, st.q(si[top[cn[v]]], si[v]+1)), v = p[top[cn[v]]].fi;
+		ret = Q::f(ret, st.q(si[w]+edge_w, si[v]+1));
 
 		return ret;
 	}
 
 	void upd(int cur, T w){return st.upd(si[cur], w);}
-	void upd(int s, int e, T w){}
-protected:
-	using RT::n;using RT::r;using RT::ch;using RT::p;using RT::tsz;using LCA<T>::lca;
-	Seg<T,F> st;
-	Arr<int> cn,top,si;
-
-	void dfs_hld(int cur, int& csi, int& ccn){
-		swap(ch[cur].front(), *max_element(all(ch[cur]),[this](auto a, auto b){return this->tsz[a.fi]>this->tsz[b.fi];}));
-		st.upd(si[cur]=csi++, p[cur].se);
-		cn[cur]=ccn;
-		rep(i,sz(ch[cur])){
-			if(i)
-				top[++ccn]=ch[cur][i].fi;
-			dfs_hld(ch[cur][i].fi, csi, ccn);
-		}
-	}
-};
+	void upd(int s, int e, T w){}*/
 /*
 #include <bits/stdc++.h>
 using namespace std;

@@ -5,14 +5,9 @@
 //Static Rooted Tree
 template<typename T>
 struct RootedTree{
-	struct F{
-		static pair<int,int> id(){return {inf<int>(),-1};}
-		static pair<int,int> q(const pair<int,int>& a, const pair<int,int>& b){return min(a,b);}
-	};
-	
 	RootedTree(const Arr<pair<int,T>>& p)
 	:n(sz(p)), r(0), ch(n), p(p), tsz(n), dpt(n), cost(n){
-		while(p[r].fi!=-1)
+		while(p[r].fi!=r)
 			r=p[r].fi;
 		hfor(i,0,n)
 			if(i!=r)

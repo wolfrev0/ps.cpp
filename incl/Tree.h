@@ -24,8 +24,8 @@ struct Tree{
 		return c;
 	}
 	Arr<pair<int,T>> rootize(int r)const{
-		Arr<pair<int,T>> res(n,{-1,-1});
-		rootize_dfs(r,-1,res);
+		Arr<pair<int,T>> res(n,{r,inf<int>()});
+		rootize_dfs(r,r,res);
 		return res;
 	}
 
