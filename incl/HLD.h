@@ -24,7 +24,7 @@ protected:
 
 	void dfs_hld(int cur, int& cpre, int& ccn){
 		if(sz(ch[cur]))
-			swap(ch[cur].front(), *max_element(all(ch[cur]),[this](auto a, auto b){return this->tsz[a.fi]>this->tsz[b.fi];}));
+			swap(ch[cur].front(), *max_element(all(ch[cur]),[this](auto a, auto b){return this->tsz[a.fi]<this->tsz[b.fi];}));
 		cn[cur]=ccn;
 		rep(i,sz(ch[cur])){
 			if(i)
