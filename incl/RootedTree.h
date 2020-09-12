@@ -1,6 +1,5 @@
 #pragma once
-#include "Tree.h"
-#include "SegBU.h"
+#include "Core.h"
 
 //Static Rooted Tree
 template<typename T>
