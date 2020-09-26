@@ -1,59 +1,41 @@
 #pragma once
 #include "Core.h"
 
-template<typename T, typename F>
-struct SegLazyDyn{
-	struct Node{
-		Node *l=0, *r=0;
-		T val=F::id();
-		T lz=inf<T>();//lz_id=inf
-	};
-	SegLazyDyn(int n):n(n){}
-	T q(int p){return q(p,p+1);}
-	T q(int s, int e){return q(r,0,n,s,e);}
-	void upd(int p, T val){upd(p, p+1, val);}
-	void upd(int s, int e, T val){upd(r,0,n,s,e,val);}
-protected:
-	int n;
-	Node* r=new Node();
+struct Node{
+    signed cs,ce,v,w;
+    Node *l,*r;
 
-	T q(Node* cur, int cs, int ce, int s, int e){
-		propa(cur, cs, ce);
-		if (s>=ce||e<=cs)
-			return F::id();
-		if (s<=cs&&ce<=e)
-			return cur->val;
-		int m=(cs+ce)/2;
-		return F::q(q(cur->l,cs,m,s,e),q(cur->r,m,ce,s,e));
-	}
+    void upd(signed s, signed e, char x){
+        if(ce<=s or e<=cs)return;
+        if(s<=cs and ce<=e){
+            w+=x;
+            v=w?ce-cs:(l?l->v:0)+(r?r->v:0);
+            return;
+        }
+        signed m=(cs+ce)/2;
+        if(!l)l=new Node{cs,m};
+        if(!r)r=new Node{m,ce};
+        l->upd(s,e,x), r->upd(s,e,x);
+        v=w?ce-cs:l->v+r->v;
+    }
+} root{0,signed(1e9+9)};
 
-	void upd(Node* cur, int cs, int ce, int s, int e, T val){
-		propa(cur, cs, ce);
-		if (s>=ce||e<=cs)
-			return;
-		if (s<=cs&&ce<=e){
-			addlz(cur, val);
-			propa(cur, cs, ce);
-			return;
-		}
-		int m=(cs+ce)/2;
-		upd(cur->l,cs,m,s,e,val);
-		upd(cur->r,m,ce,s,e,val);
-		cur->val=F::q(cur->l->val,cur->r->val);
-	}
-	
-	void propa(Node* cur, int cs, int ce){
-		if(!cur->l)	cur->l=new Node();
-		if(!cur->r) cur->r=new Node();
-		if(cur->lz!=inf<T>()){
-			cur->val=F::upd(cur->val,cur->lz,ce-cs);
-			if(ce-cs>1){
-				addlz(cur->l, cur->lz);
-				addlz(cur->r, cur->lz);
-			}
-			cur->lz=inf<T>();
-		}
-	}
-	
-	void addlz(Node* v, T val){v->lz=v->lz==inf<T>()?val:F::propa(v->lz,val);}
-};
+int solution(vector<vector<signed> > rects)
+{
+    map<signed,Arr<tint>> a;
+    for(auto& i:rects){
+        a[i[0]].emplb(i[1],i[3],1);
+        a[i[2]].emplb(i[1],i[3],-1);
+    }
+
+    int ans=0;
+        signed px=0;
+        signed pv=0;
+    for(auto [x,ev]:a){
+        for(auto [y1,y2,d]:ev)
+            root.upd(y1,y2,d);
+        ans+=pv*int(x-px);
+        px=x, pv=root.v;
+    }
+    return ans;
+}
