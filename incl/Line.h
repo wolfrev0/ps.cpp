@@ -53,8 +53,8 @@ private:
 template<typename T>
 struct Segment :public Line<T> {
 	using Line<T>::sv, Line<T>::ev;
-	explicit Segment():Line<T>() {}
-	explicit Segment(const Vec2<T>& sv, const Vec2<T>& ev) :Line<T>(sv, ev) {}
+	Segment():Line<T>() {}
+	Segment(const Vec2<T>& sv, const Vec2<T>& ev) :Line<T>(sv, ev) {}
 	bool is_valid(const Vec2<T>& p)const{ return sv.x<=p.x&&p.x<=ev.x && min(sv.y,ev.y)<=p.y&&p.y<=max(sv.y,ev.y); }
 	virtual bool valid_intersect(const Vec2<T>& p)const override {
 		if (abs(sv.x - ev.x) < eps)
@@ -66,3 +66,25 @@ struct Segment :public Line<T> {
 	virtual bool valid_foot(const Vec2<T>& p)const override { return is_valid(p); }
 	virtual bool valid_contains(const Vec2<T>& p) const override { return is_valid(p); }
 };
+
+bool onSegment(pint p, pint q, pint r){
+	return q.fi <= max(p.fi, r.fi) && q.fi >= min(p.fi, r.fi) && q.se <= max(p.se, r.se) && q.se >= min(p.se, r.se);
+}
+int orientation(pint p, pint q, pint r){
+	int val = (q.se - p.se) * (r.fi - q.fi) - (q.fi - p.fi) * (r.se - q.se);
+	if(!val)return 0;
+	return val>0?1:2;
+}
+bool isCross(pint p1, pint q1, pint p2, pint q2) 
+{ 
+	int o1 = orientation(p1, q1, p2); 
+	int o2 = orientation(p1, q1, q2); 
+	int o3 = orientation(p2, q2, p1); 
+	int o4 = orientation(p2, q2, q1); 
+	if (o1 != o2 && o3 != o4) return true; 
+	if (!o1 and onSegment(p1, p2, q1)) return true;
+	if (!o2 and onSegment(p1, q2, q1)) return true;
+	if (!o3 and onSegment(p2, p1, q2)) return true;
+	if (!o4 and onSegment(p2, q1, q2)) return true;
+	return false; 
+}

@@ -5,7 +5,7 @@
 #define INT64 0 //MLE?
 #define INTERACTIVE 0
 #define COUT_PRECISION 11
-#define C20 0
+#define C20 1
 
 //Common
 #define hfor(v, s, e) for(int v=(s);(s)<=v&&v<(e);++v)//half-opened range
