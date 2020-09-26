@@ -13,11 +13,19 @@ struct RootedTree{
 				ch[p[i].fi].pushb({i, p[i].se});
 		dfs_init(r,0,0);
 	}
-	int dfs_init(int cur, int d, T c){
-		dpt[cur]=d, cost[cur]=c, tsz[cur]=1;
-		for(const auto &i:ch[cur])
-			tsz[cur]+=dfs_init(i.fi, d+1, c+i.se);
-		return tsz[cur];
+	int dfs_init(int x, int d, T c){
+		dpt[x]=d, cost[x]=c, tsz[x]=1;
+		for(auto [i,w]:ch[x])
+			tsz[x]+=dfs_init(i, d+1, c+w);
+		return tsz[x];
+	}
+
+	int centroid(){return _centroid(r,r);}
+	int _centroid(int x, int p){
+		for(auto [i,w]:ch[x])
+			if(tsz[i]>n/2)
+				return _centroid(i,x);
+		return x;
 	}
 
 	pair<Arr<int>,Arr<int>> euler(){
@@ -25,10 +33,10 @@ struct RootedTree{
 		dfs_euler(r,eu,v2eu);
 		return {eu,v2eu};
 	}
-	void dfs_euler(int cur, Arr<int>& eu, Arr<int>& v2eu){
-		v2eu[cur]=sz(eu), eu.pushb(cur);
-		for(const auto &i:ch[cur])
-			dfs_euler(i.fi,eu,v2eu), v2eu[cur]=sz(eu), eu.pushb(cur);
+	void dfs_euler(int x, Arr<int>& eu, Arr<int>& v2eu){
+		v2eu[x]=sz(eu), eu.pushb(x);
+		for(auto [i,w]:ch[x])
+			dfs_euler(i,eu,v2eu), v2eu[x]=sz(eu), eu.pushb(x);
 	}
 
 	pair<Arr<int>,Arr<int>> pre(){
@@ -36,10 +44,10 @@ struct RootedTree{
 		dfs_pre(r,pre,v2pre);
 		return {pre,v2pre};
 	}
-	void dfs_pre(int cur, Arr<int>& pre, Arr<int>& v2pre){
-		v2pre[cur]=sz(pre), pre.pushb(cur);
-		for(const auto &i:ch[cur])
-			dfs_pre(i.fi,pre,v2pre);
+	void dfs_pre(int x, Arr<int>& pre, Arr<int>& v2pre){
+		v2pre[x]=sz(pre), pre.pushb(x);
+		for(auto [i,w]:ch[x])
+			dfs_pre(i,pre,v2pre);
 	}
 
 	pair<Arr<int>,Arr<int>> post(){
@@ -47,10 +55,10 @@ struct RootedTree{
 		dfs_post(r,po,v2po);
 		return {po,v2po};
 	}
-	void dfs_post(int cur, Arr<int>& post, Arr<int>& v2post){
-		for(const auto &i:ch[cur])
-			dfs_post(i.fi,post,v2post);
-		v2post[cur]=sz(post), post.pushb(cur);
+	void dfs_post(int x, Arr<int>& post, Arr<int>& v2post){
+		for(auto [i,w]:ch[x])
+			dfs_post(i,post,v2post);
+		v2post[x]=sz(post), post.pushb(x);
 	}
 	
 	int n, r;
