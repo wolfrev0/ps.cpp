@@ -1,12 +1,10 @@
 #pragma once
 #include "Core.h"
 
-//I don't know whether it is correct.
-//Why can't solve https://www.acmicpc.net/problem/17575 why...
 struct Hungarian{
 	Hungarian(int n, int m):n(n),m(m),g(n+1,Arr<int>(m+1)){}
 
-	void add_edge(int a, int b, int c){g[a+1][b+1]=g[b+1][a+1]=c;}
+	void add_edge(int a, int b, int c){g[a+1][b+1]=c;}
 	// mat[1][1] ~ mat[n][m]
 	// mat[i] : mat column of row i
 	pair<int,Arr<int>> calc(){
