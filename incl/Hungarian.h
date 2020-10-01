@@ -1,8 +1,11 @@
 #pragma once
 #include "Core.h"
 
+//minimum weighted bipartite matching
+//NOTE: determine no matching by inf<int>()/max(n,m) instead of inf<int>().
+//		or, check result's matching weight
 struct Hungarian{
-	Hungarian(int n, int m):n(n),m(m),g(n+1,Arr<int>(m+1)){}
+	Hungarian(int n, int m):n(n),m(m),g(n+1,Arr<int>(m+1,inf<int>()/max({1,n,m}))){}
 
 	void add_edge(int a, int b, int c){g[a+1][b+1]=c;}
 	// mat[1][1] ~ mat[n][m]
