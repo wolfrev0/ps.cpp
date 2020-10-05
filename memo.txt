@@ -10,7 +10,6 @@ time ./a.out < in
 <디버그>
 gdb ./bin/a.out  
 run < input  
-
 b <line_num>: break point  
 n: step over (next line)  
 s: step into  
@@ -20,6 +19,7 @@ p <expr>: print evaluated expression
 l: show next 10 line  
 bt: show callstack (backtrace)  
 q: quit  
+More Info) https://sourceware.org/gdb/current/onlinedocs/gdb/Sample-Session.html#Sample-Session  
 
-More Info  
-https://sourceware.org/gdb/current/onlinedocs/gdb/Sample-Session.html#Sample-Session  
+<WSL copy to clipboard>
+cat submit.cpp | clip.exe
