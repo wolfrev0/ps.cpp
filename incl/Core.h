@@ -36,6 +36,7 @@
 #define PQMIN(...) std::priority_queue<__VA_ARGS__,Arr<__VA_ARGS__>,greater<__VA_ARGS__>>
 #define lb lower_bound
 #define ub upper_bound
+#define unify(x) sort(all(x)),x.erase(unique(all(x)),x.end())
 #if INT64
 	#define int i64
 #endif
@@ -87,4 +88,5 @@ Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
 	#define CIN(T,...) T __VA_ARGS__; _cin_(__VA_ARGS__);
 	template<class... Args> void _cout_(Args... arg) { ((cout<<arg<<' '),...); }
 	#define COUT(...) _cout_(__VA_ARGS__), cout<<endl;
+	template<class T> T dupl(const T& x, int n){ T r; rep(_,n)r.insert(r.end(),all(x)); return r; }
 #endif
