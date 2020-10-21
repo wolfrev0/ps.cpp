@@ -1,7 +1,6 @@
 #pragma once
 #include "Core.h"
 
-
 //Berlekamp Massey
 //NOTE: Linear Recurrence Sequence의 점화식 도출은 행렬형태로 표현해서 O(n^3)가능할듯 한데,
 //Berlekamp Massey는 O(n^2)이다.
@@ -17,22 +16,21 @@ Arr<int> guess(Arr<int> seq){
 	for(auto& i:seq)i=(i%mod+mod)%mod;
 	//b: best(=shortest) relation so far
 	//c: current relation
-	Arr<int> b,c;
+	Arr<int> b={1},c={1};
 	//bi: pos of b
 	//bd: delta of b
 	int bi,bd;
 	rep(i,sz(seq)){
-		int v=(-seq[i]+mod)%mod;//evaluated value at i
+		int v=0;//evaluated value at i
 		rep(j,sz(c))
-			v=(v+c[j]*seq[i-j-1])%mod;
+			v=(v+c[j]*seq[i-j])%mod;
 		if(!v)continue;//good
-		if(c.empty()){//first non-zero pos
+		if(sz(c)==1){//first non-zero pos
 			c.pushb(0), bi=i, bd=v;
 			continue;
 		}
 		int coef=v*qp(bd,mod-2)%mod;
-		Arr<int> a(i-bi-1);//add zeroes in front
-		a.pushb(coef);
+		Arr<int> a(i-bi);//add zeroes in front
 		for(auto j:b)
 			a.pushb((-coef+mod)*j%mod);
 		if(sz(c)>sz(a))
@@ -43,15 +41,20 @@ Arr<int> guess(Arr<int> seq){
 			b=c, bi=i, bd=v;
 		c=a;
 	}
-	c.insert(c.begin(),-1);
-	for(auto& i:c)i=(-i+mod)%mod;
 	return c;
 }
 
 //O(M^2logN). https://codeforces.com/blog/entry/61306 might help to understand.
 //can be improved to O(MlogMlogN). see https://algoshitpo.github.io/2020/05/20/linear-recurrence/
 template<int mod=int(1e9+7)>
-int calc_nth(const Arr<int>& seq, const Arr<int>& rec, int n){
+int calc_nth(Arr<int> seq, Arr<int> rec, int n){
+	int z=0;
+	while(z<sz(rec) and !rec[sz(rec)-1-z])z++;
+	if(n<z) return seq[n];
+	seq.erase(seq.begin(),seq.begin()+z);
+	rec.erase(rec.end()-z, rec.end());
+	n-=z;
+
 	auto mul=[&](const Arr<int>& a, const Arr<int>& b){
 		Arr<int> c(sz(a)+sz(b)-1);
 		rep(i,sz(a))
