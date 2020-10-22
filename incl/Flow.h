@@ -34,9 +34,11 @@ struct Flow : public Graph<FlowW> {
 		return sum;
 	}
 
-	i64 dinic(i64 flow = inf<i64>()){
-		i64 sum = 0;
-		return sum;
+	int dinic(int flow = inf<int>()){
+		int r=0;
+		while(int f=_dinic(flow-r))
+			r+=f;
+		return r;
 	}
 
 	pair<i64, i64> mcmf(i64 flow = inf<i64>()) {
@@ -105,6 +107,40 @@ private:
 			}
 		}
 		return 0;
+	}
+
+	int _dinic(int flow){
+		queue<int> q;
+		Arr<int> d(n,inf<int>());
+		d[src]=0, q.empl(src);
+		while(sz(q)){
+			int x=q.front(); q.pop();
+			for(auto i:g[x])
+				if(i.w.cap>0 and d[i.e]>d[i.s]+1)
+					d[i.e]=d[i.s]+1, q.push(i.e);
+		}
+		decltype(g) l(n);//level graph, DAG
+		for(auto i:g)
+			for(auto j:i)
+				if(d[j.e]==d[j.s]+1)
+					l[j.s].emplb(j);
+		Func<int(int,int)> block_flow=[&](int u, int flow)->int{
+			if(u==snk) return flow;
+			for(auto i:l[u])
+				if(g[i.s][i.ei].w.cap){
+					int f=block_flow(i.e,min(flow,g[i.s][i.ei].w.cap));
+					if(f>0){
+						g[i.s][i.ei].w.cap-=f;
+						g[i.e][i.w.si].w.cap+=f;
+						return f;
+					}
+				}
+			return 0;
+		};
+		int r=0;
+		while(int f=block_flow(src,flow-r))
+			r+=f;
+		return r;
 	}
 
 	pair<i64, i64> process_mcmf(i64 flow) {
