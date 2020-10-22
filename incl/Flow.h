@@ -116,13 +116,13 @@ private:
 		while(sz(q)){
 			int x=q.front(); q.pop();
 			for(auto i:g[x])
-				if(i.w.cap>0 and d[i.e]>d[i.s]+1)
+				if(i.w.cap and d[i.e]>d[i.s]+1)
 					d[i.e]=d[i.s]+1, q.push(i.e);
 		}
 		decltype(g) l(n);//level graph, DAG
 		for(auto i:g)
 			for(auto j:i)
-				if(d[j.e]==d[j.s]+1)
+				if(j.w.cap and d[j.e]==d[j.s]+1)
 					l[j.s].emplb(j);
 		Func<int(int,int)> block_flow=[&](int u, int flow)->int{
 			if(u==snk) return flow;
