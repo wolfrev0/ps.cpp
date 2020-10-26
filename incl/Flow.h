@@ -90,6 +90,19 @@ struct Flow : public Graph<FlowW> {
 			else _cuts(i.e,vis,pvis,r);
 		}
 	}
+
+	Arr<bool> ff(){
+		Arr<bool> vis(n);
+		_ff(src,vis);
+		return vis;
+	}
+	void _ff(int v, Arr<bool>& vis){
+		if(vis[v]) return;
+		vis[v]=true;
+		for(auto i:g[v])
+			if(i.w.cap)
+				_ff(i.e,vis);
+	}
 private:
 	i64 process_mf(int v, i64 mf, Arr<bool>& vis) {
 		if (v == snk)
@@ -124,9 +137,11 @@ private:
 			for(auto j:i)
 				if(j.w.cap and d[j.e]==d[j.s]+1)
 					l[j.s].emplb(j);
+		Arr<int> ii(n);
 		Func<int(int,int)> block_flow=[&](int u, int flow)->int{
 			if(u==snk) return flow;
-			for(auto i:l[u])
+			for(auto& _i=ii[u];_i<sz(l[u]);_i++){
+				auto i=l[u][_i];
 				if(g[i.s][i.ei].w.cap){
 					int f=block_flow(i.e,min(flow,g[i.s][i.ei].w.cap));
 					if(f>0){
@@ -135,6 +150,7 @@ private:
 						return f;
 					}
 				}
+			}
 			return 0;
 		};
 		int r=0;
