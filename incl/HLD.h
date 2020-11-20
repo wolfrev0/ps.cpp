@@ -4,7 +4,7 @@
 template<class T>
 struct HLD: public RootedTree<T>{
 	using RT=RootedTree<T>; using RT::n; using RT::r; using RT::p; using RT::ch; using RT::dpt;
-
+	HLD(){}
 	HLD(const Arr<pair<int,T>>& pi)
 	:RT(pi), cn(n), top(n){
 		int ccn=0;
