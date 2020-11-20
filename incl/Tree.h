@@ -28,6 +28,11 @@ struct Tree{
 		rootize_dfs(r,r,res);
 		return res;
 	}
+	Arr<pair<int,T>> rootize(int r, const Arr<T>& vtxw)const{
+		Arr<pair<int,T>> res(n,{r,vtxw[r]});
+		rootize_dfs(r,r,res,vtxw);
+		return res;
+	}
 
 	int n;
 	Arr<Arr<pair<int,T>>> g;
@@ -58,6 +63,11 @@ private:
 		for(auto [i,w]:g[r])
 			if(i!=p)
 				res[i]={r,w}, rootize_dfs(i,r,res);
+	}
+	void rootize_dfs(int r, int p, Arr<pair<int,T>>& res, const Arr<T>& vtxw)const{
+		for(auto [i,_]:g[r])
+			if(i!=p)
+				res[i]={r,vtxw[i]}, rootize_dfs(i,r,res,vtxw);
 	}
 };
 
