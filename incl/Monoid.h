@@ -29,3 +29,10 @@ struct MonoidAss{
 	cxp static T fn(T a, int n){return a;}
 	static_assert(f(id(),id())==id());
 };
+template<typename T>
+struct MonoidXor{
+	cxp static T f(T a, T b){return a^b;}
+	cxp static T id(){return T(0);}
+	cxp static T fn(T a, int n){return n&1?a:0;}
+	static_assert(f(id(),id())==id());
+};

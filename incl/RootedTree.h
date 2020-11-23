@@ -5,11 +5,10 @@
 template<typename T>
 struct RootedTree{
 	RootedTree(){}
-	RootedTree(const Arr<pair<int,T>>& p)
-	:n(sz(p)), r(0), ch(n), p(p), tsz(n), dpt(n), cost(n){
+	RootedTree(const Arr<pair<int,T>>& p): n(sz(p)), r(0), ch(n), p(p), tsz(n), dpt(n), cost(n){
 		while(p[r].fi!=r)
 			r=p[r].fi;
-		hfor(i,0,n)
+		rep(i,n)
 			if(i!=r)
 				ch[p[i].fi].pushb({i, p[i].se});
 		dfs_init(r,0,0);
@@ -29,39 +28,15 @@ struct RootedTree{
 		return x;
 	}
 
-	pair<Arr<int>,Arr<int>> euler(){
-		Arr<int> eu,v2eu(n*2);
-		dfs_euler(r,eu,v2eu);
-		return {eu,v2eu};
-	}
-	void dfs_euler(int x, Arr<int>& eu, Arr<int>& v2eu){
-		v2eu[x]=sz(eu), eu.pushb(x);
-		for(auto [i,w]:ch[x])
-			dfs_euler(i,eu,v2eu), v2eu[x]=sz(eu), eu.pushb(x);
-	}
+	Arr<Arr<int>> euler(){ int co=0; Arr<Arr<int>> ord(n); dfs_euler(r,co,ord); return ord; }
+	void dfs_euler(int x, int& co, Arr<Arr<int>>& ord){ ord[x].emplb(co++); for(auto [i,_]:ch[x])dfs_euler(i,co,ord),ord[x].emplb(co++); }
 
-	pair<Arr<int>,Arr<int>> pre(){
-		Arr<int> pre,v2pre(n);
-		dfs_pre(r,pre,v2pre);
-		return {pre,v2pre};
-	}
-	void dfs_pre(int x, Arr<int>& pre, Arr<int>& v2pre){
-		v2pre[x]=sz(pre), pre.pushb(x);
-		for(auto [i,w]:ch[x])
-			dfs_pre(i,pre,v2pre);
-	}
-
-	pair<Arr<int>,Arr<int>> post(){
-		Arr<int> po,v2po(n);
-		dfs_post(r,po,v2po);
-		return {po,v2po};
-	}
-	void dfs_post(int x, Arr<int>& post, Arr<int>& v2post){
-		for(auto [i,w]:ch[x])
-			dfs_post(i,post,v2post);
-		v2post[x]=sz(post), post.pushb(x);
-	}
+	Arr<int> pre(){ int co=0; Arr<int> ord(n); dfs_pre(r,co,ord); return ord; }
+	void dfs_pre(int x, int& co, Arr<int>& ord){ ord[x]=co++; for(auto [i,_]:ch[x])dfs_pre(i,co,ord); }
 	
+	Arr<int> post(){ int co=0; Arr<int> ord(n); dfs_post(r,co,ord); return ord; }
+	void dfs_post(int x, int& co, Arr<int>& ord){ for(auto [i,_]:ch[x])dfs_post(i,co,ord); ord[x]=co++; }
+
 	int n, r;
 	Arr<Arr<pair<int,T>>> ch;
 	Arr<pair<int,T>> p;
