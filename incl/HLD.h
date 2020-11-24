@@ -38,7 +38,7 @@ struct HLD: public RootedTree<T>{
 				f(ord[top[cn[a]]],ord[a]+1), a=p[top[cn[a]]].fi;
 		}
 		if(dpt[a]>dpt[b]) swap(a,b);
-		f(ord[a],ord[b]+vtxw);
+		f(ord[a]+!vtxw,ord[b]+1);
 	}
 	
 	Arr<int> cn,top,ord;//chain number, top of the chain, vtx to preord
