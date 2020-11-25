@@ -45,4 +45,7 @@ struct HLD: public RootedTree<T>{
 	using RT=RootedTree<T>; using RT::n; using RT::r; using RT::p; using RT::ch; using RT::dpt;
 };
 
-//See Also: https://codeforces.com/group/q4aFsZ9De9/contest/288125/submission/99012892
+//<See Also>
+//https://www.acmicpc.net/source/share/7cc26b5459334944930192c6e75fe019
+//https://www.acmicpc.net/source/share/98c5f45fedcc4a579b5410e8ee33cd79
+//https://codeforces.com/group/q4aFsZ9De9/contest/288125/submission/99012892
