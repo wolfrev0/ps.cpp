@@ -2,7 +2,7 @@
 #include "Core.h"
 #include "UnionFind.h"
 
-template<typename T>
+template<class T>
 struct Graph {
 	struct Edge {
 		int s;

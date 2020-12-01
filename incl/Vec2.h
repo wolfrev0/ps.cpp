@@ -2,7 +2,7 @@
 #include "Core.h"
 #include "Frac.h"
 
-template<typename T>
+template<class T>
 struct Vec2 {
 	T x, y;
 	Vec2() :Vec2(0, 0) {}

@@ -2,7 +2,7 @@
 #include "Core.h"
 #include "Mod.h"
 
-template<typename T>
+template<class T>
 struct CumulQ{
 	T acc;
 	CumulQ(T init=T()):acc(init){}
@@ -15,7 +15,7 @@ private:
 	virtual void finv(T& acc, const T& x)=0;
 };
 
-template<typename T>
+template<class T>
 struct SumQ:public CumulQ<T>{
 private:
 	void f(T& acc, const T& x)override{acc+=x;}

@@ -4,7 +4,7 @@
 class LineException {};
 class LineSame :public LineException {};
 
-template<typename T>
+template<class T>
 struct Line {
 	Line() :Line(-Vec2<T>::inf(), Vec2<T>::inf()) {}
 	Line(const Vec2<T>& s, const Vec2<T>& e) :sv(s), ev(e) { if(sv > ev) swap(sv, ev); }
@@ -50,7 +50,7 @@ private:
 	virtual bool valid_contains(const Vec2<T>& p) const { return true; }
 };
 
-template<typename T>
+template<class T>
 struct Segment :public Line<T> {
 	using Line<T>::sv, Line<T>::ev;
 	Segment():Line<T>() {}

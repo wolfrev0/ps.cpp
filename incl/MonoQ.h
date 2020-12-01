@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
 
-template<typename T>
+template<class T>
 struct MonoQ{
 	MonoQ(bool ismax=false):ismax(ismax){}
 

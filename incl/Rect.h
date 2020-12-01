@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
 
-template<typename T>
+template<class T>
 struct Rect
 {
 	T x1, y1, x2, y2;

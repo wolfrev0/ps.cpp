@@ -6,7 +6,7 @@ int log_c(i64 n, int base=2) {int ret=0,rem=0; while(n)rem+=n%base,n/=base,ret++
 int sqrt_f(i64 n){i64 i=1; while(i*i<=n)i++; return i-1;}
 int sqrt_c(i64 n){i64 i=1; while(i*i<n)i++; return i;}
 
-template<typename T>
+template<class T>
 Arr<T> factorials(T n){
 	Arr<T> ret(int(n)+1);
 	ret[0]=1;
@@ -14,7 +14,7 @@ Arr<T> factorials(T n){
 		ret[i]=ret[i-1]*i;
 	return ret;
 }
-template<typename T>
+template<class T>
 T binom(T n, T k){
 	if(k>n/2)
 		return binom(n, n-k);
@@ -23,7 +23,7 @@ T binom(T n, T k){
 	auto f=factorials(n);
 	return f[int(n)]/(f[int(k)]*f[int(n-k)]);
 }
-template<typename T>
+template<class T>
 Arr<Arr<T>> binom_dp(T n, T k){
 	Arr<Arr<T>> ret(n, Arr<T>(k));
 
@@ -124,7 +124,7 @@ int eutot(int n){
 	return r;
 }
 
-template<typename T>
+template<class T>
 T fp(const T& a, int p) {
 	if(!p)return T(1);
 	T tmp=fp(a, p/2);

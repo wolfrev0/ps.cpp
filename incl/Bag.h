@@ -1,6 +1,6 @@
 #pragma once
 #include "Core.h"
-template<typename T>
+template<class T>
 struct Bag{
 	struct N{
 		T d=T();

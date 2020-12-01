@@ -3,7 +3,7 @@
 
 //interface: 0-based half
 //implement: 1-based half
-template<typename T>
+template<class T>
 struct SplayTree{
 	SplayTree():rt(new N()){bin.s=0;ins(1,0);}
 	~SplayTree(){delete rt;}

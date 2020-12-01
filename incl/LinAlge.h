@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
 
-template<typename T>
+template<class T>
 struct Mat{
 	const int n,m;
 	Arr<Arr<T>> a;

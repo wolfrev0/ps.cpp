@@ -2,7 +2,7 @@
 #include "Core.h"
 
 //Static Rooted Tree
-template<typename T>
+template<class T>
 struct RootedTree{
 	RootedTree(){}
 	RootedTree(const Arr<pair<int,T>>& p): n(sz(p)), r(0), ch(n), p(p), tsz(n), dpt(n), cost(n){

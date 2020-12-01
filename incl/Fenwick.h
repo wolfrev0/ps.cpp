@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
 
-template<typename T>
+template<class T>
 struct Fenwick{
 	Fenwick(int n=0):n(n), tr(n+1){}
 

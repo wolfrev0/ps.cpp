@@ -1,9 +1,8 @@
 #pragma once
 #include "Line.h"
 
-template<typename T>
-struct Polygon
-{
+template<class T>
+struct Polygon{
 	Arr<Vec2<T>> vtx;
 
 	Polygon() {}
@@ -48,7 +47,7 @@ struct Polygon
 	}
 };
 
-template<typename T>
+template<class T>
 struct Convex :public Polygon<T>{
 	using Polygon<T>::vtx;
 	using Polygon<T>::contains;

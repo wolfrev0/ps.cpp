@@ -2,7 +2,7 @@
 #include "Core.h"
 
 //Not Tested
-template<typename T, typename F>
+template<class T, class F>
 struct SegLazyDynPers{
 	struct Node{
 		Node *l=0, *r=0;

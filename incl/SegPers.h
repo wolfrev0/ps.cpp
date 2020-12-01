@@ -1,7 +1,7 @@
 #pragma once
 #include "Core.h"
 
-template<typename T, typename F, typename U=T>
+template<class T, class F, class U=T>
 struct SegPers{
 	struct Node{
 		Node *l=0, *r=0;

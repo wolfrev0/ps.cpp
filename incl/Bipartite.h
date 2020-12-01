@@ -1,7 +1,7 @@
 #pragma once
 #include "Graph.h"
 
-template<typename T>
+template<class T>
 struct Bipartite{
 	Arr<T> a[2];
 	Bipartite(int n, int m){}

@@ -1,7 +1,7 @@
 #pragma once
 #include "RootedTree.h"
 
-template<typename T>
+template<class T>
 struct LCA:public RootedTree<T>{
 	using P = RootedTree<T>;
 	using P::n; using P::p; using P::dpt; using P::cost;

@@ -12,21 +12,21 @@
 using namespace __gnu_pbds;
 using namespace __gnu_cxx;
 
-template<typename T>
+template<class T>
 struct Xet: public tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>{
 	Xet(){}
 	Xet(Xet&& r){this->swap(r);}
 	void operator=(Xet&& r){this->swap(r);}
 };
 
-template<typename K, typename V>
+template<class K, class V>
 struct Xmap: public tree<K, V, less<K>, rb_tree_tag, tree_order_statistics_node_update>{
 	Xmap(){}
 	Xmap(Xmap&& r){this->swap(r);}
 	void operator=(Xmap&& r){this->swap(r);}
 };
 
-template<typename T>
+template<class T>
 struct Multixet{
 	Xet<pair<T, int>> s;
 
