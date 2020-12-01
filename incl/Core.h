@@ -62,11 +62,7 @@ const f64 pi=acosl(-1), eps=1e-10;
 
 //Misc
 //#pragma GCC optimize ("Ofast")
-#ifdef DEBUG
-	mt19937 _rng(i64(new int)+time(0));
-#else
-	mt19937 _rng(i64(new int));
-#endif
+mt19937 _rng(i64(new int)^time(0));
 int rd(){static uniform_int_distribution<int> dist(0,inf<int>()); return dist(_rng);}
 int rd(int e){return rd()%e;}
 int rd(int s, int e){return rd()%(e-s)+s;}
@@ -84,9 +80,9 @@ Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
 		if constexpr(sizeof...(a)==0) return n;
 		else return vector(n,ARR(a...));
 	}
-	template<class... Args> void _cin_(Args&... arg) { ((cin>>arg),...); }
+	template<class... A> void _cin_(A&... a) { ((cin>>a),...); }
 	#define CIN(T,...) T __VA_ARGS__; _cin_(__VA_ARGS__);
-	template<class... Args> void _cout_(Args... arg) { ((cout<<arg<<' '),...); }
+	template<class... A> void _cout_(A... a) { ((cout<<a<<' '),...); }
 	#define COUT(...) _cout_(__VA_ARGS__), cout<<endl;
 	template<class T> T dupl(const T& x, int n){ T r; rep(_,n)r.insert(r.end(),all(x)); return r; }
 #endif
