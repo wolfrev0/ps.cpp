@@ -80,9 +80,4 @@ Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
 		if constexpr(sizeof...(a)==0) return n;
 		else return vector(n,ARR(a...));
 	}
-	template<class... A> void _cin_(A&... a) { ((cin>>a),...); }
-	#define CIN(T,...) T __VA_ARGS__; _cin_(__VA_ARGS__);
-	template<class... A> void _cout_(A... a) { ((cout<<a<<' '),...); }
-	#define COUT(...) _cout_(__VA_ARGS__), cout<<endl;
-	template<class T> T dupl(const T& x, int n){ T r; rep(_,n)r.insert(r.end(),all(x)); return r; }
 #endif
