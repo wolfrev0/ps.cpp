@@ -39,3 +39,26 @@ int solution(vector<vector<signed> > rects)
     }
     return ans;
 }
+
+struct A{
+	static A *id;
+	int x=0; A *l=id,*r=id;
+	void upd(int i, int v){upd(0,1e9,i,v);}
+	int q(int s, int e){return q(0,1e9,s,e);}
+private:
+	int upd(int cs, int ce, int i, int v){
+		int cm=(cs+ce)>>1;
+		if(i<=cs and ce<=i+1)return x+=v;
+		if(ce<=i or i+1<=cs)return x;
+		if(l==id)l=new A{}; if(r==id)r=new A{};
+		return x=l->upd(cs,cm,i,v)+r->upd(cm,ce,i,v);
+	}
+	int q(int cs, int ce, int s, int e){
+		int cm=(cs+ce)>>1;
+		if(s<=cs and ce<=e)return x;
+		if(ce<=s or e<=cs)return A::id->x;
+		return l->q(cs,cm,s,e)+r->q(cm,ce,s,e);
+	}
+};
+A* A::id=new A{};
+auto id=A::id->l=A::id->r=A::id;
