@@ -1,6 +1,10 @@
 #pragma once
 #include "Core.h"
 
+#ifdef ONLINE_JUDGE
+	#define cerr if(false)cerr
+#endif
+
 template <class T, typename = void>
 struct is_iterable : false_type {};
 template <class T>
