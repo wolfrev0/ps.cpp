@@ -28,3 +28,5 @@ template<class TupType, size_t... I>
 void debug(const TupType& _tup, index_sequence<I...>, int d){cerr<<endl<<string(d,' ')+'<'; (..., debug(get<I>(_tup),d+1)); cerr<<'>';}
 template<class... T>
 void debug(const tuple<T...>& _tup, int d){debug(_tup, make_index_sequence<sizeof...(T)>(), d);}
+
+#define watch(x) cerr<<(#x)<<"; = ", debug(x), cerr<<endl;
