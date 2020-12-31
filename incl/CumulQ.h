@@ -25,7 +25,7 @@ private:
 //T=u64: anti-hash unsafe
 //T=Mod<mod>: anti-hash safe but collision unsafe
 //HashPairQ: anti-hash safe and collision safe but slow.
-template<typename T>
+template<typename T, int prime>
 struct HashQ:public CumulQ<T>{
 	using P=CumulQ<T>;
 private:
@@ -45,10 +45,10 @@ private:
 	void finv(T& acc, const T& x)override{acc-=ppow(P::size()-1)*x;}
 };
 
-template<int m1=mod, int m2=1073741783>
+template<int m1=1e9+7, int m2=1073741783>
 struct HashPairQ{
-	HashQ<Mod<m1>> q1;
-	HashQ<Mod<m2>> q2;
+	HashQ<Mod<m1>,int(1e9+9)> q1;
+	HashQ<Mod<m2>,int(1e9+9)> q2;
 	void push(int x){q1.push(x), q2.push(x);}
 	void pop(){q1.pop(), q2.pop();}
 	i64 get()const{ return (i64(q1.acc.val()<<32)) + q2.acc.val(); }

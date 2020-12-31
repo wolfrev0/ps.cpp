@@ -40,11 +40,11 @@ struct Mat{
 		repo(i,n){
 			while(pi<m && a[i][pi]==0){
 				if(!pv_fix){
-					hforo(j,i+1,n)
+					forho(j,i+1,n)
 						if(a[j][pi])
 							break;
 					if(j<n){
-						hfor(k,pi,m)
+						forh(k,pi,m)
 							swap(a[i][k],a[j][k]);
 						break;
 					}
@@ -54,17 +54,17 @@ struct Mat{
 			if(pi==m)
 				break;
 			if(a[i][pi]){
-				hfori(j,pi,m)
+				forhi(j,pi,m)
 					a[i][j]/=a[i][pi];
-				hfor(j,i+1,n){
+				forh(j,i+1,n){
 					auto z=a[j][pi];
 					if(z==0)
 						continue;
-					hfor(k,pi,m)
+					forh(k,pi,m)
 						a[i][k]*=z;
-					hfor(k,pi,m)
+					forh(k,pi,m)
 						a[j][k]-=a[i][k];
-					hfor(k,pi,m)
+					forh(k,pi,m)
 						a[i][k]/=z;
 				}
 			}

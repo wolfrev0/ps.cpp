@@ -97,12 +97,12 @@ Arr<Arr<i64>> knuth_opt(const Arr<i64>& init, const function<i64(int,int)>& c){
 	int n=sz(init);
 	Arr<Arr<i64>> dp(n+1,Arr<i64>(n+1));
 	Arr<Arr<int>> a(n,Arr<int>(n+1));
-	hfor(i, 0, n)
+	forh(i, 0, n)
 		a[i][i+1]=i;
-	cfor(d, 2, n){
-		cfor(i, 0, n-d){
+	forc(d, 2, n){
+		forc(i, 0, n-d){
 			dp[i][i+d]=inf<i64>();
-			cfor(k, a[i][i+d-1], a[i+1][i+d]){
+			forc(k, a[i][i+d-1], a[i+1][i+d]){
 				if(dp[i][k+1] + dp[k+1][i+d]+c(i,i+d) < dp[i][i+d]){
 					dp[i][i+d]=dp[i][k+1] + dp[k+1][i+d]+c(i,i+d);
 					a[i][i+d]=k;
@@ -135,7 +135,7 @@ int& f(int i, int j){
 
 void dnc(int i, int s, int e, int ks, int ke){
 	int mid=(s+e)/2, kk=ks;
-	hfor(k,ks,ke){
+	forh(k,ks,ke){
 		if(f(i,mid) > f(i-1,k)+c[k+1][mid])
 			f(i,mid)=f(i-1,k)+c[k+1][mid], kk=k;
 	}
@@ -147,7 +147,7 @@ void dnc(int i, int s, int e, int ks, int ke){
 
 signed main(){
 	int t; cin>>t;
-	cfor(ti,1,t){
+	forc(ti,1,t){
 		cout<<"Case #"<<ti<<endl;
 		cin>>n>>m;
 		a=cinints(n);
@@ -156,7 +156,7 @@ signed main(){
 		c=ARR(n,n,0ll);
 		rep(i,n){
 			int l=0,r=0;
-			cfori(j,0,i){
+			forci(j,0,i){
 				l+=a[j];
 				if((i-j+1)%2)
 					l-=a[(i+j)/2];

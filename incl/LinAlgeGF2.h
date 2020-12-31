@@ -40,7 +40,7 @@ struct MatGF2{
 		repo(i,n){
 			while(pi<m && a[i][pi]==0){
 				if(!pv_fix){
-					hforo(j,i+1,n)
+					forho(j,i+1,n)
 						if(a[j][pi])
 							break;
 					if(j<n){
@@ -53,7 +53,7 @@ struct MatGF2{
 			if(pi==m)
 				break;
 			if(a[i][pi])
-				hfor(j,i+1,n)
+				forh(j,i+1,n)
 					if(a[j][pi])
 						a[j]^=a[i];
 			pi++;

@@ -50,7 +50,8 @@ private:
 		int cm=(cs+ce)>>1;
 		if(i<=cs and ce<=i+1)return x+=v;
 		if(ce<=i or i+1<=cs)return x;
-		if(l==id)l=new A{}; if(r==id)r=new A{};
+		if(l==id)l=new A{};
+		if(r==id)r=new A{};
 		return x=l->upd(cs,cm,i,v)+r->upd(cm,ce,i,v);
 	}
 	int q(int cs, int ce, int s, int e){

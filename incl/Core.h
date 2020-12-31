@@ -8,17 +8,17 @@
 #define C20 1
 
 //Common
-#define hfor(v, s, e) for(int v=(s);(s)<=v&&v<(e);++v)//half-opened range
-#define hfori(v, s, e) for(int v=(e)-1;(s)<=v&&v<(e);--v)//inversion
-#define hforo(v, s, e) int v=(s);for(;(s)<=v&&v<(e);++v)//out declaration
-#define hforoi(v, s, e) int v=(e)-1; for(;(s)<=v&&v<(e);--v)
-#define cfor(v, s, e) hfor(v,(s),(e)+1)//closed range
-#define cfori(v, s, e) hfori(v,(s),(e)+1)
-#define cforo(v, s, e) hforo(v,(s),(e)+1)
-#define cforoi(v, s, e) hforoi(v,(s),(e)+1)
-#define rep(v,x) hfor(v,0,(x))
-#define repi(v,x) hfori(v,0,(x))
-#define repo(v,x) hforo(v,0,(x))
+#define forh(v, s, e) for(int v=(s);(s)<=v&&v<(e);++v)//half-opened range
+#define forhi(v, s, e) for(int v=(e)-1;(s)<=v&&v<(e);--v)//inversion
+#define forho(v, s, e) int v=(s);for(;(s)<=v&&v<(e);++v)//out declaration
+#define forhoi(v, s, e) int v=(e)-1; for(;(s)<=v&&v<(e);--v)
+#define forc(v, s, e) forh(v,(s),(e)+1)//closed range
+#define forci(v, s, e) forhi(v,(s),(e)+1)
+#define forco(v, s, e) forho(v,(s),(e)+1)
+#define forcoi(v, s, e) forhoi(v,(s),(e)+1)
+#define rep(v,x) forh(v,0,(x))
+#define repi(v,x) forhi(v,0,(x))
+#define repo(v,x) forho(v,0,(x))
 #define all(x) (x).begin(),(x).end()
 #define pushb push_back
 #define pushf push_front
@@ -60,13 +60,15 @@ const f64 pi=acosl(-1), eps=1e-10;
 	#endif
 #endif
 
-//Misc
-//#pragma GCC optimize ("Ofast")
+//Random
 mt19937 _rng(i64(new int)^time(0));
 int rd(){static uniform_int_distribution<int> dist(0,inf<int>()); return dist(_rng);}
 int rd(int e){return rd()%e;}
 int rd(int s, int e){return rd()%(e-s)+s;}
 f64 rdf(){static uniform_real_distribution<f64> dist(0,1); return dist(_rng);}
+
+//Misc
+//#pragma GCC optimize ("Ofast")
 template<class T> T rev(const T& a){return {a.rbegin(),a.rend()};}
 Arr<int> range(int n){ Arr<int> ret(n); rep(i,n)ret[i]=i; return ret; }
 #define lam(expr, ...) [&](__VA_ARGS__){return expr;}

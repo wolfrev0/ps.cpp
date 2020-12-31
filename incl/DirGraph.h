@@ -16,12 +16,12 @@ struct DirGraph: public Graph<int>{
 
 	Arr<int> topo_sort() {
 		Arr<int> in(n);
-		hfor(i, 0, n){
+		forh(i, 0, n){
 			for(auto &j:g[i])
 				in[j.e]++;
 		}
 		queue<int> q;
-		hfor(i, 0, n)
+		forh(i, 0, n)
 			if (!in[i])
 				q.push(i);
 		Arr<int> ret;
@@ -38,12 +38,12 @@ struct DirGraph: public Graph<int>{
 
 	Arr<int> topo_sort_lex() {
 		Arr<int> in(n);
-		hfor(i, 0, n){
+		forh(i, 0, n){
 			for(auto &j:g[i])
 				in[j.e]++;
 		}
 		PQMIN(int) q;
-		hfor(i, 0, n)
+		forh(i, 0, n)
 			if (!in[i])
 				q.push(i);
 		Arr<int> ret;

@@ -22,11 +22,11 @@ Arr<i64> toi(const Arr<C>& a){
 // 	if(n==1)
 // 		return a;
 // 	Arr<C> ev(n/2), od(n/2), ret(n);
-// 	hfor(i,0,n)
+// 	forh(i,0,n)
 // 		(i%2?od:ev)[i/2]=a[i];
 // 	ev=fft(ev,w*w); od=fft(od,w*w);
 // 	auto wi=C(1,0);
-// 	hfor(i,0,n){
+// 	forh(i,0,n){
 // 		ret[i]=ev[i%(n/2)]+wi*od[i%(n/2)];
 // 		wi*=w;
 // 	}
@@ -70,7 +70,7 @@ Arr<i64> conv(const Arr<i64>& a, const Arr<i64>& b){
 	const auto& fa=fft(toC(a));
 	const auto& fb=fft(toC(b));
 	Arr<C> fc;
-	hfor(i,0,sz(a)) fc.pushb(fa[i]*fb[i]);
+	forh(i,0,sz(a)) fc.pushb(fa[i]*fb[i]);
 	return toi(ffti(fc));
 }
 
@@ -88,7 +88,7 @@ Arr<i64> conv_cir(Arr<i64> a, Arr<i64> b){
 	int m=1<<lgc(n*2);
 	a.resize(m);
 	reverse(all(b));
-	hfor(i,n,m)
+	forh(i,n,m)
 		b.pushb(b[(n+i)%n]);
 	reverse(all(b));
 	auto res=conv(a,b);

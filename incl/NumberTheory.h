@@ -10,7 +10,7 @@ template<class T>
 Arr<T> factorials(T n){
 	Arr<T> ret(int(n)+1);
 	ret[0]=1;
-	cfor(i, 1, n)
+	forc(i, 1, n)
 		ret[i]=ret[i-1]*i;
 	return ret;
 }

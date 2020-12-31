@@ -64,7 +64,7 @@ int calc_nth(Arr<int> seq, Arr<int> rec, int n){
 		//mod by rec
 		//NOTE: rec's MSB==1
 		//NOTE: rec is reversed
-		hfori(i,sz(rec)-1,sz(c))
+		forhi(i,sz(rec)-1,sz(c))
 			repi(j,sz(rec))
 				c[i-j]=(c[i-j]-c[i]*rec[j]%mod+mod)%mod;
 		while(sz(c) and !c.back())c.popb();
