@@ -1,7 +1,7 @@
 ## Bag.h
   집합을 의미하며, 집합끼리의 Union이 O(1)로 효율적이다.
 ## Bipartite.h
-  이분매칭
+  이분그래프
 ## Bucket.h
   원소의 최대크기가 n인 집합으로, Find가 O(1)로 효율적인 집합이다.
 ## Carr.h
@@ -10,73 +10,90 @@
   ps코드를 간결하게 짜기 위해 자주 사용되는 상수들과 구문들이 있다.
 ## CumulQ.h
   역연산을 지원하는 f에 대해 누적값을 FIFO로 관리할 수 있다. rabin-karp 해싱 등에 사용한다.
-## DPOpt.h
-  CHT(Stack, Dynamic), KnuthOpt등의 DP 최적화 함수들이 있다.
 ## DirGraph.h
   Directed Graph이다. 위상정렬, SCC등을 할 수 있다.
+## DPOpt.h
+  CHT(Stack, Dynamic), KnuthOpt등의 DP 최적화 함수들이 있다.
+## DST.h
+  Dynamic Setment Tree
+## DSTLazy.h
+  Dynamic Segment Tree wit Lazy Propagation
+## FastIO.h
+  include만 해도 cin의 속도가 매우 빨라진다.
+## Fenwick.h
+  역연산이 존재하는 연산들에 대해 Segment Tree보다 더 빠르게 동작합니다.
 ## FFT.h
   Fast Fourier Transform
-## FastIO.h
-  include하면 cin의 속도가 매우 향상됩니다.
-## Fenwick.h
-  역연산이 존재하는 연산들에 대해 Segment Tree보다 더 빠르게 동작합니다. (시간복잡도는 동일)
-## FlowGraph.h
-  Maximum Flow(kruskal), MCMF 등을 할 수 있습니다. dinic은 지원예정
+## Flow.h
+  Maximum Flow, MCMF 등을 할 수 있다.
 ## Frac.h
   Fractional
 ## GccExts.h
   자주 쓰는 GCC Extension들이다.
 ## Graph.h
-  가중치있는 방향그래프를 나타냅니다. dijkstra, floyd, spfa, MST 등을 구할 수 있습니다.
+  가중치있는 유향그래프. dijkstra, floyd, spfa, MST 등이 가능하다.
+## HashVal.h
+  라빈카프 해싱을 도와준다.
+## HeapSet.h
+  집합의 최댓값만 필요할때 임의원소 추가/삭제가 효율적이다.
 ## HLD.h
-  주어지는 트리를 Heavy-Light Decompose하여 저장합니다.
+  Heavy-Light Decompose
+## Hungarian
+  V^3 가중치 이분매칭. Bipartite.h에 통합될 예정
+## LCA.h
+  트리에서 Least Common Ancestor를 찾는다. Deprecated상태 (HLD의 lca함수를 권장함)
+## LinAlgeGF2.h
+  GF(2)에서의 선형대수학 관련 함수들
+## LinAlge.h
+  Z에서의 선형대수학 관련 함수들
 ## Line.h
-  직선(도형)을 나타냅니다.
+  직선(도형)
+## LinRec.h
+  선형점화식을 푸는데 굉장히 유용한 Berlekamp Massey와 Kitamasa Method가 있다.
 ## List.h
   LinkedList with O(1) merge
-## Mat.h
-  Matrix
-## MatGF2.h
-  Matrix in galois field 2
-## MergeSortTree.h
 ## Mod.h
-  Modular Number입니다. a mod m을 나타냅니다.
+  자동으로 모듈러 처리해주는 정수
+## Monoid
+  주로 사용되는 연산들을 나타내며, SegmentTree류 자료구조를 정의할때 사용된다.
 ## MonoQ.h
-  슬라이딩윈도 하며 최소(최대)값을 구할 수 있습니다.
+  MonotonicQ. 슬라이딩윈도 하며 최소(최대)값을 구할 수 있습니다.
 ## NumberTheory.h
-  정수론 관련 함수들입니다.
+  정수론
 ## Polygon.h
-  다각형을 나타냅니다. area, is intersect, Convex Hull등을 구할 수 있습니다.
+  다각형 및 볼록다각형
+## PrettyDebug.h
+  디버깅 보조함수들
+## PrettyIO.h
+  IO 보조함수들
+## PST.h
+  Persistent Segment Tree
+## PSTLazy.h
+  Persistent Segment Tree with Lazy Propagation
 ## Range.h
-  수직선상의 한 구간 [s,e)를 나타냅니다.
+  반열린구간
 ## Rect.h
-  직사각형을 나타냅니다.
+  (Axis Aligned) 직사각형
 ## RootedTree.h
-  루트있는 트리를 나타냅니다.
-## SegTree.h
+## Seg.h
   Segment Tree
-## SegTree2D.h
-  이차원 Segment Tree입니다.
-## SegTreeCommutative.h
-  교환법칙이 성립하는 값에 대해 좀 더 빠르게 동작하는 Segment Tree입니다.
-## SegTreeLazy.h
-  구간update가 가능한 Segment Tree입니다.
+## Seg2D.h
+  2D Segment Tree
+## SegBU.h
+  Recursion-Free Segment Tree (Bottom Up Implementation)
+## SegLazy.h
+  Segment Tree with LazyPropagation
 ## SimpleGraph.h
-  단순그래프(undirected & unweighted)를 나타냅니다.
-## SimpleTree.h
-  단순트리(unrooted & unweighted)를 나타냅니다.
+  단순그래프(undirected & unweighted)
 ## SplayTree.h
 ## String.h
-  문자열 관련 함수(kmp, suffix array, lcp, int to string, split)들이 있습니다.
+  문자열 관련 함수들. (kmp, suffix array, lcp, int to string, split, ...)
 ## Tree.h
-  diameter등을 구할 수 있습니다.
+## Trie.h
 ## UnionFind.h
-  서로소집합
 ## Vec2.h
-  2차원벡터를 나타냅니다.
+  2D Vector
 ## XArr.h
-  Extended Array. 인자로 넘겨주는 offset만큼의 음수인덱스까지 사용할 수 있습니다.
-## XSet.h
-  Extended Set. GCC확장기능을 사용하여 order_of_key, find_by_order등을 사용할 수 있습니다.
+  Extended Array. 설정한 offset만큼의 음수인덱스를 사용가능한 동적배열이다.
 ## Zip.h
   좌표압축
