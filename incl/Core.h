@@ -19,6 +19,7 @@
 #define rep(v,x) forh(v,0,(x))
 #define repi(v,x) forhi(v,0,(x))
 #define repo(v,x) forho(v,0,(x))
+#define repoi(v,x) forhoi(v,0,(x))
 #define all(x) (x).begin(),(x).end()
 #define pushb push_back
 #define pushf push_front

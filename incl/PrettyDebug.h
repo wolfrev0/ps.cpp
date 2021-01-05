@@ -56,4 +56,4 @@ auto debug(const tuple<T...>& _tup, int d){
 	return _tup;
 }
 
-#define watch(x) (cerr<<(#x)<<"; = ", debug(x))
+#define watch(...) (cerr<<(#__VA_ARGS__)<<"; = ", debug(mkt(__VA_ARGS__)))
