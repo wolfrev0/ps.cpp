@@ -7,4 +7,5 @@ git config --global user.email lobo_prix@naver.com
 git config --global core.editor vim
 cp cppvimrc ~/.vimrc
 alias build='source ./tool/build.sh'
+alias clips='cat submit.cpp|clip'
 build incl/Core.h H
