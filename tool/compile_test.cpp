@@ -25,7 +25,6 @@
 #include "LinRec.h"
 //#include "Line.h"
 #include "List.h"
-#include "MergeSortTree.h"
 #include "Mod.h"
 #include "MonoQ.h"
 #include "Monoid.h"
