@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #mkdir -p ./bin >/dev/null 2>&1
 #wget -P incl https://raw.githubusercontent.com/MikeMirzayanov/testlib/master/testlib.h
-ulimit -s 524288
-git config --global user.name "0xc0def"
-git config --global user.email lobo_prix@naver.com
-git config --global core.editor vim
-cp cppvimrc ~/.vimrc
-alias build='source ./tool/build.sh'
-alias clips='cat submit.cpp|clip'
-build incl/Core.h H
+ulimit -s unlimited
+#git config --global user.name "0xc0def"
+#git config --global user.email lobo_prix@naver.com
+#git config --global core.editor vim
+#cp cppvimrc ~/.vimrc
+#alias build='source ./tool/build.sh'
+#alias clips='cat submit.cpp|clip'
+source ./tool/build.sh incl/Core.h H

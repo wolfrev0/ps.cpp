@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build(Debug)",
+            "type": "shell",
+            "command": "source ./tool/build.sh ${input:src}",
+        },
+        {
+            "label": "Build(Release)",
+            "type": "shell",
+            "command": "source ./tool/build.sh ${input:src} R",
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "command": "ulimit -s unlimited && ./a.out<in",
+        }
+    ],
+    "inputs": [
+        {
+            "id": "src",
+            "description": "Source File:",
+            "default": "main.cpp",
+            "type": "promptString"
+        },
+    ]
+}
