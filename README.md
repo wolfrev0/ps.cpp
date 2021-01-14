@@ -11,6 +11,8 @@
     라이브러리를 편리하게 사용할 수 있게 도와주는 도구들의 코드가 있습니다.
 
 # 사용법
+git clone https://github.com/0xc0def/algolib  
+cd algolib  
 source envset //자동 환경설정  
 cp tpl.cpp main.cpp //main.cpp에 템플릿코드 복사  
 build main.cpp //실행파일 a.out과 병합된코드 submit.cpp가 생성된다. (디버그빌드)  
