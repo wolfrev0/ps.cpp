@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #mkdir -p ./bin >/dev/null 2>&1
 #wget -P incl https://raw.githubusercontent.com/MikeMirzayanov/testlib/master/testlib.h
-ulimit -s unlimited
+ulimit -s 1048576
 #git config --global user.name "0xc0def"
 #git config --global user.email lobo_prix@naver.com
 #git config --global core.editor vim
