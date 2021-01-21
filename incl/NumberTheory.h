@@ -43,22 +43,10 @@ Arr<int> to_digits(i64 n){
 //when x,y have boundary, see (jung2381187, koosaga)'s code at boj_11661, linearity?
 //<Multivariable Linear Deophantine>
 //ax+by+cz=k => gcd(a,b)w+cz=k && ax+by=gcd(a,b)w (extend it recursively)
-
-//recommand to use python
 tuple<int,int,int> xgcd(i64 a, i64 b) {
 	if (b==0) return {a,1,0};
 	auto [g,x,y]=xgcd(b, a%b);
 	return {g,y,x-(a/b)*y};
-}
-tuple<int,int,int> XGCDtolb(tuple<int,int,int> a, i64 lbx, i64 lby){
-	if(0) throw "no root";
-	return {};
-	//return minimum a which satisfies lb<a
-}
-tuple<int,int,int> XGCDtoub(tuple<int,int,int> a, i64 ubx, i64 uby){
-	if(0) throw "no root";
-	return {};
-	//return maximum a which satisfies a<ub
 }
 
 bool miller_rabin(i64 n){
