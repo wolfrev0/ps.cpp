@@ -23,6 +23,7 @@ struct Mod {
 	Mod operator++(signed) { auto ret = *this; ++*this; return ret; }
 	Mod operator--(signed) { auto ret = *this; --*this; return ret; }
 
+	bool operator!(){ return !n; }
 	bool operator==(const Mod& r) const { return n == r.n; }
 	bool operator!=(const Mod& r) const { return !(*this == r); }
 	bool operator<(const Mod& r) const { return n < r.n; }
