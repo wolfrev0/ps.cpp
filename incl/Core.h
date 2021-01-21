@@ -4,7 +4,7 @@
 //Settings
 #define INT64 1 //MLE?
 #define INTERACTIVE 0
-#define COUT_PRECISION 11
+#define FP_PRECISION 11
 #define C20 1
 
 //Common
@@ -33,17 +33,24 @@
 #define mkp make_pair
 #define mkt make_tuple
 #define cxp constexpr
-#define PQMAX(...) std::priority_queue<__VA_ARGS__>
-#define PQMIN(...) std::priority_queue<__VA_ARGS__,Arr<__VA_ARGS__>,greater<__VA_ARGS__>>
+#define PQ std::priority_queue
 #define lb lower_bound
 #define ub upper_bound
 #define unify(x) sort(all(x)),x.erase(unique(all(x)),x.end())
 #if INT64
 	#define int i64
 #endif
-using namespace std;using f64 = double;using i64=long long;using u64=unsigned long long;
-using pint = pair<int,int>; using tint = tuple<int,int,int>;
-template<class T> using Arr=vector<T>;template<class T> using Func=function<T>;template<class T> using Str=basic_string<T>;
+using namespace std;
+using i64=long long;
+using u64=unsigned long long;
+using f64 = double;
+using pint = pair<int,int>;
+using tint = tuple<int,int,int>;
+template<class T> using Arr=vector<T>;
+template<class T> using Func=function<T>;
+template<class T> using Str=basic_string<T>;
+template<class T> using PQMax=PQ<T>;
+template<class T> using PQMin=PQ<T,Arr<T>,greater<T>>;
 template<class T> int sz(const T& x){return x.size();}
 
 //Math
@@ -55,7 +62,7 @@ const f64 pi=acosl(-1), eps=1e-10;
 
 //IO
 #if !(DEBUG)
-	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(COUT_PRECISION)), 0);
+	auto __PRE_RUN__=(ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),(cout<<fixed<<setprecision(FP_PRECISION)), 0);
 	#if !(INTERACTIVE)
 		#define endl '\n'//interactive?
 	#endif
