@@ -24,8 +24,11 @@ bool miller_rabin(i64 n){return true;}
 /////////////////////////////
 //From Here: Snippet Exists//
 /////////////////////////////
-int log_f(i64 n, int base=2){int ret=0; while(n)n/=base,ret++; return ret-1;}
-int log_c(i64 n, int base=2) {int ret=0,rem=0; while(n)rem+=n%base,n/=base,ret++; return ret-(rem<=1);}
+template<class T> inline T sq(T x){return x*x;}
+cxp int lg2f(int x){return 63-__builtin_clzll(x);}
+cxp int lg2c(int x){return 64-__builtin_clzll(x-1);}
+int lgf(i64 n, int base=2){int ret=0; while(n)n/=base,ret++; return ret-1;}
+int lgc(i64 n, int base=2) {int ret=0,rem=0; while(n)rem+=n%base,n/=base,ret++; return ret-(rem<=1);}
 int sqrt_f(i64 n){i64 i=1; while(i*i<=n)i++; return i-1;}
 int sqrt_c(i64 n){i64 i=1; while(i*i<n)i++; return i;}
 template<class T>T fp(const T& a, int p){ if(!p)return T(1); T z=fp(a, p/2); return z*z*(p%2?x:1); }
@@ -42,9 +45,9 @@ tint xgcd(i64 a,i64 b){ if(!b)return{a,1,0}; auto[g,x,y]=xgcd(b,a%b); return{g,y
 
 //whatelse can be sieved? sieve_numdiv, sieve_sumdiv, etc.
 Arr<bool> sieve_primes(int n){Arr<bool>s(n,1);s[0]=s[1]=0; for(i64 i=2;i*i<n;i++){if(!s[i])continue;for(i64 j=i*i;j<n;j+=i)s[j]=0;}return s;}
-Arr<Arr<int>> sieve_divs(int n){Arr<Arr<int>>r(n);forh(i,1,n){for(int j=i;j<n;j+=i)r[j].emplb(i);}return r;}
+Arr<Arr<int>> sieve_divs(int n){Arr<Arr<int>>r(n);for(int i=1;i<n;i++){for(int j=i;j<n;j+=i)r[j].emplb(i);}return r;}
 
-Arr<i64> divs(i64 n){ Arr<i64> r,s; for(i64 i=1;i*i<=n;i++) if(n%i==0){r.emplb(i);if(i!=n/i)s.emplb(n/i);}reverse(all(s));r.insert(r.end(),all(s));return r;}
+Arr<i64> divs(i64 n){ Arr<i64> r,s; for(i64 i=1;i*i<=n;i++) if(n%i==0){r.emplb(i);if(i!=n/i)s.emplb(n/i);}reverse(s.begin(),s.end());r.insert(r.end(),s.begin(),s.end());return r;}
 Arr<i64> facts(i64 n){ i64 c=n;Arr<i64> r; for(i64 i=2;i*i<=n;i++) while(!(c%i)){c/=i;r.emplb(i);} if(c>1)r.emplb(c); return r; }
-Arr<int> primes(int n){auto s=sieve_primes(n);Arr<int>r;rep(i,n)if(s[i])r.emplb(i);return r;}
+Arr<int> primes(int n){auto s=sieve_primes(n);Arr<int>r;for(int i;i<n;i++)if(s[i])r.emplb(i);return r;}
 int eutot(int n){int r=1,x=n;for(int i=2;i*i<=n;i++){if(x%i)continue;while(x%i==0)x/=i,r*=i;r=r/i*(i-1);}if(x>1)r*=x-1;return r;}
