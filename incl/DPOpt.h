@@ -97,19 +97,18 @@ Arr<Arr<i64>> knuth_opt(const Arr<i64>& init, const function<i64(int,int)>& c){
 	int n=sz(init);
 	Arr<Arr<i64>> dp(n+1,Arr<i64>(n+1));
 	Arr<Arr<int>> a(n,Arr<int>(n+1));
-	forh(i, 0, n)
+	for(int i=0;i<n;i++)
 		a[i][i+1]=i;
-	forc(d, 2, n){
-		forc(i, 0, n-d){
+	for(int d=2;d<=n;d++)
+		for(int i=0;i<=n-d;i++){
 			dp[i][i+d]=inf<i64>();
-			forc(k, a[i][i+d-1], a[i+1][i+d]){
+			for(int k=a[i][i+d-1];k<a[i+1][i+d];k++){
 				if(dp[i][k+1] + dp[k+1][i+d]+c(i,i+d) < dp[i][i+d]){
 					dp[i][i+d]=dp[i][k+1] + dp[k+1][i+d]+c(i,i+d);
 					a[i][i+d]=k;
 				}
 			}
 		}
-	}
 	return dp;
 }
 
@@ -135,37 +134,34 @@ int& f(int i, int j){
 
 void dnc(int i, int s, int e, int ks, int ke){
 	int mid=(s+e)/2, kk=ks;
-	forh(k,ks,ke){
+	for(int k=ks;k<ke;k++)
 		if(f(i,mid) > f(i-1,k)+c[k+1][mid])
 			f(i,mid)=f(i-1,k)+c[k+1][mid], kk=k;
-	}
-	if(e-s>1){
-		dnc(i,s,mid,ks,kk+1);
-		dnc(i,mid,e,kk,ke);
-	}
+	if(e-s>1)
+		dnc(i,s,mid,ks,kk+1),dnc(i,mid,e,kk,ke);
 }
 
-signed main(){
-	int t; cin>>t;
-	forc(ti,1,t){
-		cout<<"Case #"<<ti<<endl;
-		cin>>n>>m;
-		a=cinints(n);
-		sort(all(a));
-		dp=ARR(m,n,inf<int>());
-		c=ARR(n,n,0ll);
-		rep(i,n){
-			int l=0,r=0;
-			forci(j,0,i){
-				l+=a[j];
-				if((i-j+1)%2)
-					l-=a[(i+j)/2];
-				c[j][i]=r-l;
-				if((i-j+1)%2)
-					r+=a[(i+j)/2];
-			}
-		}
-		rep(i,m) dnc(i,0,n,-1,n-1);
-		cout<<dp[m-1][n-1]<<endl;
-	}
-}
+// signed main(){
+// 	int t; cin>>t;
+// 	for(int ti=1;ti<=t;ti++){
+// 		cout<<"Case #"<<ti<<endl;
+// 		cin>>n>>m;
+// 		a=cinints(n);
+// 		sort(all(a));
+// 		dp=ARR(m,n,inf<int>());
+// 		c=ARR(n,n,0ll);
+// 		rep(i,n){
+// 			int l=0,r=0;
+// 			forci(j,0,i){
+// 				l+=a[j];
+// 				if((i-j+1)%2)
+// 					l-=a[(i+j)/2];
+// 				c[j][i]=r-l;
+// 				if((i-j+1)%2)
+// 					r+=a[(i+j)/2];
+// 			}
+// 		}
+// 		rep(i,m) dnc(i,0,n,-1,n-1);
+// 		cout<<dp[m-1][n-1]<<endl;
+// 	}
+// }

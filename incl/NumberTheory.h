@@ -1,6 +1,34 @@
 #pragma once
 #include "Core.h"
 
+int lgf(i64 n, int base=2){int ret=0; while(n)n/=base,ret++; return ret-1;}
+int lgc(i64 n, int base=2) {int ret=0,rem=0; while(n)rem+=n%base,n/=base,ret++; return ret-(rem<=1);}
+int sqrt_f(i64 n){i64 i=1; while(i*i<=n)i++; return i-1;}
+int sqrt_c(i64 n){i64 i=1; while(i*i<n)i++; return i;}
+template<class T> Arr<T> factorials(int n){Arr<T>r(n,1); for(int i=1;i<n;i++)r[i]=r[i-1]*i; return r;}
+template<class T, int n, int k>Arr<Arr<T>> binoms(){Arr<Arr<T>> r(n, Arr<T>(k)); for(int i=1;i<n;i++){r[i][0]=1; for(int j=1;j<k;j++)r[i][j]=r[i-1][j-1]+r[i-1][j];}return r;}
+//<Adjust Formaula>
+//xgcd(a,b) solves ax+by=gcd(a,b)=g
+//ax+by=c satisfied iff c=g*k     so, do x*=k and y*=k.
+//if (x,y) is one of root, (x+t*b/g, y-t*a/g) is also root.(t is arbitary integer)
+//when x,y have boundary, see (jung2381187, koosaga)'s code at boj_11661, linearity?
+//<Multivariable Linear Deophantine>
+//ax+by+cz=k => gcd(a,b)w+cz=k && ax+by=gcd(a,b)w (extend it recursively)
+tint xgcd(i64 a,i64 b){ if(!b)return{a,1,0}; auto[g,x,y]=xgcd(b,a%b); return{g,y,x-(a/b)*y}; }
+
+//whatelse can be sieved? sieve_numdiv, sieve_sumdiv, etc.
+Arr<bool> sieve_primes(int n){Arr<bool>s(n,1);s[0]=s[1]=0; for(i64 i=2;i*i<n;i++){if(!s[i])continue;for(i64 j=i*i;j<n;j+=i)s[j]=0;}return s;}
+Arr<Arr<int>> sieve_divs(int n){Arr<Arr<int>>r(n);for(int i=1;i<n;i++){for(int j=i;j<n;j+=i)r[j].emplb(i);}return r;}
+
+Arr<i64> divs(i64 n){ Arr<i64> r,s; for(i64 i=1;i*i<=n;i++) if(n%i==0){r.emplb(i);if(i!=n/i)s.emplb(n/i);}reverse(s.begin(),s.end());r.insert(r.end(),s.begin(),s.end());return r;}
+Arr<i64> facts(i64 n){ i64 c=n;Arr<i64> r; for(i64 i=2;i*i<=n;i++) while(!(c%i)){c/=i;r.emplb(i);} if(c>1)r.emplb(c); return r; }
+Arr<int> primes(int n){auto s=sieve_primes(n);Arr<int>r;for(int i=0;i<n;i++)if(s[i])r.emplb(i);return r;}
+int eutot(int n){int r=1,x=n;for(int i=2;i*i<=n;i++){if(x%i)continue;while(x%i==0)x/=i,r*=i;r=r/i*(i-1);}if(x>1)r*=x-1;return r;}
+
+/////////////////////////////////
+//From Here: Snippet not exists//
+/////////////////////////////////
+
 //chinese remainder theorem
 //https://en.wikipedia.org/wiki/Chinese_remainder_theorem#Generalization_to_non-coprime_moduli
 //x = r (mod m), pair<r,m>
@@ -20,34 +48,3 @@ pair<i64,i64> crt(Arr<pair<i64,i64>> a){
 Arr<int> sieve_eutot(int n){return{};}
 void discrete_log(){}//baby step giant step
 bool miller_rabin(i64 n){return true;}
-
-/////////////////////////////
-//From Here: Snippet Exists//
-/////////////////////////////
-template<class T> inline T sq(T x){return x*x;}
-cxp int lg2f(int x){return 63-__builtin_clzll(x);}
-cxp int lg2c(int x){return 64-__builtin_clzll(x-1);}
-int lgf(i64 n, int base=2){int ret=0; while(n)n/=base,ret++; return ret-1;}
-int lgc(i64 n, int base=2) {int ret=0,rem=0; while(n)rem+=n%base,n/=base,ret++; return ret-(rem<=1);}
-int sqrt_f(i64 n){i64 i=1; while(i*i<=n)i++; return i-1;}
-int sqrt_c(i64 n){i64 i=1; while(i*i<n)i++; return i;}
-template<class T>T fp(const T& a, int p){ if(!p)return T(1); T z=fp(a, p/2); return z*z*(p%2?x:1); }
-template<class T> Arr<T> factorials(int n){Arr<T>r(n,1); forh(i,1,n)r[i]=r[i-1]*i; return r;}
-template<class T, int n, int k>Arr<Arr<T>> binoms(){Arr<Arr<T>> r(n, Arr<T>(k));forh(i,1,n){r[i][0]=1;forh(j,1,k)r[i][j]=r[i-1][j-1]+r[i-1][j];}return r;}
-//<Adjust Formaula>
-//xgcd(a,b) solves ax+by=gcd(a,b)=g
-//ax+by=c satisfied iff c=g*k     so, do x*=k and y*=k.
-//if (x,y) is one of root, (x+t*b/g, y-t*a/g) is also root.(t is arbitary integer)
-//when x,y have boundary, see (jung2381187, koosaga)'s code at boj_11661, linearity?
-//<Multivariable Linear Deophantine>
-//ax+by+cz=k => gcd(a,b)w+cz=k && ax+by=gcd(a,b)w (extend it recursively)
-tint xgcd(i64 a,i64 b){ if(!b)return{a,1,0}; auto[g,x,y]=xgcd(b,a%b); return{g,y,x-(a/b)*y}; }
-
-//whatelse can be sieved? sieve_numdiv, sieve_sumdiv, etc.
-Arr<bool> sieve_primes(int n){Arr<bool>s(n,1);s[0]=s[1]=0; for(i64 i=2;i*i<n;i++){if(!s[i])continue;for(i64 j=i*i;j<n;j+=i)s[j]=0;}return s;}
-Arr<Arr<int>> sieve_divs(int n){Arr<Arr<int>>r(n);for(int i=1;i<n;i++){for(int j=i;j<n;j+=i)r[j].emplb(i);}return r;}
-
-Arr<i64> divs(i64 n){ Arr<i64> r,s; for(i64 i=1;i*i<=n;i++) if(n%i==0){r.emplb(i);if(i!=n/i)s.emplb(n/i);}reverse(s.begin(),s.end());r.insert(r.end(),s.begin(),s.end());return r;}
-Arr<i64> facts(i64 n){ i64 c=n;Arr<i64> r; for(i64 i=2;i*i<=n;i++) while(!(c%i)){c/=i;r.emplb(i);} if(c>1)r.emplb(c); return r; }
-Arr<int> primes(int n){auto s=sieve_primes(n);Arr<int>r;for(int i;i<n;i++)if(s[i])r.emplb(i);return r;}
-int eutot(int n){int r=1,x=n;for(int i=2;i*i<=n;i++){if(x%i)continue;while(x%i==0)x/=i,r*=i;r=r/i*(i-1);}if(x>1)r*=x-1;return r;}

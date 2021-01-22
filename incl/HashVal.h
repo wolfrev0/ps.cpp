@@ -5,13 +5,13 @@ struct HashVal{
 	u64 h[2];
 	HashVal(u64 h1=0, u64 h2=0, int cnt=0):cnt(cnt){ h[0]=h1; h[1]=h2; }
 	
-	void push_back(HashVal x){ rep(i,2) h[i]*=p[i], h[i]+=x.h[i]; cnt++; }
-	void push_front(HashVal x){ rep(i,2) h[i]+=x.h[i]*fp(p[i],cnt); cnt++; }
-	void pop_back(HashVal x){ rep(i,2) h[i]-=x.h[i], h[i]*=inv(p[i]); cnt--; }
-	void pop_front(HashVal x){ rep(i,2) h[i]-=x.h[i]*fp(p[i],cnt-1); cnt--; }
+	void push_back(HashVal x){ for(int i=0;i<2;i++) h[i]*=p[i], h[i]+=x.h[i]; cnt++; }
+	void push_front(HashVal x){ for(int i=0;i<2;i++) h[i]+=x.h[i]*fp(p[i],cnt); cnt++; }
+	void pop_back(HashVal x){ for(int i=0;i<2;i++) h[i]-=x.h[i], h[i]*=inv(p[i]); cnt--; }
+	void pop_front(HashVal x){ for(int i=0;i<2;i++) h[i]-=x.h[i]*fp(p[i],cnt-1); cnt--; }
 	
-	void insert(HashVal x){ rep(i,2) h[i]+=fp(p[i], x.h[i]); cnt++; }
-	void erase(HashVal x){ rep(i,2) h[i]-=fp(p[i], x.h[i]); cnt--; }
+	void insert(HashVal x){ for(int i=0;i<2;i++) h[i]+=fp(p[i], x.h[i]); cnt++; }
+	void erase(HashVal x){ for(int i=0;i<2;i++) h[i]-=fp(p[i], x.h[i]); cnt--; }
 
 	int size()const{return cnt;}
 	

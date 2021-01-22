@@ -27,12 +27,12 @@ struct LCA:public RootedTree<T>{
 	int lca(int a, int b){
 		if(dpt[a]>dpt[b])
 			swap(a,b);
-		repi(i,lgc(n))
+		for(int i=lgc(n)-1;i;i--)
 			if(dpt[panc(b,i)]>=dpt[a])
 				b=panc(b,i);
 		if(a==b)
 			return a;
-		repi(i,lgc(n))
+		for(int i=lgc(n)-1;i;i--)
 			if(panc(a,i)!=panc(b,i))
 				a=panc(a,i), b=panc(b,i);
 		return panc(a,0);

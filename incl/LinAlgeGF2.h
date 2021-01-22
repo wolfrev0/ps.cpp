@@ -9,8 +9,8 @@ struct MatGF2{
 	MatGF2(int n, bool one=false):n(n),a(n){
 		if(!one)
 			return;
-		rep(i,min(n,m))
-			rep(j,min(n,m))
+		for(int i=0;i<min(n,m);i++)
+			for(int j=0;j<min(n,m);j++)
 				a[i][j]=1;
 	}
 	
@@ -18,8 +18,8 @@ struct MatGF2{
 	MatGF2 operator*(const MatGF2<rm>& r)const{
 		assert(m==r.n);
 		MatGF2 ret(n,rm);
-		rep(i,n)
-			rep(j,m)
+		for(int i=0;i<n;i++)
+			for(int j=0;j<m;j++)
 				if(a[i][j])
 					ret.a[i]^=r.a[j];
 		return ret;
@@ -29,18 +29,20 @@ struct MatGF2{
 	
 	MatGF2 sub(int r, int c, int rn, int rm)const{
 		MatGF2 ret(rn,rm);
-		rep(i,rn)
-			rep(j,rm)
+		for(int i=0;i<rn;i++)
+			for(int j=0;j<rm;j++)
 				ret.a[i][j]=a[r+i][c+j];
 		return ret;
 	}
 	
 	void REF(bool pv_fix){
 		int pi=0;
-		repo(i,n){
+		int i=0;
+		for(;i<n;i++){
 			while(pi<m && a[i][pi]==0){
 				if(!pv_fix){
-					forho(j,i+1,n)
+					int j=i+1;
+					for(;j<n;j++)
 						if(a[j][pi])
 							break;
 					if(j<n){
@@ -53,7 +55,7 @@ struct MatGF2{
 			if(pi==m)
 				break;
 			if(a[i][pi])
-				forh(j,i+1,n)
+				for(int j=i+1;j<n;j++)
 					if(a[j][pi])
 						a[j]^=a[i];
 			pi++;
@@ -73,13 +75,13 @@ struct MatGF2{
 	}
 	
 	void flipX(int rn){
-		rep(i,rn/2)
+		for(int i=0;i<rn/2;i++)
 			swap(a[i],a[rn-1-i]);
 	}
 	
 	void flipY(int rm){
-		rep(i,n){
-			rep(j,rm/2){
+		for(int i=0;i<n;i++){
+			for(int j=0;j<rm/2;j++){
 				bool z=a[i][j];
 				a[i][j]=a[i][rm-1-j];
 				a[i][rm-1-j]=z;
@@ -90,8 +92,8 @@ struct MatGF2{
 
 template<int m>
 ostream& operator<<(ostream& s, const MatGF2<m>& mat){
-	rep(i,mat.n){
-		rep(j,m)
+	for(int i=0;i<mat.n;i++){
+		for(int j=0;j<m;j++)
 			s<<mat.a[i][j]<<' ';
 		s<<endl;
 	}
@@ -106,13 +108,13 @@ ostream& operator<<(ostream& s, const MatGF2<m>& mat){
 pair<Arr<pint>,Arr<int>> xor_basis(const Arr<int>& a){
 	Arr<pint> r(64,{-1,-1});//descending
 	Arr<int> bi;
-	rep(i,sz(a)){
+	for(int i=0;i<sz(a);i++){
 		int x=a[i], xc=0;
 		for(auto [b,bc]:r)
 			if(~b and x>(x^b))
 				x^=b, xc^=bc;
 		if(x)
-			r[63-lgf(x)]={x,xc^(1ll<<sz(bi))}, bi.pushb(i);
+			r[63-lg2f(x)]={x,xc^(1ll<<sz(bi))}, bi.pushb(i);
 	}
 	return {move(r),move(bi)};
 }

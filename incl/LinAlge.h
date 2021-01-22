@@ -9,7 +9,7 @@ struct Mat{
 	Mat(int n, int m, bool one=false):n(n),m(m),a(n,Arr<T>(m)){
 		if(!one)
 			return;
-		rep(i,min(n,m))
+		for(int i=0;i<min(n,m);i++)
 			a[i][i]=1;
 	}
 	Mat<T> zero()const{return Mat(n,m);}
@@ -18,9 +18,9 @@ struct Mat{
 	Mat<T> operator*(const Mat<T>& r)const{
 		assert(m==r.n);
 		Mat<T> ret(n,r.m);
-		rep(i,n)
-			rep(j,r.m)
-				rep(k,m)
+		for(int i=0;i<n;i++)
+			for(int j=0;j<r.m;j++)
+				for(int k=0;k<m;k++)
 					ret.a[i][j]+=a[i][k]*r.a[k][j];
 		return ret;
 	}
@@ -29,22 +29,24 @@ struct Mat{
 	
 	Mat<T> sub(int r, int c, int rn, int rm)const{
 		Mat<T> ret(rn,rm);
-		rep(i,rn)
-			rep(j,rm)
+		for(int i=0;i<rn;i++)
+			for(int j=0;j<rm;j++)
 				ret.a[i][j]=a[r+i][c+j];
 		return ret;
 	}
 	
 	void REF(bool pv_fix){
 		int pi=0;
-		repo(i,n){
+		int i=0;
+		for(;i<n;i++){
 			while(pi<m && a[i][pi]==0){
 				if(!pv_fix){
-					forho(j,i+1,n)
+					int j=i+1;
+					for(;j<n;j++)
 						if(a[j][pi])
 							break;
 					if(j<n){
-						forh(k,pi,m)
+						for(int k=pi;k<m;k++)
 							swap(a[i][k],a[j][k]);
 						break;
 					}
@@ -54,17 +56,17 @@ struct Mat{
 			if(pi==m)
 				break;
 			if(a[i][pi]){
-				forhi(j,pi,m)
+				for(int j=pi;j<m;j++)
 					a[i][j]/=a[i][pi];
-				forh(j,i+1,n){
+				for(int j=i+1;j<n;j++){
 					auto z=a[j][pi];
 					if(z==0)
 						continue;
-					forh(k,pi,m)
+					for(int k=pi;k<m;k++)
 						a[i][k]*=z;
-					forh(k,pi,m)
+					for(int k=pi;k<m;k++)
 						a[j][k]-=a[i][k];
-					forh(k,pi,m)
+					for(int k=pi;k<m;k++)
 						a[i][k]/=z;
 				}
 			}
@@ -84,22 +86,22 @@ struct Mat{
 	}
 	
 	void flipX(int rn){
-		rep(i,rn/2)
-			rep(j,m)
+		for(int i=0;i<rn/2;i++)
+			for(int j=0;j<m;j++)
 				swap(a[i][j],a[rn-1-i][j]);
 	}
 	
 	void flipY(int rm){
-		rep(i,n)
-			rep(j,rm/2)
+		for(int i=0;i<n;i++)
+			for(int j=0;j<rm/2;j++)
 				swap(a[i][j],a[i][rm-1-j]);
 	}
 };
 
 template<typename T>
 ostream& operator<<(ostream& s, const Mat<T>& mat){
-	rep(i,mat.n){
-		rep(j,mat.m)
+	for(int i=0;i<mat.n;i++){
+		for(int j=0;j<mat.m;j++)
 			s<<mat.a[i][j]<<' ';
 		s<<endl;
 	}

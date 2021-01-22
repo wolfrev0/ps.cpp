@@ -28,7 +28,7 @@ struct Graph {
 
 	struct DNV{T dist; int v; bool operator<(const DNV& r)const{return dist>r.dist;}};
 	void dijkstra(Arr<T>& d, Arr<Edge>& p, int s) {
-		priority_queue<DNV> pq;
+		PQ<DNV> pq;
 		d = Arr<T>(n, inf<T>());
 		p = Arr<Edge>(n, {-1,-1,-1,-1});
 		pq.push({ d[s]=0, s });
@@ -51,14 +51,14 @@ struct Graph {
 
 	Arr<Arr<int>> floyd(){
 		Arr<Arr<int>> a(n, Arr<int>(n,inf<int>()));
-		rep(i,n){
+		for(int i=0;i<n;i++){
 			for(auto j:g[i])
 				a[i][j.e]=1;
 			a[i][i]=0;
 		}
-		rep(k,n)
-			rep(i,n)
-				rep(j,n)
+		for(int k=0;k<n;k++)
+			for(int i=0;i<n;i++)
+				for(int j=0;j<n;j++)
 					a[i][j]=min(a[i][j], a[i][k]+a[k][j]);
 		return a;
 	}
@@ -109,7 +109,7 @@ struct Graph {
 	Arr<Edge> mst_prim() {
 		Arr<Edge> ret;
 		Arr<bool> vis(n);
-		PQMIN(Edge) q;
+		PQMin<Edge> q;
 		for(auto i:g[0])
 			q.push(i);
 		vis[0]=true;
@@ -136,7 +136,7 @@ struct Graph {
 		for (auto &i : g)
 			for (auto &j : i)
 				e.pushb(j);
-		sort(all(e));
+		sort(e.begin(),e.end());
 
 		UF uf(n);
 		Arr<Edge> ret;

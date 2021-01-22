@@ -65,11 +65,11 @@ struct Flow : public Graph<FlowW> {
 		Arr<Edge> r;
 		auto vis=Arr<bool>(n+2), pvis=Arr<bool>(n+2);
 		_cuts_pre(src,pvis), _cuts(src,vis,pvis,r);
-		sort(all(r),lam(make_pair(x.s,x.e)<make_pair(y.s,y.e),auto x,auto y));
-		r.erase(unique(all(r),lam(make_pair(x.s,x.e)==make_pair(y.s,y.e),auto x,auto y)),r.end());
+		sort(r.begin(),r.end(),[&](auto x, auto y){return make_pair(x.s,x.e)<make_pair(y.s,y.e);});
+		r.erase(unique(r.begin(),r.end(),[&](auto x, auto y){return make_pair(x.s,x.e)==make_pair(y.s,y.e);}),r.end());
 
 		Arr<int> srcv, snkv;
-		rep(i,n-2)
+		for(int i=0;i<n-2;i++)
 			(pvis[i]?srcv:snkv).pushb(i);
 
 		return {r,srcv,snkv};

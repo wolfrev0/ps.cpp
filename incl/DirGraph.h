@@ -16,12 +16,11 @@ struct DirGraph: public Graph<int>{
 
 	Arr<int> topo_sort() {
 		Arr<int> in(n);
-		forh(i, 0, n){
+		for(int i=0;i<n;i++)
 			for(auto &j:g[i])
 				in[j.e]++;
-		}
 		queue<int> q;
-		forh(i, 0, n)
+		for(int i=0;i<n;i++)
 			if (!in[i])
 				q.push(i);
 		Arr<int> ret;
@@ -38,12 +37,11 @@ struct DirGraph: public Graph<int>{
 
 	Arr<int> topo_sort_lex() {
 		Arr<int> in(n);
-		forh(i, 0, n){
+		for(int i=0;i<n;i++)
 			for(auto &j:g[i])
 				in[j.e]++;
-		}
-		PQMIN(int) q;
-		forh(i, 0, n)
+		PQMin<int> q;
+		for(int i=0;i<n;i++)
 			if (!in[i])
 				q.push(i);
 		Arr<int> ret;
@@ -63,7 +61,7 @@ struct DirGraph: public Graph<int>{
 		Arr<int> stat(n), ord(n);
 		stack<int> stk;
 		int ordi=0;
-		rep(i,n)
+		for(int i=0;i<n;i++)
 			if(!stat[i])
 				dfs_tj(i, stat, ord, ordi, stk, scc);
 		return scc_util(scc);
@@ -72,13 +70,13 @@ struct DirGraph: public Graph<int>{
 	tuple<Arr<Arr<int>>, Arr<int>, DirGraph> scc_kosaraju(){
 		Arr<int> post_ord;
 		Arr<bool> vis(n);
-		rep(i,n)
+		for(int i=0;i<n;i++)
 			if(!vis[i])
 				dfs_ksrj(i, post_ord, vis, *this);
 		auto rg=reversed();
 		Arr<Arr<int>> scc;
-		fill(all(vis), false);
-		reverse(all(post_ord));
+		fill(vis.begin(),vis.end(),false);
+		reverse(post_ord.begin(),post_ord.end());
 		for(auto i:post_ord)
 			if(!vis[i])
 				scc.pushb({}), dfs_ksrj(i, scc.back(), vis, rg);
@@ -126,12 +124,12 @@ private:
 
 	tuple<Arr<Arr<int>>, Arr<int>, DirGraph> scc_util(Arr<Arr<int>> scc){
 		Arr<int> v2scc(n);
-		rep(i,sz(scc))
+		for(int i=0;i<sz(scc);i++)
 			for(auto j:scc[i])
 				v2scc[j]=i;
 		
 		DirGraph sccg(sz(scc));
-		rep(i,n)
+		for(int i=0;i<n;i++)
 			for(auto& j:g[i])
 				if(v2scc[i]!=v2scc[j.e])
 					sccg.add_edge(v2scc[i], v2scc[j.e]);
@@ -148,7 +146,7 @@ struct SAT2{
 	Arr<int> sat(){
 		auto [sccs,v2scc,__]=g.scc_tarjan();
 		bool fail=false;
-		rep(i,n) fail = fail or v2scc[i*2]==v2scc[i*2+1];
+		for(int i=0;i<n;i++) fail = fail or v2scc[i*2]==v2scc[i*2+1];
 		if(fail) return {};
 		Arr<int> r(n,-1);
 		for(auto scc:sccs){

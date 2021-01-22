@@ -33,7 +33,7 @@ struct Multixet{
 	auto begin()const{return s.begin();}
 	auto end()const{return s.end();}
 	auto find(const T& v)const{
-		auto it = s.lower_bound({v, 0});
+		auto it = s.lb({v, 0});
 		return it->fi == v ? it : s.end();
 	}
 	void insert(const T& v){ s.insert({v, counter++}); }

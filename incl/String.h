@@ -55,7 +55,7 @@ template<class T>
 Arr<int> suffix_array(const Str<T> &s){
 	int n = sz(s);
 	Arr<int> sa(n), ord(n+1), nord(n+1);
-	forh(i, 0, sz(s))
+	for(int i=0;i<sz(s);i++)
 		sa[i]=i, ord[i]=s[i];
 
 	ord[n]=-1;
@@ -63,7 +63,7 @@ Arr<int> suffix_array(const Str<T> &s){
 		sort(sa.begin(), sa.end(), [&](const int &a, const int &b){return cmp(a, b, ord, i);});
 		nord[sa[0]]=0;
 		nord[n]=-1;
-		forh(j, 1, n)
+		for(int j=1;j<n;j++)
 			nord[sa[j]]=nord[sa[j-1]]+cmp(sa[j-1], sa[j], ord, i);
 		ord=nord;
 	}
@@ -77,10 +77,10 @@ Arr<int> get_lcp(const Str<T> &s, const Arr<int> &sa){
 	int n = sz(s);
 	Arr<int> lcp(n), psa(n+1), plcp(n+1);
 	psa[sa[0]]=-1;
-	forh(i,1,n)
+	for(int i=1;i<n;i++)
 	psa[sa[i]]=sa[i-1];
 	int common=0;
-	forh(i,0,n){
+	for(int i=0;i<n;i++){
 		if(psa[i]==-1)
 			plcp[i]=0;
 		else{
@@ -90,7 +90,7 @@ Arr<int> get_lcp(const Str<T> &s, const Arr<int> &sa){
 			common = max(common-1,0ll);
 		}
 	}
-	forh(i,0,n)
+	for(int i=0;i<n;i++)
 		lcp[i]=plcp[sa[i]];
 	return lcp;
 }
@@ -114,7 +114,7 @@ Arr<int> suffix_array2(const Str<T> &s){
 		for (int i=0; i<n; i++) if (out[i] >= h)
 			temp[bpos[pos2bckt[out[i] - h]]++] = out[i] - h;
 		c = 0;
-		forh(i,0,n-1){
+		for(int i=0;i<n-1;i++){
 			int a=bckt[i]!=bckt[i+1] || temp[i]>=n-h || pos2bckt[temp[i+1]+h]!=pos2bckt[temp[i]+h];
 			bckt[i]=c;
 			c+=a;
@@ -131,10 +131,10 @@ Arr<int> get_lcp2(const Str<T> &s, const Arr<int> &sa){
 	int h=0;
 	int n=sz(s);
 	Arr<int> rank(n);
-	forh(i, 0, sz(sa))
+	for(int i=0;i<sz(sa);i++)
 		rank[sa[i]]=i;
 	Arr<int> lcp(n);
-	forh(i,0,n){
+	for(int i=0;i<n;i++){
 		if(rank[i]){
 			int j=sa[rank[i]-1];
 			while(s[i+h]==s[j+h])
@@ -150,7 +150,7 @@ template<class T>
 Arr<int> z(const Str<T>& a){
 	Arr<int> z(sz(a)); z[0]=sz(a);
 	int s=0,e=1;
-	forh(i,1,sz(a)){
+	for(int i=1;i<sz(a);i++){
 		if(i<e and z[i-s] < e-i) z[i]=z[i-s];
 		else{
 			s=i; if(i>=e)e=i;

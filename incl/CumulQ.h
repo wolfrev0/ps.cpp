@@ -45,7 +45,7 @@ private:
 	void finv(T& acc, const T& x)override{acc-=ppow(P::size()-1)*x;}
 };
 
-template<int m1=1e9+7, int m2=1073741783>
+template<int m1=int(1e9+7), int m2=1073741783>
 struct HashPairQ{
 	HashQ<Mod<m1>,int(1e9+9)> q1;
 	HashQ<Mod<m2>,int(1e9+9)> q2;

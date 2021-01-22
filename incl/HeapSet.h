@@ -12,5 +12,5 @@ struct HeapSet{
 		return mx?-a.top():a.top();
 	}
 	int size()const{return sz(a)-sz(b);}
-	PQMIN(T) a,b;
+	PQMin<T> a,b;
 };

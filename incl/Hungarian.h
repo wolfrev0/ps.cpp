@@ -12,7 +12,7 @@ struct Hungarian{
 	// mat[i] : mat column of row i
 	pair<int,Arr<int>> calc(){
 		Arr<int> mat(n+1), u(n+1), v(m+1), p(m+1), way(m+1);
-		forc(i,1,n){
+		for(int i=1;i<=n;i++){
 			p[0]=i;
 			int js=0;
 			Arr<int> minv(m+1,inf<int>());
@@ -20,17 +20,15 @@ struct Hungarian{
 			do{
 				used[js]=true;
 				int is=p[js], d=inf<int>(), je;
-				forc(j,1,m){
+				for(int j=1;j<=m;j++)
 					if(!used[j]){
 						int c=g[is][j]-u[is]-v[j];
 						if(c<minv[j]) minv[j]=c, way[j]=js;
 						if(minv[j]<d) d=minv[j], je=j;
 					}
-				}
-				rep(j,m+1){
+				for(int j=0;j<=m;j++)
 					if(used[j]) u[p[j]]+=d, v[j]-=d;
 					else minv[j]-=d;
-				}
 				js=je;
 			}while(p[js]);
 			do{
@@ -39,7 +37,7 @@ struct Hungarian{
 				js=je;
 			}while(js);
 		}
-		forc(j,1,m)mat[p[j]]=j;
+		for(int j=1;j<=m;j++)mat[p[j]]=j;
 		return {-v[0],mat};
 	}
 

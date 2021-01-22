@@ -20,9 +20,9 @@ Arr<int> guess(Arr<int> seq){
 	//bi: pos of b
 	//bd: delta of b
 	int bi,bd;
-	rep(i,sz(seq)){
+	for(int i=0;i<sz(seq);i++){
 		int v=0;//evaluated value at i
-		rep(j,sz(c))
+		for(int j=0;j<sz(c);j++)
 			v=(v+c[j]*seq[i-j])%mod;
 		if(!v)continue;//good
 		if(sz(c)==1){//first non-zero pos
@@ -35,7 +35,7 @@ Arr<int> guess(Arr<int> seq){
 			a.pushb((-coef+mod)*j%mod);
 		if(sz(c)>sz(a))
 			a.resize(sz(c));
-		rep(j,sz(c))
+		for(int j=0;j<sz(c);j++)
 			a[j]=(a[j]+c[j])%mod;
 		if(sz(c)<=i-bi+sz(b))
 			b=c, bi=i, bd=v;
@@ -57,15 +57,14 @@ int calc_nth(Arr<int> seq, Arr<int> rec, int n){
 
 	auto mul=[&](const Arr<int>& a, const Arr<int>& b){
 		Arr<int> c(sz(a)+sz(b)-1);
-		rep(i,sz(a))
-			rep(j,sz(b))
-				c[i+j]=(c[i+j]+a[i]*b[j])%mod;
-		
+		for(int i=0;i<sz(a);i++)
+			for(int j=0;j<sz(b);j++)
+				c[i+j]=(c[i+j]+a[i]*b[j])%mod;	
 		//mod by rec
 		//NOTE: rec's MSB==1
 		//NOTE: rec is reversed
-		forhi(i,sz(rec)-1,sz(c))
-			repi(j,sz(rec))
+		for(int i=sz(c)-1;i>=sz(rec)-1;i--)
+			for(int j=sz(rec)-1;~j;j--)
 				c[i-j]=(c[i-j]-c[i]*rec[j]%mod+mod)%mod;
 		while(sz(c) and !c.back())c.popb();
 		return c;
@@ -77,7 +76,7 @@ int calc_nth(Arr<int> seq, Arr<int> rec, int n){
 	};
 	auto coef=qp({0,1},n);
 	int r=0;
-	rep(i,sz(coef))
+	for(int i=0;i<sz(coef);i++)
 		r=(r+coef[i]*seq[i]%mod+mod)%mod;
 	return r;
 }

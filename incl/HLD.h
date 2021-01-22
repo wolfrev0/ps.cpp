@@ -13,7 +13,7 @@ struct HLD: public RootedTree<T>{
 		if(sz(ch[x]))
 			swap(ch[x].front(), *max_element(all(ch[x]),[this](auto a, auto b){return this->tsz[a.fi]<this->tsz[b.fi];}));
 		cn[x]=ccn;
-		rep(i,sz(ch[x])){
+		for(int i=0;i<sz(ch[x]);i++){
 			if(i)
 				top[++ccn]=ch[x][i].fi;
 			dfs_hld(ch[x][i].fi, ccn);

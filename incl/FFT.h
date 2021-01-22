@@ -70,13 +70,13 @@ Arr<i64> conv(const Arr<i64>& a, const Arr<i64>& b){
 	const auto& fa=fft(toC(a));
 	const auto& fb=fft(toC(b));
 	Arr<C> fc;
-	forh(i,0,sz(a)) fc.pushb(fa[i]*fb[i]);
+	for(int i=0;i<sz(a);i++)fc.pushb(fa[i]*fb[i]);
 	return toi(ffti(fc));
 }
 
 //c[i]=sigma(j=0~i, a[j]*b[i-j])
 Arr<i64> conv_mul(Arr<i64> a, Arr<i64> b){
-	int n=1<<lgc(max(sz(a), sz(b))*2);
+	int n=1<<lg2c(max(sz(a), sz(b))*2);
 	a.resize(n);
 	b.resize(n);
 	return conv(a,b);
@@ -85,18 +85,15 @@ Arr<i64> conv_mul(Arr<i64> a, Arr<i64> b){
 //c[i]=sigma(j=0~n-1, a[j]*b[i-j])
 Arr<i64> conv_cir(Arr<i64> a, Arr<i64> b){
 	int n=max(sz(a), sz(b));
-	int m=1<<lgc(n*2);
+	int m=1<<lg2c(n*2);
 	a.resize(m);
-	reverse(all(b));
-	forh(i,n,m)
+	reverse(b.begin(),b.end());
+	for(int i=n;i<m;i++)
 		b.pushb(b[(n+i)%n]);
-	reverse(all(b));
+	reverse(b.begin(),b.end());
 	auto res=conv(a,b);
 	return {res.end()-n, res.end()};
 }
 
-void ntt(){
-}
-
-void walsh_hadamard(){
-}
+void ntt(){}
+void walsh_hadamard(){}

@@ -3,7 +3,7 @@
 
 struct UF {
 	Arr<int> p,s;
-	UF(int n=0): p(n),s(n,1){rep(i,n)p[i]=i;}
+	UF(int n=0): p(n),s(n,1){for(int i=0;i<n;i++)p[i]=i;}
 	void uni(int a, int b){
 		a=find(a), b=find(b);
 		if(a==b)return;

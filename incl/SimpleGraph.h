@@ -9,7 +9,7 @@ struct SimpleGraph: public DirGraph{
 	Arr<int> art_points(){
 		int ordi=0;
 		Arr<int> ord(n,-1), ret;
-		rep(i,n)
+		for(int i=0;i<n;i++)
 			if(ord[i]==-1)
 				dfs_ap(i, -1, ordi, ord, ret);
 		return ret;
@@ -19,7 +19,7 @@ struct SimpleGraph: public DirGraph{
 		int ordi=0;
 		Arr<int> ord(n,-1);
 		Arr<pair<int,int>> ret;
-		rep(i,n)
+		for(int i=0;i<n;i++)
 			if(ord[i]==-1)
 				dfs_bridge(i, -1, ordi, ord, ret);
 		return ret;
