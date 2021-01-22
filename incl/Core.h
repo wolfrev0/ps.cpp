@@ -52,5 +52,5 @@ template<class T>T fp(const T& a, int p){ if(!p)return T(1); T z=fp(a, p/2); ret
 template<class T> inline T sq(T x){return x*x;}
 cxp int lg2f(int x){return 63-__builtin_clzll(x);}
 cxp int lg2c(int x){return 64-__builtin_clzll(x-1);}
-Arr<int> range(int n){ Arr<int> r(n); for(int i;i<n;i++)r[i]=i; return r; }
+Arr<int> range(int n){ Arr<int> r(n); for(int i=0;i<n;i++)r[i]=i; return r; }
 const f64 pi=acosl(-1), eps=1e-10;
