@@ -3,7 +3,7 @@
 
 template<class T>
 struct Mat{
-	const int n,m;
+	int n,m;
 	Arr<Arr<T>> a;
 
 	Mat(int n, int m, bool one=false):n(n),m(m),a(n,Arr<T>(m)){
@@ -11,6 +11,12 @@ struct Mat{
 			return;
 		for(int i=0;i<min(n,m);i++)
 			a[i][i]=1;
+	}
+	Mat(int n, int m, initializer_list<int> li):Mat(n,m){
+		auto it=li.begin();
+		for(int i=0;i<n;i++)
+			for(int j=0;j<m;j++)
+				a[i][j]=*it++;
 	}
 	Mat<T> zero()const{return Mat(n,m);}
 	Mat<T> one()const{return Mat(n,m,true);}
