@@ -51,7 +51,4 @@
 #include "XArr.h"
 #include "Zip.h"
 
-signed main(){
-	
-	return 0;
-}
+signed main() {}
