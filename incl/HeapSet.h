@@ -10,6 +10,7 @@ template<class T, bool mx = false> struct HeapSet {
 	}
 	T get() {
 		while(sz(b) and b.top() == a.top()) b.pop(), a.pop();
+		if(a.empty()) return mx?-inf<int>():inf<int>();
 		return mx ? -a.top() : a.top();
 	}
 	int size() const { return sz(a) - sz(b); }

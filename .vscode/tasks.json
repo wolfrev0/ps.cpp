@@ -15,6 +15,11 @@
 			"label": "Run",
 			"type": "shell",
 			"command": "ulimit -s 1048576 && ./a.out<in",
+		},
+		{
+			"label": "Run with time",
+			"type": "shell",
+			"command": "ulimit -s 1048576 && /usr/bin/time -v ./a.out<in",
 		}
 	],
 	// "inputs": [
