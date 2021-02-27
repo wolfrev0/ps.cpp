@@ -62,6 +62,7 @@ template<class T> T fp(const T& a, int p) {
 	T z = fp(a, p / 2);
 	return z * z * (p % 2 ? a : 1);
 }
+int divceil(int a, int b){return (a+b-1)/b;}
 template<class T> inline T sq(T x) { return x * x; }
 cxp int lg2f(int x) { return 63 - __builtin_clzll(x); }
 cxp int lg2c(int x) { return 64 - __builtin_clzll(x - 1); }
