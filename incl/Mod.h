@@ -46,13 +46,13 @@ private:
 	i64 n;
 
 	Mod inv(const Mod& b) const {
-		auto res = xgcd(b.val(), -m);
-		if(1 % res.g) throw "No Mod Inv";
-		res.x *= 1 / res.g;
-		while(res.x < 0) res.x += -m / res.g;
-		return res.x;
+		auto [g,x,y] = xgcd(b.val(), -m);
+		if(1 % g) throw "No Mod Inv";
+		x *= 1 / g;
+		while(x < 0) x += -m / g;
+		return x;
 	}
-	tint xgcd(i64 a, i64 b) {
+	tint xgcd(i64 a, i64 b)const{
 		if(b == 0) return {a, 1, 0};
 		auto [g, x, y] = xgcd(b, a % b);
 		return {g, y, x - (a / b) * y};
