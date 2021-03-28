@@ -57,11 +57,6 @@ template<class T> T dupl(const T& x, int n) {
 	for(int _ = 0; _ < n; _++) r.insert(r.end(), all(x));
 	return r;
 }
-template<class T> T fp(const T& a, int p) {
-	if(!p) return T(1);
-	T z = fp(a, p / 2);
-	return z * z * (p % 2 ? a : 1);
-}
 int divceil(int a, int b){return (a+b-1)/b;}
 template<class T> inline T sq(T x) { return x * x; }
 cxp int lg2f(int x) { return 63 - __builtin_clzll(x); }
