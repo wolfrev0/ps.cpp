@@ -1,6 +1,4 @@
 #include "Core.h"
-#include "SegPredefs.h"
-#include "SegPers.h"
 #include "XArr.h"
 #define endl '\n'//not interactive?
 #define int i64//overflow?
