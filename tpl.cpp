@@ -4,5 +4,7 @@
 // #include "PrettyDebug.h"
 
 signed main() {
-	
+	CIN(int,t);
+	while(t--){
+	}
 }

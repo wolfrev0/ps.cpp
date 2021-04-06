@@ -4,8 +4,11 @@
 
 template<class T, class Q, class U> struct Seg {
 	Seg(int n = 0) : n(n), tr(4 * n, Q::id()) {}
-	T q(int p) { return q(p, p + 1); }
-	T q(int s, int e) { return q(1, 0, n, s, e); }
+	T q(int s, int e, bool circular=true) {
+		if(circular) s=mod(s,n),e=mod(e,n);
+		if(s>e) return Q::f(q(s,n,false),q(0,e,false));
+		return q(1, 0, n, s, e);
+	}
 	void upd(int idx, T val) { upd(1, 0, n, idx, val); }
 
 private:
@@ -16,6 +19,7 @@ private:
 		return Q::f(q(c * 2, cs, cm, s, e), q(c * 2 + 1, cm, ce, s, e));
 	}
 	T upd(int c, int cs, int ce, int idx, T val) {
+		idx=mod(idx,n);
 		if(idx >= ce || idx + 1 <= cs) return tr[c];
 		if(idx <= cs && ce <= idx + 1) return tr[c] = U::f(tr[c], val);
 		int cm = (cs + ce) / 2;
