@@ -1,7 +1,8 @@
 # 기본 인터페이스
   1. [s, e) 반열린구간
   2. 0-based index
-  
+  3. negative index (same as python)
+
 # 목차
   ## Examples
     다양한 클래스들의 사용 예시가 있습니다.
