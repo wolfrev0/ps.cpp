@@ -5,6 +5,6 @@
 
 signed main() {
 	CIN(int,t);
-	while(t--){
+	for(int ti=1;ti<=t;ti++){
 	}
 }
