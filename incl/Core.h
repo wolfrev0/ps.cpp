@@ -58,7 +58,7 @@ template<class T> cxp T inf() { return numeric_limits<T>::max() / 2; }
 template<class... A> auto ARR(auto n, A&&... a) {
 	if constexpr(sizeof...(a) == 0) return n;
 	else
-		return vector(n, ARR(a...));
+		return Arr(n, ARR(a...));
 }
 template<class T> T dupl(const T& x, int n) {
 	T r;
