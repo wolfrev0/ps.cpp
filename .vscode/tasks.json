@@ -14,7 +14,7 @@
 		{
 			"label": "Run",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && ./a.out<in",
+			"command": "case ${file} in *.py) python3 ${file} < in ;; *) ulimit -s 1048576 && ./a.out<in ;; esac",
 		},
 		{
 			"label": "Run with time",
