@@ -4,7 +4,7 @@
 
 src=${1:-"main.cpp"}
 
-base_arg=" -iquote ./incl -std=c++17 -Wall -Wno-unused-variable -fconcepts"
+base_arg=" -iquote ./incl -std=c++2a -Wall -Wno-unused-variable -fconcepts"
 if [ "$2" == "R" ]; then #release
 	option="-O2"
 else #debug

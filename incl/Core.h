@@ -6,6 +6,7 @@ using namespace std;
 #define INT64 1  // MLE?
 #define INTERACTIVE 0
 #define FP_PRECISION 11
+#define FAST_IO 1
 
 // Optional
 #if !(DEBUG)
@@ -74,3 +75,23 @@ Arr<int> range(int n) {
 	return r;
 }
 const f64 pi = acosl(-1), eps = 1e-10;
+
+template <class T, class U = T>
+bool accmin(T& a, U&& b) {return b < a ? a = std::forward<U>(b), true : false;}
+template <class T, class U = T>
+bool accmax(T& a, U&& b) {return a < b ? a = std::forward<U>(b), true : false;}
+
+template<class T>
+struct IterRange {
+  IterRange(T s, T e):s(s),e(e){}
+  T begin()const{ return s; }
+  T end()const{ return e; }
+	T s,e;
+};
+template<class T>
+Arr<pair<T,int>> enumerate(Arr<T> a){
+	Arr<pair<T,int>> r;
+	for(int i=0;i<sz(a);i++)
+		r.emplb(a[i],i);
+	return r;
+}
