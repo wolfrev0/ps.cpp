@@ -40,12 +40,11 @@ using u64 = unsigned long long;
 using f64 = double;
 using pint = pair<int, int>;
 using tint = tuple<int, int, int>;
-int mod(int n, int m){return !m?n:(n%m+m)%m;}
 template<class T> struct Arr : public vector<T> {
 	Arr(int n=0, T init=T()):vector<T>(n, init){}
 	Arr(initializer_list<T> il):vector<T>(il){}
-	T& operator[](int i) { return vector<T>::operator[](mod(i,this->size())); }
-	const T& operator[](int i) const { return vector<T>::operator[](mod(i,this->size())); }
+	T& operator[](int i) { i+=i<0?this->size():0; return vector<T>::operator[](i); }
+	const T& operator[](int i) const { i+=i<0?this->size():0; return vector<T>::operator[](i); }
 	T& at(int i) { return *this[i]; }
 	const T& at(int i) const { return *this[i]; }
 };

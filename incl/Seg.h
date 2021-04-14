@@ -9,7 +9,7 @@ template<class T, class Q, class U> struct Seg {
 		assert(0<=s&&s<=e&&e<=n);
 		return q(1, 0, n, s, e);
 	}
-	void upd(int idx, T val) { upd(1, 0, n, mod(idx,n), val); }
+	void upd(int idx, T val) { idx+=idx<0?n:0; upd(1,0,n,idx,val); }
 
 private:
 	T q(int c, int cs, int ce, int s, int e) {
