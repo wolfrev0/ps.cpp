@@ -1,5 +1,6 @@
 #pragma once
 #include <bits/stdc++.h>
+#include <bits/extc++.h>
 using namespace std;
 
 // Settings
@@ -62,6 +63,7 @@ int dir8[8][2]={{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
 template<class T> struct Arr : public vector<T> {
 	Arr(int n=0, T init=T()):vector<T>(n, init){}
 	Arr(initializer_list<T> il):vector<T>(il){}
+	Arr(vector<T>::iterator s, vector<T>::iterator e):vector<T>(s,e){}
 	T& operator[](int i){
 #if DEBUG
 		static bool flag=false;
@@ -75,6 +77,7 @@ template<class T> struct Arr : public vector<T> {
 	T& at(int i) { return *this[i]; }
 	const T& at(int i) const { return *this[i]; }
 };
+#define bool char
 template<class... A> auto ARR(auto n, A&&... a) {
 	if constexpr(sizeof...(a) == 0) return n;
 	else

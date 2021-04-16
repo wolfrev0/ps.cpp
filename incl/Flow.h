@@ -4,7 +4,7 @@
 struct FlowW {
 	int si;
 	i64 cap, cost;
-	FlowW(i64 cost) : cost(cost) {}
+	FlowW(i64 cost=0) : cost(cost) {}
 	FlowW(int si, i64 cap, i64 cost) : si(si), cap(cap), cost(cost) {}
 	bool operator<(const FlowW& r) const { return cost < r.cost; }
 	bool operator>(const FlowW& r) const { return cost > r.cost; }

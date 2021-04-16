@@ -4,12 +4,12 @@
 		{
 			"label": "Build(Debug)",
 			"type": "shell",
-			"command": "source ./tool/build.sh ${relativeFile}",
+			"command": "source build.sh ${relativeFile}",
 		},
 		{
 			"label": "Build(Release)",
 			"type": "shell",
-			"command": "source ./tool/build.sh ${relativeFile} R",
+			"command": "source build.sh ${relativeFile} R",
 		},
 		{
 			"label": "Run",
@@ -19,7 +19,7 @@
 		{
 			"label": "Run with time",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && /usr/bin/time -v ./a.out<in",
+			"command": "ulimit -s 1048576 && /usr/bin/time -v ./a.out<in 2>&1 | grep -e User -e System -e Elap -e Max",
 		}
 	],
 	// "inputs": [

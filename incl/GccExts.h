@@ -1,14 +1,6 @@
 #pragma once
 #include "Core.h"
 
-#if INT64
-#undef int
-#endif
-#include <bits/extc++.h>
-#if INT64
-#define int i64
-#endif
-
 using namespace __gnu_pbds;
 using namespace __gnu_cxx;
 
