@@ -21,6 +21,7 @@ function f(){
 	if (( 1 < $(echo $arr | wc -w | cat) )); then
 		for i in $arr
 		do
+			echo $i incl/Config.h
 			echo $(awk -F'"' '/^#include *"/{print FILENAME, "incl/"$2}' $i)
 			z=$(awk -F'"' '/^#include *"/{print "incl/"$2, "incl/"$2}' $i)
 			if (( 1 < $(echo $z | wc -w | cat) )); then

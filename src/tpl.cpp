@@ -1,3 +1,4 @@
+#include "Config.h"
 #include "Core.h"
 #include "IO.h"
 // #include "Debug.h"

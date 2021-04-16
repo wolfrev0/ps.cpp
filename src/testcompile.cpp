@@ -1,3 +1,4 @@
+#include "Config.h"
 #include "Core.h"
 #include "Bag.h"
 #include "Bipartite.h"

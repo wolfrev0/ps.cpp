@@ -3,12 +3,6 @@
 #include <bits/extc++.h>
 using namespace std;
 
-// Settings
-#define INT64 1  // MLE?
-#define INTERACTIVE 0
-#define FP_PRINT_PREC 12
-
-// Optional
 #if !(DEBUG)
 auto __PRE_RUN__ = (ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),
                     (cout << fixed << setprecision(FP_PRINT_PREC)), 0);
