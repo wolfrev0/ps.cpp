@@ -1,16 +1,11 @@
 #pragma once
 #include "Core.h"
 
-#if !(DEBUG)
+#if !(DEBUG)&&!(INTERACTIVE)
 struct FIO {
 	static const int BUF_SZ = 1 << 24;
 	char *p, *q;
 	FIO() {
-		// #include <sys/stat.h>
-		// struct stat z;
-		// fstat(0, &z);
-		// setvbuf(stdout, 0, 0, z.st_blksize);
-
 		p = new char[BUF_SZ];
 		q = p + BUF_SZ;
 		cin.read(p, BUF_SZ);
@@ -50,3 +45,27 @@ struct FIO {
 } fcin;
 #define cin fcin
 #endif
+
+template<class... A> void _cin_(A&... a) { ((cin >> a), ...); }
+template<class... A> void _cout_(A... a) { ((cout << a << ' '), ...); }
+template<class T> ostream& operator<<(ostream& s, const Arr<T>& a) {
+	for(auto i : a) cout << i << ' ';
+	return s;
+}
+#define CIN(T, ...) \
+	T __VA_ARGS__;    \
+	_cin_(__VA_ARGS__);
+#define COUT(...) _cout_(__VA_ARGS__), cout << endl;
+
+template<class T=int>
+T geti() {
+	T x;
+	cin >> x;
+	return x;
+}
+template<class T=int>
+Arr<T> getis(int n) {
+	Arr<T> a(n);
+	for(auto& i : a) cin >> i;
+	return a;
+}

@@ -5,13 +5,12 @@ using namespace std;
 // Settings
 #define INT64 1  // MLE?
 #define INTERACTIVE 0
-#define FP_PRECISION 11
-#define FAST_IO 1
+#define FP_PRINT_PREC 12
 
 // Optional
 #if !(DEBUG)
 auto __PRE_RUN__ = (ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),
-                    (cout << fixed << setprecision(FP_PRECISION)), 0);
+                    (cout << fixed << setprecision(FP_PRINT_PREC)), 0);
 #if !(INTERACTIVE)
 #define endl '\n'  // interactive?
 #endif
@@ -36,62 +35,48 @@ auto __PRE_RUN__ = (ios::sync_with_stdio(0), cin.tie(0), cout.tie(0),
 #define lb lower_bound
 #define ub upper_bound
 #define reduce accumulate
-using i64 = long long;
-using u64 = unsigned long long;
-using f64 = double;
-using pint = pair<int, int>;
-using tint = tuple<int, int, int>;
-template<class T> struct Arr : public vector<T> {
-	Arr(int n=0, T init=T()):vector<T>(n, init){}
-	Arr(initializer_list<T> il):vector<T>(il){}
-	T& operator[](int i) { i+=i<0?this->size():0; return vector<T>::operator[](i); }
-	const T& operator[](int i) const { i+=i<0?this->size():0; return vector<T>::operator[](i); }
-	T& at(int i) { return *this[i]; }
-	const T& at(int i) const { return *this[i]; }
-};
+using i64 = long long; using u64 = unsigned long long; using f64 = double; using i128=__int128;
+using pint = pair<int, int>; using tint = tuple<int, int, int>;
 template<class T> using Func = function<T>;
 template<class T> using Str = basic_string<T>;
 template<class T> using PQMax = PQ<T>;
-template<class T> using PQMin = PQ<T, Arr<T>, greater<T>>;
+template<class T> using PQMin = PQ<T, vector<T>, greater<T>>;
 template<class T> int sz(const T& x) { return x.size(); }
 template<class T> cxp T inf() { return numeric_limits<T>::max() / 2; }
-template<class... A> auto ARR(auto n, A&&... a) {
-	if constexpr(sizeof...(a) == 0) return n;
-	else
-		return Arr(n, ARR(a...));
-}
-template<class T> T dupl(const T& x, int n) {
-	T r;
-	for(int _ = 0; _ < n; _++) r.insert(r.end(), all(x));
-	return r;
-}
-int divceil(int a, int b){return (a+b-1)/b;}
-template<class T> inline T sq(T x) { return x * x; }
+
+int divc(int a, int b){return (a+b-1)/b;}
+int divf(int a, int b){return a/b;}
 cxp int lg2f(int x) { return 63 - __builtin_clzll(x); }
 cxp int lg2c(int x) { return 64 - __builtin_clzll(x - 1); }
-Arr<int> range(int n) {
-	Arr<int> r(n);
-	for(int i = 0; i < n; i++) r[i] = i;
-	return r;
-}
-const f64 pi = acosl(-1), eps = 1e-10;
+template<class T> inline T sq(T x) { return x * x; }
 
 template <class T, class U = T>
 bool accmin(T& a, U&& b) {return b < a ? a = std::forward<U>(b), true : false;}
 template <class T, class U = T>
 bool accmax(T& a, U&& b) {return a < b ? a = std::forward<U>(b), true : false;}
 
-template<class T>
-struct IterRange {
-  IterRange(T s, T e):s(s),e(e){}
-  T begin()const{ return s; }
-  T end()const{ return e; }
-	T s,e;
+const f64 pi = acosl(-1), eps = 1e-10;
+int dir4[4][2]={{1,0},{0,1},{-1,0},{0,-1}};
+int dir8[8][2]={{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
+
+template<class T> struct Arr : public vector<T> {
+	Arr(int n=0, T init=T()):vector<T>(n, init){}
+	Arr(initializer_list<T> il):vector<T>(il){}
+	T& operator[](int i){
+#if DEBUG
+		static bool flag=false;
+		if(!flag && i<0)
+			cerr<<"[INFO]Negative Index Found"<<endl;
+		flag=true;
+#endif
+		return vector<T>::operator[](i>=0?i:i+this->size());
+	}
+	const T& operator[](int i) const { return vector<T>::operator[](i>=0?i:i+this->size()); }
+	T& at(int i) { return *this[i]; }
+	const T& at(int i) const { return *this[i]; }
 };
-template<class T>
-Arr<pair<T,int>> enumerate(Arr<T> a){
-	Arr<pair<T,int>> r;
-	for(int i=0;i<sz(a);i++)
-		r.emplb(a[i],i);
-	return r;
+template<class... A> auto ARR(auto n, A&&... a) {
+	if constexpr(sizeof...(a) == 0) return n;
+	else
+		return Arr(n, ARR(a...));
 }
