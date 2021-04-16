@@ -1,19 +1,11 @@
-# 기본 인터페이스
-  1. [s, e) 반열린구간
+# Interface
+  1. [s, e) half opened range
   2. 0-based index
   3. negative index (same as python)
 
-# 목차
-  ## Examples
-    다양한 클래스들의 사용 예시가 있습니다.
-  ## Includes
-    알고리즘 문제해결에 자주 사용되는 코드들이 추상화되어 있습니다.
-   ## Tools
-    라이브러리를 편리하게 사용할 수 있게 도와주는 도구들의 코드가 있습니다.
-
-# 사용법
+# Getting Started
 git clone https://github.com/0xc0def/algolib  
 cd algolib  
-cp tpl.cpp main.cpp //main.cpp에 템플릿코드 복사  
-source ./tool/build.sh main.cpp //실행파일 a.out과 병합된코드 submit.cpp가 생성된다. (디버그빌드)  
-source ./tool/build.sh main.cpp R //실행파일 a.out과 병합된코드 submitcpp가 생성된다. (릴리즈 빌드) 
+cp src/tpl.cpp src/main.cpp //main.cpp에 템플릿코드 복사  
+source build.sh src/main.cpp //실행파일 a.out과 병합된코드 submit.cpp가 생성된다. (디버그빌드)  
+source build.sh src/main.cpp R //실행파일 a.out과 병합된코드 submitcpp가 생성된다. (릴리즈 빌드) 
