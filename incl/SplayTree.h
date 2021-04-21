@@ -1,111 +1,104 @@
 #pragma once
 #include "Core.h"
+#include "Monoid.h"
 
-// interface: 0-based half
-// implement: 1-based half
-template<class T> struct SplayTree {
-	SplayTree() : rt(new N()) {
-		bin.s = 0;
-		ins(1, 0);
-	}
-	~SplayTree() { delete rt; }
-	void upd(int s, int e, T val) {
-		auto x = interval(s + 1, e + 1);
-		lz(x) += val;
-		renew(x, true);
-	}
-	T q(int s, int e) { return a(interval(s + 1, e + 1)); }
-	void ins(int i, T v) {
-		splay(nth(rt, i));
-		auto rsav = r(rt);
-		setr(rt, new N(v));
-		setr(r(rt), rsav);
-		renew(r(rt), true);
-	}
-	void rm(int i) {
-		auto x = interval(i + 1, i + 2);
-		setl(p(x), nullptr);
-		renew(p(x), true);
-		delete x;
-	}
-
-private:
-	struct N {
-		T v = 0, a = 0, lz = 0;
-		int s = 1;
-		N *p = 0, *l = 0, *r = 0;
-		N(T v = 0) : v(v) {}
-		~N() {
+//NOTE: root->s = n+1임. 맨뒤에 모조노드1개 사용하기때문.
+template<class T, class Q, class U>
+struct SplayTree{
+	struct N{
+		N *l=0,*r=0,*p=0;
+		int s=1;
+		T v=Q::id(),a=Q::id();//,lz=U::id();
+		N(T v):v(v){}
+		~N(){
 			if(l) delete l;
 			if(r) delete r;
 		}
-	};
-	N *rt, bin;
-	T &v(N *x) { return x ? x->v : bin.v; }
-	T &a(N *x) { return x ? x->a : bin.a; }
-	T &lz(N *x) { return x ? x->lz : bin.lz; }
-	int &s(N *x) { return x ? x->s : bin.s; }
-	N *&p(N *x) { return x ? x->p : bin.p; }
-	N *&l(N *x) { return x ? x->l : bin.l; }
-	N *&r(N *x) { return x ? x->r : bin.r; }
-	void setl(N *x, N *y) {
-		if(x) x->l = y;
-		if(y) y->p = x;
+		void setL(N* x){l=x; if(x)x->p=this;}
+		void setR(N* x){r=x; if(x)x->p=this;}
+		void step_splay(){
+			N *p=this->p,*pp=p->p;
+			if(!p) return;
+			if(pp) (this==p->l ^ p==pp->l ? this : p)->rot();
+			this->rot();
+		}
+		void rot(){
+			if(!this->p) return;
+			N *p=this->p,*pp=p->p;
+			propa();
+			if(pp){
+				if(p==pp->l) pp->setL(this);
+				else pp->setR(this);
+			}else this->p=0;
+			if(this==p->l) p->setL(r),this->setR(p);
+			else p->setR(l),this->setL(p);
+			if(pp)pp->renew();
+			p->renew();
+			this->renew();
+		}
+		void propa(){
+			// if(lz==U::id()) return;
+			// v=U::f(v,lz);
+			// a=U::fn(a,s);
+			// if(l)l->lz=U::f(l->lz,lz);
+			// if(r)r->lz=U::f(r->lz,lz);
+			// lz=U::id();
+		}
+		void renew(){
+			a=Q::f(Q::f(l?l->a:Q::id(),v),r?r->a:Q::id());
+			s=(l?l->s:0)+(r?r->s:0)+1;
+		}
+	} *root;
+
+	SplayTree(): root(new N(Q::id())){}
+	~SplayTree(){delete root;}
+
+	void ins(int i, T v){
+		splay(nth(root,i));
+		N* node=new N(v);
+		node->setL(root->l);
+		root->setL(node);
+		
+		node->renew();
+		root->renew();
 	}
-	void setr(N *x, N *y) {
-		if(x) x->r = y;
-		if(y) y->p = x;
+	void del(int i){
+		N* x=interval(i,i+1);
+		x->p->l=0;
+		x->p->renew();
+		if(x->p->p)x->p->p->renew();
+		delete x;
+	}
+	T q(int s, int e){ return interval(s,e)->a; }
+
+	N* nth(N* x, int n){
+		if(!x)return x;
+		x->propa();
+		int ls=(x->l?x->l->s:0);
+		if(n<ls) return nth(x->l,n);
+		else if(n>ls) return nth(x->r,n-ls-1);
+		else return x;
+	}
+	void splay(N *x){
+		while(x->p)
+			x->step_splay();
+		root=x;
 	}
 
-	N *nth(N *x, int n) {
-		prop(x);
-		if(s(l(x)) > n) return nth(l(x), n);
-		if(s(l(x)) < n) return nth(r(x), n - s(l(x)) - 1);
-		return x;
-	}
-	N *interval(int s, int e) {
-		auto x = nth(rt, s - 1), y = nth(rt, e);
-		splay(x);
-		setr(x, p(r(x)) = nullptr);
-		splay(y), rt = x;
-		;
-		setr(x, y);
-		renew(y, true);
-		return l(r(x));
-	}
-	void renew(N *x, bool anc = false) {
-		prop(x), prop(l(x)), prop(r(x));
-		s(x) = s(l(x)) + 1 + s(r(x));
-		a(x) = a(l(x)) + v(x) + a(r(x));
-		if(anc and p(x)) renew(p(x), anc);
-	}
-	void splay(N *x) {
-		if(!p(x)) return;
-		if(p(p(x))) rot((x == l(p(x))) == (p(x) == p(p(l(x)))) ? p(x) : x);
-		rot(x);
-		splay(x);
-	}
-	void rot(N *x) {
-		if(!p(x)) return;
-		prop(p(x)), prop(l(p(x))), prop(r(p(x)));
-		auto psav = p(x);
-		if(auto pp = p(p(x))) {
-			if(l(pp) == p(x)) setl(pp, x);
-			else
-				setr(pp, x);
-		} else
-			p(x) = nullptr, rt = x;
-		if(x == l(psav)) setl(psav, r(x)), setr(x, psav);
-		else
-			setr(psav, l(x)), setl(x, psav);
-		renew(psav), renew(x);
-	}
-	void prop(N *x) {
-		if(!lz(x)) return;
-		v(x) += lz(x);
-		a(x) += lz(x) * s(x);
-		lz(l(x)) += lz(x);
-		lz(r(x)) += lz(x);
-		lz(x) = 0;
+	N* interval(int s, int e){
+		if(!s){
+			splay(nth(root,e));
+			return root->l;
+		}
+		splay(nth(root,s-1));
+		N* root_save=root;
+		root->r->p=0;
+		root=root->r;
+		splay(nth(root,e-s));
+		root->p=root_save;
+		root_save->r=root;
+		root=root_save;
+		return root->r->l;
 	}
 };
+
