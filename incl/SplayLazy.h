@@ -2,8 +2,7 @@
 #include "Core.h"
 #include "Monoid.h"
 
-//NOTE: Upd없어도 삭제 후 삽입하면 됨
-template<class T, class Q>
+template<class T, class Q, class U>
 struct SplayTree{
 	struct N;
 	SplayTree(): root(new N(Q::id())){}
@@ -27,10 +26,16 @@ struct SplayTree{
 		delete x;
 	}
 	T q(int s, int e){ return interval(s,e)->a; }
+	void upd(int s, int e, T val){
+		N* x=interval(s,e);
+		x->addlz(val);
+		x->propa();
+	}
 
 private:
 	N* nth(N* x, int n){
 		if(!x)return x;
+		x->propa();
 		int ls=(x->l?x->l->s:0);
 		if(n<ls) return nth(x->l,n);
 		else if(n>ls) return nth(x->r,n-ls-1);
@@ -60,7 +65,7 @@ private:
 	struct N{
 		N *l=0,*r=0,*p=0;
 		int s=1;
-		T v=Q::id(),a=Q::id();
+		T v=Q::id(),a=Q::id(),lz=U::id();
 		N(T v):v(v){}
 		~N(){
 			if(l) delete l;
@@ -77,6 +82,7 @@ private:
 		void rot(){
 			if(!this->p) return;
 			N *p=this->p,*pp=p->p;
+			propa();
 			if(pp){
 				if(p==pp->l) pp->setL(this);
 				else pp->setR(this);
@@ -86,6 +92,17 @@ private:
 			if(pp)pp->renew();
 			p->renew();
 			this->renew();
+		}
+		void propa(){
+			if(lz==U::id()) return;
+			v=U::f(v,lz);
+			a=U::f(a,Q::fn(lz,s),this);
+			if(l)l->addlz(lz);
+			if(r)r->addlz(lz);
+			lz=U::id();
+		}
+		void addlz(T val){
+			lz = lz==U::id() ? val : U::f(lz,val);
 		}
 		void renew(){
 			a=Q::f(Q::f(l?l->a:Q::id(),v),r?r->a:Q::id());
