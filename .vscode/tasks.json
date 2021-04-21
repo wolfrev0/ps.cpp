@@ -19,7 +19,7 @@
 		{
 			"label": "Run with time",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && /usr/bin/time -v ./a.out<in 2>&1 | grep -e User -e System -e Elap -e Max",
+			"command": "ulimit -s 1048576 && /usr/bin/time -v ./a.out<in 2>&1 | grep -e User -e System -e Elap -e Max && ./a.out<in",
 		}
 	],
 	// "inputs": [

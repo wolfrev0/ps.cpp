@@ -8,7 +8,7 @@
 			"name": "Run Debug",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${fileDirname}/a.out",
+			"program": "${workspaceFolder}/a.out",
 			"args": ["<","in"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
