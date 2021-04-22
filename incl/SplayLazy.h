@@ -2,14 +2,14 @@
 #include "Core.h"
 #include "Monoid.h"
 
-template<class T, class Q, class U>
-struct SplayTree{
+template<class T, class F>
+struct SplayLazy{
 	struct N;
-	SplayTree(): root(new N(Q::id())){}
-	~SplayTree(){delete root;}
+	SplayLazy(): root(new N(F::idT())){}
+	~SplayLazy(){delete root;}
 
 	int size()const{return root->s-1;}//remove one mock node
-	void ins(int i, T v){
+	N* ins(int i, T v){
 		splay(nth(root,i));
 		N* node=new N(v);
 		node->setL(root->l);
@@ -17,6 +17,7 @@ struct SplayTree{
 		
 		node->renew();
 		root->renew();
+		return node;
 	}
 	void del(int i){
 		N* x=interval(i,i+1);
@@ -30,9 +31,12 @@ struct SplayTree{
 		N* x=interval(s,e);
 		x->addlz(val);
 		x->propa();
+		//x->renew();
+		x->p->renew();
+		if(x->p->p) x->p->p->renew();
 	}
 
-private:
+// private:
 	N* nth(N* x, int n){
 		if(!x)return x;
 		x->propa();
@@ -41,10 +45,10 @@ private:
 		else if(n>ls) return nth(x->r,n-ls-1);
 		else return x;
 	}
-	void splay(N *x){
+	N* splay(N *x){
 		while(x->p)
 			x->step_splay();
-		root=x;
+		return root=x;
 	}
 	N* interval(int s, int e){
 		if(!s){
@@ -65,7 +69,7 @@ private:
 	struct N{
 		N *l=0,*r=0,*p=0;
 		int s=1;
-		T v=Q::id(),a=Q::id(),lz=U::id();
+		T v=F::idT(),a=F::idT(),lz=F::idU();
 		N(T v):v(v){}
 		~N(){
 			if(l) delete l;
@@ -82,6 +86,7 @@ private:
 		void rot(){
 			if(!this->p) return;
 			N *p=this->p,*pp=p->p;
+			p->propa();
 			propa();
 			if(pp){
 				if(p==pp->l) pp->setL(this);
@@ -94,19 +99,20 @@ private:
 			this->renew();
 		}
 		void propa(){
-			if(lz==U::id()) return;
-			v=U::f(v,lz);
-			a=U::f(a,Q::fn(lz,s),this);
+			if(lz==F::idU()) return;
+			v=F::upd(v,lz);
+			a=F::updn(a,lz,s,this);
 			if(l)l->addlz(lz);
 			if(r)r->addlz(lz);
-			lz=U::id();
+			lz=F::idU();
 		}
 		void addlz(T val){
-			lz = lz==U::id() ? val : U::f(lz,val);
+			lz = lz==F::idU() ? val : F::propa(lz,val);
 		}
 		void renew(){
-			a=Q::f(Q::f(l?l->a:Q::id(),v),r?r->a:Q::id());
-			s=(l?l->s:0)+(r?r->s:0)+1;
+			a=v,s=1;
+			if(l)l->propa(),a=F::f(l->a,a),s+=l->s;
+			if(r)r->propa(),a=F::f(a,r->a),s+=r->s;
 		}
 	} *root;
 };

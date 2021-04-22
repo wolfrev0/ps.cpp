@@ -3,11 +3,11 @@
 #include "Monoid.h"
 
 //NOTE: Upd없어도 삭제 후 삽입하면 됨
-template<class T, class Q>
-struct SplayTree{
+template<class T, class F>
+struct Splay{
 	struct N;
-	SplayTree(): root(new N(Q::id())){}
-	~SplayTree(){delete root;}
+	Splay(): root(new N(F::idT())){}
+	~Splay(){delete root;}
 
 	int size()const{return root->s-1;}//remove one mock node
 	void ins(int i, T v){
@@ -60,7 +60,7 @@ private:
 	struct N{
 		N *l=0,*r=0,*p=0;
 		int s=1;
-		T v=Q::id(),a=Q::id();
+		T v=F::idT(),a=F::idT();
 		N(T v):v(v){}
 		~N(){
 			if(l) delete l;
@@ -88,7 +88,7 @@ private:
 			this->renew();
 		}
 		void renew(){
-			a=Q::f(Q::f(l?l->a:Q::id(),v),r?r->a:Q::id());
+			a=F::f(F::f(l?l->a:F::idT(),v),r?r->a:F::idT());
 			s=(l?l->s:0)+(r?r->s:0)+1;
 		}
 	} *root;
