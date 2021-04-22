@@ -82,7 +82,7 @@ Arr<i64> conv_mul(Arr<i64> a, Arr<i64> b) {
 }
 
 // c[i]=sigma(j=0~n-1, a[j]*b[i-j])
-Arr<i64> conv_cir(Arr<i64> a, Arr<i64> b) {
+vector<i64> conv_cir(Arr<i64> a, Arr<i64> b) {
 	int n = max(sz(a), sz(b));
 	int m = 1 << lg2c(n * 2);
 	a.resize(m);
@@ -90,7 +90,7 @@ Arr<i64> conv_cir(Arr<i64> a, Arr<i64> b) {
 	for(int i = n; i < m; i++) b.pushb(b[(n + i) % n]);
 	reverse(b.begin(), b.end());
 	auto res = conv(a, b);
-	return {res.end() - n, res.end()};
+	return vector<i64>{res.end() - n, res.end()};
 }
 
 void ntt() {}
