@@ -4,12 +4,11 @@
 // #include "Debug.h"
 // #include "Functional.h"
 
+int ti,t=geti();
 void solve(){
+
 }
 signed main() {
-	CIN(int,t);
-	// int t=1;
-	for(int ti=1;ti<=t;ti++){
+	while(++ti<=t)
 		solve();
-	}
 }
