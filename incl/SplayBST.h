@@ -3,7 +3,7 @@
 #include "Monoid.h"
 
 //NOTE: Upd없어도 삭제 후 삽입하면 됨
-//NOTE: using open range (lb,ub), not half open range [lb,ub)
+//NOTE: using open range (lb,ub), not half open range [lb,ub), 2 mock nodes
 //ex: https://atcoder.jp/contests/jsc2021/tasks/jsc2021_f
 template<class T, class F>
 struct SplayBST{
@@ -11,7 +11,7 @@ struct SplayBST{
 	SplayBST(): root(new N(inf<T>()*2)){root->setL(new N(-inf<T>()*2)); root->renew();}
 	~SplayBST(){delete root;}
 
-	int size()const{return root->s-2;}//remove one mock node
+	int size()const{return root->s-2;}//remove two mock node
 	void ins(T v){
 		splay(root->ub(v));
 		N* node=new N(v);
@@ -39,14 +39,6 @@ struct SplayBST{
 		root->setL(xl);
 
 		root->renew();
-	}
-	N* merge(N* l, N* r, int& c){c++;
-		if(!l) return r;
-		if(!r) return l;
-		l->setL(merge(l->l,l->r,c));
-		l->setR(r);
-		l->renew();
-		return l;
 	}
 	N* q(T s, T e){ return interval(root->lb(s),root->ub(e)); }
 
