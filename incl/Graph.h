@@ -140,7 +140,58 @@ template<class T> struct Graph {
 		}
 		return ret;
 	}
-
 protected:
 	virtual bool valid_spfa_edge(const Edge& w) const { return true; }
+};
+
+template<class T>
+struct EdgeList{
+	struct E{
+		int v[2],vi[2]; T x;
+		int opp(int self){return v[self==v[0]];}
+		int oppi(int self){return vi[self==v[0]];}
+	};
+
+	EdgeList(int n):n(n),m(0),adj(n){}
+
+	void add(int s, int e, T x, bool dir=false){
+		edg.emplb(E{{s,e},{sz(adj[e]),sz(adj[s])},x});
+		if(!dir)adj[e].emplb(m);
+		adj[s].emplb(m);
+		m++;
+	}
+
+	//SeeAlso) https://codeforces.com/blog/entry/90137?#comment-785463
+	Arr<pint> boomerang(){
+		//boj.kr/16583
+		//https://codeforces.com/contest/1519/problem/E
+		//https://codeforces.com/contest/858/problem/F
+		// https://www.acmicpc.net/problem/13353 ?
+		Arr<bool> vis(n);
+		Arr<pint> ret;
+		Arr<int> ok(m,true);
+		LAM(dfs, void, int v, int pei){
+			vis[v]=true;
+			Arr<int> y;
+			for(auto i:adj[v]){
+				if(i==pei)continue;
+				int opp=edg[i].opp(v);
+				if(!vis[opp])
+					dfs(opp,i);
+				if(ok[i])
+					y.emplb(i);
+			}
+			if(pei!=-1)y.emplb(pei);
+			for(int i=0;i+1<sz(y);i+=2)
+				ok[y[i]]=ok[y[i+1]]=false,ret.emplb(y[i],y[i+1]);
+		};
+		for(int i=0;i<n;i++)
+			if(!vis[i])
+				dfs(i,-1);
+		return ret;
+	}
+
+	int n,m;
+	Arr<E> edg;
+	Arr<Arr<int>> adj;
 };
