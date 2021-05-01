@@ -48,7 +48,6 @@
 #include "Trie.h"
 #include "UnionFind.h"
 #include "Vec2.h"
-#include "XArr.h"
 #include "Zip.h"
 
 signed main() {}
