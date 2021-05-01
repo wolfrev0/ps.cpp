@@ -5,11 +5,21 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Run Debug",
+			"name": "Debug Py",
+			"type": "python",
+			"request": "launch",
+			"program": "${file}<in",
+			"console": "integratedTerminal"
+		},
+		{
+			"name": "Debug Cpp",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/a.out",
-			"args": ["<","in"],
+			"args": [
+				"<",
+				"in"
+			],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],
