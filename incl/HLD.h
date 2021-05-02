@@ -19,7 +19,7 @@ template<class T> struct HLD : public RootedTree<T> {
 			dfs_hld(ch[x][i].fi, ccn);
 		}
 	}
-	int iter(int a, int b, const Func<void(int, int)>& f, bool vtxw) {
+	int iter(int a, int b, const auto& f, bool vtxw) {
 		while(cn[a] != cn[b])
 			if(dpt[top[cn[a]]] < dpt[top[cn[b]]])
 				f(ord[top[cn[b]]], ord[b] + 1), b = p[top[cn[b]]].fi;

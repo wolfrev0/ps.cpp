@@ -170,7 +170,7 @@ struct EdgeList{
 		Arr<bool> vis(n);
 		Arr<pint> ret;
 		Arr<int> ok(m,true);
-		LAM(dfs, void, int v, int pei){
+		func(dfs, void, int v, int pei){
 			vis[v]=true;
 			Arr<int> y;
 			for(auto i:adj[v]){

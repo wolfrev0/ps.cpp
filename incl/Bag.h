@@ -26,7 +26,7 @@ template<class T> struct Bag {
 		a.cnt = 0;
 	}
 	int size() const { return cnt; }
-	void iter(Func<void(T&)> f) {
+	void iter(auto f) {
 		N* c = h->n;
 		while(c) f(c->d), c = c->n;
 	}

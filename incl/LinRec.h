@@ -7,10 +7,10 @@
 // f(n)=a*f(n-i)+b*f(n-j)+.. 꼴이 아니라 f(n)+a*f(n-i)+b*f(n-j)+...=0꼴으로
 // 반환한다.
 template<int mod = int(1e9 + 7)> Arr<int> guess(Arr<int> seq) {
-	Func<int(int, int)> qp = [&](int x, int p) {
+	func(qp,int,int x,int p){
 		if(!p) return 1ll;
-		int z = qp(x, p / 2);
-		return z * z % mod * (p % 2 ? x : 1) % mod;
+		int z=qp(x,p/2);
+		return z*z%mod*(p%2?x:1)%mod;
 	};
 
 	for(auto& i : seq) i = (i % mod + mod) % mod;
@@ -64,7 +64,7 @@ int calc_nth(Arr<int> seq, Arr<int> rec, int n) {
 		while(sz(c) and !c.back()) c.popb();
 		return c;
 	};
-	Func<Arr<int>(const Arr<int>&, int)> qp = [&](const Arr<int>& x, int p) {
+	func(qp,Arr<int>,const Arr<int>& x,int p){
 		if(!p) return Arr<int>{1};
 		auto z = qp(x, p / 2);
 		return mul(mul(z, z), p % 2 ? x : Arr<int>{1});

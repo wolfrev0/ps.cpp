@@ -18,6 +18,7 @@
 #include "HashVal.h"
 #include "HeapSet.h"
 #include "Hungarian.h"
+#include "Int128.h"
 //#include "LCA.h"
 #include "LinAlge.h"
 #include "LinAlgeGF2.h"

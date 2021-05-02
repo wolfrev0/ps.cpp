@@ -141,7 +141,7 @@ private:
 			for(auto j : i)
 				if(j.w.cap and d[j.e] == d[j.s] + 1) l[j.s].emplb(j);
 		Arr<int> ii(n);
-		Func<int(int, int)> block_flow = [&](int u, int flow) -> int {
+		func(block_flow,int,int u,int flow){
 			if(u == snk) return flow;
 			for(auto& _i = ii[u]; _i < sz(l[u]); _i++) {
 				auto i = l[u][_i];
