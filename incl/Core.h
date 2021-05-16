@@ -29,7 +29,7 @@ using namespace std;
 #define lb lower_bound
 #define ub upper_bound
 #define reduce accumulate
-#define func(fname,RetT,...) function<RetT(__VA_ARGS__)> fname=[&](__VA_ARGS__)->RetT
+#define func(RetT,fname,...) function<RetT(__VA_ARGS__)> fname=[&](__VA_ARGS__)->RetT
 using i64=long long;using u64=unsigned long long;using f64=double;
 using pint=pair<int,int>;using tint=tuple<int,int,int>;
 template<class T>using Str=basic_string<T>;

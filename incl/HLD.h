@@ -10,7 +10,7 @@ template<class T> struct HLD : public RootedTree<T> {
 	}
 	void dfs_hld(int x, int& ccn) {
 		if(sz(ch[x]))
-			swap(ch[x].front(), *max_element(all(ch[x]), [this](auto a, auto b) {
+			swap(ch[x].front(), *max_element(ch[x].begin(),ch[x].end(), [this](auto a, auto b) {
 				     return this->tsz[a.fi] < this->tsz[b.fi];
 			     }));
 		cn[x] = ccn;
