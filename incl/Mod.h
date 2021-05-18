@@ -1,6 +1,6 @@
 #pragma once
 #include "Core.h"
-
+//modular const나 constexpr로 선언하면 빨라진다는듯?
 template<int m> struct Mod {
 	Mod(i64 n = 0) : n((n % m + m) % m) {}
 	explicit operator int() const { return n; }

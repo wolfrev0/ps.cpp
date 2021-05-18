@@ -146,3 +146,5 @@ template<class T> Arr<int> z(const Str<T> &a) {
 	}
 	return z;
 }
+
+template<class T> Arr<int> manacher(const Str<T> &a){return {};}
