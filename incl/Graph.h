@@ -2,167 +2,121 @@
 #include "Core.h"
 #include "UnionFind.h"
 
-template<class T> struct Graph {
-	struct Edge {
-		int s;
-		int e;
-		int ei;
-		T w;
-		Edge() : s(0), e(0), ei(0), w(T()){};
-		Edge(int s, int e, int ei, T w) : s(s), e(e), ei(ei), w(w){};
-		bool operator<(const Edge& r) const { return w < r.w; }
-		bool operator>(const Edge& r) const { return w > r.w; }
-	};
-	int n;
-	Arr<Arr<Edge>> g;
-
-	Graph(int n = 0) : n(n), g(n) {}
-	Graph(const Graph& r) : n(r.n), g(r.g) {}
-
-	void add_edge(int s, int e, T w, bool bidir = false) {
-		g[s].pushb({s, e, sz(g[s]), w});
-		if(bidir) g[e].pushb({e, s, sz(g[e]), w});
-	}
-
-	struct DNV {
-		T dist;
-		int v;
-		bool operator<(const DNV& r) const { return dist > r.dist; }
-	};
-	void dijkstra(Arr<T>& d, Arr<Edge>& p, int s) {
-		PQ<DNV> pq;
-		d = Arr<T>(n, inf<T>());
-		p = Arr<Edge>(n, {-1, -1, -1, -1});
-		pq.push({d[s] = 0, s});
-		while(size(pq)) {
-			auto c = pq.top();
-			pq.pop();
-
-			if(c.dist != d[c.v]) continue;
-
-			auto& cg = g[c.v];
-			for(auto& i : cg) {
-				if(d[i.e] > c.dist + i.w) {
-					p[i.e] = i;
-					pq.push({d[i.e] = c.dist + i.w, i.e});
-				}
-			}
-		}
-	}
-
-	Arr<Arr<int>> floyd() {
-		Arr<Arr<int>> a(n, Arr<int>(n, inf<int>()));
-		for(int i = 0; i < n; i++) {
-			for(auto j : g[i]) a[i][j.e] = 1;
-			a[i][i] = 0;
-		}
-		for(int k = 0; k < n; k++)
-			for(int i = 0; i < n; i++)
-				for(int j = 0; j < n; j++) a[i][j] = min(a[i][j], a[i][k] + a[k][j]);
-		return a;
-	}
-
-	bool spfa(Arr<T>& ub, Arr<Edge>& p, int s) {
-		deque<int> q;
-		Arr<bool> inq(n);
-		ub = Arr<T>(n, inf<T>());
-		p = Arr<Edge>(n, {-1, -1, -1, -1});
-		int c[n]{};
-
-		ub[s] = 0;
-		inq[s] = true;
-		q.pushb(s);
-		while(sz(q)) {
-			int j = q.front();
-			inq[j] = false;
-			q.popf();
-			for(auto k : g[j]) {
-				if(valid_spfa_edge(k) && ub[j] + k.w < ub[k.e]) {
-					p[k.e] = k;
-					ub[k.e] = ub[j] + k.w;
-					if(!inq[k.e]) {
-						inq[k.e] = true;
-						if(++c[k.e] > n) return false;
-						if(sz(q) && ub[k.e] < ub[q.front()]) q.pushf(k.e);
-						else
-							q.pushb(k.e);
-					}
-				}
-			}
-		}
-
-		return q.empty();
-	}
-
-	Arr<Edge> cons_path(const Arr<T>& d, const Arr<Edge>& p, int dest) {
-		Arr<Edge> ret;
-		while(p[dest].s != -1) {
-			ret.pushb(g[p[dest].s][p[dest].ei]);
-			dest = p[dest].s;
-		}
-		return ret;
-	}
-
-	Arr<Edge> mst_prim() {
-		Arr<Edge> ret;
-		Arr<bool> vis(n);
-		PQMin<Edge> q;
-		for(auto i : g[0]) q.push(i);
-		vis[0] = true;
-		while(sz(q)) {
-			auto c = q.top();
-			q.pop();
-
-			if(vis[c.e]) continue;
-			vis[c.e] = true;
-
-			ret.pushb(c);
-			for(auto& i : g[c.e]) {
-				if(!vis[i.e]) { q.push(i); }
-			}
-		}
-		return ret;
-	}
-
-	Arr<Edge> mst_kruskal() {
-		Arr<Edge> e;
-		for(auto& i : g)
-			for(auto& j : i) e.pushb(j);
-		sort(e.begin(), e.end());
-
-		UF uf(n);
-		Arr<Edge> ret;
-		for(auto& i : e) {
-			if(uf.find(i.s) != uf.find(i.e)) {
-				uf.uni(i.s, i.e);
-				ret.pushb(i);
-			}
-		}
-		return ret;
-	}
-protected:
-	virtual bool valid_spfa_edge(const Edge& w) const { return true; }
-};
-
-template<class T>
-struct EdgeList{
+//NOTE: if bidir -> use e.opp(x)
+//			else -> can use e.opp(x) but e.v[1] is simpler
+template<class T, bool bidir>
+struct Graph{
 	struct E{
-		int v[2],vi[2]; T x;
+		int v[2],vi[2],ei; T w;
 		int opp(int self){return v[self==v[0]];}
 		int oppi(int self){return vi[self==v[0]];}
+		bool operator<(const E&r)const{return w<r.w;}
 	};
+	Graph(int n):n(n),m(0),adj(n){}
 
-	EdgeList(int n):n(n),m(0),adj(n){}
-
-	void add(int s, int e, T x, bool dir=false){
-		edg.emplb(E{{s,e},{sz(adj[e]),sz(adj[s])},x});
-		if(!dir)adj[e].emplb(m);
+	void add_edge(int s, int e, T w){
+		edg.emplb(E{{s,e},{sz(adj[e]),sz(adj[s])},sz(edg),w});
+		if(bidir)adj[e].emplb(m);
 		adj[s].emplb(m);
 		m++;
 	}
 
+	void dijkstra(Arr<T>& d, Arr<int>& p, int s){
+		d=Arr<T>(n,inf<T>());
+		p=Arr<int>(n,-1);
+		PQMin<pair<T,int>> pq;
+		pq.empl(d[s]=0,s);
+		while(sz(pq)){
+			auto [dist,x]=pq.top(); pq.pop();
+			if(dist!=d[x])continue;
+			for(auto& i:adj[x]){
+				int y=edg[i].opp(x);
+				int w=edg[i].w;
+				if(d[y]>dist+w)
+					p[y]=i, pq.empl(d[y]=dist+w,y);
+			}
+		}
+	}
+
+	Arr<Arr<int>> floyd(){
+		Arr<Arr<int>> a(n,Arr<int>(n,inf<int>()));
+		for(int i=0;i<n;i++)a[i][i]=0;
+		for(auto i:edg){
+			a[i.v[0]][i.v[1]]=i.w;
+			if(bidir)a[i.v[1]][i.v[0]]=i.w;
+		}
+		for(int k=0;k<n;k++)
+			for(int i=0;i<n;i++)
+				for(int j=0;j<n;j++)
+					a[i][j]=min(a[i][j],a[i][k]+a[k][j]);
+		return a;
+	}
+
+	bool spfa(Arr<T>& ub, Arr<int>& p, int s) {
+		deque<int> q;
+		Arr<bool> inq(n);
+		ub=Arr<T>(n,inf<T>());
+		p=Arr<int>(n,-1);
+		Arr<int> c(n);
+
+		ub[s]=0;
+		inq[s]=true;
+		q.pushb(s);
+		while(sz(q)){
+			int x=q.front(); inq[x]=false, q.popf();
+			for(auto i:adj[x]){
+				int y=edg[i].opp(x);
+				auto w=edg[i].w;
+				if(isvalid(edg[i]) && ub[y]>ub[x]+w){
+					p[y]=i, ub[y]=ub[x]+w;
+					if(!inq[y]){
+						inq[y]=true;
+						if(++c[y]>n)return false;
+						if(sz(q) && ub[y]<ub[q.front()])q.pushf(y);
+						else q.pushb(y);
+					}
+				}
+			}
+		}
+		return q.empty();
+	}
+	//kruskal
+	Arr<E> mst(){ assert(bidir);
+		auto e=edg;
+		sort(e.begin(),e.end());
+		UF uf(n);
+		Arr<E> ret;
+		ret.reserve(n-1);
+		for(auto i:e) {
+			if(uf.find(i.v[0])^uf.find(i.v[1])){
+				uf.uni(i.v[0],i.v[1]);
+				ret.emplb(move(i));
+			}
+		}
+		return ret;
+	}
+	//prim
+	Arr<E> mst2(){ assert(bidir);
+		Arr<E> ret;
+		Arr<bool> vis(n);
+		PQMin<tuple<T,int,int>> pq;
+		for(auto i:adj[0])
+			pq.empl(edg[i].w,edg[i].opp(0),i);
+		vis[0]=true;
+		while(sz(pq)){
+			auto [w,x,idx]=pq.top();pq.pop();
+			if(vis[x]) continue;
+			vis[x]=true;
+			ret.pushb(edg[idx]);
+			for(auto& i:adj[x])
+				if(!vis[edg[i].opp(x)])
+					pq.empl(edg[i].w,edg[i].opp(x),i);
+		}
+		return ret;
+	}
+
 	//SeeAlso) https://codeforces.com/blog/entry/90137?#comment-785463
-	Arr<pint> boomerang(){
+	Arr<pint> boomerang(){ assert(bidir);
 		//boj.kr/16583
 		//https://codeforces.com/contest/1519/problem/E
 		//https://codeforces.com/contest/858/problem/F
@@ -170,7 +124,7 @@ struct EdgeList{
 		Arr<bool> vis(n);
 		Arr<pint> ret;
 		Arr<int> ok(m,true);
-		func(dfs, void, int v, int pei){
+		func(void,dfs,int v,int pei){
 			vis[v]=true;
 			Arr<int> y;
 			for(auto i:adj[v]){
@@ -194,4 +148,6 @@ struct EdgeList{
 	int n,m;
 	Arr<E> edg;
 	Arr<Arr<int>> adj;
+protected:
+	virtual bool isvalid(const E& e)const{return true;}
 };

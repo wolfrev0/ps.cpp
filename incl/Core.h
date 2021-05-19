@@ -30,6 +30,7 @@ using namespace std;
 #define ub upper_bound
 #define reduce accumulate
 #define func(RetT,fname,...) function<RetT(__VA_ARGS__)> fname=[&](__VA_ARGS__)->RetT
+#define lam(expr,...) [&](__VA_ARGS__){return expr;}
 using i64=long long;using u64=unsigned long long;using f64=double;
 using pint=pair<int,int>;using tint=tuple<int,int,int>;
 template<class T>using Str=basic_string<T>;
@@ -50,7 +51,8 @@ int dir4[4][2]={{1,0},{0,1},{-1,0},{0,-1}};
 int dir8[8][2]={{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
 
 template<class T>struct Arr : public vector<T>{
-	explicit Arr(int n=0,T init=T()):vector<T>(n,init){}
+	Arr():Arr(0){}
+	explicit Arr(int n,T init=T()):vector<T>(n,init){}
 	Arr(initializer_list<T>il):vector<T>(il){}
 	//Arr(vector<T>::iterator s,vector<T>::iterator e):vector<T>(s,e){}
 	T& operator[](int i){
