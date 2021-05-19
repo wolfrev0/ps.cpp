@@ -59,60 +59,63 @@ struct GraphUD: public GraphWD<int>{
 		Arr<int> stat(n),ord(n);
 		stack<int> stk;
 		int ordi=0;
+		func(int,dfs,int v){
+			stat[v]=1, stk.push(v);
+			int ret=ord[v]=ordi++;
+			for(auto i:adj[v]){
+				if(stat[edg[i].v[1]]==0)// tree edge
+					ret=min(ret,dfs(edg[i].v[1]));
+				else if(stat[edg[i].v[1]]==1)// bwd edge
+					ret=min(ret,ord[edg[i].v[1]]);
+				else if(stat[edg[i].v[1]]==2) {
+					if(ord[edg[i].v[1]]<=ord[v])// cross edge which not scc grouped
+						ret=min(ret, ord[edg[i].v[1]]);
+					// else fwd edge
+				}
+				// else state==3 (scc grouped)
+			}
+			// nothing goes to ancestor => root of scc
+			if(ret==ord[v]){
+				scc.emplb();
+				int prv=-1;
+				while(sz(stk) && prv!=v)
+					scc.back().pushb(prv=stk.top()), stat[prv]=3, stk.pop();
+			}else stat[v]=2;
+			return ret;
+		};
+
 		for(int i=0;i<n;i++)
 			if(!stat[i])
-				dfs_tj(i,stat,ord,ordi,stk,scc);
+				dfs(i);
 		return scc_util(scc);
 	}
 
 	tuple<Arr<Arr<int>>, Arr<int>, GraphUD> scc_kosaraju(){
 		Arr<int> post_ord;
 		Arr<bool> vis(n);
+
+		func(void,dfs,int v,Arr<int>& out,GraphUD& g){
+			vis[v]=true;
+			for(auto i:g.adj[v])
+				if(!vis[edg[i].v[1]])
+					dfs(edg[i].v[1], out, g);
+			out.pushb(v);
+		};
 		for(int i=0;i<n;i++)
 			if(!vis[i])
-				dfs_ksrj(i,post_ord,vis,*this);
+				dfs(i,post_ord,*this);
+		
 		auto rg=reversed();
-		Arr<Arr<int>> scc;
-		fill(vis.begin(),vis.end(),false);
 		reverse(post_ord.begin(),post_ord.end());
+		vis=Arr<bool>(n);
+		Arr<Arr<int>> scc;
 		for(auto i:post_ord)
 			if(!vis[i])
-				scc.emplb(),dfs_ksrj(i,scc.back(),vis,rg);
+				scc.emplb(),dfs(i,scc.back(),rg);
 		return scc_util(scc);
 	}
 
 private:
-	int dfs_tj(int v,Arr<int>& stat,Arr<int>& ord,int& ordi,stack<int>& stk,Arr<Arr<int>>& scc){
-		stat[v]=1, stk.push(v);
-		int ret=ord[v]=ordi++;
-		for(auto i:adj[v]){
-			if(stat[edg[i].v[1]]==0)// tree edge
-				ret=min(ret,dfs_tj(edg[i].v[1],stat,ord,ordi,stk,scc));
-			else if(stat[edg[i].v[1]]==1)// bwd edge
-				ret=min(ret,ord[edg[i].v[1]]);
-			else if(stat[edg[i].v[1]]==2) {
-				if(ord[edg[i].v[1]]<=ord[v])// cross edge which not scc grouped
-					ret=min(ret, ord[edg[i].v[1]]);
-				// else fwd edge
-			}
-			// else state==3 (scc grouped)
-		}
-		// nothing goes to ancestor => root of scc
-		if(ret==ord[v]){
-			scc.emplb();
-			int prv=-1;
-			while(sz(stk) && prv!=v)
-				scc.back().pushb(prv=stk.top()), stat[prv]=3, stk.pop();
-		}else stat[v]=2;
-		return ret;
-	}
-	void dfs_ksrj(int v,Arr<int>& out,Arr<bool>& vis,GraphUD& g){
-		vis[v]=true;
-		for(auto i:g.adj[v])
-			if(!vis[edg[i].v[1]])
-				dfs_ksrj(edg[i].v[1], out, vis, g);
-		out.pushb(v);
-	}
 	tuple<Arr<Arr<int>>,Arr<int>,GraphUD> scc_util(Arr<Arr<int>> scc){
 		Arr<int> v2scc(n);
 		for(int i=0;i<sz(scc);i++)
