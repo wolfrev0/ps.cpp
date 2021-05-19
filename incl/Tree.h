@@ -14,13 +14,6 @@ template<class T> struct Tree{
 		auto y=furthest(x,x,0).se;
 		return {x,y};
 	}
-	int center(){
-		auto x=furthest(0,0,0).se;
-		auto z=furthest(x,x,0);
-		auto [v,c,cd]=fcenter(x,x,0,z.se,z.fi);
-		assert(v);
-		return c;
-	}
 	Arr<pair<int,T>> rootize(int r)const{
 		Arr<pair<int,T>> res(n,{r,inf<int>()});
 		func(void,dfs,int r,int p){
@@ -52,20 +45,5 @@ private:
 			if(i!=p)
 				r=max(r,furthest(i,x,d+w));
 		return r;
-	}
-	tuple<bool,int,int> fcenter(int x,int p,int d,int y,int diam){
-		bool valid=x==y;
-		int center=x;
-		int centerd=max(d,diam-d);
-		for(auto[i,w]:g[x])
-			if(i!=p){
-				auto[v,c,cd]=fcenter(i,x,d+w,y,diam);
-				if(v){
-					valid=true;
-					if(max(d,diam-d)>cd)
-						center=c,centerd=max(d,diam-d);
-				}
-			}
-		return {valid,center,centerd};
 	}
 };
