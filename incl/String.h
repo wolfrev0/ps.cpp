@@ -74,9 +74,9 @@ template<class T> Arr<int> get_lcp(const Str<T> &s, const Arr<int> &sa) {
 	for(int i = 0; i < n; i++) {
 		if(psa[i] == -1) plcp[i] = 0;
 		else {
-			while(s[i + common] == s[psa[i] + common]) common++;
-			plcp[i] = common;
-			common = max(common - 1, 0ll);
+			while(s[i+common]==s[psa[i]+common])common++;
+			plcp[i]=common;
+			common=max<int>(common-1,0);
 		}
 	}
 	for(int i = 0; i < n; i++) lcp[i] = plcp[sa[i]];

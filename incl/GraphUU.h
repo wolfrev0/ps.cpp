@@ -1,9 +1,9 @@
 #pragma once
-#include "DirGraph.h"
+#include "GraphWU.h"
 
-struct SimpleGraph:public DirGraph{
-	SimpleGraph(int n=0):DirGraph(n){}
-	void add_edge(int s,int e){DirGraph::add_edge(s,e);}
+struct GraphUU:public GraphWU<int>{
+	GraphUU(int n=0):GraphWU(n){}
+	void add_edge(int s,int e){GraphWU::add_edge(s,e,1);}
 	Arr<int> art_points(){
 		int ordi=0;
 		Arr<int> ord(n,-1),ret;

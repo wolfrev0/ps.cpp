@@ -105,10 +105,10 @@ struct SplayBST{
 		}
 		N* begin(){return l?l->begin():this;}
 		N* end(){return r?r->end():this;}
-		void iter(auto func){
-			if(l)l->iter(func);
-			func(v);
-			if(r)r->iter(func);
+		void iter(auto f){
+			if(l)l->iter(f);
+			f(v);
+			if(r)r->iter(f);
 		}
 	} *root;
 };

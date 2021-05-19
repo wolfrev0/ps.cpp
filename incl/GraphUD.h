@@ -1,13 +1,13 @@
 #pragma once
-#include "Graph.h"
+#include "GraphWD.h"
 
-struct DirGraph: public Graph<int,false>{
-	DirGraph(int n=0):Graph(n){}
+struct GraphUD: public GraphWD<int>{
+	GraphUD(int n=0):GraphWD(n){}
 
-	void add_edge(int s,int e){Graph::add_edge(s,e,1);}
+	void add_edge(int s,int e){GraphWD::add_edge(s,e,1);}
 
-	DirGraph reversed(){
-		DirGraph ret(n);
+	GraphUD reversed(){
+		GraphUD ret(n);
 		for(auto& i:adj)
 			for(auto j:i)
 				ret.add_edge(edg[j].v[1],edg[j].v[0]);
@@ -54,7 +54,7 @@ struct DirGraph: public Graph<int,false>{
 		return ret;
 	}
 
-	tuple<Arr<Arr<int>>, Arr<int>, DirGraph> scc_tarjan() {
+	tuple<Arr<Arr<int>>, Arr<int>, GraphUD> scc_tarjan() {
 		Arr<Arr<int>> scc;
 		Arr<int> stat(n),ord(n);
 		stack<int> stk;
@@ -65,7 +65,7 @@ struct DirGraph: public Graph<int,false>{
 		return scc_util(scc);
 	}
 
-	tuple<Arr<Arr<int>>, Arr<int>, DirGraph> scc_kosaraju(){
+	tuple<Arr<Arr<int>>, Arr<int>, GraphUD> scc_kosaraju(){
 		Arr<int> post_ord;
 		Arr<bool> vis(n);
 		for(int i=0;i<n;i++)
@@ -106,19 +106,19 @@ private:
 		}else stat[v]=2;
 		return ret;
 	}
-	void dfs_ksrj(int v,Arr<int>& out,Arr<bool>& vis,DirGraph& g){
+	void dfs_ksrj(int v,Arr<int>& out,Arr<bool>& vis,GraphUD& g){
 		vis[v]=true;
 		for(auto i:g.adj[v])
 			if(!vis[edg[i].v[1]])
 				dfs_ksrj(edg[i].v[1], out, vis, g);
 		out.pushb(v);
 	}
-	tuple<Arr<Arr<int>>,Arr<int>,DirGraph> scc_util(Arr<Arr<int>> scc){
+	tuple<Arr<Arr<int>>,Arr<int>,GraphUD> scc_util(Arr<Arr<int>> scc){
 		Arr<int> v2scc(n);
 		for(int i=0;i<sz(scc);i++)
 			for(auto j:scc[i])
 				v2scc[j]=i;
-		DirGraph sccg(sz(scc));
+		GraphUD sccg(sz(scc));
 		for(int i=0;i<n;i++)
 			for(auto& j:adj[i])
 				if(v2scc[i]!=v2scc[edg[j].v[1]])
@@ -152,5 +152,5 @@ struct SAT2{
 		return r;
 	}
 	int n;
-	DirGraph g;
+	GraphUD g;
 };

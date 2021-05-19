@@ -1,10 +1,10 @@
 #pragma once
-#include "Graph.h"
+#include "GraphWD.h"
 
 struct FlowW {
-	i64 cap, cost;
-	FlowW(i64 cost=0) : cost(cost) {}
-	FlowW(i64 cap, i64 cost): cap(cap), cost(cost) {}
+	int cap, cost;
+	FlowW(int cost=0) : cost(cost) {}
+	FlowW(int cap, int cost): cap(cap), cost(cost) {}
 	bool operator<(const FlowW& r) const { return cost < r.cost; }
 	bool operator>(const FlowW& r) const { return cost > r.cost; }
 	FlowW operator+(const FlowW& r) const { return cost + r.cost; }
@@ -14,24 +14,24 @@ struct FlowW {
 namespace std{
 	template<> class numeric_limits<FlowW> {
 	public:
-		static FlowW max(){return FlowW(inf<i64>());}
+		static FlowW max(){return FlowW(inf<int>());}
 	};
 }
-struct Flow:public Graph<FlowW,false>{
+struct Flow:public GraphWD<FlowW>{
 	int src, snk;
-	Flow(int n):Graph(n+2),src(n),snk(n+1){}
+	Flow(int n):GraphWD(n+2),src(n),snk(n+1){}
 
-	void add_edge(int s, int e, i64 cap, i64 cost) {
-		Graph::add_edge(s,e,{cap,cost});
-		Graph::add_edge(e,s,{0,-cost});
+	void add_edge(int s, int e, int cap, int cost) {
+		GraphWD::add_edge(s,e,{cap,cost});
+		GraphWD::add_edge(e,s,{0,-cost});
 		edg[-2].vi[0]=sz(adj[e])-1;
 		edg[-1].vi[0]=sz(adj[s])-1;
 	}
 
-	i64 mf(i64 flow = inf<i64>()){
-		i64 sum=0;
+	int mf(int flow = inf<int>()){
+		int sum=0;
 		auto vis=Arr<bool>(n+2);
-		while(i64 f=process_mf(src,flow-sum,vis)) {
+		while(int f=process_mf(src,flow-sum,vis)) {
 			sum+=f;
 			vis=Arr<bool>(n+2);
 		}
@@ -44,8 +44,8 @@ struct Flow:public Graph<FlowW,false>{
 		return r;
 	}
 
-	pair<i64, i64> mcmf(i64 flow=inf<i64>()) {
-		pair<i64,i64> ret;
+	pair<int, int> mcmf(int flow=inf<int>()) {
+		pair<int,int> ret;
 		while(true){
 			auto res=process_mcmf(flow-ret.se);
 			ret.fi+=res.fi,ret.se+=res.se;
@@ -55,7 +55,7 @@ struct Flow:public Graph<FlowW,false>{
 	}
 
 	// successive shortest path || primal-dual
-	pair<i64, i64> mcmf_fast(i64 flow = inf<i64>()) { return {}; }
+	pair<int, int> mcmf_fast(int flow = inf<int>()) { return {}; }
 	void gomory_hu() {}
 
 	tuple<Arr<E>, Arr<int>, Arr<int>> cuts() {
@@ -101,12 +101,12 @@ struct Flow:public Graph<FlowW,false>{
 	}
 
 private:
-	i64 process_mf(int v, i64 mf, Arr<bool>& vis) {
+	int process_mf(int v, int mf, Arr<bool>& vis) {
 		if(v == snk) return mf;
 		vis[v]=true;
 		for(auto i:adj[v]){
 			if(!vis[edg[i].v[1]] && edg[i].w.cap){
-				i64 f=process_mf(edg[i].v[1],min(mf, edg[i].w.cap),vis);
+				int f=process_mf(edg[i].v[1],min(mf, edg[i].w.cap),vis);
 				if(f>0){
 					edg[i].w.cap-=f;
 					edg[adj[edg[i].v[1]][edg[i].vi[0]]].w.cap+=f;
@@ -154,7 +154,7 @@ private:
 		return r;
 	}
 
-	pair<i64, i64> process_mcmf(i64 flow) {
+	pair<int, int> process_mcmf(int flow) {
 		Arr<FlowW> d;
 		Arr<int> p;
 		if(!spfa(d, p, src) || edg[p[snk]].v[0] == -1) return {};
@@ -162,7 +162,7 @@ private:
 		for(;p[x]!=-1;x=edg[p[x]].opp(x))
 			flow=min(flow,edg[p[x]].w.cap);
 
-		i64 cost=0;
+		int cost=0;
 		x=snk;
 		for(;p[x]!=-1;x=edg[p[x]].opp(x)){
 			edg[p[x]].w.cap-=flow;

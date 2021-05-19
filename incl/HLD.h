@@ -29,10 +29,7 @@ template<class T> struct HLD : public RootedTree<T> {
 		f(ord[a] + !vtxw, ord[b] + 1);
 		return a;
 	}
-	int lca(int a, int b) {
-		return iter(
-		    a, b, [&](int _, int __) {}, true);
-	}
+	int lca(int a, int b) { return iter(a,b,[&](int _, int __){},true); }
 
 	Arr<int> cn, top, ord;  // chain number, top of the chain, vtx to preord
 	using RT = RootedTree<T>;
