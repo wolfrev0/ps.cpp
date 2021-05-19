@@ -12,13 +12,12 @@ struct Graph{
 		int oppi(int self){return vi[self==v[0]];}
 		bool operator<(const E&r)const{return w<r.w;}
 	};
-	Graph(int n):n(n),m(0),adj(n){}
+	Graph(int n):n(n),adj(n){}
 
 	void add_edge(int s, int e, T w){
 		edg.emplb(E{{s,e},{sz(adj[e]),sz(adj[s])},sz(edg),w});
-		if(bidir)adj[e].emplb(m);
-		adj[s].emplb(m);
-		m++;
+		if(bidir)adj[e].emplb(sz(edg)-1);
+		adj[s].emplb(sz(edg)-1);
 	}
 
 	void dijkstra(Arr<T>& d, Arr<int>& p, int s){
@@ -123,7 +122,7 @@ struct Graph{
 		// https://www.acmicpc.net/problem/13353 ?
 		Arr<bool> vis(n);
 		Arr<pint> ret;
-		Arr<int> ok(m,true);
+		Arr<int> ok(sz(edg),true);
 		func(void,dfs,int v,int pei){
 			vis[v]=true;
 			Arr<int> y;
@@ -145,7 +144,7 @@ struct Graph{
 		return ret;
 	}
 
-	int n,m;
+	int n;
 	Arr<E> edg;
 	Arr<Arr<int>> adj;
 protected:
