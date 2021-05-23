@@ -3,5 +3,4 @@
 import sys
 sys.setrecursionlimit(int(1e6))
 import math
-read=lambda:map(int,input().split())
-
+read=lambda T:list(map(T,input().split()))

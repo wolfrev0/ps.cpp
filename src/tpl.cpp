@@ -1,6 +1,6 @@
-#include "Config.h"
-#include "Core.h"
-#include "IO.h"
+#include "core/config.h"
+#include "core/base.h"
+#include "core/io.h"
 // #include "Debug.h"
 // #include "Functional.h"
 

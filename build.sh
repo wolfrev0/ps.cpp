@@ -9,8 +9,8 @@ if [ "$2" == "R" ]; then #release
 	option="-O2"
 else #debug
 	option="-O0 -D DEBUG=1 -ggdb3"
-	if [ "$src" != "incl/Core.h" ] && [ "incl/Core.h.gch" -ot "incl/Core.h" ]; then
-		g++ incl/Core.h $base_arg $option
+	if [ "$src" != "incl/core/base.h" ] && [ "incl/core/base.h.gch" -ot "incl/core/base.h" ]; then
+		g++ incl/core/base.h $base_arg $option
 	fi
 fi
 g++ $src $base_arg $option
@@ -21,7 +21,7 @@ function f(){
 	if (( 1 < $(echo $arr | wc -w | cat) )); then
 		for i in $arr
 		do
-			echo $i incl/Config.h
+			echo $i incl/core/config.h
 			echo $(awk -F'"' '/^#include *"/{print FILENAME, "incl/"$2}' $i)
 			z=$(awk -F'"' '/^#include *"/{print "incl/"$2, "incl/"$2}' $i)
 			if (( 1 < $(echo $z | wc -w | cat) )); then
