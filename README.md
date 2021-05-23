@@ -1,7 +1,7 @@
 # Interface
   1. [s, e) half opened range
   2. 0-based index
-  3. negative index (same as python)
+  3. Support negative index (same as python)
 
 # Getting Started
 git clone https://github.com/0xc0def/algolib  
