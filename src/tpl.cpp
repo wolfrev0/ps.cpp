@@ -1,8 +1,8 @@
 #include "core/config.h"
 #include "core/base.h"
 #include "core/io.h"
-// #include "Debug.h"
-// #include "Functional.h"
+// #include "core/debug.h"
+// #include "functional.h"
 
 void solve(){
 }
