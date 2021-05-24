@@ -1,6 +1,6 @@
 #pragma once
 #include "core/base.h"
-#include "uf.h"
+#include "misc/uf.h"
 
 //NOTE: if bidir -> use e.opp(x)
 //			else -> can use e.opp(x) but e.v[1] is simpler
