@@ -3,7 +3,7 @@
 #include "math/monoid.h"
 
 template<class T, class F> struct Seg{
-	Seg(int n=0):n(n),tr(4*n,F::idT()){}
+	Seg(int n=0,T init=F::idT()):n(n),tr(4*n,init){}
 	T q(int s,int e){s+=s<0?n:0,e+=e<0?n:0;
 		if(s>e) return F::f(q(s,n),q(0,e));
 		assert(0<=s&&s<=e&&e<=n);

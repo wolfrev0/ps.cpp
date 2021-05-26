@@ -3,7 +3,7 @@
 #include "math/monoid.h"
 
 template<class T,class F> struct SegBU{
-	SegBU(int n=0):n(n),tr(n<<1,F::idT()){}
+	SegBU(int n=0,T init=F::idT()):n(n),tr(n<<1,init){}
 	void upd(int i,T val) {i+=i<0?n:0;
 		i+=n,tr[i]=F::upd(tr[i],val);
 		while(i>>=1)tr[i]=F::f(tr[i<<1], tr[i<<1|1]);

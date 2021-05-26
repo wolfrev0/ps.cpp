@@ -3,8 +3,9 @@
 #include "math/monoid.h"
 
 template<class T, class F> struct SegLazy {
-	SegLazy(int n=0):n(n),tr(n<<2,F::idT()),lz(n<<2,F::idU()){}
-	SegLazy(int n,const Arr<T>& a):SegLazy(n){build(1,0,n,a);}
+	SegLazy(int n=0,const Arr<T>& a={})
+		:n(n),tr(n<<2,F::idT()),lz(n<<2,F::idU())
+		{if(sz(a))build(1,0,n,a);}
 	T q(int p){return q(p,p+1);}
 	T q(int s,int e){return q(1,0,n,s,e);}
 	void upd(int p,T val){upd(p,p+1,val);}
