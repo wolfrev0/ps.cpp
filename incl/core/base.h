@@ -43,8 +43,10 @@ int divf(int a,int b){return a/b;}
 cxp int lg2f(int x){return 63-__builtin_clzll(x);}
 cxp int lg2c(int x){return 64-__builtin_clzll(x-1);}
 template<class T>inline T sq(T x){return x*x;}
-template <class T,class U=T>bool assmin(T& a,U&& b){return a>b?a=forward(b),true:false;}
-template <class T,class U=T>bool assmax(T& a,U&& b){return a<b?a=forward(b),true:false;}
+template <class T,class U=T>bool assmin(T& a,U&& b){return a>b?a=b,true:false;}
+template <class T,class U=T>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}
+int argmin(const auto& a){return min_element(a.begin(),a.end())-a.begin();}
+int argmax(const auto& a){return max_element(a.begin(),a.end())-a.begin();}
 
 const f64 pi=acosl(-1),eps=1e-10;
 int dir4[4][2]={{1,0},{0,1},{-1,0},{0,-1}};
