@@ -4,7 +4,7 @@
 using namespace std;
 
 #if !(DEBUG)
-	auto __PRE_RUN__=(ios::sync_with_stdio(0),cin.tie(0),cout.tie(0),(cout << fixed << setprecision(FP_PRINT_PREC)),0);
+	auto __PRE_RUN__=(ios::sync_with_stdio(0),cin.tie(0),cout.tie(0),(cout << fixed << setprecision(COUT_FP_PREC)),0);
 	#if !(INTERACTIVE)
 		#define endl '\n'  // interactive?
 	#endif
