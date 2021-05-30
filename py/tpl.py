@@ -2,5 +2,4 @@
 #import numpy as np
 import sys
 sys.setrecursionlimit(int(1e6))
-import math
 read=lambda T:list(map(T,input().split()))
