@@ -8,7 +8,7 @@ void solve(){
 }
 signed main() {
 #ifdef TESTCASE
-	int ti=0,t=geti();
+	int ti=0,t=cin.tok();
 	while(++ti<=t)
 		// cout<<"Case #"<<ti<<": ",
 #endif
