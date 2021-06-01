@@ -11,10 +11,10 @@ struct FIO{
 	inline char get(){if(!cnt)preload(); return cnt>0?*p:0;}
 	void ignore_wsc(){while(get()==' '||get()=='\n')pop();}
 	operator bool(){return get();}
-	template<typename T>
-	FIO& operator>>(T& n){ignore_wsc();n=0;char neg=false;if(get()=='-')neg=true,pop();while('0'<=get()&&get()<='9')n=n*10+pop()-'0';if(neg)n*=-1;return *this;}
+	FIO& operator>>(int& n){ignore_wsc();n=0;char neg=false;if(get()=='-')neg=true,pop();while('0'<=get()&&get()<='9')n=n*10+pop()-'0';if(neg)n*=-1;return *this;}
 	FIO& operator>>(char& c){ignore_wsc();c=pop();return *this;}
 	FIO& operator>>(string& s){ignore_wsc();s.clear();while(get()!=' '&&get()!='\n')s.pushb(pop());return *this;}
+	FIO& operator>>(f64& n){ignore_wsc();string s;while('0'<=get()&&get()<='9'||get()=='.'||get()=='-')s.pushb(pop());n=stod(s);return *this;}
 };
 struct PrettyIO:FIO{
 	template<class T=int>T tok(){T x;*this>>x;return x;}

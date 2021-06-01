@@ -60,7 +60,7 @@ template<class T>struct Arr : public vector<T>{
 	T& operator[](int i){
 		#if DEBUG
 			static bool flag=false;
-			if(!flag && i<0) flag=true,cerr<<"[INFO]Negative Index Found"<<endl;
+			if(!flag && i<0) flag=true,cerr<<"[INFO] Negative Index Found"<<endl;
 		#endif
 		return vector<T>::operator[](i>=0?i:i+this->size());
 	}
