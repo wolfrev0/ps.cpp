@@ -1,13 +1,11 @@
 #pragma once
 #include <bits/stdc++.h>
 #include <bits/extc++.h>
+#include "core/config.h"
 using namespace std;
 
 #if !(DEBUG)
-	auto __PRE_RUN__=(ios::sync_with_stdio(0),cin.tie(0),cout.tie(0),(cout << fixed << setprecision(COUT_FP_PREC)),0);
-	#if !(INTERACTIVE)
-		#define endl '\n'  // interactive?
-	#endif
+	auto __PRE_RUN__=(ios::sync_with_stdio(0),cin.tie(0),cout.tie(0),(cout<<fixed<<setprecision(COUT_FP)),0);
 #endif
 #if INT64
 	#define int i64
@@ -43,8 +41,8 @@ int divf(int a,int b){return a/b;}
 cxp int lg2f(int x){return 63-__builtin_clzll(x);}
 cxp int lg2c(int x){return 64-__builtin_clzll(x-1);}
 template<class T>inline T sq(T x){return x*x;}
-template <class T,class U=T>bool assmin(T& a,U&& b){return a>b?a=b,true:false;}
-template <class T,class U=T>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}
+bool assmin(auto& a,auto&& b){return a>b?a=b,true:false;}
+bool assmax(auto& a,auto&& b){return a<b?a=b,true:false;}
 int argmin(const auto& a){return min_element(a.begin(),a.end())-a.begin();}
 int argmax(const auto& a){return max_element(a.begin(),a.end())-a.begin();}
 
@@ -52,15 +50,15 @@ const f64 pi=acosl(-1),eps=1e-10;
 int dir4[4][2]={{1,0},{0,1},{-1,0},{0,-1}};
 int dir8[8][2]={{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
 
-template<class T>struct Arr : public vector<T>{
+template<class T>struct Arr:public vector<T>{
 	Arr():Arr(0){}
 	explicit Arr(int n,T init=T()):vector<T>(n,init){}
 	Arr(initializer_list<T>il):vector<T>(il){}
 	//Arr(vector<T>::iterator s,vector<T>::iterator e):vector<T>(s,e){}
 	T& operator[](int i){
 		#if DEBUG
-			static bool flag=false;
-			if(!flag && i<0) flag=true,cerr<<"[INFO] Negative Index Found"<<endl;
+			static bool _z=false;
+			if(i<0&&!_z)_z=true,cerr<<"[INFO] Negative Index Found"<<endl;
 		#endif
 		return vector<T>::operator[](i>=0?i:i+this->size());
 	}
