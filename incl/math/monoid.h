@@ -1,6 +1,19 @@
 #pragma once
 #include "core/base.h"
 
+// template<class T, class U=T> struct PlusPlus{
+// 	static cxp Monoid<T> mq;
+// 	static cxp Monoid<U> mu;
+// 	cxp static T updn(T a, U b, int c, auto*x){return a+b*c;}
+// 	cxp static U propa(U a, U b){return a+b;}
+// };
+// template<class T, class U=T> struct PlusAss{
+// 	static cxp Monoid<T> mq;
+// 	static cxp Monoid<U,[](T x,U y){return y;},inf<U>()> mu;
+// 	cxp static T updn(T a, U b, int c, auto*x){return b*c;}
+// 	cxp static U propa(U a, U b){return b;}
+// };
+
 template<class T, class U=T> struct PlusPlus{
 	cxp static T idT(){return T(0);}
 	cxp static T idU(){return U(0);}
