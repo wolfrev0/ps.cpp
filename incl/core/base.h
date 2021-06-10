@@ -10,6 +10,7 @@ using namespace std;
 #if INT64
 	#define int i64
 #endif
+#define ARG(...) __VA_ARGS__
 #define bool char
 #define pushb push_back
 #define pushf push_front
@@ -54,7 +55,9 @@ template<class T>struct Arr:public vector<T>{
 	Arr():Arr(0){}
 	explicit Arr(int n,T init=T()):vector<T>(n,init){}
 	Arr(initializer_list<T>il):vector<T>(il){}
-	//Arr(vector<T>::iterator s,vector<T>::iterator e):vector<T>(s,e){}
+#ifdef CPP20
+	Arr(auto its, auto ite):vector<T>(its,ite){}
+#endif
 	T& operator[](int i){
 		#if DEBUG
 			static bool _z=false;
@@ -70,5 +73,7 @@ template<class... A> auto ARR(auto n,A&&... a) {
 	if constexpr(!sizeof...(a)) return n;
 	else return Arr(n,ARR(a...));
 }
-template<class T, auto _f=[](T x,T y){return x+y;}, T _id=0> struct Monoid{static cxp auto f=_f,id=_id;};
-template<class T, class M=Monoid<T>>Arr<T> cumf(const Arr<T>& a){Arr<T> b(sz(a)+1,M::id);for(int i=0;i<sz(a);i++)b[i]=M::f(b[i-1],a[i]);return b;}
+#ifdef CPP20
+	template<class T, auto _f=[](T x,T y){return x+y;}, T _id=0> struct Monoid{static cxp auto f=_f,id=_id;};
+	template<class T, class M=Monoid<T>>Arr<T> cumf(const Arr<T>& a){Arr<T> b(sz(a)+1,M::id);for(int i=0;i<sz(a);i++)b[i]=M::f(b[i-1],a[i]);return b;}
+#endif
