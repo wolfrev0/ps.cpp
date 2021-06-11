@@ -44,7 +44,7 @@ bool assmax(auto& a,auto&& b){return a<b?a=b,true:false;}
 int argmin(const auto& a){return min_element(a.begin(),a.end())-a.begin();}
 int argmax(const auto& a){return max_element(a.begin(),a.end())-a.begin();}
 
-const f64 pi=acosl(-1),eps=1e-10;
+const f64 pi=acosl(-1),eps=FP_EPS;
 int dir4[4][2]={{1,0},{0,1},{-1,0},{0,-1}};
 int dir8[8][2]={{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
 
@@ -67,7 +67,6 @@ struct Arr:public P{
 	T& at(int i){return *this[i];}
 	const T& at(int i)const{return *this[i];}
 };
-// template<>struct Arr<bool>:public Arr<char>{using Arr<char>::Arr;};
 template<class... A> auto ARR(auto n,A&&... a) {
 	if constexpr(!sizeof...(a)) return n;
 	else return Arr(n,ARR(a...));
