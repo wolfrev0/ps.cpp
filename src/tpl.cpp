@@ -3,7 +3,7 @@
 // #include "misc/functional.h"
 
 //Don't use at interactive problem
-#include "core/fastio.h"
+#include "core/io.h"
 #define endl '\n'
 
 void solve(){

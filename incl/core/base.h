@@ -10,8 +10,6 @@ using namespace std;
 #if INT64
 	#define int i64
 #endif
-#define ARG(...) __VA_ARGS__
-#define bool char
 #define pushb push_back
 #define pushf push_front
 #define popb pop_back
@@ -28,7 +26,6 @@ using namespace std;
 #define lb lower_bound
 #define ub upper_bound
 #define reduce accumulate
-#define func(RetT,fname,...) function<RetT(__VA_ARGS__)> fname=[&](__VA_ARGS__)->RetT
 #define lam(expr,...) [&](__VA_ARGS__){return expr;}
 using i64=long long;using u64=unsigned long long;using f64=double;
 using pint=pair<int,int>;using tint=tuple<int,int,int>;
@@ -51,24 +48,26 @@ const f64 pi=acosl(-1),eps=1e-10;
 int dir4[4][2]={{1,0},{0,1},{-1,0},{0,-1}};
 int dir8[8][2]={{1,0},{1,1},{0,1},{-1,1},{-1,0},{-1,-1},{0,-1},{1,-1}};
 
-template<class T>struct Arr:public vector<T>{
+template<class T, class P=conditional_t<is_same<bool,T>::value,deque<T>,vector<T>>>
+struct Arr:public P{
 	Arr():Arr(0){}
-	explicit Arr(int n,T init=T()):vector<T>(n,init){}
-	Arr(initializer_list<T>il):vector<T>(il){}
+	explicit Arr(int n,T init=T()):P(n,init){}
+	Arr(initializer_list<T>il):P(il){}
 #ifdef CPP20
-	Arr(auto its, auto ite):vector<T>(its,ite){}
+	Arr(auto its, auto ite):P(its,ite){}
 #endif
 	T& operator[](int i){
 		#if DEBUG
 			static bool _z=false;
 			if(i<0&&!_z)_z=true,cerr<<"[INFO] Negative Index Found"<<endl;
 		#endif
-		return vector<T>::operator[](i>=0?i:i+this->size());
+		return P::operator[](i>=0?i:i+this->size());
 	}
-	const T& operator[](int i)const{return vector<T>::operator[](i>=0?i:i+this->size());}
+	const T& operator[](int i)const{return P::operator[](i>=0?i:i+this->size());}
 	T& at(int i){return *this[i];}
 	const T& at(int i)const{return *this[i];}
 };
+// template<>struct Arr<bool>:public Arr<char>{using Arr<char>::Arr;};
 template<class... A> auto ARR(auto n,A&&... a) {
 	if constexpr(!sizeof...(a)) return n;
 	else return Arr(n,ARR(a...));
@@ -77,3 +76,6 @@ template<class... A> auto ARR(auto n,A&&... a) {
 	template<class T, auto _f=[](T x,T y){return x+y;}, T _id=0> struct Monoid{static cxp auto f=_f,id=_id;};
 	template<class T, class M=Monoid<T>>Arr<T> cumf(const Arr<T>& a){Arr<T> b(sz(a)+1,M::id);for(int i=0;i<sz(a);i++)b[i]=M::f(b[i-1],a[i]);return b;}
 #endif
+
+#define RETT(...) __VA_ARGS__
+#define func(RetT,fname,...) function<RetT(__VA_ARGS__)> fname=[&](__VA_ARGS__)->RetT

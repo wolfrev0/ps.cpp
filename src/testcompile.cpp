@@ -1,6 +1,6 @@
 #include "core/base.h"
 #include "core/config.h"
-#include "core/fastio.h"
+#include "core/io.h"
 
 #include "geom/line.h"
 #include "geom/polygon.h"
