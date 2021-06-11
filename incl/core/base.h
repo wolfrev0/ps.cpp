@@ -37,8 +37,8 @@ template<class T>using PQMax=PQ<T>;
 template<class T>using PQMin=PQ<T,vector<T>,greater<T>>;
 template<class T>int sz(const T& x){return x.size();}
 template<class T>cxp T inf(){return numeric_limits<T>::max()/2;}
-int divc(int a,int b){return (a+b-1)/b;}
-int divf(int a,int b){return a/b;}
+int divc(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?(a+b-1)/b:a/b;}
+int divf(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?a/b:(a-b+1)/b;}
 cxp int lg2f(int x){return 63-__builtin_clzll(x);}
 cxp int lg2c(int x){return 64-__builtin_clzll(x-1);}
 template<class T>inline T sq(T x){return x*x;}
