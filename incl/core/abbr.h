@@ -1,9 +1,4 @@
 #pragma once
-
-//Abbrevs
-#if INT64
-#define int i64
-#endif
 #define pushb push_back
 #define pushf push_front
 #define popb pop_back

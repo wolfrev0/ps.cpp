@@ -1,6 +1,4 @@
 #include "core/base.h"
-#include "core/config.h"
-#include "core/io.h"
 
 #include "geom/line.h"
 #include "geom/polygon.h"
@@ -47,7 +45,6 @@
 #include "misc/bucket.h"
 #include "misc/bucketbias.h"
 #include "misc/cumulQ.h"
-#include "misc/debug.h"
 #include "misc/dpopt.h"
 #include "misc/functional.h"
 #include "misc/gccext.h"

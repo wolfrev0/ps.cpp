@@ -2,10 +2,6 @@
 // #include "misc/debug.h"
 // #include "misc/functional.h"
 
-//Don't use at interactive problem
-#include "core/io.h"
-#define endl '\n'
-
 void solve(){
 }
 signed main(){
