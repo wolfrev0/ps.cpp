@@ -1,4 +1,5 @@
 #pragma once
+#include "core/config.h"
 
 //Consts
 const f64 pi=acosl(-1),eps=FP_EPS;

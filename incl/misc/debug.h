@@ -1,4 +1,5 @@
 #pragma once
+#include "core/func.h"
 
 #ifdef ONLINE_JUDGE
 	#define cerr if(false)cerr

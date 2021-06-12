@@ -1,6 +1,4 @@
 #include "core/base.h"
-// #include "misc/debug.h"
-// #include "misc/functional.h"
 
 void solve(){
 }

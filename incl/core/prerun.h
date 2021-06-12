@@ -1,4 +1,6 @@
 #pragma once
+#include "core/std.h"
+#include "core/config.h"
 
 //Pre-runs
 #if !(DEBUG)

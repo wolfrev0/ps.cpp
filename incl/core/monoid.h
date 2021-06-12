@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/config.h"
+#include "core/arr.h"
 //Monoid
 #ifdef CPP20
 template<class T, auto _f=[](T x,T y){return x+y;}, T _id=0>

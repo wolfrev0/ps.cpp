@@ -2,36 +2,40 @@
 
 #build <*.cpp|*.h> <R|D>
 
-src=${1:-"main.cpp"}
+src=${1:-"src/main.cpp"}
 
 base_arg=" -iquote ./incl -std=c++2a -Wall -Wno-unused-variable -fconcepts"
 if [ "$2" == "R" ]; then #release
 	option="-O2"
 else #debug
 	option="-O0 -D DEBUG=1 -ggdb3"
-	if [ "$src" != "incl/core/base.h" ] && [ "incl/core/base.h.gch" -ot "incl/core/base.h" ]; then
-		g++ incl/core/base.h $base_arg $option
-	fi
 fi
-g++ $src $base_arg $option
 
 function f(){
 	arr=$(g++ $src $base_arg -MM | cut -d ' ' -f2-)
 	arr="${arr//\\}"
 	if (( 1 < $(echo $arr | wc -w | cat) )); then
 		for i in $arr
-		do
-			#echo $i incl/core/config.h
+		do			
 			echo $(awk -F'"' '/^#include *"/{print FILENAME, "incl/"$2}' $i)
 			z=$(awk -F'"' '/^#include *"/{print "incl/"$2, "incl/"$2}' $i)
 			if (( 1 < $(echo $z | wc -w | cat) )); then
 				echo $z
+			fi
+
+			if [ "$i" != "$src" ] && [ $i.gch -ot $i ]; then
+				#touch $z
+				g++ $i $base_arg $option
 			fi
 		done | tsort
 	else
 		echo $src
 	fi
 }
-if ! [[ "$2" =~ ?*.h ]]; then #header
+if ! [[ "$2" =~ ?*.h ]]; then
+	#f
 	awk '//' $(f|tac) | grep -Ev '#include *"|#pragma once' > submit.cpp
 fi
+
+
+g++ $src $base_arg $option

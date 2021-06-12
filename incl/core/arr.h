@@ -1,5 +1,5 @@
 #pragma once
-
+#include "core/std.h"
 //Arr
 template<class T, class P=conditional_t<is_same<bool,T>::value,deque<T>,vector<T>>>
 struct Arr:public P{
