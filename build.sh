@@ -22,11 +22,6 @@ function f(){
 			if (( 1 < $(echo $z | wc -w | cat) )); then
 				echo $z
 			fi
-
-			if [ "$i" != "$src" ] && [ $i.gch -ot $i ]; then
-				#touch $z
-				g++ $i $base_arg $option
-			fi
 		done | tsort
 	else
 		echo $src
@@ -37,5 +32,11 @@ if ! [[ "$2" =~ ?*.h ]]; then
 	awk '//' $(f|tac) | grep -Ev '#include *"|#pragma once' > submit.cpp
 fi
 
+for i in incl/core/*
+do
+	if [ "$i" != "$src" ] && [ incl/core/base.h.gch -ot $i ]; then
+		g++ incl/core/base.h $base_arg $option
+	fi
+done
 
 g++ $src $base_arg $option
