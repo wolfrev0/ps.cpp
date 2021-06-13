@@ -28,7 +28,7 @@ main.cpp
 submit.cpp
 tmp.cpp
 gen.cpp
-incl/core/config.h
+# incl/core/config.h
 
 a.py
 b.py
