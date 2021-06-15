@@ -92,7 +92,7 @@ struct GraphUD: public GraphWD<int>{
 
 	tuple<Arr<Arr<int>>, Arr<int>, GraphUD> scc_kosaraju(){
 		Arr<int> post_ord;
-		Arr<bool> vis(n);
+		Arr<char> vis(n);
 
 		func(void,dfs,int v,Arr<int>& out,GraphUD& g){
 			vis[v]=true;
@@ -107,7 +107,7 @@ struct GraphUD: public GraphWD<int>{
 		
 		auto rg=reversed();
 		reverse(post_ord.begin(),post_ord.end());
-		vis=Arr<bool>(n);
+		vis=Arr<char>(n);
 		Arr<Arr<int>> scc;
 		for(auto i:post_ord)
 			if(!vis[i])

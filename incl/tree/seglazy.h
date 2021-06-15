@@ -1,6 +1,6 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid.h"
+#include "math/monoid2.h"
 
 template<class T, class F> struct SegLazy {
 	SegLazy(int n=0,const Arr<T>& a={})

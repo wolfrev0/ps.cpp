@@ -1,6 +1,6 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid.h"
+#include "math/monoid2.h"
 
 template<class T,class F> struct SegBU{
 	SegBU(int n=0,T init=F::idT()):n(n),tr(n<<1,init){}

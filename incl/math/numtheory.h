@@ -48,8 +48,8 @@ tint xgcd(i64 a, i64 b) {
 }
 
 // whatelse can be sieved? sieve_numdiv, sieve_sumdiv, etc.
-Arr<bool> sieve_primes(int n) {
-	Arr<bool> s(n, 1);
+Arr<char> sieve_primes(int n) {
+	Arr<char> s(n, 1);
 	s[0] = s[1] = 0;
 	for(i64 i = 2; i * i < n; i++) {
 		if(!s[i]) continue;

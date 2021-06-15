@@ -1,6 +1,6 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid.h"
+#include "math/monoid2.h"
 
 //NOTE: Upd없어도 삭제 후 삽입하면 됨
 //NOTE: using open range (lb,ub), not half open range [lb,ub), 2 mock nodes

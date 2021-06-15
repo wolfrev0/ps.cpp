@@ -1,6 +1,6 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid.h"
+#include "math/monoid2.h"
 
 
 struct TreapBST{};

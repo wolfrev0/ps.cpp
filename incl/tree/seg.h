@@ -1,6 +1,6 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid.h"
+#include "math/monoid2.h"
 
 template<class T, class F> struct Seg{
 	Seg(int n=0,T init=F::idT()):n(n),tr(4*n,init){}

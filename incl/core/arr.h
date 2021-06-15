@@ -1,7 +1,12 @@
 #pragma once
 #include "core/std.h"
 //Arr
-template<class T, class P=conditional_t<is_same<bool,T>::value,deque<T>,vector<T>>>
+template<class T, class P=
+#if CPP20
+conditional_t<is_same<bool,T>::value,deque<T>,vector<T>>>
+#else
+vector<T>>
+#endif
 struct Arr:public P{
 	Arr():Arr(0){}
 	explicit Arr(int n,T init=T()):P(n,init){}

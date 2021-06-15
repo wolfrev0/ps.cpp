@@ -18,7 +18,7 @@
 #include "math/linalgeGF2.h"
 #include "math/linrec.h"
 #include "math/mod.h"
-#include "math/monoid.h"
+#include "math/monoid2.h"
 #include "math/numtheory.h"
 
 #include "str/ahocorasik.h"

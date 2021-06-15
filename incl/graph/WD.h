@@ -50,7 +50,7 @@ struct GraphWD{
 
 	bool spfa(Arr<T>& ub,Arr<int>& p,int s){
 		deque<int> q;
-		Arr<bool> inq(n);
+		Arr<char> inq(n);
 		ub=Arr<T>(n,inf<T>());
 		p=Arr<int>(n,-1);
 		Arr<int> c(n);

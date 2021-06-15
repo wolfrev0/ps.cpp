@@ -29,7 +29,7 @@ struct Flow:public GraphWD<FlowW>{
 	}
 
 	int mf(int flow = inf<int>()){
-		func(int,step,int v,int ubf,Arr<bool>& vis){
+		func(int,step,int v,int ubf,Arr<char>& vis){
 			if(v == snk) return ubf;
 			vis[v]=true;
 			for(auto i:adj[v]){
@@ -46,10 +46,10 @@ struct Flow:public GraphWD<FlowW>{
 		};
 
 		int sum=0;
-		auto vis=Arr<bool>(n+2);
+		auto vis=Arr<char>(n+2);
 		while(int f=step(src,flow-sum,vis)){
 			sum+=f;
-			vis=Arr<bool>(n+2);
+			vis=Arr<char>(n+2);
 		}
 		return sum;
 	}
@@ -130,7 +130,7 @@ struct Flow:public GraphWD<FlowW>{
 	tuple<Arr<E>, Arr<int>, Arr<int>> cuts(){
 		Arr<E> r;
 		
-		Arr<bool> vis1(n+2);
+		Arr<char> vis1(n+2);
 		func(void,dfs1,int v){
 			if(vis1[v]) return;
 			vis1[v]=true;
@@ -140,7 +140,7 @@ struct Flow:public GraphWD<FlowW>{
 		};
 		dfs1(src);
 		
-		Arr<bool> vis2(n+2);
+		Arr<char> vis2(n+2);
 		func(void,dfs2,int v){
 			if(vis2[v])return;
 			vis2[v]=true;

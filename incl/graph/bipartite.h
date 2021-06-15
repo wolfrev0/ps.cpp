@@ -32,7 +32,7 @@ struct Hungarian {
 			p[0] = i;
 			int js = 0;
 			Arr<int> minv(m + 1, inf<int>());
-			Arr<bool> used(m + 1);
+			Arr<char> used(m + 1);
 			do {
 				used[js] = true;
 				int is = p[js], d = inf<int>(), je;
