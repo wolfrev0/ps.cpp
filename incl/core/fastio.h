@@ -7,10 +7,10 @@
 //INPUT
 struct FastCIN{
 	static const int SZ=1<<22;
-	unsigned cnt=0;char a[SZ],*p;
+	unsigned cnt=0;char a[SZ+1],*p;
 	FastCIN(){preload();}
 	void tie(int x){}
-	int preload(){cin.read(p=a,SZ);return cnt=cin.gcount();}
+	int preload(){return cnt=cin.read(p=a,SZ).gcount();}
 	inline char pop(){if(!cnt)preload(); return cnt>0?cnt--,*p++:0;}
 	inline char get(){if(!cnt)preload(); return cnt>0?*p:0;}
 	void ignore_wsc(){while(get()==' '||get()=='\n')pop();}
@@ -22,11 +22,14 @@ struct FastCIN{
 };
 
 struct TokCIN:public FastCIN{
+	static TokCIN* x;
+	static TokCIN* instance(){return !x?x=new TokCIN():x;}
 	template<class T=i64>T tok(){T x;operator>>(x);return x;}
 	template<class T=i64>Arr<T> toks(int n){Arr<T> a(n);for(auto& i:a)operator>>(i);return a;}
 	template<class... A> void _read(A&...a){((operator>>(a)),...);}
-}tcin;
-#define cin tcin
+};
+TokCIN* TokCIN::x;
+#define cin (*TokCIN::instance())
 #define READ(T,...) T __VA_ARGS__;cin._read(__VA_ARGS__);
 
 //OUTPUT
