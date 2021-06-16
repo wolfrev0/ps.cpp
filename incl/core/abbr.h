@@ -16,6 +16,7 @@
 #define lb lower_bound
 #define ub upper_bound
 #define reduce accumulate
+#define itos to_string
 using i64=long long;using u64=unsigned long long;using f64=double;
 using pint=pair<int,int>;using tint=tuple<int,int,int>;
 template<class T>using Str=basic_string<T>;

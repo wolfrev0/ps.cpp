@@ -19,9 +19,9 @@ struct GraphWD{
 		adj[s].emplb(sz(edg)-1);
 	}
 
-	void dijkstra(Arr<T>& d,Arr<int>& p,int s){
+	void dijkstra(Arr<T>& d,Arr<Arr<int>>& p,int s){
 		d=Arr<T>(n,inf<T>());
-		p=Arr<int>(n,-1);
+		p=Arr<Arr<int>>(n);
 		PQMin<pair<T,int>> pq;
 		pq.empl(d[s]=0,s);
 		while(sz(pq)){
@@ -31,7 +31,9 @@ struct GraphWD{
 				int y=edg[i].opp(x);
 				int w=edg[i].w;
 				if(d[y]>dist+w)
-					p[y]=i, pq.empl(d[y]=dist+w,y);
+					p[y]={x}, pq.empl(d[y]=dist+w,y);
+				else if(d[y]==dist+w)
+					p[y].emplb(x);
 			}
 		}
 	}

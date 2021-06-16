@@ -19,6 +19,7 @@ struct FastCIN{
 	FastCIN& operator>>(char& c){ignore_wsc();c=pop();return *this;}
 	FastCIN& operator>>(string& s){ignore_wsc();s.clear();while(get()!=' '&&get()!='\n'&&get())s.pushb(pop());return *this;}
 	FastCIN& operator>>(f64& n){ignore_wsc();string s;while(('0'<=get()&&get()<='9')||get()=='.'||get()=='-')s.pushb(pop());n=stod(s);return *this;}
+	template<class T> FastCIN& operator>>(Arr<T>& a){for(auto& i:a)*this>>i;return *this;}
 };
 
 struct TokCIN:public FastCIN{
