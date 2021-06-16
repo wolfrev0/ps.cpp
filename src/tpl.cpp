@@ -1,5 +1,9 @@
 #include "core/base.h"
 
+//Don't use it at interactive
+#include "core/fastio.h"
+#define endl '\n'
+
 void solve(){
 }
 signed main(){

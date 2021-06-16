@@ -1,8 +1,8 @@
 #pragma once
 #include "geom/vec2.h"
 
-class LineException {};
-class LineSame : public LineException {};
+class LineException{};
+class LineSame:public LineException{};
 
 template<class T> struct Line {
 	Line() : Line(-Vec2<T>::inf(), Vec2<T>::inf()) {}
@@ -26,9 +26,9 @@ template<class T> struct Line {
 	bool intersect(const Line& r, Vec2<T>& res) const {
 		T det = dir().cross(r.dir());
 		if(abs(det) < eps) {
-			if(abs((r.sv - sv).cross(ev - sv)) < eps)
-				return false;  // throw LineSame();
-			else
+			if(abs((r.sv - sv).cross(ev - sv)) < eps){
+				return line_same_handler(r,res);
+			}else
 				return false;
 		}
 		res = sv + dir() * ((r.sv - sv).cross(r.dir()) / det);
@@ -52,28 +52,29 @@ template<class T> struct Line {
 	T dist(const Vec2<T>& p) const {
 		return abs((ev - p).cross(sv - p) / (ev - sv).len());
 	}
-
-protected:
 	Vec2<T> sv, ev;
 
 private:
 	virtual bool valid_intersect(const Vec2<T>& p) const { return true; }
 	virtual bool valid_foot(const Vec2<T>& p) const { return true; }
 	virtual bool valid_contains(const Vec2<T>& p) const { return true; }
+	virtual bool line_same_handler(const Line& a,Vec2<T>&res)const{throw LineSame();}
 };
 
 template<class T> struct Segment : public Line<T> {
 	using Line<T>::sv, Line<T>::ev;
 	Segment() : Line<T>() {}
 	Segment(const Vec2<T>& sv, const Vec2<T>& ev) : Line<T>(sv, ev) {}
+	f64 len()const{return (sv-ev).len();}
 	bool is_valid(const Vec2<T>& p) const {
-		return sv.x <= p.x && p.x <= ev.x && min(sv.y, ev.y) <= p.y &&
-		       p.y <= max(sv.y, ev.y);
+		return sv.x-eps <= p.x && p.x <= ev.x+eps && min(sv.y, ev.y)-eps <= p.y &&
+		       p.y <= max(sv.y, ev.y)+eps;
 	}
 	virtual bool valid_intersect(const Vec2<T>& p) const override {
 		if(abs(sv.x - ev.x) < eps)
-			return min(sv.y, ev.y) <= p.y && p.y <= max(sv.y, ev.y);
-		if(abs(sv.y - ev.y) < eps) return sv.x <= p.x && p.x <= ev.x;
+			return min(sv.y, ev.y) -eps<= p.y && p.y <= max(sv.y, ev.y)+eps;
+		if(abs(sv.y - ev.y) < eps)
+			return sv.x-eps <= p.x && p.x <= ev.x+eps;
 		return is_valid(p);
 	}
 	virtual bool valid_foot(const Vec2<T>& p) const override {
@@ -81,6 +82,14 @@ template<class T> struct Segment : public Line<T> {
 	}
 	virtual bool valid_contains(const Vec2<T>& p) const override {
 		return is_valid(p);
+	}
+	virtual bool line_same_handler(const Line<T>& a, Vec2<T>& res)const override{
+		Segment<T> seg1=*this,seg2={a.sv,a.ev};
+		if(seg1.len()<seg2.len())swap(seg1,seg2);
+		if(seg1.sv==seg2.sv and !seg1.is_valid(seg2.ev) or seg1.sv==seg2.ev and !seg1.is_valid(seg2.sv)){res=sv;return true;}
+		if(seg1.ev==seg2.sv and !seg1.is_valid(seg2.ev) or seg1.ev==seg2.ev and !seg1.is_valid(seg2.sv)){res=ev;return true;}
+		if(!is_valid(a.sv) and !is_valid(a.ev)) return false;
+		throw LineSame();
 	}
 };
 
