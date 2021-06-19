@@ -1,5 +1,6 @@
 #pragma once
 #include "core/std.h"
+#include "core/config.h"
 
 #define pushb push_back
 #define pushf push_front

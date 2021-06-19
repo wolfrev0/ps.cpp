@@ -13,7 +13,7 @@ template<class T> struct RootedTree {
 				ch[p[i].fi].pushb({i, p[i].se});
 		func(int,dfs,int x,int d,T c){
 			dpt[x]=d,cost[x]=c,tsz[x]=1;
-			for(auto [i,w]:ch[x])tsz[x]+=dfs_init(i,d+1,c+w);
+			for(auto [i,w]:ch[x])tsz[x]+=dfs(i,d+1,c+w);
 			return tsz[x];
 		};
 		dfs(r,0,0);

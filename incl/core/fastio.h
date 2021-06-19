@@ -6,7 +6,7 @@
 
 //INPUT
 struct FastCIN{
-	static const int SZ=1<<22;
+	static const int SZ=1<<24;
 	unsigned cnt=0;char a[SZ+1],*p;
 	FastCIN(){preload();}
 	void tie(int x){}
@@ -20,6 +20,7 @@ struct FastCIN{
 	FastCIN& operator>>(string& s){ignore_wsc();s.clear();while(get()!=' '&&get()!='\n'&&get())s.pushb(pop());return *this;}
 	FastCIN& operator>>(f64& n){ignore_wsc();string s;while(('0'<=get()&&get()<='9')||get()=='.'||get()=='-')s.pushb(pop());n=stod(s);return *this;}
 	template<class T> FastCIN& operator>>(Arr<T>& a){for(auto& i:a)*this>>i;return *this;}
+	template<class T,class U> FastCIN& operator>>(pair<T,U>& a){*this>>a.fi>>a.se;return *this;}
 };
 
 struct TokCIN:public FastCIN{

@@ -131,6 +131,7 @@ template<class T> Arr<int> get_lcp2(const Str<T> &s, const Arr<int> &sa) {
 	return lcp;
 }
 
+//z[i]=match length of s[0,n-1] and s[i,n-1]
 template<class T> Arr<int> z(const Str<T> &a) {
 	Arr<int> z(sz(a));
 	z[0] = sz(a);
