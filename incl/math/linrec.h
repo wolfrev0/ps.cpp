@@ -61,7 +61,7 @@ int calc_nth(Arr<int> seq, Arr<int> rec, int n) {
 		for(int i = sz(c) - 1; i >= sz(rec) - 1; i--)
 			for(int j = sz(rec) - 1; ~j; j--)
 				c[i - j] = (c[i - j] - c[i] * rec[j] % mod + mod) % mod;
-		while(sz(c) and !c.back()) c.popb();
+		while(sz(c)>1 and !c.back()) c.popb();
 		return c;
 	};
 	func(Arr<int>,qp,const Arr<int>& x,int p){
