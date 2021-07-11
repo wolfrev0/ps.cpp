@@ -15,7 +15,7 @@ struct FastCIN{
 	inline char get(){if(!cnt)preload(); return cnt>0?*p:0;}
 	void ignore_wsc(){while(get()==' '||get()=='\n')pop();}
 	operator bool(){return get();}
-	template<class T>FastCIN& operator>>(T& n){ignore_wsc();n=0;char neg=false;if(get()=='-')neg=true,pop();while('0'<=get()&&get()<='9')n=n*10+pop()-'0';if(neg)n*=-1;return *this;}
+	template<class T>FastCIN& operator>>(T& n){ignore_wsc();n=0;char neg=false;if(get()=='-')neg=true,pop();while('0'<=get()&&get()<='9')n=n*10+pop()-'0';if(neg)n*=-1;return *this;}//int,i64,Mod<mod>
 	FastCIN& operator>>(char& c){ignore_wsc();c=pop();return *this;}
 	FastCIN& operator>>(string& s){ignore_wsc();s.clear();while(get()!=' '&&get()!='\n'&&get())s.pushb(pop());return *this;}
 	FastCIN& operator>>(f64& n){ignore_wsc();string s;while(('0'<=get()&&get()<='9')||get()=='.'||get()=='-')s.pushb(pop());n=stod(s);return *this;}
