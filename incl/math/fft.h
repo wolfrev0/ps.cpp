@@ -33,7 +33,6 @@ Arr<i64> toi(const Arr<C>& a) {
 // Arr<C> fft(const Arr<C>& a){return fft(a, pow(exp(1),
 // C(0,1)*(-2*pi/sz(a))));}
 
-// topology's no-recursion code
 Arr<C> fft(Arr<C> a) {
 	int n = sz(a);
 	for(int i = 1, j = 0; i < n; i++) {

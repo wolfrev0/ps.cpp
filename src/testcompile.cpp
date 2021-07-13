@@ -19,7 +19,9 @@
 #include "math/linrec.h"
 #include "math/mod.h"
 #include "math/monoid2.h"
-#include "math/numtheory.h"
+#include "math/numth/basic.h"
+#include "math/numth/advance.h"
+#include "math/numth/sieve.h"
 
 #include "str/ahocorasik.h"
 #include "str/string.h"
