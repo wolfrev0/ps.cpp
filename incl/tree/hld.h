@@ -17,18 +17,19 @@ template<class T> struct HLD:public RootedTree<T>{
 		dfs(r);
 		ord=RT::pre(),top[0]=r;
 	}
-
-	int iter(int a, int b, const auto& f, bool vtxw) {
+	Arr<pint> q(int a, int b, bool vtxw, int* plca=0){
+		Arr<pint> ret;
 		while(cn[a]!=cn[b])
 			if(dpt[top[cn[a]]]<dpt[top[cn[b]]])
-				f(ord[top[cn[b]]],ord[b]+1),b=p[top[cn[b]]].fi;
+				ret.emplb(ord[top[cn[b]]],ord[b]+1),b=p[top[cn[b]]].fi;
 			else
-				f(ord[top[cn[a]]],ord[a]+1),a=p[top[cn[a]]].fi;
+				ret.emplb(ord[top[cn[a]]],ord[a]+1),a=p[top[cn[a]]].fi;
 		if(dpt[a]>dpt[b]) swap(a,b);
-		f(ord[a]+!vtxw,ord[b]+1);
-		return a;
+		ret.emplb(ord[a]+!vtxw,ord[b]+1);
+		if(plca)*plca=a;
+		return ret;
 	}
-	int lca(int a, int b) { return iter(a,b,[&](int _, int __){},true); }
+	int lca(int a, int b) { int ret; q(a,b,0,&ret); return ret; }
 
 	Arr<int> cn,top,ord;  // chain number, top of the chain, vtx to preord
 	using RT = RootedTree<T>;using RT::ch;using RT::dpt;using RT::n;using RT::p;using RT::r;using RT::tsz;
