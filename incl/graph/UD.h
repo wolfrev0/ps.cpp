@@ -89,7 +89,8 @@ struct GraphUD: public GraphWD<int>{
 				dfs(i);
 		return scc_util(scc);
 	}
-
+	
+	//지금 동작이 이상함. 고칠때까지 SCC필요하면 scc_tarjan을 사용할것
 	tuple<Arr<Arr<int>>, Arr<int>, GraphUD> scc_kosaraju(){
 		Arr<int> post_ord;
 		Arr<char> vis(n);

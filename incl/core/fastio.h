@@ -36,6 +36,7 @@ TokCIN* TokCIN::x;
 
 //OUTPUT
 template<class T> ostream& operator<<(ostream& s,const Arr<T>& a){for(auto i:a)cout<<i<<' ';return s;}
+template<class T> ostream& operator<<(ostream& o,const pair<T,T>& x){return o<<x.fi<<' '<<x.se;}
 template<class... A> void PRINT(A...a){((cout<<a<<' '),...,(cout<<endl));}
 
 //

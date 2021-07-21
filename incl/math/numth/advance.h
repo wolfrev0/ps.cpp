@@ -13,6 +13,8 @@ tint xgcd(i64 a, i64 b) {
 	auto [g, x, y] = xgcd(b, a % b);
 	return {g, y, x - (a / b) * y};
 }
+int modinv(int n,int m){auto [g,x,y]=xgcd(n,m); assert(g==1); while(x<0)x+=m; return x;}
+
 int eutot(int n) {
 	int r = 1, x = n;
 	for(int i = 2; i * i <= n; i++) {
@@ -53,21 +55,24 @@ bool miller_rabin(u64 n){
 	return ret;
 }
 
-// chinese remainder theorem
-// https://en.wikipedia.org/wiki/Chinese_remainder_theorem#Generalization_to_non-coprime_moduli
-// x = r (mod m), pair<r,m>
-pair<i64, i64> crt(Arr<pair<i64, i64>> a) {
-	i64 r1 = 0, m1 = 1;
-	for(auto [r2, m2] : a) {
-		i64 g = gcd(m1, m2);
-		if(r1 % g != r2 % g) return {-1, -1};
-		auto [_1, x, y] = xgcd(m1 / g, m2 / g);
-		i64 m3 = lcm(m1, m2);
-		i64 r3 = m2 / g * r1 % m3 * y % m3 + m1 / g * r2 % m3 * x % m3;
-		r1 = r3 < 0 ? r3 + m3 : r3;
-		m1 = m3;
-	}
-	return {r1, m1};
+//chinese remainder theorem
+//https://rkm0959.tistory.com/180?category=828364
+//merge two equation [ x=a.fi (mod a.se), x=b.fi (mod b.se) ]
+//these are equivalent with
+//x=a.se*y+a.fi=b.fi (mod b.se)
+//=> a.se*y1+b.se*y2=b.fi-a.fi
+//=> 이제 xgcd로 y1,y2 구할 수 있다. 정확히는 y1=t(mod b.se/g)를 알수있다.
+//=> 위와 동치인 y1=t+b.se/g*m을 x=a.se*y1+a.fi에 대입하면
+//=> x=a.se*b.se/g*m+a.se*t+a.fi => x=a.se*t+a.fi (mod lcm) 끝!
+pint crt(pint a, pint b){
+	if(a==pint{-1,-1} or b==pint{-1,-1})return {-1,-1};
+	if(a.fi>b.fi)swap(a,b);
+	auto [g,y1,y2]=xgcd(a.se,b.se);while(y1<0)y1+=b.se/g;
+	int l=a.se/g*b.se, mul=(b.fi-a.fi)/g;
+	if(mul*g!=b.fi-a.fi)return {-1,-1};
+	y1*=mul,y2*=mul;
+	return {(a.se*y1+a.fi)%l,l};
 }
+
 void discrete_log() {}  // baby step giant step
 void discrete_sqrt() {}  // tonelli-shanks
