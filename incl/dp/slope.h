@@ -2,9 +2,8 @@
 #include "core/base.h"
 
 //NOTE: Concave의 LeftHull을 관리하며, 최솟값이 ans에 저장됨
-//NOTE: y=abs(x-k)+k 같이 괴상한 함수는 최솟값이 k라서 수동으로 ans+=k해줘야 함
-//NOTE: 모든 slope-trickable 함수는 pf_dec과 sf_inc의 조합으로 만들 수 있는듯(내 추측임)
-//NOTE: sf_inc에 답구하는게 들어있어서, 반드시 한 연산에 대해 pf_def->sf_inc순서로 호출해야함(https://atcoder.jp/contests/arc123/tasks/arc123_d)
+//NOTE: 모든 slope-trickable 함수는 pf_dec과 sf_inc의 조합으로 만들 수 있는듯? 단, y=abs(x-k)+m 같은건 최솟값이 m이라서 수동으로 ans+=m해줘야 함
+//NOTE: sf_inc에 답구하는게 들어있어서, 반드시 한 연산에 대해 pf_def->sf_inc순서로 호출해야함 (https://atcoder.jp/contests/arc123/tasks/arc123_d)
 //https://codeforces.com/contest/713/my
 struct SlopeTrick{
 	void pf_dec(int x){pq.empl(x-bias);}//x이하의 기울기들 -1
