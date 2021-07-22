@@ -88,7 +88,7 @@ template<class T> struct Segment : public Line<T> {
 		if(seg1.len()<seg2.len())swap(seg1,seg2);
 		if(seg1.sv==seg2.sv and !seg1.is_valid(seg2.ev) or seg1.sv==seg2.ev and !seg1.is_valid(seg2.sv)){res=sv;return true;}
 		if(seg1.ev==seg2.sv and !seg1.is_valid(seg2.ev) or seg1.ev==seg2.ev and !seg1.is_valid(seg2.sv)){res=ev;return true;}
-		if(!is_valid(a.sv) and !is_valid(a.ev)) return false;
+		if(!seg1.is_valid(seg2.sv) and !seg1.is_valid(seg2.ev)) return false;
 		throw LineSame();
 	}
 };
