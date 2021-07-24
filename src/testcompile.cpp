@@ -24,7 +24,9 @@
 #include "math/numth/sieve.h"
 
 #include "str/ahocorasik.h"
-#include "str/string.h"
+#include "str/manacher.h"
+#include "str/match.h"
+#include "str/sufarr.h"
 
 #include "tree/dynseg.h"
 #include "tree/dynseglazy.h"
@@ -49,7 +51,7 @@
 #include "misc/cumulQ.h"
 #include "dp/dpopt.h"
 #include "dp/slope.h"
-#include "misc/functional.h"
+#include "misc/util.h"
 #include "misc/gccext.h"
 #include "misc/hashval.h"
 #include "misc/heapset.h"

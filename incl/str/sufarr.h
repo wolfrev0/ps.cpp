@@ -1,44 +1,6 @@
 #pragma once
 #include "core/base.h"
 
-template<class T> Str<T> itos(int i) {
-	if(!i) return "0";
-	Str<T> ret;
-	while(i) ret.push_back(i % 10 + '0'), i /= 10;
-	reverse(ret.begin(), ret.end());
-	return ret;
-}
-auto split(auto s, auto p) {
-	Arr<decltype(s)> ret;
-	auto it1 = s.begin();
-	for(auto it2 = it1; (it2 = find(it1, s.end(), p)) != s.end(); it1 = it2 + 1)
-		ret.pushb({it1, it2});
-	ret.pushb({it1, s.end()});
-	return ret;
-}
-
-// ff[i] = longest proper (prefix==suffix) length of s[0,i]
-template<class T> Arr<int> failure_function(const Str<T> &p) {
-	Arr<int> ff(sz(p));
-	for(int i = 0, j = 1; j < sz(p); j++) {
-		while(i > 0 and p[j] != p[i]) i = ff[i - 1];
-		if(p[j] == p[i]) ff[j] = ++i;
-	}
-	return ff;
-}
-
-// return: partial matched length of that index
-template<class T> Arr<int> kmp(const Str<T> &s, const Str<T> &p) {
-	auto ff = failure_function(p);
-	Arr<int> ret(sz(s));
-	for(int i = 0, j = 0; j < sz(s); j++) {
-		while(i > 0 and s[j] != p[i]) i = ff[i - 1];
-		if(s[j] == p[i]) ret[j] = ++i;
-		if(i == sz(p)) i = ff[i - 1];
-	}
-	return ret;
-}
-
 bool cmp(int i, int j, const Arr<int> &g, int t) {
 	if(g[i] == g[j]) return g[i + t] < g[j + t];
 	return g[i] < g[j];
@@ -130,22 +92,3 @@ template<class T> Arr<int> get_lcp2(const Str<T> &s, const Arr<int> &sa) {
 	}
 	return lcp;
 }
-
-//z[i]=match length of s[0,n-1] and s[i,n-1]
-template<class T> Arr<int> z(const Str<T> &a) {
-	Arr<int> z(sz(a));
-	z[0] = sz(a);
-	int s = 0, e = 1;
-	for(int i = 1; i < sz(a); i++) {
-		if(i < e and z[i - s] < e - i) z[i] = z[i - s];
-		else {
-			s = i;
-			if(i >= e) e = i;
-			while(e < sz(a) and a[e - s] == a[e]) e++;
-			z[i] = e - s;
-		}
-	}
-	return z;
-}
-
-template<class T> Arr<int> manacher(const Str<T> &a){return {};}
