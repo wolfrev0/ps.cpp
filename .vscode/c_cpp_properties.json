@@ -3,7 +3,7 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/incl"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/g++",
