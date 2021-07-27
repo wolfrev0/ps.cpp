@@ -1,41 +1,39 @@
 #pragma once
 #include "core/base.h"
 
-//NOTE: 점화식 형태 f(i,x) = min(f(i-1,y))+(slopetrickable) 형태에 적용가능
-//Fireworks는 점화식 형태가 다르기 때문에 적용불가능
-//NOTE: Concave의 LeftHull을 관리하며, 최솟값이 ans에 저장됨
-//NOTE: 모든 slope-trickable 함수는 pf_dec과 sf_inc의 조합으로 만들 수 있는듯? 단, y=abs(x-k)+m 같은건 최솟값이 m이라서 수동으로 ans+=m해줘야 함
-//NOTE: sf_inc에 답구하는게 들어있어서, 반드시 한 연산에 대해 pf_dec->sf_inc순서로 호출해야함 (https://atcoder.jp/contests/arc123/tasks/arc123_d)
-//https://codeforces.com/contest/713/my
-struct HalfHull{
+//NOTE: f(x)=min{f(x+i),i<a}+|x-k|+m -> pf(k)sf(k)ab(-a,m)
+//NOTE: sf_inc에 답구하는게 들어있어서, 반드시 한 연산에 대해 pf_dec->sf_inc순서로 호출
+struct LeftHull{
 	void pf_dec(int x){pq.empl(x-bias);}//x이하의 기울기들 -1
-	void sf_inc(int x){//x이상의 기울기들 +1
-		if(sz(pq) and pq.top()+bias>x){
-			ans+=(pq.top()+bias)-x;//이 경우 최솟값이 증가함
+	int sf_inc(int x){//x이상의 기울기들 +1, pop된 원소 반환(Right Hull관리에 사용됨)
+		if(sz(pq) and argmin()>x){
+			ans+=argmin()-x;//이 경우 최솟값이 증가함
 			pq.empl(x-bias);//x 이하 -1
-			pq.pop();//전체 +1
-			//결과적으로 x이상만 +1됨
+			int r=argmin();pq.pop();//전체 +1
+			return r;
 		}
+		return x;
 	}
-	void add_bias(int x){bias+=x;}//그래프 x축 평행이동
+	void add_bias(int x,int y){bias+=x;ans+=y;}//그래프 x축 평행이동
+	int getmin(){return ans;}//최소값
+	int argmin(){return pq.empty()?-inf<int>():pq.top()+bias;}//최소값 x좌표
+private:
 	PQMax<int> pq;
 	int ans=0,bias=0;
 };
-//역추적 방법: 각 스텝별로 pq.top()+bias가 해당스텝에서 최소x좌표임. 스텝i의 해당값을 sav[i]라고 하자.
-//이제 스텝n부터 스텝1까지 ans[i]=min(ans[i+1],sav[i])하면 된다. 아래는 증명..은 아니고 간략한 이유
-//sav[i]<=ans[i+1]일때: ans[i]=sav[i]
-//sav[i]>ans[i+1]일때: ans[i]=ans[i+1] 왜냐하면 f(i,x)는 x<sav[i]에서 감소함수이므로 가능한 최대로 오른쪽으로 붙은 ans[i+1]이 최적
-//NOTE: 단계 i에서 add_bias(k)한다면 간격제한k가 있는것이므로 역추적은 ans[i]=min(ans[i+1]-k,sav[i])이다.
+//LeftHull 역추적 방법: 스텝i의 argmin값을 am(i)라고 하자. 스텝n부터 스텝1까지 ans[i]=min(ans[i+1],am(i))하면 된다. 아래는 증명..은 아니고 간략한 이유
+//am(i)<=ans[i+1]일때: ans[i]=am(i)
+//x[i]>ans[i+1]일때: ans[i]=ans[i+1] 왜냐하면 f(i,a)는 a<x[i]에서 감소함수이므로 가능한 최대로 오른쪽으로 붙은 ans[i+1]이 최적.
+//스텝i에서 add_bias(k,0)한다면 간격제한k가 있는것이므로 ans[i]=min(ans[i+1]-k,x[i])으로 수정.
 
+//NOTE: f(x)=min{f(x+i),a<i<b}+|x-k|+m -> pf(k)sf(k)ab(-a,b,m)
 struct SlopeTrick{
-	HalfHull l,r;
-	void pf_dec(int x){
-		l.pf_dec(x);
-		r.pf_dec(-x);
-	}
-	void sf_inc(int x){
-		l.sf_inc(x);
-		r.sf_inc(-x);
-	}
-	void add_bias(int x){l.bias+=x;r.bias-=x;}
+	void pf_dec(int x){l.pf_dec(-r.sf_inc(-x));}
+	void sf_inc(int x){r.pf_dec(-l.sf_inc(x));}
+	void add_bias(int lx,int rx,int y){l.add_bias(lx,0),r.add_bias(-rx,0),ans+=y;}
+	int getmin(){return ans+l.getmin()+r.getmin();}
+	pint argmin(){return {l.argmin(),-r.argmin()};}
+private:
+	LeftHull l,r;
+	int ans=0;
 };
