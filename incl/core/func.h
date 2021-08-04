@@ -1,5 +1,6 @@
 #pragma once
 #include "core/config.h"
+#include "core/abbr.h"
 
 //Handy Funcs
 template<class T>int sz(const T& x){return x.size();}
