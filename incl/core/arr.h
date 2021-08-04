@@ -1,7 +1,8 @@
 #pragma once
 #include "core/std.h"
 #include "core/config.h"
-//Arr
+#include "core/func.h"
+
 template<class T, class P=
 #if CPP20
 conditional_t<is_same<bool,T>::value,deque<T>,vector<T>>>
@@ -16,10 +17,7 @@ struct Arr:public P{
 	Arr(auto its, auto ite):P(its,ite){}
 #endif
 	T& operator[](signed i){
-		#if DEBUG
-		static bool _z=false;
-		if(i<0&&!_z)_z=true,cerr<<"[INFO] Negative Index Found"<<endl;
-		#endif
+		WARN(i<0,"Negative Index Found");
 		return P::operator[](i>=0?i:i+this->size());
 	}
 	const T& operator[](signed i)const{return P::operator[](i>=0?i:i+this->size());}

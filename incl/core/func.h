@@ -13,3 +13,10 @@ bool assmin(auto& a,auto&& b){return a>b?a=b,true:false;}
 bool assmax(auto& a,auto&& b){return a<b?a=b,true:false;}
 int argmin(const auto& a){return min_element(a.begin(),a.end())-a.begin();}
 int argmax(const auto& a){return max_element(a.begin(),a.end())-a.begin();}
+
+void WARN(bool cond,const char* str){
+	#if DEBUG
+	static set<const char*> z;
+	if(cond&&!z.count(str))z.insert(str),cerr<<"[WARN] "<<str<<endl;
+	#endif
+}

@@ -1,5 +1,7 @@
 #pragma once
 #include "core/base.h"
+
+//Mod객체로 DP하는법: 직접 객체.n에 접근해서 .n=m으로 초기화하고, if(dp[].n==m)return dp;로 사용
 template<const int m> struct Mod {
 	Mod(i64 n = 0) : n((n % m + m) % m) {}
 	explicit operator int() const { return n; }
