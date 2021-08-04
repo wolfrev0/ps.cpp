@@ -6,18 +6,23 @@
 struct LeftHull{
 	void pf_dec(int x){pq.empl(x-bias);}//x이하의 기울기들 -1
 	int sf_inc(int x){//x이상의 기울기들 +1, pop된 원소 반환(Right Hull관리에 사용됨)
-		if(sz(pq) and argmin()>x){
-			ans+=argmin()-x;//이 경우 최솟값이 증가함
-			pq.empl(x-bias);//x 이하 -1
-			int r=argmin();pq.pop();//전체 +1
-			return r;
-		}
-		return x;
+		if(pq.empty() or argmin()<=x)return x;
+		ans+=argmin()-x;//이 경우 최솟값이 증가함
+		pq.empl(x-bias);//x 이하 -1
+		int r=argmin();pq.pop();//전체 +1
+		return r;
 	}
 	void add_bias(int x,int y){bias+=x;ans+=y;}//그래프 x축 평행이동
-	int getmin(){return ans;}//최소값
+	int minval(){return ans;}//최소값
 	int argmin(){return pq.empty()?-inf<int>():pq.top()+bias;}//최소값 x좌표
-private:
+
+	void operator+=(LeftHull& a){
+		ans+=a.ans;
+		while(sz(a.pq))pf_dec(a.argmin()), a.pq.pop();
+	}
+	int size()const{return sz(pq);}
+	
+// private:
 	PQMax<int> pq;
 	int ans=0,bias=0;
 };
@@ -27,9 +32,20 @@ struct SlopeTrick{
 	void pf_dec(int x){l.pf_dec(-r.sf_inc(-x));}
 	void sf_inc(int x){r.pf_dec(-l.sf_inc(x));}
 	void add_bias(int lx,int rx,int y){l.add_bias(lx,0),r.add_bias(-rx,0),ans+=y;}
-	int getmin(){return ans+l.getmin()+r.getmin();}
+	int minval(){return ans+l.minval()+r.minval();}
 	pint argmin(){return {l.argmin(),-r.argmin()};}
-private:
+	void operator+=(SlopeTrick& a){
+		//그냥 Left Right 각각 +=하면 안되는 이유: 최솟값이 증가하며, 최소구간이 꼬일수 있음.
+		ans+=a.ans;
+		while(sz(a.l.pq))
+			pf_dec(a.l.argmin()),a.l.pq.pop();
+		l.ans+=a.l.ans;
+		while(sz(a.r.pq))
+			sf_inc(-a.r.argmin()),a.r.pq.pop();
+		r.ans+=a.r.ans;
+	}
+	int size()const{return l.size()+r.size();}
+// private:
 	LeftHull l,r;
 	int ans=0;
 };
