@@ -80,6 +80,23 @@ template<class T, class U=T> struct XorXor{
 	cxp static T updn(T a, U b, int c, auto*x){return a^(c%2?b:U(0));}
 	cxp static U propa(U a, U b){return a^b;}
 };
+template<class T,class U=T> struct GCDAss{
+	cxp static T idT(){return 0;}
+	cxp static U idU(){return inf<U>();}
+	cxp static T f(T a, T b){return gcd(a,b);}
+	cxp static T upd(T a, U b){return b;}
+	cxp static T updn(T a, U b, int c, auto* x){return b;}
+	cxp static U propa(U a, U b){return b;}
+};
+template<class T,class U=T> struct GCDAdd{
+	cxp static T idT(){return T(0);}
+	cxp static U idU(){return U(0);}
+	cxp static T f(T a, T b){return gcd(a,b);}
+	cxp static T upd(T a, U b){return a+b;}
+	//RangeUpdate: https://www.acmicpc.net/problem/12858
+	// cxp static T updn(T a, U b, int c, auto* x){return b;}
+	// cxp static U propa(U a, U b){return b;}
+};
 
 //Splay Only
 template<class T, class U=T> struct PlusFlip{
