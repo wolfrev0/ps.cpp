@@ -37,7 +37,8 @@ template<int m> struct MatGF2{
 			while(pi<m&&a[i][pi]==0){
 				if(!pv_fix){
 					int j=i+1;
-					for(;j<n;j++)if(a[j][pi])break;
+					for(;j<n;j++)
+						if(a[j][pi])break;
 					if(j<n){swap(a[i],a[j]);break;}
 				}
 				pi++;
