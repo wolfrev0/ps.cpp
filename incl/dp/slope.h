@@ -15,14 +15,13 @@ struct LeftHull{
 	void add_bias(int x,int y){bias+=x;ans+=y;}//그래프 x축 평행이동
 	int minval(){return ans;}//최소값
 	int argmin(){return pq.empty()?-inf<int>():pq.top()+bias;}//최소값 x좌표
-
 	void operator+=(LeftHull& a){
 		ans+=a.ans;
 		while(sz(a.pq))pf_dec(a.argmin()), a.pq.pop();
 	}
 	int size()const{return sz(pq);}
-	
-// private:
+	int pop(){int z=argmin();pq.pop();return z;}
+private:
 	PQMax<int> pq;
 	int ans=0,bias=0;
 };
@@ -37,15 +36,15 @@ struct SlopeTrick{
 	void operator+=(SlopeTrick& a){
 		//그냥 Left Right 각각 +=하면 안되는 이유: 최솟값이 증가하며, 최소구간이 꼬일수 있음.
 		ans+=a.ans;
-		while(sz(a.l.pq))
-			pf_dec(a.l.argmin()),a.l.pq.pop();
-		l.ans+=a.l.ans;
-		while(sz(a.r.pq))
-			sf_inc(-a.r.argmin()),a.r.pq.pop();
-		r.ans+=a.r.ans;
+		while(sz(a.l))
+			pf_dec(a.l.pop());
+		l.add_bias(0,a.l.minval());
+		while(sz(a.r))
+			sf_inc(-a.r.pop());
+		r.add_bias(0,a.r.minval());
 	}
 	int size()const{return l.size()+r.size();}
-// private:
+	
 	LeftHull l,r;
 	int ans=0;
 };
