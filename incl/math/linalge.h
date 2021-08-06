@@ -1,6 +1,7 @@
 #pragma once
 #include "core/base.h"
 
+#pragma GCC optimize ("Ofast")
 template<class T> struct Mat{
 	int n, m;
 	Arr<Arr<T>> a;
