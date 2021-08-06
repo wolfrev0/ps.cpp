@@ -25,16 +25,15 @@ template<const int m> struct Mod {
 	Mod operator++(signed) { auto ret = *this; ++*this; return ret; }
 	Mod operator--(signed) { auto ret = *this; --*this; return ret; }
 
-	bool operator!() { return !n; }
 	bool operator==(const Mod& r) const { return n == r.n; }
 	bool operator!=(const Mod& r) const { return !(*this == r); }
 	bool operator<(const Mod& r) const { return n < r.n; }
 
 	i64 n;
 	tint xgcd(i64 a, i64 b)const{
-		if(b == 0) return {a, 1, 0};
-		auto [g, x, y] = xgcd(b, a % b);
-		return {g, y, x - (a / b) * y};
+		if(!b) return {a,1,0};
+		auto [g,x,y]=xgcd(b,a%b);
+		return {g,y,x-(a/b)*y};
 	}
 };
 template<int m> ostream& operator<<(ostream& s, const Mod<m>& n) { return s << n.n; }
