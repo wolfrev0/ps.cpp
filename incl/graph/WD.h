@@ -31,9 +31,9 @@ struct GraphWD{
 				int y=edg[i].opp(x);
 				int w=edg[i].w;
 				if(d[y]>dist+w)
-					p[y]={x}, pq.empl(d[y]=dist+w,y);
+					p[y]={i}, pq.empl(d[y]=dist+w,y);
 				else if(d[y]==dist+w)
-					p[y].emplb(x);
+					p[y].emplb(i);
 			}
 		}
 	}
@@ -50,11 +50,11 @@ struct GraphWD{
 		return a;
 	}
 
-	bool spfa(Arr<T>& ub,Arr<int>& p,int s){
+	bool spfa(Arr<T>& ub,Arr<Arr<int>>& p,int s){
 		deque<int> q;
 		Arr<char> inq(n);
 		ub=Arr<T>(n,inf<T>());
-		p=Arr<int>(n,-1);
+		p=Arr<Arr<int>>(n);
 		Arr<int> c(n);
 
 		ub[s]=0;
@@ -65,14 +65,17 @@ struct GraphWD{
 			for(auto i:adj[x]){
 				int y=edg[i].opp(x);
 				auto w=edg[i].w;
-				if(isvalid(edg[i]) && ub[y]>ub[x]+w){
-					p[y]=i, ub[y]=ub[x]+w;
-					if(!inq[y]){
-						inq[y]=true;
-						if(++c[y]>n)return false;
-						if(sz(q) && ub[y]<ub[q.front()])q.pushf(y);
-						else q.pushb(y);
-					}
+				if(isvalid(edg[i])){
+					if(ub[y]>ub[x]+w){
+						p[y]={i}, ub[y]=ub[x]+w;
+						if(!inq[y]){
+							inq[y]=true;
+							if(++c[y]>n)return false;
+							if(sz(q) && ub[y]<ub[q.front()])q.pushf(y);
+							else q.pushb(y);
+						}
+					}else if(ub[y]==ub[x]+w)
+						p[y].emplb(i);
 				}
 			}
 		}

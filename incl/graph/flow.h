@@ -7,6 +7,7 @@ struct FlowW {
 	FlowW(int cap, int cost): cap(cap), cost(cost) {}
 	bool operator<(const FlowW& r) const { return cost < r.cost; }
 	bool operator>(const FlowW& r) const { return cost > r.cost; }
+	bool operator==(const FlowW& r)const{return !(cost<r.cost) and !(cost>r.cost);}
 	FlowW operator+(const FlowW& r) const { return cost + r.cost; }
 	FlowW operator/(const FlowW& r) const { return cost / r.cost; }
 };
@@ -99,18 +100,20 @@ struct Flow:public GraphWD<FlowW>{
 	pint mcmf(int flow=inf<int>()){
 		func(pint,step,int flow){
 			Arr<FlowW> d;
-			Arr<int> p;
-			if(!spfa(d, p, src) || edg[p[snk]].v[0] == -1) return {};
+			Arr<Arr<int>> p;
+			if(!spfa(d,p,src) || p[snk].empty()) return {};
 			int x=snk;
-			for(;p[x]!=-1;x=edg[p[x]].opp(x))
-				flow=min(flow,edg[p[x]].w.cap);
-			
+			for(;x!=src;x=edg[p[x].front()].opp(x))
+				flow=min(flow,edg[p[x].front()].w.cap);
 			int cost=0;
 			x=snk;
-			for(;p[x]!=-1;x=edg[p[x]].opp(x)){
-				edg[p[x]].w.cap-=flow;
-				edg[adj[edg[p[x]].opp(x)][x]].w.cap+=flow;
-				cost+=edg[p[x]].w.cost*flow;
+			for(;x!=src;x=edg[p[x].front()].opp(x)){
+				edg[p[x].front()].w.cap-=flow;
+				// edg[edg[p[x]].wei].w.cap+=flow;
+				
+				edg[adj[x][edg[p[x].front()].oppi(x)]].w.cap+=flow;
+				// edg[adj[edg[p[x].front()].opp(x)][x]].w.cap+=flow;
+				cost+=edg[p[x].front()].w.cost*flow;
 			}
 			return {cost,flow};
 		};
