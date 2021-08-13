@@ -16,7 +16,8 @@ template<class T> struct Bipartite {
 	// int hopcroft_karp(){}
 };
 
-// minimum weighted bipartite matching
+// NOTE: minimum weighted bipartite matching
+//NOTE: 단순히 가중치를 음수로 바꾸면 max매칭이 되는게 맞는데 어째선지 잘 안됨(TLE남). 일단 max매칭은 mcmf로 풀자
 // NOTE: determine no matching by inf<int>()/max(n,m) instead of inf<int>().
 //		or, check result's matching weight
 struct Hungarian {

@@ -111,8 +111,7 @@ Arr<Arr<i64>> knuth_opt(const Arr<i64>& init,
 // Constraints:
 // a[t][i]는 d[t][i] Formula가 minimum이 되는 k들중 최소값이라 할때
 // a[t][i]≤a[t][i+1]
-// Note:
-//사각부등식을 만족하면 위 제약조건이 성립됨
+// Note: c가 사각부등식을 만족하면 위 제약조건이 성립됨
 
 // Codeground SCPC2016(2회) 본선1번 재활용
 int n, m;
