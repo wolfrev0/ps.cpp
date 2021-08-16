@@ -1,10 +1,11 @@
 #pragma once
 #include "graph/WD.h"
 
+using T=i64;
 struct FlowW {
-	int cap, cost;
-	FlowW(int cost=0) : cost(cost) {}
-	FlowW(int cap, int cost): cap(cap), cost(cost) {}
+	int cap; T cost;
+	FlowW(T cost=0) : cost(cost) {}
+	FlowW(int cap, T cost): cap(cap), cost(cost) {}
 	bool operator<(const FlowW& r) const { return cost < r.cost; }
 	bool operator>(const FlowW& r) const { return cost > r.cost; }
 	bool operator==(const FlowW& r)const{return !(cost<r.cost) and !(cost>r.cost);}
@@ -22,7 +23,7 @@ struct Flow:public GraphWD<FlowW>{
 	int src, snk;
 	Flow(int n):GraphWD(n+2),src(n),snk(n+1){}
 
-	void add_edge(int s, int e, int cap, int cost) {
+	void add_edge(int s, int e, int cap, T cost) {
 		GraphWD::add_edge(s,e,{cap,cost});
 		GraphWD::add_edge(e,s,{0,-cost});
 		edg[-2].vi[0]=sz(adj[e])-1;
@@ -97,15 +98,15 @@ struct Flow:public GraphWD<FlowW>{
 		return r;
 	}
 
-	pint mcmf(int flow=inf<int>()){
-		func(pint,step,int flow){
+	pair<T,int> mcmf(int flow=inf<int>()){
+		func(ARG(pair<T,int>),step,int flow){
 			Arr<FlowW> d;
 			Arr<Arr<int>> p;
 			if(!spfa(d,p,src) || p[snk].empty()) return {};
 			int x=snk;
 			for(;x!=src;x=edg[p[x].front()].opp(x))
 				flow=min(flow,edg[p[x].front()].w.cap);
-			int cost=0;
+			T cost=0;
 			x=snk;
 			for(;x!=src;x=edg[p[x].front()].opp(x)){
 				edg[p[x].front()].w.cap-=flow;
@@ -117,7 +118,7 @@ struct Flow:public GraphWD<FlowW>{
 			}
 			return {cost,flow};
 		};
-		pair<int,int> ret;
+		pair<T,int> ret;
 		while(true){
 			auto res=step(flow-ret.se);
 			ret.fi+=res.fi,ret.se+=res.se;

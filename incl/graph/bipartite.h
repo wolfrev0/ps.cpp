@@ -16,37 +16,39 @@ template<class T> struct Bipartite {
 	// int hopcroft_karp(){}
 };
 
+//NOTE: self loop=0들어가는 경우 주의하자. 매칭값 0이됨
 // NOTE: minimum weighted bipartite matching
 //NOTE: 단순히 가중치를 음수로 바꾸면 max매칭이 되는게 맞는데 어째선지 잘 안됨(TLE남). 일단 max매칭은 mcmf로 풀자
 // NOTE: determine no matching by inf<int>()/max(n,m) instead of inf<int>().
 //		or, check result's matching weight
+using T=i64;
 struct Hungarian {
 	Hungarian(int n, int m)
-	    : n(n), m(m), g(n + 1, Arr<int>(m + 1, inf<int>() / max({1ll, (i64)n, (i64)m}))) {}
+	    : n(n), m(m), g(n + 1, Arr<T>(m + 1, inf<int>() / max({1ll, (i64)n, (i64)m}))) {}
 
-	void add_edge(int a, int b, int c) { g[a + 1][b + 1] = c; }
+	void add_edge(int a, int b, T c) { g[a + 1][b + 1] = c; }
 	// mat[1][1] ~ mat[n][m]
 	// mat[i] : mat column of row i
-	pair<int, Arr<int>> calc() {
-		Arr<int> mat(n + 1), u(n + 1), v(m + 1), p(m + 1), way(m + 1);
+	pair<f64, Arr<int>> calc() {
+		Arr<int> mat(n + 1), p(m + 1), way(m + 1);
+		Arr<T> u(n + 1), v(m + 1);
 		for(int i = 1; i <= n; i++) {
 			p[0] = i;
 			int js = 0;
-			Arr<int> minv(m + 1, inf<int>());
+			Arr<T> minv(m + 1, inf<int>());
 			Arr<char> used(m + 1);
 			do {
 				used[js] = true;
-				int is = p[js], d = inf<int>(), je;
+				int is = p[js], je; T d = inf<int>();
 				for(int j = 1; j <= m; j++)
 					if(!used[j]) {
-						int c = g[is][j] - u[is] - v[j];
+						T c = g[is][j] - u[is] - v[j];
 						if(c < minv[j]) minv[j] = c, way[j] = js;
 						if(minv[j] < d) d = minv[j], je = j;
 					}
 				for(int j = 0; j <= m; j++)
-					if(used[j]) u[p[j]] += d, v[j] -= d;
-					else
-						minv[j] -= d;
+					if(used[j]) u[p[j]]+=d, v[j]-=d;
+					else minv[j]-=d;
 				js = je;
 			} while(p[js]);
 			do {
@@ -60,5 +62,5 @@ struct Hungarian {
 	}
 
 	int n, m;
-	Arr<Arr<int>> g;
+	Arr<Arr<T>> g;
 };
