@@ -1,5 +1,6 @@
 #pragma once
 #include "core/func.h"
+#include "core/config.h"
 
 #ifdef ONLINE_JUDGE
 	#define cerr if(false)cerr
@@ -16,7 +17,7 @@ template<class... T> auto debug(const tuple<T...>& _tup, int d = 0);
 
 template<class T, typename enable_if<!is_iterable<T>::value, int>::type = 0>
 auto debug(const T& a, int d = 0) {
-	cerr << a << ',';
+	cerr << setw(DBG_SETW) << a << ',';
 	if(!d) cerr << endl;
 	return a;
 }
