@@ -20,3 +20,11 @@ auto split(auto s, auto p) {
 	ret.pushb({it1, s.end()});
 	return ret;
 }
+template<class T>
+Arr<Arr<T>> transpose(const Arr<Arr<T>>& a){
+	auto r=ARR(sz(a[0]),sz(a),T());
+	for(int i=0;i<sz(a);i++)
+		for(int j=0;j<sz(a[0]);j++)
+			r[j][i]=a[i][j];
+	return r;
+}
