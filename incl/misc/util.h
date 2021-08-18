@@ -21,10 +21,24 @@ auto split(auto s, auto p) {
 	return ret;
 }
 template<class T>
-Arr<Arr<T>> transpose(const Arr<Arr<T>>& a){
-	auto r=ARR(sz(a[0]),sz(a),T());
-	for(int i=0;i<sz(a);i++)
-		for(int j=0;j<sz(a[0]);j++)
-			r[j][i]=a[i][j];
-	return r;
+void transpose(Arr<Arr<T>>& a){
+	int n=sz(a),m=sz(a[0]);
+	for(int i=0;i<min(n,m);i++)
+		for(int j=i+1;j<min(n,m);j++)
+			swap(a[i][j],a[j][i]);
+	if(n<m){
+		a.resize(m);
+		for(int i=0;i<n;i++){
+			for(int j=n;j<m;j++)
+				a[j].emplb(a[i][j]);
+			a[i].resize(n),a[i].shrink_to_fit();
+		}
+	}else{
+		for(int i=m;i<n;i++){
+			for(int j=0;j<m;j++)
+				a[j].emplb(a[i][j]);
+			a[i].clear(),a[i].shrink_to_fit();
+		}
+		a.resize(m);
+	}
 }
