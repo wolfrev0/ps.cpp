@@ -15,7 +15,7 @@ void dualize(Arr<Arr<T>> &a,Arr<T> &b,Arr<char>& leq,Arr<T>& obj){
 			leq[i]=!leq[i];
 		}
 	}
-	a=transpose(a);
+	transpose(a);
 	swap(b,obj);
 	leq=Arr<char>(n,false);
 	for(int i=0;i<n;i++)
@@ -30,7 +30,7 @@ template<class T=f64,int M>
 T simplex(Arr<Arr<T>>& a,Arr<T>& b,Arr<char>&leq, Arr<T>& obj){
 	for(auto i:b)assert(i>=0);
 	int m=sz(a), n=sz(a[0]);
-	if(m>n*1.2){
+	if(m>n){
 		dualize<T,M>(a,b,leq,obj);
 		return -simplex<T,M>(a,b,leq,obj);
 	}

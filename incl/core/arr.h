@@ -10,7 +10,7 @@ conditional_t<is_same<bool,T>::value,deque<T>,vector<T>>>
 vector<T>>
 #endif
 struct Arr:public P{
-	Arr():Arr(0){}
+	Arr():Arr(0){P::shrink_to_fit();}
 	explicit Arr(signed n,T init=T()):P(n,init){}
 	Arr(initializer_list<T>il):P(il){}
 #ifdef CPP20
