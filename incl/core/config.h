@@ -6,4 +6,4 @@
 #define COUT_FP 11
 using f64=double;
 // #define CPP20 1
-#define DBG_SETW 4
+#define DBG_SETW 3

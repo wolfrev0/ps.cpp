@@ -16,9 +16,16 @@ void dualize(Arr<Arr<T>> &a,Arr<T> &b,Arr<T>& obj){
 	for(auto& i:obj)i=-i;
 }
 template<class T=f64,int M>
-T simplex(Arr<Arr<T>>& a,Arr<T>& b,Arr<T>& obj){
+tuple<T,Arr<T>,Arr<T>> simplex(Arr<Arr<T>>& a,Arr<T>& b,Arr<T>& obj){
+	//return {maxval,argmax,dual_argmin}
 	int m=sz(a),n=sz(a[0]),s=0;
-	if(m>n){dualize<T,M>(a,b,obj);return -simplex<T,M>(a,b,obj);}
+	if(m>n){
+		dualize<T,M>(a,b,obj);
+		auto&& [x,y,z]=simplex<T,M>(a,b,obj);
+		x*=-1;
+		swap(y,z);
+		return {move(x),move(y),move(z)};
+	}
 	func(void,elim,int r1,int r2,int c){//elim r2
 		if(r1==r2){T x=a[r1][c]; for(auto& i:a[r1])i/=x;}
 		else{
@@ -63,7 +70,12 @@ T simplex(Arr<Arr<T>>& a,Arr<T>& b,Arr<T>& obj){
 		for(int i=0;i<m+1;i++)elim(lvi,i,ev);
 		p[lvi]=ev;
 	}
-	//역추적 잘 모르겠다. 가우스소거 필요한듯?
 	//if(?) throw "infeasible"
-	return a[-1][-1];
+	Arr<T> ans(n+s+m+2);
+	for(int i=0;i<m;i++)
+		ans[p[i]]=a[i][-1];
+	Arr<T> dual(m);
+	for(int i=0;i<m;i++)
+		dual[i]=a[-1][n+s+i];
+	return {a[-1][-1],ans,dual};
 }
