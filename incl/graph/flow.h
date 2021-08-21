@@ -4,6 +4,7 @@
 using T=i64;
 struct FlowW {
 	int cap; T cost;
+	int inv;
 	FlowW(T cost=0) : cost(cost) {}
 	FlowW(int cap, T cost): cap(cap), cost(cost) {}
 	bool operator<(const FlowW& r) const { return cost < r.cost; }
@@ -26,8 +27,8 @@ struct Flow:public GraphWD<FlowW>{
 	void add_edge(int s, int e, int cap, T cost) {
 		GraphWD::add_edge(s,e,{cap,cost});
 		GraphWD::add_edge(e,s,{0,-cost});
-		edg[-2].vi[0]=sz(adj[e])-1;
-		edg[-1].vi[0]=sz(adj[s])-1;
+		edg[-2].w.inv=sz(edg)-1;
+		edg[-1].w.inv=sz(edg)-2;
 	}
 
 	int mf(int flow = inf<int>()){
@@ -39,7 +40,7 @@ struct Flow:public GraphWD<FlowW>{
 					int f=step(edg[i].v[1],min(ubf, edg[i].w.cap),vis);
 					if(f>0){
 						edg[i].w.cap-=f;
-						edg[adj[edg[i].v[1]][edg[i].vi[0]]].w.cap+=f;
+						edg[edg[i].w.inv].w.cap+=f;
 						return f;
 					}
 				}
@@ -78,11 +79,11 @@ struct Flow:public GraphWD<FlowW>{
 				if(u==snk) return flow;
 				for(auto& _i=ii[u]; _i<sz(l[u]); _i++) {
 					auto i=l[u][_i];
-					if(edg[adj[edg[i].v[0]][edg[i].vi[1]]].w.cap) {
-						int f=block_flow(edg[i].v[1], min(flow, edg[adj[edg[i].v[0]][edg[i].vi[1]]].w.cap));
+					if(edg[i].w.cap) {
+						int f=block_flow(edg[i].v[1], min(flow, edg[i].w.cap));
 						if(f>0){
-							edg[adj[edg[i].v[0]][edg[i].vi[1]]].w.cap-=f;
-							edg[adj[edg[i].v[1]][edg[i].vi[0]]].w.cap+=f;
+							edg[i].w.cap-=f;
+							edg[edg[i].w.inv].w.cap+=f;
 							return f;
 						}
 					}
@@ -102,7 +103,8 @@ struct Flow:public GraphWD<FlowW>{
 		func(ARG(pair<T,int>),step,int flow){
 			Arr<FlowW> d;
 			Arr<Arr<int>> p;
-			if(!spfa(d,p,src) || p[snk].empty()) return {};
+			if(!spfa(d,p,src) || p[snk].empty())
+				return {};
 			int x=snk;
 			for(;x!=src;x=edg[p[x].front()].opp(x))
 				flow=min(flow,edg[p[x].front()].w.cap);
@@ -110,10 +112,7 @@ struct Flow:public GraphWD<FlowW>{
 			x=snk;
 			for(;x!=src;x=edg[p[x].front()].opp(x)){
 				edg[p[x].front()].w.cap-=flow;
-				// edg[edg[p[x]].wei].w.cap+=flow;
-				
-				edg[adj[x][edg[p[x].front()].oppi(x)]].w.cap+=flow;
-				// edg[adj[edg[p[x].front()].opp(x)][x]].w.cap+=flow;
+				edg[edg[p[x].front()].w.inv].w.cap+=flow;
 				cost+=edg[p[x].front()].w.cost*flow;
 			}
 			return {cost,flow};
@@ -131,6 +130,7 @@ struct Flow:public GraphWD<FlowW>{
 	pair<int, int> mcmf_fast(int flow = inf<int>()){return {};}
 	void gomory_hu(){}
 
+	//not tested
 	tuple<Arr<E>, Arr<int>, Arr<int>> cuts(){
 		Arr<E> r;
 		
