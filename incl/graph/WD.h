@@ -29,7 +29,7 @@ struct GraphWD{
 			if(dist!=d[x])continue;
 			for(auto& i:adj[x]){
 				int y=edg[i].opp(x);
-				int w=edg[i].w;
+				T w=edg[i].w;
 				if(d[y]>dist+w)
 					p[y]={i}, pq.empl(d[y]=dist+w,y);
 				else if(d[y]==dist+w)

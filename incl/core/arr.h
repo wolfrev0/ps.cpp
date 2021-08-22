@@ -24,5 +24,7 @@ struct Arr:public P{
 	T& at(signed i){return *this[i];}
 	const T& at(signed i)const{return *this[i];}
 };
+#if ARGAUTO
 template<class... A> auto ARR(auto n,A&&... a)
 {if constexpr(!sizeof...(a)) return n; else return Arr(n,ARR(a...));}
+#endif

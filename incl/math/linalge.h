@@ -9,7 +9,7 @@ template<class T> struct Mat{
 		if(!one)return;
 		for(int i=0;i<min(n,m);i++)a[i][i]=1;
 	}
-	Mat(int n,int m,initializer_list<int> li):Mat(n,m) {
+	Mat(int n,int m,initializer_list<int> li):Mat(n,m){
 		auto it=li.begin();
 		for(int i=0;i<n;i++)for(int j=0;j<m;j++)a[i][j]=*it++;
 	}
