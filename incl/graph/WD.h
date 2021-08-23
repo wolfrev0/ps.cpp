@@ -23,7 +23,7 @@ struct GraphWD{
 		d=Arr<T>(n,inf<T>());
 		p=Arr<Arr<int>>(n);
 		PQMin<pair<T,int>> pq;
-		pq.empl(d[s]=0,s);
+		pq.empl(d[s]=T(),s);
 		while(sz(pq)){
 			auto [dist,x]=pq.top(); pq.pop();
 			if(dist!=d[x])continue;
