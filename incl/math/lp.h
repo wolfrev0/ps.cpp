@@ -8,6 +8,8 @@
 //디버깅 노트
 //1. T=f64 해보기(정수값만 나오는거같아도 중간에 유리수나올때 있음)
 //2. M값 조절(답의 상한정도의 크기가 적절)
+//듀얼후 리덕션한 결과값 primal로 복원하기
+//https://math.stackexchange.com/questions/1226186/recovering-the-optimal-primal-solution-from-dual-solution
 template<class T=f64,int M>
 void dualize(Arr<Arr<T>> &a,Arr<T> &b,Arr<T>& obj){
 	int m=sz(a), n=sz(a[0]);
