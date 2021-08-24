@@ -5,6 +5,9 @@
 //입력: Ax<=b, obj
 //출력: maximize obj*x
 //numeric stability is sensitive by M
+//디버깅 노트
+//1. T=f64 해보기(정수값만 나오는거같아도 중간에 유리수나올때 있음)
+//2. M값 조절(답의 상한정도의 크기가 적절)
 template<class T=f64,int M>
 void dualize(Arr<Arr<T>> &a,Arr<T> &b,Arr<T>& obj){
 	int m=sz(a), n=sz(a[0]);
@@ -54,6 +57,7 @@ tuple<T,Arr<T>,Arr<T>> simplex(Arr<Arr<T>>& a,Arr<T>& b,Arr<T>& obj){
 	for(auto &i:obj)i=-i;
 	obj[-2]=1;
 	a.emplb(obj);
+	
 	for(int i=0;i<m;i++)
 		elim(i,m,p[i]);
 	
@@ -66,7 +70,7 @@ tuple<T,Arr<T>,Arr<T>> simplex(Arr<Arr<T>>& a,Arr<T>& b,Arr<T>& obj){
 		for(int i=0;i<m;i++)
 			if(a[i][ev]>eps and (!~lvi or a[i][-1]/a[i][ev]<a[lvi][-1]/a[lvi][ev]))
 				lvi=i;
-		if(!~lvi or (-eps<a[lvi][ev]&&a[lvi][ev]<eps)) throw "unbounded";
+		if(!~lvi) throw "unbounded";
 		for(int i=0;i<m+1;i++)elim(lvi,i,ev);
 		p[lvi]=ev;
 	}
@@ -76,6 +80,6 @@ tuple<T,Arr<T>,Arr<T>> simplex(Arr<Arr<T>>& a,Arr<T>& b,Arr<T>& obj){
 		ans[p[i]]=a[i][-1];
 	Arr<T> dual(m);
 	for(int i=0;i<m;i++)
-		dual[i]=a[-1][n+s+i];
+		dual[i]=a[-1][n+s+i]+(geq[i]?+M:0);
 	return {a[-1][-1],ans,dual};
 }
