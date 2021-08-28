@@ -13,4 +13,6 @@ f64 rdf() {
 	static uniform_real_distribution<f64> dist(0, 1);
 	return dist(_rng);
 }
+#if ARGAUTO
 void shuffle(auto is, auto ie) { shuffle(is, ie, _rng); }
+#endif

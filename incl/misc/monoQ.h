@@ -3,7 +3,7 @@
 
 template<class T> struct MonoQ {
 	MonoQ(bool ismax=false):ismax(ismax){}
-	int size(){return e-s;}
+	int size()const{return e-s;}
 	void push(T val){
 		val-=bias;
 		while(sz(q) && ((val<q.back().fi)^ismax))q.popb();

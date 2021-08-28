@@ -1,5 +1,6 @@
 #pragma once
 #include "core/base.h"
+#include "misc/i128.h"
 
 //아래 링크자료 정독하자
 //https://rkm0959.tistory.com/category/PS/PS%20%EC%A0%95%EC%88%98%EB%A1%A0%20%EA%B0%80%EC%9D%B4%EB%93%9C
@@ -52,6 +53,50 @@ bool miller_rabin(u64 n){
 	bool ret=true;
 	for(auto i:{2,325,9375,28178,450775,9780504,1795265022})//{2,7,61}<=2^32
 		ret&=test(n,i);
+	return ret;
+}
+//출처불명
+Arr<i64> pollard_rho(i64 n){
+	func(i64,rho,i64 n){
+		while(true){
+			i64 x=rand()%(n-2)+2;
+			i64 y=x,c=rand()%(n-1)+1;
+			while(true){
+				x=(i128(x)*x%n+c)%n;
+				y=(i128(y)*y%n+c)%n;
+				y=(i128(y)*y%n+c)%n;
+				i64 d=gcd(abs(x-y),n);
+				if(d==1) continue;
+				if(!miller_rabin(d)){n=d;break;}
+				else return d;
+			}
+		}
+	};
+	Arr<i64> v;
+	while(~n&1)n>>=1,v.push_back(2);
+	if(n==1) return v;
+	while(!miller_rabin(n)){
+		i64 d=rho(n);
+		while(n%d==0) v.push_back(d),n/=d;
+		if(n==1) break;
+	}
+	if(n!=1) v.push_back(n);
+	return v;
+}
+
+int lucas(int n, int m, int p){
+	Arr<int> fac(p),inv(p*2);
+	fac[0]=1;
+	for(int i=1;i<p;i++)
+		fac[i]=fac[i-1]*i%p;
+	inv[p-1]=p-1;//willson
+	for(int i=p-2;~i;i--)
+		inv[i]=inv[i+1]*(i+1)%p;
+	int ret=1;
+	while(n||m){
+		ret = ret*fac[n%p]%p*inv[m%p]%p*inv[n%p-m%p]%p;
+		n/=p,m/=p;
+	}
 	return ret;
 }
 
