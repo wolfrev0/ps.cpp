@@ -21,7 +21,7 @@ struct GraphWU: GraphWD<T>{
 		Arr<E> ret;
 		ret.reserve(n-1);
 		for(auto i:e) {
-			if(uf.find(i.v[0])^uf.find(i.v[1])){
+			if(uf.r(i.v[0])^uf.r(i.v[1])){
 				uf.uni(i.v[0],i.v[1]);
 				ret.emplb(move(i));
 			}

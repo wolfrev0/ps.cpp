@@ -2,50 +2,50 @@
 #include "core/base.h"
 
 #pragma GCC optimize ("Ofast")
-template<class T> struct Mat{
+template<class T> struct MatDyn{
 	int n, m;
 	Arr<Arr<T>> a;
-	Mat(int n,int m,bool one=false):n(n),m(m),a(n,Arr<T>(m)){
+	MatDyn(int n,int m,bool one=false):n(n),m(m),a(n,Arr<T>(m)){
 		if(!one)return;
 		for(int i=0;i<min(n,m);i++)a[i][i]=1;
 	}
-	Mat(int n,int m,initializer_list<int> li):Mat(n,m){
+	MatDyn(int n,int m,initializer_list<int> li):MatDyn(n,m){
 		auto it=li.begin();
 		for(int i=0;i<n;i++)for(int j=0;j<m;j++)a[i][j]=*it++;
 	}
-	Mat<T> operator*(const Mat<T>& r)const{
+	MatDyn<T> operator*(const MatDyn<T>& r)const{
 		assert(m==r.n);
-		Mat<T> ret(n,r.m);
+		MatDyn<T> ret(n,r.m);
 		for(int i=0;i<n;i++)
 			for(int j=0;j<r.m;j++)
 				for(int k=0;k<m;k++)
 					ret.a[i][j]+=a[i][k]*r.a[k][j];
 		return ret;
 	}
-	Mat<T> transpose(){
-		Mat<T> ret(m,n);
+	MatDyn<T> transpose(){
+		MatDyn<T> ret(m,n);
 		for(int i=0;i<n;i++)
 			for(int j=0;j<m;j++)
 				ret.a[j][i]=a[i][j];
 		return ret;
 	}
-	Mat<T> sub(int r,int c,int rn,int rm)const{
-		Mat<T> ret(rn,rm);
+	MatDyn<T> sub(int r,int c,int rn,int rm)const{
+		MatDyn<T> ret(rn,rm);
 		for(int i=0;i<rn;i++)
 			for(int j=0;j<rm;j++)
 				ret.a[i][j]=a[r+i][c+j];
 		return ret;
 	}
-	Mat<T> inv(){
-		if(n!=m)throw "No MatInv";
+	MatDyn<T> inv(){
+		if(n!=m)throw "No MatDynInv";
 		assert(n==m);
-		Mat<T> tmp(n,n*2);
+		MatDyn<T> tmp(n,n*2);
 		for(int i=0;i<n;i++)
 			for(int j=0;j<n;j++)
 				tmp.a[i][j]=a[i][j];
 		for(int i=0;i<n;i++)
 			tmp.a[i][n+i]=1;
-		if(tmp.RREF(n)!=n)throw "No MatInv";
+		if(tmp.RREF(n)!=n)throw "No MatDynInv";
 		return tmp.sub(0,n,n,n);
 	}
 	int REF(bool pv_fix) {
@@ -83,9 +83,9 @@ private:
 	int rank=-1;
 };
 
-template<typename T> ostream& operator<<(ostream& s, const Mat<T>& mat) {
-	for(int i=0;i<mat.n;i++,s<<'\n')
-		for(int j=0;j<mat.m;j++)
-			s<<mat.a[i][j]<<' ';
+template<typename T> ostream& operator<<(ostream& s, const MatDyn<T>& MatDyn) {
+	for(int i=0;i<MatDyn.n;i++,s<<'\n')
+		for(int j=0;j<MatDyn.m;j++)
+			s<<MatDyn.a[i][j]<<' ';
 	return s;
 }
