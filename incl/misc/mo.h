@@ -14,3 +14,10 @@ template<int n>int hilbert_ord(int x,int y){//n-bit order
 	}
 	return d;
 }
+// template<int B>
+struct MOQ{
+	int s,e,i,o;
+	MOQ(int s,int e,int i):s(s),e(e),i(i),o(hilbert_ord<30>(s,e)){}
+	bool operator<(const MOQ& r)const{return o<r.o;}
+	// bool operator<(const MOQ& r)const{return pint{s/B,e/B}<pint{r.s/B,r.e/B};}
+};
