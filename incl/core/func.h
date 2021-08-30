@@ -3,7 +3,7 @@
 #include "core/abbr.h"
 
 //Handy Funcs
-template<class T>int sz(const T& x){return x.size();}
+template<class T>int sz(const T& x){return x.size();}123
 template<class T>cxp T inf(){return numeric_limits<T>::max()/2;}
 int divc(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?(a+b-1)/b:a/b;}
 int divf(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?a/b:(a-b+1)/b;}
