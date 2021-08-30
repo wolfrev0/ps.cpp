@@ -15,8 +15,8 @@ struct GraphWD{
 	GraphWD(int n):n(n),adj(n){}
 
 	void add_edge(int s,int e,T w){
-		edg.emplb(E{{s,e},{sz(adj[e]),sz(adj[s])},sz(edg),w});
-		adj[s].emplb(sz(edg)-1);
+		edg.pushb(E{{s,e},{sz(adj[e]),sz(adj[s])},sz(edg),w});
+		adj[s].pushb(sz(edg)-1);
 	}
 
 	void dijkstra(Arr<T>& d,Arr<Arr<int>>& p,int s){
@@ -33,7 +33,7 @@ struct GraphWD{
 				if(d[y]>dist+w)
 					p[y]={i}, pq.empl(d[y]=dist+w,y);
 				else if(d[y]==dist+w)
-					p[y].emplb(i);
+					p[y].pushb(i);
 			}
 		}
 	}
@@ -75,7 +75,7 @@ struct GraphWD{
 							else q.pushb(y);
 						}
 					}else if(ub[y]==ub[x]+w)
-						p[y].emplb(i);
+						p[y].pushb(i);
 				}
 			}
 		}

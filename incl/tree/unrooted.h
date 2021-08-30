@@ -3,7 +3,7 @@
 
 template<class T> struct Tree{
 	Tree(int n=0):n(n),g(n){}
-	void add_edge(int s,int e,T w){g[s].emplb(e,w),g[e].emplb(s,w);}
+	void add_edge(int s,int e,T w){g[s].pushb(e,w),g[e].pushb(s,w);}
 	T diameter()const{
 		auto x=furthest(0,0,0).se;
 		return furthest(x,x,0).fi;
@@ -55,7 +55,7 @@ template<class T> struct Tree{
 		func(void,f,int x){
 			upd_tsz(x,x);
 			x=centroid(x,x,tsz[x]);
-			ret.emplb(x);
+			ret.pushb(x);
 			av[x]=false;
 			for(auto [i,_]:g[x])
 				if(av[i])

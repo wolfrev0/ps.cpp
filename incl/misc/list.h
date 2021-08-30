@@ -9,7 +9,7 @@ template<class T> struct List {
 	Node *h = 0, *t = 0;
 	Node *begin() const { return h; }
 	Node *end() const { return 0; }
-	void pushb(const T &a) {
+	void push_back(const T &a) {
 		if(!h) h = t = new Node{a};
 		else
 			t = t->nn = new Node{a};

@@ -11,7 +11,7 @@ Arr<C> toC(const Arr<i64>& a) {
 
 Arr<i64> toi(const Arr<C>& a) {
 	Arr<i64> ret;
-	for(auto i : a) ret.pushb(round(i.real()));
+	for(auto i : a) ret.pushb((int)round(i.real()));
 	return ret;
 }
 

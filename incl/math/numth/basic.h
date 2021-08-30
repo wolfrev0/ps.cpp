@@ -27,9 +27,9 @@ Arr<i64> divs(i64 n) {
 	Arr<i64> r,s;
 	for(i64 i=1;i*i<=n;i++)
 		if(n%i==0){
-			r.emplb(i);
+			r.pushb(i);
 			if(i!=n/i)
-				s.emplb(n/i);
+				s.pushb(n/i);
 		}
 	reverse(s.begin(),s.end());
 	r.insert(r.end(),s.begin(),s.end());
@@ -41,8 +41,8 @@ Arr<i64> facts(i64 n) {
 	for(i64 i=2;i*i<=n;i++)
 		while(!(c%i)){
 			c/=i;
-			r.emplb(i);
+			r.pushb(i);
 		}
-	if(c>1)r.emplb(c);
+	if(c>1)r.pushb(c);
 	return r;
 }

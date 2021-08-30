@@ -76,7 +76,7 @@ struct GraphUD: public GraphWD<int>{
 			}
 			// nothing goes to ancestor => root of scc
 			if(ret==ord[v]){
-				scc.emplb();
+				scc.pushb();
 				int prv=-1;
 				while(sz(stk) && prv!=v)
 					scc.back().pushb(prv=stk.top()), stat[prv]=3, stk.pop();
@@ -112,7 +112,7 @@ struct GraphUD: public GraphWD<int>{
 		Arr<Arr<int>> scc;
 		for(auto i:post_ord)
 			if(!vis[i])
-				scc.emplb(),dfs(i,scc.back(),rg);
+				scc.pushb(),dfs(i,scc.back(),rg);
 		return scc_util(scc);
 	}
 

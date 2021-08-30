@@ -10,6 +10,9 @@ template<class T,int n,char base=0> struct Trie{
 	void rem(auto x){rem(x.begin(),x.end());}
 	char ch;int cnt;Trie *p,*a[n]{};
 };
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wchar-subscripts"
+#pragma GCC diagnostic ignored "-Wparentheses"
 
 //MSB to LSB, maxval=1e9(30bit)
 struct Bitrie {
@@ -24,3 +27,4 @@ struct Bitrie {
 	}
 	char bit;int cnt;Bitrie *p,*a[2]{};
 };
+#pragma GCC diagnostic pop

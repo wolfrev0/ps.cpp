@@ -9,9 +9,9 @@ struct GraphWU: GraphWD<T>{
 	using E=GraphWD<T>::E;
 	GraphWU(int n):GraphWD<T>(n){}
 	void add_edge(int s, int e, T w){
-		edg.emplb(E{{s,e},{sz(adj[e]),sz(adj[s])},sz(edg),w});
-		adj[e].emplb(sz(edg)-1);
-		adj[s].emplb(sz(edg)-1);
+		edg.pushb(E{{s,e},{sz(adj[e]),sz(adj[s])},sz(edg),w});
+		adj[e].pushb(sz(edg)-1);
+		adj[s].pushb(sz(edg)-1);
 	}
 	//kruskal
 	Arr<E> mst(){
@@ -23,7 +23,7 @@ struct GraphWU: GraphWD<T>{
 		for(auto i:e) {
 			if(uf.r(i.v[0])^uf.r(i.v[1])){
 				uf.uni(i.v[0],i.v[1]);
-				ret.emplb(move(i));
+				ret.pushb(move(i));
 			}
 		}
 		return ret;
@@ -66,11 +66,11 @@ struct GraphWU: GraphWD<T>{
 				if(!vis[opp])
 					dfs(opp,i);
 				if(ok[i])
-					y.emplb(i);
+					y.pushb(i);
 			}
-			if(pei!=-1)y.emplb(pei);
+			if(pei!=-1)y.pushb(pei);
 			for(int i=0;i+1<sz(y);i+=2)
-				ok[y[i]]=ok[y[i+1]]=false,ret.emplb(y[i],y[i+1]);
+				ok[y[i]]=ok[y[i+1]]=false,ret.pushb(y[i],y[i+1]);
 		};
 		for(int i=0;i<n;i++)
 			if(!vis[i])

@@ -33,9 +33,9 @@ template<class T> struct RootedTree {
 		int co = 0;
 		Arr<Arr<int>> ord(n);
 		func(void,dfs,int x){
-			ord[x].emplb(co++);
+			ord[x].pushb(co++);
 			for(auto [i,_]:ch[x])
-				dfs(i),ord[x].emplb(co++);
+				dfs(i),ord[x].pushb(co++);
 		};
 		dfs(r);
 		return ord;

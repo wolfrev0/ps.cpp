@@ -9,7 +9,7 @@ template<class T> struct Polygon{
 	explicit Polygon(int n):vtx(n){}
 	explicit Polygon(const Arr<Vec2<T>>& v):vtx(v){}
 	int size()const{ return sz(vtx);}
-	void pushb(const Vec2<T>& v){ vtx.pushb(v);}
+	void push_back(const Vec2<T>& v){ vtx.pushb(v);}
 	void eb(){ vtx.eb();}
 	Vec2<T>& operator[](int idx){ return vtx[idx];}
 
@@ -83,11 +83,11 @@ template<class T> struct ConvexPolygon:public Polygon<T>{
 		//퇴화케이스 처리
 		if(sz(r)<sz(*this))return r.intersect(*this);
 		if(sz(*this)==1){
-			if(sz(r)==1 and vtx[0]==r.vtx[0]) ret.emplb(vtx[0]);
-			else if(sz(r)==2 and Segment<T>(r.vtx[0],r.vtx[1]).contains(vtx[0])) ret.emplb(vtx[0]); 
+			if(sz(r)==1 and vtx[0]==r.vtx[0]) ret.pushb(vtx[0]);
+			else if(sz(r)==2 and Segment<T>(r.vtx[0],r.vtx[1]).contains(vtx[0])) ret.pushb(vtx[0]); 
 		}else if(sz(*this)==2){
-			if(sz(r)==1 and Segment<T>(vtx[0],vtx[1]).contains(r.vtx[0])) ret.emplb(r.vtx[0]);
-			else if(sz(r)==2 and Segment<T>(vtx[0],vtx[1]).intersect_det({r.vtx[0],r.vtx[1]})) ret.emplb(inf<int>(),inf<int>());
+			if(sz(r)==1 and Segment<T>(vtx[0],vtx[1]).contains(r.vtx[0])) ret.pushb(r.vtx[0]);
+			else if(sz(r)==2 and Segment<T>(vtx[0],vtx[1]).intersect_det({r.vtx[0],r.vtx[1]})) ret.pushb(inf<int>(),inf<int>());
 		}else{
 			for(auto i:vtx)
 				if(r.contains(i))

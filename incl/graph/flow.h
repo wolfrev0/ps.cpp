@@ -61,7 +61,7 @@ struct Flow:public GraphWD<FlowW>{
 		func(int,step,int flow){
 			queue<int> q;
 			Arr<int> d(n,inf<int>());
-			d[src]=0,q.empl(src);
+			d[src]=0,q.push(src);
 			while(sz(q)){
 				int x=q.front();
 				q.pop();
@@ -73,7 +73,7 @@ struct Flow:public GraphWD<FlowW>{
 			for(auto i:adj)
 				for(auto j:i)
 					if(edg[j].w.cap and d[edg[j].v[1]]==d[edg[j].v[0]]+1)
-						l[edg[j].v[0]].emplb(j);
+						l[edg[j].v[0]].pushb(j);
 			Arr<int> ii(n);
 			func(int,block_flow,int u,int flow){
 				if(u==snk) return flow;

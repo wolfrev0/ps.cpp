@@ -34,10 +34,10 @@ struct undoUF{
 			if(s[a]<s[b])swap(a,b);
 			ui.b=b, ui.pb=p[b], ui.sb=s[b];
 			p[b]=a, s[a]+=s[b], s[b]=0;
-			uis.empl(ui);
+			uis.push(ui);
 			return true;
 		}
-		uis.empl(ui);
+		uis.push(ui);
 		return a!=b;
 	}
 	void undo(){

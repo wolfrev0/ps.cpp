@@ -4,11 +4,11 @@
 //NOTE: f(x)=min{f(x+i),i<a}+|x-k|+m -> pf(k)sf(k)ab(-a,m)
 //NOTE: sf_inc에 답구하는게 들어있어서, 반드시 한 연산에 대해 pf_dec->sf_inc순서로 호출
 struct LeftHull{
-	void pf_dec(int x){pq.empl(x-bias);}//x이하의 기울기들 -1
+	void pf_dec(int x){pq.push(x-bias);}//x이하의 기울기들 -1
 	int sf_inc(int x){//x이상의 기울기들 +1, pop된 원소 반환(Right Hull관리에 사용됨)
 		if(pq.empty() or argmin()<=x)return x;
 		ans+=argmin()-x;//이 경우 최솟값이 증가함
-		pq.empl(x-bias);//x 이하 -1
+		pq.push(x-bias);//x 이하 -1
 		int r=argmin();pq.pop();//전체 +1
 		return r;
 	}
