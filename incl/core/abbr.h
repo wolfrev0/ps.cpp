@@ -4,6 +4,7 @@
 
 #define pushb(...) push_back({__VA_ARGS__})
 #define pushf(...) push_front({__VA_ARGS__})
+#define push_(...) push({__VA_ARGS__})
 #define popb pop_back
 #define popf pop_front
 #define fi first
