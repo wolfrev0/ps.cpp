@@ -2,13 +2,10 @@
 #include "core/std.h"
 #include "core/config.h"
 
-#define pushb push_back
-#define pushf push_front
+#define pushb(...) push_back({__VA_ARGS__})
+#define pushf(...) push_front({__VA_ARGS__})
 #define popb pop_back
 #define popf pop_front
-#define empl emplace
-#define emplb emplace_back
-#define emplf emplace_front
 #define fi first
 #define se second
 #define mkp make_pair
