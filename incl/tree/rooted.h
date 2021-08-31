@@ -1,8 +1,8 @@
 #pragma once
 #include "core/base.h"
 
-template<class T> struct RootedTree {
-	RootedTree() {}
+template<class T> struct RootedTree{
+	RootedTree(){}
 	RootedTree(const Arr<pair<int,T>>& p):n(sz(p)),r(0),ch(n),p(p),tsz(n),dpt(n),cost(n){
 		while(p[r].fi!=r)r=p[r].fi;
 		for(int i=0;i<n;i++)
