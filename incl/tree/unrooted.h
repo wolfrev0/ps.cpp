@@ -34,8 +34,9 @@ template<class T> struct Tree{
 		return res;
 	}
 
-	//Usage: https://www.acmicpc.net/submit/22360/31799657
-	Arr<int> centroid_ord()const{
+	//Usage: https://www.acmicpc.net/problem/13514
+	//Legacy: https://www.acmicpc.net/submit/22360/31799657
+	pair<Tree<T>,int> centroid_decomposition(){
 		Arr<char> av(n,true);
 		Arr<int> tsz(n);
 		func(int,upd_tsz,int x,int p){
@@ -51,18 +52,18 @@ template<class T> struct Tree{
 					return centroid(i,x,sztot);
 			return x;
 		};
-		Arr<int> ret;
-		func(void,f,int x){
+		Tree<T> ct(n);
+		func(int,f,int x){//ret=centroid
 			upd_tsz(x,x);
 			x=centroid(x,x,tsz[x]);
-			ret.pushb(x);
 			av[x]=false;
 			for(auto [i,_]:g[x])
 				if(av[i])
-					f(i);
+					ct.add_edge(x,f(i),0);
+			return x;
 		};
-		f(0);
-		return ret;
+		int r=f(0);
+		return {move(ct),r};
 	}
 
 	int n;

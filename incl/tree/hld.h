@@ -3,39 +3,38 @@
 
 template<class T> struct HLD:public RootedTree<T>{
 	HLD(){}
-	HLD(const Arr<pair<int, T>>& pi):RT(pi),cn(n),top(n){
-		int ccn=0;
+	HLD(const Arr<pair<int, T>>& pi):RT(pi),c(n),top(n){
+		int cc=0;
 		func(void,dfs,int x){
 			if(sz(ch[x]))
 				swap(ch[x].front(), *max_element(ch[x].begin(),ch[x].end(), lam(tsz[a.fi]<tsz[b.fi],auto a,auto b)));
-			cn[x]=ccn;
+			c[x]=cc;
 			for(int i=0;i<sz(ch[x]);i++){
-				if(i) top[++ccn]=ch[x][i].fi;
+				if(i) top[++cc]=ch[x][i].fi;
 				dfs(ch[x][i].fi);
 			}
 		};
 		dfs(r);
-		ord=RT::pre(),top[0]=r;
+		idx=permuinv(RT::pre()),top[0]=r;
 	}
 	Arr<pint> q(int a, int b, bool vtxw, int* plca=0){
 		Arr<pint> ret;
-		while(cn[a]!=cn[b])
-			if(dpt[top[cn[a]]]<dpt[top[cn[b]]])
-				ret.pushb(ord[top[cn[b]]],ord[b]+1),b=p[top[cn[b]]].fi;
+		while(c[a]!=c[b])
+			if(dpt[top[c[a]]]<dpt[top[c[b]]])
+				ret.pushb(idx[top[c[b]]],idx[b]+1),b=p[top[c[b]]].fi;
 			else
-				ret.pushb(ord[top[cn[a]]],ord[a]+1),a=p[top[cn[a]]].fi;
+				ret.pushb(idx[top[c[a]]],idx[a]+1),a=p[top[c[a]]].fi;
 		if(dpt[a]>dpt[b]) swap(a,b);
-		ret.pushb(ord[a]+!vtxw,ord[b]+1);
+		ret.pushb(idx[a]+!vtxw,idx[b]+1);
 		if(plca)*plca=a;
 		return ret;
 	}
 	int lca(int a, int b) { int ret; q(a,b,0,&ret); return ret; }
 
-	Arr<int> cn,top,ord;  // chain number, top of the chain, vtx to preord
+	Arr<int> c,top,idx;  // chain number, top of the chain, vtx to preidx
 	using RT = RootedTree<T>;using RT::ch;using RT::dpt;using RT::n;using RT::p;using RT::r;using RT::tsz;
 };
 
 //<See Also>
-// https://www.acmicpc.net/source/share/7cc26b5459334944930192c6e75fe019
-// https://www.acmicpc.net/source/share/98c5f45fedcc4a579b5410e8ee33cd79
+// https://www.acmicpc.net/source/32842689
 // https://codeforces.com/group/q4aFsZ9De9/contest/288125/submission/99012892

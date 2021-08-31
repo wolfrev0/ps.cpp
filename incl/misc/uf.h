@@ -20,7 +20,6 @@ struct UF{
 	int gsz(int a){return s[r(a)];}
 };
 
-//Not tested yet
 struct UFundo{
 	struct A{int b=-1,sb=-1;};
 	int gc;

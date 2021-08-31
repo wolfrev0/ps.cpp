@@ -1,7 +1,7 @@
 #pragma once
 #include "core/std.h"
 #include "core/config.h"
-#include "core/func.h"
+#include "core/func1.h"
 
 template<class T, class P=
 #if CPP20
@@ -13,7 +13,7 @@ struct Arr:public P{
 	Arr(){P::shrink_to_fit();}
 	explicit Arr(signed n,T init=T()):P(n,init){}
 	Arr(initializer_list<T>il):P(il){}
-#ifdef CPP20
+#ifdef ARGAUTO
 	Arr(auto its, auto ite):P(its,ite){}
 #endif
 	T& operator[](signed i){
