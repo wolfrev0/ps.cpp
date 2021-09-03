@@ -37,7 +37,6 @@
 #include "tree/linkcut.h"
 #include "tree/seg/pst.h"
 #include "tree/seg/pstlazy.h"
-#include "tree/rooted.h"
 #include "tree/seg/seg.h"
 #include "tree/seg/seg2d.h"
 #include "tree/seg/segbu.h"
@@ -46,7 +45,7 @@
 #include "tree/bbst/treap.h"
 #include "tree/bbst/treapBST.h"
 #include "tree/trie.h"
-#include "tree/unrooted.h"
+#include "tree/tree.h"
 
 #include "misc/bucket.h"
 #include "misc/bucketbias.h"

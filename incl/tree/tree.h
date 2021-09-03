@@ -13,30 +13,9 @@ template<class T> struct Tree{
 		auto y=furthest(x,x,0).se;
 		return {x,y};
 	}
-	Arr<pair<int,T>> rootize(int r)const{
-		Arr<pair<int,T>> res(n,{r,inf<int>()});
-		func(void,dfs,int r,int p){
-			for(auto [i,w]:g[r])
-				if(i!=p)
-					res[i]={r,w},dfs(i,r);
-		};
-		dfs(r,r);
-		return res;
-	}
-	Arr<pair<int,T>> rootize(int r,const Arr<T>& vtxw)const{
-		Arr<pair<int,T>> res(n,{r,vtxw[r]});
-		func(void,dfs,int r,int p){
-			for(auto [i,_]:g[r])
-				if(i!=p)
-					res[i]={r,vtxw[i]},dfs(i,r);
-		};
-		dfs(r,r);
-		return res;
-	}
 
 	//Usage: https://www.acmicpc.net/problem/13514
-	//Legacy: https://www.acmicpc.net/submit/22360/31799657
-	pair<Tree<T>,int> centroid_decomposition(){
+	pair<Tree<T>,int> centroid_tree(){
 		Arr<char> av(n,true);
 		Arr<int> tsz(n);
 		func(int,upd_tsz,int x,int p){
@@ -77,4 +56,42 @@ private:
 				r=max(r,furthest(i,x,d+w));
 		return r;
 	}
+};
+
+template<class T> struct RootedTree{
+	RootedTree(){}
+
+	RootedTree(const Tree<T>& t,int r,Arr<T> vw={}):n(t.n),r(r),ch(t.n),p(t.n),tsz(t.n),dpt(t.n),cost(t.n){
+		func(int,rootize,int x,int y,int yw,int d,T c){
+			p[x]={y,yw},dpt[x]=d,cost[x]=c,tsz[x]=1;
+			if(x!=y)ch[y].pushb(x,yw);
+			for(auto [i,ew]:t.g[x])
+				if(i!=y){
+					T w=sz(vw)?vw[i]:ew;
+					tsz[x]+=rootize(i,x,w,d+1,c+w);
+				}
+			return tsz[x];
+		};
+		rootize(r,r,sz(vw)?vw[r]:0,0,0);
+	}
+	Arr<int> euler(){
+		Arr<int> z;
+		func(void,f,int x){z.pushb(x);for(auto [i,_]:ch[x])f(i),z.pushb(x);};
+		f(r);return z;
+	}
+	Arr<int> pre(){
+		Arr<int> z;
+		func(void,f,int x){z.pushb(x);for(auto [i,_]:ch[x])f(i);};
+		f(r);return z;
+	}
+	Arr<int> post(){
+		Arr<int> z;
+		func(void,f,int x){for(auto [i,_]:ch[x])f(i);z.pushb(x);};
+		f(r);return z;
+	}
+	int n, r;
+	Arr<Arr<pair<int, T>>> ch;
+	Arr<pair<int, T>> p;
+	Arr<int> tsz, dpt;
+	Arr<T> cost;
 };

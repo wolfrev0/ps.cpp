@@ -1,9 +1,9 @@
 #pragma once
-#include "tree/rooted.h"
+#include "tree/tree.h"
 
 template<class T> struct HLD:public RootedTree<T>{
 	HLD(){}
-	HLD(const Arr<pair<int, T>>& pi):RT(pi),c(n),top(n){
+	HLD(const Tree<T>& t,int r,Arr<T> vw={}):RT(t,r,vw),c(n),top(n){
 		int cc=0;
 		func(void,dfs,int x){
 			if(sz(ch[x]))
