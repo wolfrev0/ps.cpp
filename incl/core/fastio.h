@@ -21,18 +21,13 @@ struct FastCIN{
 	FastCIN& operator>>(f64& n){ignore_wsc();string s;while(('0'<=get()&&get()<='9')||get()=='.'||get()=='-')s.pushb(pop());n=stod(s);return *this;}
 	template<class T> FastCIN& operator>>(Arr<T>& a){for(auto& i:a)*this>>i;return *this;}
 	template<class T,class U> FastCIN& operator>>(pair<T,U>& a){*this>>a.fi>>a.se;return *this;}
-};
+}fcin;
+#define cin fcin
 
-struct TokCIN:public FastCIN{
-	static TokCIN* x;
-	static TokCIN* instance(){return !x?x=new TokCIN():x;}
-	template<class T=i64>T tok(){T x;operator>>(x);return x;}
-	template<class T=i64>Arr<T> toks(int n){Arr<T> a(n);for(auto& i:a)operator>>(i);return a;}
-	template<class... A> void _read(A&...a){((operator>>(a)),...);}
-};
-TokCIN* TokCIN::x;
-#define cin (*TokCIN::instance())
-#define READ(T,...) T __VA_ARGS__;cin._read(__VA_ARGS__);
+template<class T=i64>T cintok(){T x;cin>>x;return x;}
+template<class T=i64>Arr<T> cintoks(int n){Arr<T> a(n);for(auto& i:a)cin>>i;return a;}
+template<class... A> void _cinread(A&...a){((cin>>(a)),...);}
+#define READ(T,...) T __VA_ARGS__;_cinread(__VA_ARGS__);
 
 //OUTPUT
 template<class T> ostream& operator<<(ostream& s,const Arr<T>& a){for(auto i:a)cout<<i<<' ';return s;}

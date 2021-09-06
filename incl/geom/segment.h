@@ -87,7 +87,7 @@ template<class T> struct Segment : public LineLegacy<T> {
 		if(seg1.sv==seg2.sv and !seg1.is_valid(seg2.ev) or seg1.sv==seg2.ev and !seg1.is_valid(seg2.sv)){res=sv;return true;}
 		if(seg1.ev==seg2.sv and !seg1.is_valid(seg2.ev) or seg1.ev==seg2.ev and !seg1.is_valid(seg2.sv)){res=ev;return true;}
 		if(!seg1.is_valid(seg2.sv) and !seg1.is_valid(seg2.ev)) return false;
-		throw LineLegacySame();
+		throw LineSame();
 	}
 };
 
