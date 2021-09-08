@@ -1,0 +1,2 @@
+DP최적화 Cost조건 opt[i][j]<=opt[i][j+1]증명 충분조건
+1. a<b, c<d -> f(a,c)+f(b,d)<=f(a,d)+f(b,c) (사각부등식 a<=b<=c<=d보다 강력한듯)
