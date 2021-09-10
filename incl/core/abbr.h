@@ -14,6 +14,7 @@
 #define cxp constexpr
 #define lb lower_bound
 #define ub upper_bound
+#define bs binary_search
 #define reduce accumulate
 #define itos to_string
 using i64=long long;using u64=unsigned long long;

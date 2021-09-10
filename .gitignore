@@ -26,8 +26,6 @@ y.cpp
 z.cpp
 main.cpp
 submit.cpp
-tmp.cpp
-gen.cpp
 # incl/core/config.h
 
 a.py
@@ -63,7 +61,8 @@ gen.py
 __pycache__/
 
 in
-out
 o
+oa
+ob
 a.out
 *.gch

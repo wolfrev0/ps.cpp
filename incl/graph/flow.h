@@ -14,6 +14,7 @@ struct FlowW {
 	FlowW operator/(const FlowW& r) const { return cost / r.cost; }
 };
 
+//이분그래프 최대독립집합 재구성: 종만북참고
 namespace std{
 	template<> class numeric_limits<FlowW> {
 	public:

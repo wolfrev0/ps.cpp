@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-touch o1 o2
-while cmp -s o1 o2; do
-	./gen > in
-	./a < in > o1
-	./b < in > o2
+touch oa ob
+while cmp -s oa ob; do
+	./gen < /dev/null > in
+	./a < in > oa
+	./b < in > ob
 done
-rm o1 o2
+rm oa ob
