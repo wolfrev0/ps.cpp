@@ -11,7 +11,8 @@ vector<T>>
 #endif
 struct Arr:public P{
 	Arr(){P::shrink_to_fit();}
-	explicit Arr(signed n,T init=T()):P(n,init){}
+	explicit Arr(signed n):P(n){}
+	explicit Arr(signed n,T init):P(n,init){}
 	Arr(initializer_list<T>il):P(il){}
 #ifdef ARGAUTO
 	Arr(auto its, auto ite):P(its,ite){}
