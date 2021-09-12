@@ -1,19 +1,20 @@
 #pragma once
 #include "core/base.h"
 
-template<class T,int n,char base=0> struct Trie{
-	Trie(char ch=base,Trie* p=0):ch(ch),cnt(0),p(p){}
-	Trie* next(char c){c-=base; return a[c]=a[c]?a[c]:new Trie<T,n,base>(c,this);}
-	Trie* add(auto s,auto e){cnt++; return s^e?next(*s)->add(s+1,e):this;}
-	void rem(auto s,auto e){cnt--;if(s^e)next(*s)->rem(s+1,e);}
-	Trie* add(auto x){return add(x.begin(),x.end());}
-	void rem(auto x){rem(x.begin(),x.end());}
-	char ch;int cnt;Trie *p,*a[n]{};
+//메모리 절약법: 배열대신 map, 포인터대신 index, Radix_tree, 
+template<int n> struct Trie{
+	Trie(char c=0,Trie* p=0):c(c),cnt(0),p(p){}
+	~Trie(){for(auto i:a)if(i)delete i;}
+	Trie* add(auto s,auto e){
+		cnt++;return s^e?next(*s)->add(s+1,e):this;
+	}
+	void rem(auto s,auto e){cnt--;if(s^e)a[*s]->rem(s+1,e);}
+	char c;int cnt;Trie *p,*a[n]{};
 };
+
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wchar-subscripts"
 #pragma GCC diagnostic ignored "-Wparentheses"
-
 //MSB to LSB, maxval=1e9(30bit)
 struct Bitrie {
 	Bitrie(char bit=0,Bitrie* p=0):bit(bit),cnt(0),p(p){}
