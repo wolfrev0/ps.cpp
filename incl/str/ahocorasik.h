@@ -1,7 +1,8 @@
 #pragma once
 #include "core/base.h"
 
-//메모리 절약법: 배열대신 map, 포인터대신 index, Radix_tree
+//메모리 적당히 절약: 배열대신 map, 포인터대신 index
+//메모리 갈아엎는 절약: 1.RadixTree
 template<int n=26> struct AhoCorasick{
 	using A=AhoCorasick;
 	A(char c=0,A* p=0):c(c),p(p?p:this){}

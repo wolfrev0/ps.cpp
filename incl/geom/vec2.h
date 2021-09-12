@@ -4,7 +4,7 @@
 
 //기하 디버그 팁: 완전이상하게 동작하면 T=f64로 해봐라
 template<class T> struct Vec2{
-	T x, y;
+	T x,y;
 	Vec2():Vec2(0, 0){}
 	Vec2(T x, T y):x(x), y(y){}
 	Vec2 operator+(const Vec2& r)const{return {x+r.x, y+r.y};}
@@ -16,12 +16,7 @@ template<class T> struct Vec2{
 	Vec2 operator-=(const Vec2& r){return *this=*this-r;}
 	Vec2 operator*=(T r){return *this=*this*r;}
 	Vec2 operator/=(T r){return *this=*this/r;}
-	bool operator==(const Vec2& r)const{return x==r.x&&y==r.y;}
-	bool operator!=(const Vec2& r)const{return !(*this==r);}
-	bool operator<(const Vec2& r)const{return x==r.x?y<r.y:x<r.x;}
-	bool operator<=(const Vec2& r)const{return *this==r||*this<r;}
-	bool operator>(const Vec2& r)const{return x==r.x?y>r.y:x>r.x;}
-	bool operator>=(const Vec2& r)const{return *this==r||*this>r;}
+	friend strong_ordering operator<=>(const Vec2&, const Vec2&)=default;
 	f64 len()const{return hypot(x, y);}
 	T lensq()const{return dot(*this);}
 	T taxi()const{return abs(x)+abs(y);}

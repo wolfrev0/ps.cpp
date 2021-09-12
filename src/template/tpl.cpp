@@ -7,7 +7,7 @@
 void solve(){
 }
 signed main(){
-	// int ti=0,t=cin.tok();
+	// int ti=0,t=cintok();
 	// while(++ti<=t)
 	// 	cout<<"Case #"<<ti<<": ",
 		solve();

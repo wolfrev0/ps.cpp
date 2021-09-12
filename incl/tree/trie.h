@@ -1,7 +1,8 @@
 #pragma once
 #include "core/base.h"
 
-//메모리 절약법: 배열대신 map, 포인터대신 index, Radix_tree, 
+//메모리 적당히 절약: 배열대신 map, 포인터대신 index
+//메모리 갈아엎는 절약: 1.정렬후 이분탐색(채점번호 33273843), 2.RadixTree
 template<int n> struct Trie{
 	Trie(char c=0,Trie* p=0):c(c),cnt(0),p(p){}
 	~Trie(){for(auto i:a)if(i)delete i;}

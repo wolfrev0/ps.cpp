@@ -1,21 +1,17 @@
 #pragma once
 #include "core/base.h"
+#include "misc/i128.h"
 
 struct Frac {
 	i64 a,b;
 	Frac(i64 a=0,i64 b=1):a(a),b(b) {normalize();}
-	bool operator<(const Frac& r)const{
-		// NaN<-inf<...<inf (for using set conveniently)
-		//!(a>b)&&!(a<b) <=> a==b
-		if(r.is_nan()) return false;
-		if(is_nan()) return true;
-		return a*r.b<r.a*b;
+	auto operator<=>(const Frac& r)const{
+		// if(is_nan())return strong_ordering::less;
+		// if(r.is_nan())return strong_ordering::greater;
+		assert(!is_nan() and !r.is_nan());
+		return i128(a)*r.b<=>i128(r.a)*b;
 	}
-	bool operator>(const Frac& r)const{return r<*this;}
-	bool operator==(const Frac& r)const{return !(*this<r)&&!(*this>r);}
-	bool operator!=(const Frac& r)const{return !(*this==r);}
-	bool operator<=(const Frac& r)const{return *this<r||*this==r;}
-	bool operator>=(const Frac& r)const{return *this>r||*this==r;}
+	bool operator==(const Frac& r)const=default;
 	Frac operator-()const{return {-a,b};}
 	Frac operator+(const Frac& r)const{return {a*r.b+r.a*b,b*r.b};}
 	Frac operator-(const Frac& r)const{return *this+-r;}
@@ -25,9 +21,8 @@ struct Frac {
 	Frac operator-=(const Frac& r){return *this=*this-r;}
 	Frac operator*=(const Frac& r){return *this=*this*r;}
 	Frac operator/=(const Frac& r){return *this=*this/r;}
-	operator bool()const{return *this!=Frac();}
-	operator int()const{return a/b;}
-	operator f64()const{return f64(a)/b;}
+	explicit operator int()const{return a/b;}
+	explicit operator f64()const{return f64(a)/b;}
 	bool is_singular()const{return !b;}
 	bool is_infpos()const{return a>0&&!b;}
 	bool is_infneg()const{return a<0&&!b;}
@@ -37,14 +32,9 @@ struct Frac {
 	i64 floor()const{return a/b-(a*b<0)*!!(a%b);}
 	i64 smaller_int()const{return is_int()?int(*this)-1:floor();}
 	i64 larger_int()const{return is_int()?int(*this)+1:ceil();}
-	void normalize() {
-		if(is_singular()) {
-			if(a) a/=abs(a);
-			return;
-		}
-		i64 g=gcd(a,b);
-		a/=g;
-		b/=g;
+	void normalize(){
+		if(is_singular()){if(a)a/=abs(a);return;}
+		i64 g=gcd(a,b); a/=g,b/=g;
 		if(b<0) a*=-1,b*=-1;
 	}
 };
