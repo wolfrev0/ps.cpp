@@ -103,18 +103,18 @@ struct Flow:public GraphWD<FlowW>{
 	pair<T,int> mcmf(int flow=inf<int>()){
 		func(ARG(pair<T,int>),step,int flow){
 			Arr<FlowW> d;
-			Arr<Arr<int>> p;
-			if(!spfa(d,p,src) || p[snk].empty())
+			Arr<int> p;
+			if(!spfa_trackone(d,p,src) || p[snk]==-1)
 				return {};
 			int x=snk;
-			for(;x!=src;x=edg[p[x].front()].opp(x))
-				flow=min(flow,edg[p[x].front()].w.cap);
+			for(;x!=src;x=edg[p[x]].opp(x))
+				flow=min(flow,edg[p[x]].w.cap);
 			T cost=0;
 			x=snk;
-			for(;x!=src;x=edg[p[x].front()].opp(x)){
-				edg[p[x].front()].w.cap-=flow;
-				edg[edg[p[x].front()].w.inv].w.cap+=flow;
-				cost+=edg[p[x].front()].w.cost*flow;
+			for(;x!=src;x=edg[p[x]].opp(x)){
+				edg[p[x]].w.cap-=flow;
+				edg[edg[p[x]].w.inv].w.cap+=flow;
+				cost+=edg[p[x]].w.cost*flow;
 			}
 			return {cost,flow};
 		};

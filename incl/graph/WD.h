@@ -19,11 +19,11 @@ struct GraphWD{
 		adj[s].pushb(sz(edg)-1);
 	}
 
-	void dijkstra(Arr<T>& d,Arr<Arr<int>>& p,int s){
+	void dijkstra_trackall(Arr<T>& d,Arr<Arr<int>>& p,int s){
 		d=Arr<T>(n,inf<T>());
 		p=Arr<Arr<int>>(n);
 		PQMin<pair<T,int>> pq;
-		pq.empl(d[s]=T(),s);
+		pq.push({d[s]=T(),s});
 		while(sz(pq)){
 			auto [dist,x]=pq.top(); pq.pop();
 			if(dist!=d[x])continue;
@@ -31,9 +31,25 @@ struct GraphWD{
 				int y=edg[i].opp(x);
 				T w=edg[i].w;
 				if(d[y]>dist+w)
-					p[y]={i}, pq.empl(d[y]=dist+w,y);
+					p[y]={i}, pq.push({d[y]=dist+w,y});
 				else if(d[y]==dist+w)
 					p[y].pushb(i);
+			}
+		}
+	}
+	void dijkstra_trackone(Arr<T>& d,Arr<int>& p,int s){
+		d=Arr<T>(n,inf<T>());
+		p=Arr<int>(n,-1);
+		PQMin<pair<T,int>> pq;
+		pq.push({d[s]=T(),s});
+		while(sz(pq)){
+			auto [dist,x]=pq.top(); pq.pop();
+			if(dist!=d[x])continue;
+			for(auto& i:adj[x]){
+				int y=edg[i].opp(x);
+				T w=edg[i].w;
+				if(d[y]>dist+w)
+					p[y]=i, pq.push({d[y]=dist+w,y});
 			}
 		}
 	}
@@ -50,7 +66,7 @@ struct GraphWD{
 		return a;
 	}
 
-	bool spfa(Arr<T>& ub,Arr<Arr<int>>& p,int s){
+	bool spfa_trackall(Arr<T>& ub,Arr<Arr<int>>& p,int s){
 		deque<int> q;
 		Arr<char> inq(n);
 		ub=Arr<T>(n,inf<T>());
@@ -76,6 +92,36 @@ struct GraphWD{
 						}
 					}else if(ub[y]==ub[x]+w)
 						p[y].pushb(i);
+				}
+			}
+		}
+		return q.empty();
+	}
+	bool spfa_trackone(Arr<T>& ub,Arr<int>& p,int s){
+		deque<int> q;
+		Arr<char> inq(n);
+		ub=Arr<T>(n,inf<T>());
+		p=Arr<int>(n,-1);
+		Arr<int> c(n);
+
+		ub[s]=0;
+		inq[s]=true;
+		q.pushb(s);
+		while(sz(q)){
+			int x=q.front(); inq[x]=false, q.popf();
+			for(auto i:adj[x]){
+				int y=edg[i].opp(x);
+				auto w=edg[i].w;
+				if(isvalid(edg[i])){
+					if(ub[y]>ub[x]+w){
+						p[y]=i, ub[y]=ub[x]+w;
+						if(!inq[y]){
+							inq[y]=true;
+							if(++c[y]>n)return false;
+							if(sz(q) && ub[y]<ub[q.front()])q.pushf(y);
+							else q.pushb(y);
+						}
+					}
 				}
 			}
 		}
