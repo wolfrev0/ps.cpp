@@ -11,7 +11,7 @@ struct Line{
 	int a,b,c;
 	Line(int a,int b,int c):a(a),b(b),c(c){}
 	Line(pint a,pint b):Line(a.se-b.se,b.fi-a.fi,-a.se*(b.fi-a.fi)+a.fi*(b.se-a.se)){}
-	Line(pint tangent, pint pt):Line(pt,mkp(pt.fi+tangent.fi,pt.se-tangent.se)){}
+	Line(pint tangent, pint pt, void* dummy_param):Line(pt,mkp(pt.fi+tangent.fi,pt.se-tangent.se)){}
 	bool operator==(const Line&r)const{return mkt(a,b,c)==mkt(r.a,r.b,r.c) or mkt(-a,-b,-c)==mkt(r.a,r.b,r.c);}
 	pint tan()const{return !b?pint{1,0}:(b>=0?pint{-a,b}:pint{a,-b});}//기울기=[0]/[1]
 	tint intersect(const Line& r)const{
