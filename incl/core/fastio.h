@@ -24,12 +24,9 @@ struct FastCIN{
 }fcin;
 #define cin fcin
 
-template<class T=i64>T cintok(){T x;cin>>x;return x;}
-template<class T=i64>Arr<T> cintoks(int n){Arr<T> a(n);for(auto& i:a)cin>>i;return a;}
 template<class... A> void _cinread(A&...a){((cin>>(a)),...);}
 #define READ(T,...) T __VA_ARGS__;_cinread(__VA_ARGS__);
 
-//OUTPUT
 template<class T> ostream& operator<<(ostream& s,const Arr<T>& a){for(auto i:a)cout<<i<<' ';return s;}
 template<class T> ostream& operator<<(ostream& o,const pair<T,T>& x){return o<<x.fi<<' '<<x.se;}
 template<class... A> void PRINT(A...a){((cout<<a<<' '),...,(cout<<endl));}

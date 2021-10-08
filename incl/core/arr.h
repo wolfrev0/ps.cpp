@@ -3,12 +3,7 @@
 #include "core/config.h"
 #include "core/func1.h"
 
-template<class T, class P=
-#if CPP20
-conditional_t<is_same<bool,T>::value,deque<T>,vector<T>>>
-#else
-vector<T>>
-#endif
+template<class T, class P=vector<T>>
 struct Arr:public P{
 	Arr(){P::shrink_to_fit();}
 	explicit Arr(signed n):P(n){}
@@ -17,9 +12,11 @@ struct Arr:public P{
 #ifdef ARGAUTO
 	Arr(auto its, auto ite):P(its,ite){}
 #endif
-	T& operator[](signed i){
-		WARN(i<0,"Negative Index Found");
-		return P::operator[](i>=0?i:i+this->size());
+	inline T& operator[](signed i){
+		int n=sz(*this);
+		if(i<0)i+=n,WARN(1,"Neg Index Found");
+		if(i>=n)i-=n,WARN(1,"Over Index Found");
+		return P::operator[](i);
 	}
 	const T& operator[](signed i)const{return P::operator[](i>=0?i:i+this->size());}
 	T& at(signed i){return *this[i];}
