@@ -142,7 +142,6 @@ struct GraphUD: public GraphWD<int>{
 		WARN(m!=n,"Not Connected");
 
 		for(int i=m-1;~i;i--){
-			if(!~sdom[o[i]])continue;
 			for(auto j:rg.adj[o[i]]){
 				if(!~sdom[rg.edg[j].v[1]])continue;
 				int x=eval(rg.edg[j].v[1]);
@@ -153,11 +152,12 @@ struct GraphUD: public GraphWD<int>{
 			buf[p[o[i]]].clear();
 			link(o[i],p[o[i]]);
 		}
-		for(int i=0;i<m;i++){
+		idom[src]=src;
+		for(int i=1;i<m;i++){
 			int x=o[i],y=u[x];
 			idom[x]=sdom[x]==sdom[y]?sdom[x]:idom[y];
 		}
-		for(int i=0;i<m;i++)
+		for(int i=1;i<m;i++)
 			idom[o[i]]=o[idom[o[i]]];
 		return idom;
 	}
