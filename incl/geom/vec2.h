@@ -16,7 +16,16 @@ template<class T> struct Vec2{
 	Vec2 operator-=(const Vec2& r){return *this=*this-r;}
 	Vec2 operator*=(T r){return *this=*this*r;}
 	Vec2 operator/=(T r){return *this=*this/r;}
-	friend strong_ordering operator<=>(const Vec2&, const Vec2&)=default;
+
+	//호환성때문에 잠시 보류
+	// friend strong_ordering operator<=>(const Vec2&, const Vec2&)=default;
+	bool operator==(const Vec2& r)const{return x==r.x&&y==r.y;}
+	bool operator!=(const Vec2& r)const{return !(*this==r);}
+	bool operator<(const Vec2& r)const{return x==r.x?y<r.y:x<r.x;}
+	bool operator<=(const Vec2& r)const{return *this==r||*this<r;}
+	bool operator>(const Vec2& r)const{return x==r.x?y>r.y:x>r.x;}
+	bool operator>=(const Vec2& r)const{return *this==r||*this>r;}
+	
 	f64 len()const{return hypot(x, y);}
 	T lensq()const{return dot(*this);}
 	T taxi()const{return abs(x)+abs(y);}
@@ -27,7 +36,7 @@ template<class T> struct Vec2{
 	T cross(const Vec2& a,const Vec2& b)const{return (a-*this).cross(b-*this);}
 	T ccw(const Vec2& a,const Vec2& b)const{return cross(a, b)?cross(a, b)/abs(cross(a, b)):0;}
 	f64 angle()const{return fmod(atan2(y, x)+2*pi, 2*pi);}
-	Frac tan()const{return{y,x};}
+	Frac tan()const{return x==0?Frac{1,0}:Frac{y,x};}
 	Vec2 project(const Vec2& p)const{Vec2 base=normalized();return base*base.dot(p);}
 	Vec2 ortho()const{return Vec2(y, -x);}
 	Vec2 rot(double rad)const{return {cos(rad)*x-sin(rad)*y,sin(rad)*x+cos(rad)*y};}
