@@ -1,12 +1,13 @@
 #pragma once
 #include "graph/WD.h"
+#include "misc/uf.h"
 
 struct GraphUD: public GraphWD<int>{
 	GraphUD(int n=0):GraphWD(n){}
 
 	void add_edge(int s,int e){GraphWD::add_edge(s,e,1);}
 
-	GraphUD reversed(){
+	GraphUD inv(){
 		GraphUD ret(n);
 		for(auto& i:adj)
 			for(auto j:i)
@@ -106,7 +107,7 @@ struct GraphUD: public GraphWD<int>{
 			if(!vis[i])
 				dfs(i,post_ord,*this);
 		
-		auto rg=reversed();
+		auto rg=inv();
 		reverse(post_ord.begin(),post_ord.end());
 		vis=Arr<char>(n);
 		Arr<Arr<int>> scc;
@@ -114,6 +115,58 @@ struct GraphUD: public GraphWD<int>{
 			if(!vis[i])
 				scc.pushb(),dfs(i,scc.back(),rg);
 		return scc_util(scc);
+	}
+
+	//based on https://github.com/ei1333/library/blob/master/graph/others/dominator-tree.hpp
+	Arr<int> domtree(int src){
+		auto rg=inv();
+		Arr<int> r(n),val(n),idom(n,-1),sdom(n,-1),o,p(n);
+		iota(r.begin(),r.end(),0);
+		iota(val.begin(),val.end(),0);
+		func(int,find,int x){
+			assert(~sdom[x]);
+			if(r[x]==x)return x;
+			int ret=find(r[x]);
+			if(sdom[val[x]]>sdom[val[r[x]]]) val[x]=val[r[x]];
+			return r[x]=ret;
+		};
+		func(int,eval,int x){find(x);return val[x];};
+		func(void,link,int x,int y){r[x]=y;};
+		func(void,dfs,int x){
+			sdom[x]=sz(o);
+			o.pushb(x);
+			for(auto i:adj[x]){
+				int y=edg[i].v[1];
+				if(!~sdom[y])
+					p[y]=x,dfs(y);
+			}
+		};
+		dfs(src);
+		int m=sz(o);
+		WARN(m!=n,"Not Connected");
+
+		Arr<Arr<int>> buf(n);
+		Arr<int> u(n);
+		//reversed preorder
+		for(int i=m-1;~i;i--){
+			if(!~sdom[o[i]])continue;
+			for(auto j:rg.adj[o[i]]){
+				if(!~sdom[rg.edg[j].v[1]])continue;
+				int x=eval(rg.edg[j].v[1]);
+				if(sdom[o[i]]>sdom[x])sdom[o[i]]=sdom[x];
+			}
+			buf[o[sdom[o[i]]]].pushb(o[i]);
+			for(auto x:buf[p[o[i]]])u[x]=eval(x);
+			buf[p[o[i]]].clear();
+			link(o[i],p[o[i]]);
+		}
+		for(int i=0;i<m;i++){
+			int x=o[i],y=u[x];
+			idom[x]=sdom[x]==sdom[y]?sdom[x]:idom[y];
+		}
+		for(int i=0;i<m;i++)
+			idom[o[i]]=o[idom[o[i]]];
+		return idom;
 	}
 
 private:
