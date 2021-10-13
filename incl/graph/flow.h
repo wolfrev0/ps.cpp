@@ -166,4 +166,12 @@ struct Flow:public GraphWD<FlowW>{
 	}
 	
 	virtual bool isvalid(const E& e)const override{return e.w.cap;}
+
+	void trace(){
+		for(auto i:edg){
+			//not residual edge
+			if(i.w.inv%2 and edg[i.w.inv].w.cap)// and i.v[1]==snk)
+				cout<<i.v[0]<<' '<<i.v[1]<<' '<<edg[i.w.inv].w.cap<<endl;
+		}
+	}
 };
