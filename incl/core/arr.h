@@ -18,7 +18,12 @@ struct Arr:public P{
 		if(i>=n)i-=n,WARN(1,"Over Index Found");
 		return P::operator[](i);
 	}
-	const T& operator[](signed i)const{return P::operator[](i>=0?i:i+this->size());}
+	const T& operator[](signed i)const{	
+		int n=sz(*this);
+		if(i<0)i+=n,WARN(1,"Neg Index Found");
+		if(i>=n)i-=n,WARN(1,"Over Index Found");
+		return P::operator[](i);
+	}
 	T& at(signed i){return *this[i];}
 	const T& at(signed i)const{return *this[i];}
 };

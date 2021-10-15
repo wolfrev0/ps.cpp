@@ -4,6 +4,11 @@
 using namespace __gnu_pbds;
 using namespace __gnu_cxx;
 
+int __RANDOM=i64(new int)^time(0);
+struct randomhasher{int operator()(int x)const{return x^__RANDOM;}};
+template<class K,class V> using HashMap=gp_hash_table<K,V,randomhasher>;
+//MLE나면 cc_hash_table이나 unordered_map 사용
+
 template<class T> struct Xet : public tree<T, null_type, less<T>, rb_tree_tag,
                                            tree_order_statistics_node_update> {
 	Xet() {}
