@@ -22,17 +22,16 @@ namespace std{
 	};
 }
 struct Flow:public GraphWD<FlowW>{
-	int src, snk;
-	Flow(int n):GraphWD(n+2),src(n),snk(n+1){}
+	Flow(int n):GraphWD(n){}
 
-	void add_edge(int s, int e, int cap, T cost) {
+	void add_edge(int s, int e, int cap, T cost){
 		GraphWD::add_edge(s,e,{cap,cost});
 		GraphWD::add_edge(e,s,{0,-cost});
 		edg[-2].w.inv=sz(edg)-1;
 		edg[-1].w.inv=sz(edg)-2;
 	}
 
-	int mf(int flow = inf<int>()){
+	int mf(int src,int snk,int flow = inf<int>()){
 		func(int,step,int v,int ubf,Arr<char>& vis){
 			if(v == snk) return ubf;
 			vis[v]=true;
@@ -50,15 +49,15 @@ struct Flow:public GraphWD<FlowW>{
 		};
 
 		int sum=0;
-		auto vis=Arr<char>(n+2);
+		auto vis=Arr<char>(n);
 		while(int f=step(src,flow-sum,vis)){
 			sum+=f;
-			vis=Arr<char>(n+2);
+			vis=Arr<char>(n);
 		}
 		return sum;
 	}
 
-	int dinic(int flow=inf<int>()){
+	int dinic(int src,int snk,int flow=inf<int>()){
 		func(int,step,int flow){
 			queue<int> q;
 			Arr<int> d(n,inf<int>());
@@ -100,7 +99,7 @@ struct Flow:public GraphWD<FlowW>{
 		return r;
 	}
 
-	pair<T,int> mcmf(int flow=inf<int>()){
+	pair<T,int> mcmf(int src,int snk,int flow=inf<int>()){
 		func(ARG(pair<T,int>),step,int flow){
 			Arr<FlowW> d;
 			Arr<int> p;
@@ -132,10 +131,10 @@ struct Flow:public GraphWD<FlowW>{
 	void gomory_hu(){}
 
 	//not tested
-	tuple<Arr<E>, Arr<int>, Arr<int>> cuts(){
+	tuple<Arr<E>, Arr<int>, Arr<int>> cuts(int src,int snk){
 		Arr<E> r;
 		
-		Arr<char> vis1(n+2);
+		Arr<char> vis1(n);
 		func(void,dfs1,int v){
 			if(vis1[v]) return;
 			vis1[v]=true;
@@ -145,7 +144,7 @@ struct Flow:public GraphWD<FlowW>{
 		};
 		dfs1(src);
 		
-		Arr<char> vis2(n+2);
+		Arr<char> vis2(n);
 		func(void,dfs2,int v){
 			if(vis2[v])return;
 			vis2[v]=true;
@@ -173,5 +172,33 @@ struct Flow:public GraphWD<FlowW>{
 			if(i.w.inv%2 and edg[i.w.inv].w.cap)// and i.v[1]==snk)
 				cout<<i.v[0]<<' '<<i.v[1]<<' '<<edg[i.w.inv].w.cap<<endl;
 		}
+	}
+};
+
+struct FlowLB:public Flow{
+	int SRC,SNK,demands=0;
+	FlowLB(int n):Flow(n+2),SRC(n),SNK(n+1){}
+
+	//NOTE: cost처리 잘 된건지 모름. 검증필요(Library Checker에 있을듯?)
+	void add_edge(int s,int e,pint cap,int cost){
+		auto [lo,hi]=cap;
+		demands+=lo;
+		if(lo){
+			Flow::add_edge(SRC,e,lo,cost);
+			Flow::add_edge(s,SNK,lo,cost);
+			Flow::add_edge(s,e,hi-lo,cost);
+		}else
+			Flow::add_edge(s,e,hi,cost);
+	}
+
+	int dinic(int src,int snk,int flow=inf<int>()){
+		Flow::add_edge(snk,src,inf<int>(),0);
+		if(Flow::dinic(SRC,SNK,flow)!=demands)
+			return -1;
+		int r=edg[-1].w.cap;
+		adj[edg[-1].v[0]].popb(),edg.popb();
+		adj[edg[-1].v[0]].popb(),edg.popb();
+		r+=Flow::dinic(src,snk,flow);
+		return r;
 	}
 };
