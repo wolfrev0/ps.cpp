@@ -46,6 +46,8 @@ Arr<i64> facts(i64 n) {
 	if(c>1)r.pushb(c);
 	return r;
 }
+
+#include "math/mod.h"
 //not tested
 //a(r^0)+a/(r^1)+a/(r^2)+...+a/(r^n)
 template<const int m> Mod<m> geom_sum(Mod<m> a,Mod<m> r,int n){

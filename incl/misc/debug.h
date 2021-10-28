@@ -1,5 +1,5 @@
 #pragma once
-#include "core/func.h"
+#include "core/func1.h"
 #include "core/config.h"
 
 #ifdef ONLINE_JUDGE

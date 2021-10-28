@@ -26,7 +26,7 @@ template<class T> Arr<int> suffix_array(const Str<T> &s) {
 }
 
 // lcp[i]: 사전순 i번째 접미사와 i−1번째 접미사의 가장 긴 공통 접두사의 길이
-// plzrun's code
+// based on plzrun's code
 template<class T> Arr<int> get_lcp(const Str<T> &s, const Arr<int> &sa) {
 	int n = sz(s);
 	Arr<int> lcp(n), psa(n + 1), plcp(n + 1);
@@ -45,7 +45,7 @@ template<class T> Arr<int> get_lcp(const Str<T> &s, const Arr<int> &sa) {
 	return lcp;
 }
 
-// jh05013's code, O(NlogN)
+// based on jh05013's code, O(NlogN)
 template<class T> Arr<int> suffix_array2(const Str<T> &s) {
 	int n = sz(s), c = 0;
 	Arr<int> temp(n), pos2bckt(n), bckt(n), bpos(n), out(n);
@@ -75,7 +75,7 @@ template<class T> Arr<int> suffix_array2(const Str<T> &s) {
 	return out;
 }
 
-// comet's code
+// based on comet's code
 template<class T> Arr<int> get_lcp2(const Str<T> &s, const Arr<int> &sa) {
 	int h = 0;
 	int n = sz(s);

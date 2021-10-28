@@ -82,6 +82,22 @@
 		"typeindex": "cpp",
 		"typeinfo": "cpp",
 		"variant": "cpp",
-		"coroutine": "cpp"
+		"coroutine": "cpp",
+		"cassert": "cpp",
+		"ccomplex": "cpp",
+		"cerrno": "cpp",
+		"cfloat": "cpp",
+		"ciso646": "cpp",
+		"climits": "cpp",
+		"cstdalign": "cpp",
+		"cstdbool": "cpp",
+		"ctgmath": "cpp",
+		"filesystem": "cpp",
+		"rb_tree": "cpp",
+		"ios": "cpp",
+		"locale": "cpp",
+		"queue": "cpp",
+		"stack": "cpp",
+		"version": "cpp"
 	}
 }
