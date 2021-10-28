@@ -49,10 +49,32 @@ struct GraphWD{
 				int y=edg[i].opp(x);
 				T w=edg[i].w;
 				if(d[y]>dist+w)
-					p[y]=i, pq.push({d[y]=dist+w,y});
+					p[y]=x, pq.push({d[y]=dist+w,y});
 			}
 		}
 	}
+	// //이론상 O(E)인데 더 느린듯, gccext include필요
+	// void dijkstra_trackone2(Arr<T>& d,Arr<int>& p,int s){
+	// 	d=Arr<T>(n,inf<T>());
+	// 	p=Arr<int>(n,-1);
+	// 	using PQType=XPQMin<pair<i64,int>,thin_heap_tag>;
+	// 	PQType pq;
+	// 	Arr<PQType::point_iterator> ita(n);
+	// 	for(int i=0;i<n;i++)
+	// 		ita[i]=pq.push({inf<T>(),i});
+	// 	pq.modify(ita[s],{d[s]=0,s});
+	// 	while(sz(pq)){
+	// 		auto [xd,x]=pq.top(); pq.pop();
+	// 		if(xd>d[x])continue;
+	// 		ita[x]=pq.end();
+	// 		for(auto& i:adj[x]){
+	// 			int y=edg[i].opp(x);
+	// 			T w=edg[i].w;
+	// 			if(ita[y]!=pq.end() and d[y]>xd+w)
+	// 				p[y]=x, pq.modify(ita[y],{d[y]=xd+w,y});
+	// 		}
+	// 	}
+	// }
 
 	Arr<Arr<int>> floyd(){
 		Arr<Arr<int>> a(n,Arr<int>(n,inf<int>()));
