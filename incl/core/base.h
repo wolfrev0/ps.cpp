@@ -3,7 +3,6 @@
 #include "core/abbr.h"
 #include "core/config.h"
 #include "core/func1.h"
-#include "core/monoid.h"
 #include "core/func2.h"
 #include "core/pq.h"
 #include "core/arr.h"

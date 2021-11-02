@@ -36,8 +36,8 @@ template<class T> struct Multixet{
 		auto it=s.lb({v,0});
 		return it->fi==v?it:s.end();
 	}
-	void insert(const T& v){s.insert({v,counter++});}
-	void erase(const typename Xet<pair<T,int>>::iterator& it){s.erase(it);}
+	auto insert(const T& v){return s.insert({v,counter++});}
+	auto erase(const typename Xet<pair<T,int>>::iterator& it){return s.erase(it);}
 	int order_of_key(const T& v,bool ub=true)const{return s.order_of_key({v,ub?counter:0});}
 	auto find_by_order(int ord)const{return s.find_by_order(ord);}
 	int count(const T& v)const{return order_of_key(v)-order_of_key(v-1);}
