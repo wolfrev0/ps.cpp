@@ -20,3 +20,7 @@
 using i64=long long;using u64=unsigned long long;
 using pint=pair<int,int>;using tint=tuple<int,int,int>;
 template<class T>using Str=basic_string<T>;
+
+#define PQ std::priority_queue
+template<class T>using PQMax=PQ<T>;
+template<class T>using PQMin=PQ<T,vector<T>,greater<T>>;
