@@ -30,6 +30,7 @@
 #include "math/frac.h"
 #include "math/lp.h"
 #include "math/mod.h"
+#include "math/monoid.h"
 #include "math/monoid2.h"
 
 #include "misc/bucket.h"
@@ -64,8 +65,9 @@
 #include "tree/seg/pstlazy.h"
 #include "tree/seg/seg.h"
 #include "tree/seg/seg2d.h"
-#include "tree/seg/segbu.h"
 #include "tree/seg/seglazy.h"
+#include "tree/seg/seglegacy.h"
+#include "tree/seg/segrec.h"
 #include "tree/toptree.h"
 #include "tree/bbst/treap.h"
 #include "tree/bbst/treapBST.h"
