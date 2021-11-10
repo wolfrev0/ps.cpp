@@ -1,6 +1,14 @@
 #pragma once
 #include "core/base.h"
 
+#include "math/monoid.h"
+
+// template<class T,class U> struct Monoid2{
+// 	Monoid2(Monoid<T> mq,Monoid<U>mu,
+// };
+
+// #define M2PLUSPLUS(T) MPLUS(T),MPLUS(T)
+
 // template<class T, class U=T> struct PlusPlus{
 // 	static cxp Monoid<T> mq;
 // 	static cxp Monoid<U> mu;

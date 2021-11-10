@@ -24,3 +24,6 @@ template<class T>using Str=basic_string<T>;
 #define PQ std::priority_queue
 template<class T>using PQMax=PQ<T>;
 template<class T>using PQMin=PQ<T,vector<T>,greater<T>>;
+
+#define head(x) (x.begin())
+#define tail(x) prev(x.end())

@@ -4,6 +4,7 @@
 #define ARG(...) __VA_ARGS__
 #define func(RetT,fname,...) function<RetT(__VA_ARGS__)> fname=[&](__VA_ARGS__)->RetT
 #define lam(expr,...) [&](__VA_ARGS__){return expr;}
+#define lamp(expr,...) [](__VA_ARGS__){return expr;}
 
 template<class T,class U>bool assmin(T& a,U&& b){return a>b?a=b,true:false;}
 template<class T,class U>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}

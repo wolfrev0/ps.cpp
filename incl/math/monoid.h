@@ -3,25 +3,22 @@
 #include "core/config.h"
 #include "core/arr.h"
 
-#ifdef CPP20
+template<class T>
+struct Monoid{
+	function<T(T,T)> f; T id;
+	Monoid(function<T(T,T)> f,T id=T()):f(f),id(id){}
+};
+#define MPLUS(T) Monoid<T>(lamp(x+y,T x,T y),T(0))
+#define MMIN(T) Monoid<T>(lamp(min(x,y),T x,T y),inf<T>())
+#define MMAX(T) Monoid<T>(lamp(max(x,y),T x,T y),-inf<T>())
+#define MXOR(T) Monoid<T>(lamp(x^y,T x,T y),T(0))
+#define MMUL(T) Monoid<T>(lamp(x*y,T x,T y),T(1))
+#define MASS(T) Monoid<T>(lamp(y,T x,T y),inf<T>()+1)
 
-template<class T, auto _f=[](T x,T y){return x+y;}, T _id=0>
-struct Monoid{static cxp auto f=_f,id=_id;};
-
-template<class T> struct MonoidPlus:Monoid<T,[](T x,T y){return x+y;},T(0)>{};
-template<class T> struct MonoidMin:Monoid<T,[](T x,T y){return min(x,y);},inf<T>()>{};
-template<class T> struct MonoidMax:Monoid<T,[](T x,T y){return max(x,y);},-inf<T>()>{};
-template<class T> struct MonoidXor:Monoid<T,[](T x,T y){return x^y;},T(0)>{};
-template<class T> struct MonoidMul:Monoid<T,[](T x,T y){return x*y;},T(1)>{};
-template<class T> struct MonoidAss:Monoid<T,[](T x,T y){return y;},inf<T>()*2>{};
-template<class T,T id=inf<T>()*2> struct MonoidAssOnce:Monoid<T,[](T x,T y){return x==id?y:x;},id>{};
-
-template<class T, class M=Monoid<T>>
-Arr<T> cumf(const Arr<T>& a){
-	Arr<T> b(sz(a)+1,M::id);
+template<class T>
+Arr<T> cumf(const Arr<T>& a, const Monoid<T>& m=MPLUS(T)){
+	Arr<T> b(sz(a)+1,m.id);
 	for(int i=0;i<sz(a);i++)
-		b[i]=M::f(b[i-1],a[i]);
+		b[i]=m.f(b[i-1],a[i]);
 	return b;
 }
-
-#endif
