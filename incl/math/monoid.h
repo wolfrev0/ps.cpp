@@ -22,3 +22,10 @@ Arr<T> cumf(const Arr<T>& a, const Monoid<T>& m=MPLUS(T)){
 		b[i]=m.f(b[i-1],a[i]);
 	return b;
 }
+template<class T>
+Arr<T> cumb(const Arr<T>& a, const Monoid<T>& m=MPLUS(T)){
+	Arr<T> b(sz(a)+1,m.id);
+	for(int i=sz(a)-1;~i;i--)
+		b[i]=m.f(b[i-1],a[i]);
+	return b;
+}

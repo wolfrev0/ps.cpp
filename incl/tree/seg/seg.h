@@ -18,7 +18,6 @@ template<class T> struct Seg{
 		}
 		return mq.f(rs,re);
 	}
-protected:
 	int n;
 	Monoid<T> mq,mu;
 	Arr<T> tr;

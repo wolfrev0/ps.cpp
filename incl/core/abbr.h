@@ -20,10 +20,7 @@
 using i64=long long;using u64=unsigned long long;
 using pint=pair<int,int>;using tint=tuple<int,int,int>;
 template<class T>using Str=basic_string<T>;
-
-#define PQ std::priority_queue
-template<class T>using PQMax=PQ<T>;
-template<class T>using PQMin=PQ<T,vector<T>,greater<T>>;
+template<class T,class CMP=greater<T>>using PQ=std::priority_queue<T,vector<T>,CMP>;
 
 #define head(x) (x.begin())
 #define tail(x) prev(x.end())
