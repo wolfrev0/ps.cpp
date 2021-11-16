@@ -40,7 +40,7 @@ struct GraphUD: public GraphWD<int>{
 		for(int i=0;i<n;i++)
 			for(auto& j:adj[i])
 				in[edg[j].v[1]]++;
-		PQMin<int> q;
+		PQ<int,greater<int>> q;
 		for(int i=0;i<n;i++)
 			if(!in[i])
 				q.push(i);

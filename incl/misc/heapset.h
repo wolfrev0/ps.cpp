@@ -10,5 +10,5 @@ template<class T, bool mx=false> struct HeapSet {
 		return mx?-a.top():a.top();
 	}
 	int size()const{return sz(a)-sz(b);}
-	PQMin<T> a,b;
+	PQ<T,greater<>> a,b;
 };

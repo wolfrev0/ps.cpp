@@ -22,7 +22,7 @@ struct GraphWD{
 	void dijkstra_trackall(Arr<T>& d,Arr<Arr<int>>& p,int s){
 		d=Arr<T>(n,inf<T>());
 		p=Arr<Arr<int>>(n);
-		PQMin<pair<T,int>> pq;
+		PQ<pair<T,int>,greater<>> pq;
 		pq.push({d[s]=T(),s});
 		while(sz(pq)){
 			auto [dist,x]=pq.top(); pq.pop();
@@ -40,7 +40,7 @@ struct GraphWD{
 	void dijkstra_trackone(Arr<T>& d,Arr<int>& p,int s){
 		d=Arr<T>(n,inf<T>());
 		p=Arr<int>(n,-1);
-		PQMin<pair<T,int>> pq;
+		PQ<pair<T,int>,greater<>> pq;
 		pq.push({d[s]=T(),s});
 		while(sz(pq)){
 			auto [dist,x]=pq.top(); pq.pop();

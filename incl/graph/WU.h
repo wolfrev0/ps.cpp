@@ -32,7 +32,7 @@ struct GraphWU: GraphWD<T>{
 	Arr<E> mst2(){
 		Arr<E> ret;
 		Arr<bool> vis(n);
-		PQMin<tuple<T,int,int>> pq;
+		PQ<tuple<T,int,int>,greater<>> pq;
 		for(auto i:adj[0])
 			pq.empl(edg[i].w,edg[i].opp(0),i);
 		vis[0]=true;

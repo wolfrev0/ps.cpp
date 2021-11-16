@@ -22,7 +22,7 @@ struct LeftHull{
 	int size()const{return sz(pq);}
 	int pop(){int z=argmin();pq.pop();return z;}
 private:
-	PQMax<int> pq;
+	PQ<int> pq;
 	int ans=0,bias=0;
 };
 
