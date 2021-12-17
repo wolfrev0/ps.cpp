@@ -24,6 +24,7 @@ Arr<Arr<int>> sieve_divs(int n) {
 			r[j].pushb(i);
 	return r;
 }
+//NOTE: minfac[p]=p
 Arr<int> sieve_minfac(int n) {
 	Arr<int> s(n);
 	for(i64 i=2;i<n;i++)

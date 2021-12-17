@@ -9,7 +9,7 @@ struct Arr:public P{
 	explicit Arr(signed n):P(n){}
 	explicit Arr(signed n,T init):P(n,init){}
 	Arr(initializer_list<T>il):P(il){}
-#ifdef ARGAUTO
+#if ARGAUTO
 	Arr(auto its, auto ite):P(its,ite){}
 #endif
 	inline T& operator[](signed i){

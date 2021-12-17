@@ -99,6 +99,7 @@ struct Flow:public GraphWD<FlowW>{
 		return r;
 	}
 
+	// successive shortest path || primal-dual
 	pair<T,int> mcmf(int src,int snk,int flow=inf<int>()){
 		func(ARG(pair<T,int>),step,int flow){
 			Arr<FlowW> d;
@@ -126,8 +127,6 @@ struct Flow:public GraphWD<FlowW>{
 		return ret;
 	}
 
-	// successive shortest path || primal-dual
-	pair<int, int> mcmf_fast(int flow = inf<int>()){return {};}
 	void gomory_hu(){}
 
 	//not tested
