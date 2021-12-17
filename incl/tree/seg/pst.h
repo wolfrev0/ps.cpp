@@ -1,6 +1,5 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid2.h"
 
 template<class T, class F, int n> struct PST {
 	static PST* id() {

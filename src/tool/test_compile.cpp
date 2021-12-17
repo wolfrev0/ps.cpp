@@ -31,7 +31,6 @@
 #include "math/lp.h"
 #include "math/mod.h"
 #include "math/monoid.h"
-#include "math/monoid2.h"
 
 #include "misc/bucket.h"
 #include "misc/bucketbias.h"
@@ -57,7 +56,6 @@
 #include "str/sufarr.h"
 
 #include "tree/seg/dynseg.h"
-#include "tree/seg/dynseglazy.h"
 #include "tree/seg/fenwick.h"
 #include "tree/hld.h"
 #include "tree/linkcut.h"
@@ -66,8 +64,6 @@
 #include "tree/seg/seg.h"
 #include "tree/seg/seg2d.h"
 #include "tree/seg/seglazy.h"
-#include "tree/seg/seglegacy.h"
-#include "tree/seg/segrec.h"
 #include "tree/toptree.h"
 #include "tree/bbst/treap.h"
 #include "tree/bbst/treapBST.h"

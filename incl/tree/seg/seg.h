@@ -3,7 +3,7 @@
 #include "math/monoid.h"
 
 template<class T> struct Seg{
-	Seg(int n=0,Monoid<T> mq=MPLUS(T),Monoid<T> mu=MASS(T)):n(n),mq(mq),mu(mu),tr(n<<1,mu.id){}
+	Seg(int n=0,Monoid<T> mq=MAdd<T>(),Monoid<T> mu=MAss<T>()):n(n),mq(mq),mu(mu),tr(n<<1,mu.id){}
 	void upd(int i,T val) {i+=i<0?n:0;
 		i+=n,tr[i]=mu.f(tr[i],val);
 		while(i>>=1)tr[i]=mq.f(tr[i<<1], tr[i<<1|1]);
@@ -13,8 +13,8 @@ template<class T> struct Seg{
 		assert(0<=s&&s<=e&&e<=n);
 		T rs=mq.id,re=mq.id;
 		for(s+=n,e+=n;s<e;s>>=1,e>>=1){
-			if(s&1)rs=mq.f(tr[s++],rs);
-			if(e&1)re=mq.f(re,tr[--e]);
+			if(s&1)rs=mq.f(rs,tr[s++]);
+			if(e&1)re=mq.f(tr[--e],re);
 		}
 		return mq.f(rs,re);
 	}
