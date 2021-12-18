@@ -4,7 +4,6 @@
 
 //Handy Funcs
 template<class T>int sz(const T& x){return x.size();}
-template<class T>cxp T inf(){return numeric_limits<T>::max()/2;}
 int divc(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?(a+b-1)/b:a/b;}
 int divf(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?a/b:(a-b+1)/b;}
 cxp i64 lg2f(i64 x){return 63-__builtin_clzll(x);}
@@ -17,3 +16,7 @@ void WARN(bool cond,const char* str){
 	if(cond&&!z.count(str))z.insert(str),cerr<<"[WARN] "<<str<<endl;
 	#endif
 }
+
+template<typename T> concept MemberInf=requires(T t){t.inf();};
+template<class T>cxp T inf(){return numeric_limits<T>::max()/2;}
+template<MemberInf T>T inf(){return T().inf();}
