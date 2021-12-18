@@ -6,6 +6,7 @@
   3. Support negative index (same as python)
 
 ## Getting Started
+  Requirements: c++20, g++
   1. git clone https://github.com/0xb612f/pslib  
   2. cd algolib  
   3. cp src/tpl.cpp src/main.cpp //main.cpp에 템플릿코드 복사  
