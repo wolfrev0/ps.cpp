@@ -29,7 +29,7 @@ template<class T>struct MMul:Monoid<T>{
 };
 template<class T>struct MAss:Monoid<T>{
 	static T id(){return inf<T>()+1;}
-	static T f(T x,T y){return y;}
+	static T f(T x,T y){return y==id()?x:y;}
 	static T fn(T x,int n){return x;}
 };
 template<class T>struct MMin:Monoid<T>{

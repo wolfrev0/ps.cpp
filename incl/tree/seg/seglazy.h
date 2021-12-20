@@ -14,29 +14,23 @@ struct SegLazy{
 	using T=MQ::T;
 	SegLazy(int n=0):n(n),tr(n<<2,MU::id()),lz(n<<2,MU::id()){}
 	T q(int p){return q(p,p+1);}
-	T q(int s,int e){return q(1,0,n,s,e);}
+	T q(int s,int e){return q(s,e,1,0,n);}
 	void upd(int p,T val){upd(p,p+1,val);}
-	void upd(int s,int e,T val){upd(1,0,n,s,e,val);}
+	void upd(int s,int e,T val){upd(s,e,val,1,0,n);}
 private:
-	T q(int c,int cs,int ce,int s,int e){
+	T q(int s,int e,int c,int cs,int ce){
 		propa(c,cs,ce);
 		if(s>=ce||e<=cs) return MQ::id();
 		if(s<=cs&&ce<=e) return tr[c];
 		int m=(cs+ce)/2;
-		return MQ::f(q(c<<1,cs,m,s,e),q(c<<1|1,m,ce,s,e));
+		return MQ::f(q(s,e,c<<1,cs,m),q(s,e,c<<1|1,m,ce));
 	}
-	void upd(int c,int cs,int ce,int s,int e,T val){
+	T upd(int s,int e,T val,int c,int cs,int ce){
 		propa(c,cs,ce);
-		if(s>=ce||e<=cs) return;
-		if(s<=cs&&ce<=e){
-			addlz(c,val);
-			propa(c,cs,ce);
-			return;
-		}
+		if(s>=ce||e<=cs) return tr[c];
+		if(s<=cs&&ce<=e){ addlz(c,val),propa(c,cs,ce);return tr[c]; }
 		int m=(cs+ce)/2;
-		upd(c<<1,cs,m,s,e,val);
-		upd(c<<1|1,m,ce,s,e,val);
-		tr[c]=MQ::f(tr[c<<1],tr[c<<1|1]);
+		return tr[c]=MQ::f(upd(s,e,val,c<<1,cs,m),upd(s,e,val,c<<1|1,m,ce));
 	}
 	void propa(int c,int cs,int ce){
 		if(lz[c]==MU::id()) return;
