@@ -17,6 +17,8 @@ void WARN(bool cond,const char* str){
 	#endif
 }
 
-template<typename T> concept MemberInf=requires(T t){t.inf();};
 template<class T>cxp T inf(){return numeric_limits<T>::max()/2;}
+#ifdef CONCEPT
+template<typename T> concept MemberInf=requires(T t){t.inf();};
 template<MemberInf T>T inf(){return T().inf();}
+#endif
