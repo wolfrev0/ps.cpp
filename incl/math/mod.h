@@ -1,7 +1,7 @@
 #pragma once
 #include "core/base.h"
 
-//Mod객체로 DP하는법: 직접 객체.n에 접근해서 .n=m으로 초기화하고, if(dp[].n==m)return dp;로 사용
+//Mod객체로 DP하는법: 지금 inf<mod>어느정도 지원됨. optional 사용하는게 더 깔끔할까?
 template<int m> struct Mod{
 	Mod(i64 n=0):n(n>=i64(m)*m?n:(n%m+m)%m){}
 	explicit operator int()const{return n;}

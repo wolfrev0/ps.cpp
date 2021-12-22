@@ -66,3 +66,6 @@ oa
 ob
 a.out
 *.gch
+
+node_modules
+tc
