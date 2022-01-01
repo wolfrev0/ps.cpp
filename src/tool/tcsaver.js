@@ -2,7 +2,7 @@
 //Requirements: node(v14), competitive companion(web browser extension)
 //How to use
 //1. install [competitive companion] on web browser
-//2. run this server
+//2. run this server ([Allow Automatic Tasks] of VSCode might be convenient)
 //3. click green (+) button on browser in problem page
 //4. build your code and run testtc.sh
 const app = require('express')();
@@ -17,6 +17,8 @@ app.post('/', (req, res) => {
 		fs.rmdirSync('tc',{recursive:true});
 	fs.mkdirSync('tc');
 	for(let i=0;i<data.tests.length;i++){
+		if(!i)
+			fs.writeFileSync('in', data.tests[i].input);
 		fs.writeFileSync('tc/'+i+'.in', data.tests[i].input);
 		fs.writeFileSync('tc/'+i+'.ans', data.tests[i].output);
 	}
