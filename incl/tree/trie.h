@@ -5,12 +5,11 @@
 //메모리 갈아엎는 절약: 1.정렬후 이분탐색(채점번호 33273843), 2.RadixTree
 template<int n> struct Trie{
 	Trie(char c=0,Trie* p=0):c(c),cnt(0),p(p){}
-	~Trie(){for(auto i:a)if(i)delete i;}
-	Trie* add(auto s,auto e){
-		cnt++;return s^e?next(*s)->add(s+1,e):this;
-	}
+	~Trie(){for(auto i:a)if(i.se)delete i.se;}
+	Trie* next(char x){return a[x]=a[x]?a[x]:new Trie(x,this);}
+	Trie* add(auto s,auto e){cnt++;return s!=e?next(*s)->add(s+1,e):this;}
 	void rem(auto s,auto e){cnt--;if(s^e)a[*s]->rem(s+1,e);}
-	char c;int cnt;Trie *p,*a[n]{};
+	char c;int cnt;Trie *p; array<Trie*,n>a{};
 };
 
 #pragma GCC diagnostic push
