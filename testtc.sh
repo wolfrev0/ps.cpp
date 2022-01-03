@@ -10,5 +10,5 @@ for i in tc/*.in;
 do
 	echo "### "${i%.*}" ###"
 	./a.out<$i>${i%.*}.o
-	diff --strip-trailing-cr ${i%.*}.o ${i%.*}.ans
+	diff ${i%.*}.o ${i%.*}.ans -B -Z
 done
