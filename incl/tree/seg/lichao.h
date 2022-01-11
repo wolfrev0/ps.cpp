@@ -3,8 +3,8 @@
 
 //TODO: concept로 인터페이스 추상화(서로 교점 하나인 그래프면 관리가능하다 함)시키고,cht.L과 lichao.LL도 geom.Line으로 통합시키자.
 struct LL{
-	static LL id(){return {0,-inf<int>()};}
-	int a,b;
+	static LL id(){return {0,0.-inf<int>()};}
+	f64 a,b;
 	f64 f(f64 x){return a*x+b;}
 };
 

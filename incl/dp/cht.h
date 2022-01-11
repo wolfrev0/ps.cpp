@@ -2,6 +2,8 @@
 #include "geom/line.h"
 #include "misc/i128.h"
 
+//NOTE:골치아프면 걍 리차오 쓰자
+
 bool fraclt(pint a,pint b){
 	if(a.se<0)a.fi*=-1,a.se*=-1;
 	if(b.se<0)b.fi*=-1,b.se*=-1;
@@ -40,15 +42,16 @@ struct CHTint{
 auto mri(auto it) { return make_reverse_iterator(it); }  //*mri(it) == *prev(it)
 auto rerase(auto& c, auto ri) { return mri(c.erase(prev(ri.base()))); }
 
-struct L {
-	i64 tan, yic;
+using T=f64;
+struct L{
+	T tan, yic;
 	mutable f64 lx = -1 / 0.0, rx = 1 / 0.0;
 
 	bool operator<(const L& r) const { return tan < r.tan; }
-	bool operator<(const i64 x) const { return rx < x; }
+	bool operator<(const T x) const { return rx < x; }
 
 	f64 cpx(const L& r) const { return (r.yic - yic) / f64(tan - r.tan); }
-	i64 f(i64 x) const { return tan * x + yic; }
+	T f(T x) const { return tan * x + yic; }
 };
 
 // max(lower convex envelope), increasing tangent
@@ -59,7 +62,7 @@ struct L {
 struct CHTStk {
 	Arr<L> st;
 
-	void push(i64 tan, i64 yic) {
+	void add(T tan, T yic) {
 		L z{tan, yic, 0};
 		while(sz(st)) {
 			z.lx = st.back().cpx(z);
@@ -70,7 +73,7 @@ struct CHTStk {
 		st.pushb(z);
 	}
 
-	// i64 q(i64 x){
+	// T q(T x){
 	// 	int s=0, e=sz(st);
 	// 	while(e-s>1){
 	// 		int m=(s+e)/2;
@@ -80,7 +83,7 @@ struct CHTStk {
 	// }
 	//쿼리하는 x값도 단조증가하면 O(n) 가능
 	int s = 0;
-	i64 q(i64 x) {
+	T q(T x) {
 		while(s < sz(st) and x >= st[s].lx) s++;
 		return st[s - 1].tan * x + st[s - 1].yic;
 	}
@@ -88,7 +91,7 @@ struct CHTStk {
 
 // max(lower convex envelope)
 struct CHTSet {
-	void add(i64 a, i64 b) {
+	void add(T a, T b) {
 		auto it = s.find({a, b});
 		if(it != s.end()) b = max(b, it->yic), s.erase(it);
 
@@ -106,7 +109,7 @@ struct CHTSet {
 		if(l != s.rend()) l->rx = z.lx;
 	}
 
-	i64 q(i64 x) {
+	T q(T x) {
 		auto it = s.lower_bound(x);
 		return it->tan * x + it->yic;
 	}
