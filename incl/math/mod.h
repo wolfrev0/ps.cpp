@@ -36,5 +36,6 @@ template<int m> struct Mod{
 		return{g,y,x-(a/b)*y};
 	}
 	Mod inf()const{return ::inf<int>();}
+	Mod nan()const{return ::nan<int>();}
 };
 template<int m> ostream& operator<<(ostream& s,const Mod<m>& n){return s << n.n;}

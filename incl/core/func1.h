@@ -18,7 +18,10 @@ void WARN(bool cond,const char* str){
 }
 
 template<class T>cxp T inf(){return numeric_limits<T>::max()/2;}
+template<class T>cxp T nan(){return inf<T>()+1;}
 #ifdef CONCEPT
 template<typename T> concept MemberInf=requires(T t){t.inf();};
+template<typename T> concept MemberNan=requires(T t){t.nan();};
 template<MemberInf T>T inf(){return T().inf();}
+template<MemberNan T>T nan(){return T().nan();}
 #endif

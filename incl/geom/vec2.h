@@ -17,14 +17,7 @@ template<class T> struct Vec2{
 	Vec2 operator*=(T r){return *this=*this*r;}
 	Vec2 operator/=(T r){return *this=*this/r;}
 
-	//호환성때문에 잠시 보류
-	// friend strong_ordering operator<=>(const Vec2&, const Vec2&)=default;
-	bool operator==(const Vec2& r)const{return x==r.x&&y==r.y;}
-	bool operator!=(const Vec2& r)const{return !(*this==r);}
-	bool operator<(const Vec2& r)const{return x==r.x?y<r.y:x<r.x;}
-	bool operator<=(const Vec2& r)const{return *this==r||*this<r;}
-	bool operator>(const Vec2& r)const{return x==r.x?y>r.y:x>r.x;}
-	bool operator>=(const Vec2& r)const{return *this==r||*this>r;}
+	friend strong_ordering operator<=>(const Vec2&, const Vec2&)=default;
 	
 	f64 len()const{return hypot(x, y);}
 	T lensq()const{return dot(*this);}
@@ -43,6 +36,7 @@ template<class T> struct Vec2{
 	Vec2 rot(double s, double c)const{return{c*x-s*y, s*x+c*y};}
 	Vec2 rot90()const{return {y,-x};}
 	static Vec2 inf(){return{::inf<T>(),::inf<T>()};}
+	static Vec2 nan(){return{::nan<T>(),::nan<T>()};}
 	static bool cmpccw(const Vec2& l,const Vec2& r,const Vec2& base){
 		T val=base.ccw(l,r);
 		assert(base<=l&&base<=r);
