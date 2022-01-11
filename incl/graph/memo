@@ -9,3 +9,5 @@ x->A&B(단 2개, boj12961): A->x->B로 모델링
 이외에는 LP공식 듀얼시켜보고 이리저리 정리해서 플로우로 환원시키는듯(대부분 이분매칭으로 정리시킴)
 
 플로우로도 부족하면 AugmentPath분석해서 PathFinding을 최적화하는거까지 생각해볼 수 있다(많은 어려운그리디 문제들이 여기에 해당)
+
+DenseGraph의 Complement(=Sparse)가 주어질때 빠른 bfs하기[https://www.geeksforgeeks.org/shortest-path-in-a-complement-graph/]
