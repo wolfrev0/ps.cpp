@@ -1,7 +1,7 @@
 #pragma once
 #include "graph/WD.h"
 
-using T=i64;
+template<class T>
 struct FlowW {
 	int cap; T cost;
 	int inv;
@@ -12,21 +12,20 @@ struct FlowW {
 	bool operator==(const FlowW& r)const{return !(cost<r.cost) and !(cost>r.cost);}
 	FlowW operator+(const FlowW& r) const { return cost + r.cost; }
 	FlowW operator/(const FlowW& r) const { return cost / r.cost; }
+	FlowW inf()const{return inf<int>();}
 };
 
 //이분그래프 최대독립집합 재구성: 종만북참고
-namespace std{
-	template<> class numeric_limits<FlowW> {
-	public:
-		static FlowW max(){return FlowW(inf<int>());}
-	};
-}
-struct Flow:public GraphWD<FlowW>{
-	Flow(int n):GraphWD(n){}
+template<class T=i64>
+struct Flow:public GraphWD<FlowW<T>>{
+	using W=FlowW<T>;
+	using P=GraphWD<W>;
+	using E=P::E;using P::edg;using P::adj; using P::n;
+	Flow(int n):P(n){}
 
 	void add_edge(int s, int e, int cap, T cost){
-		GraphWD::add_edge(s,e,{cap,cost});
-		GraphWD::add_edge(e,s,{0,-cost});
+		P::add_edge(s,e,{cap,cost});
+		P::add_edge(e,s,{0,-cost});
 		edg[-2].w.inv=sz(edg)-1;
 		edg[-1].w.inv=sz(edg)-2;
 	}
@@ -102,7 +101,7 @@ struct Flow:public GraphWD<FlowW>{
 	// successive shortest path || primal-dual
 	pair<T,int> mcmf(int src,int snk,int flow=inf<int>()){
 		func(ARG(pair<T,int>),step,int flow){
-			Arr<FlowW> d;
+			Arr<W> d;
 			Arr<int> p;
 			if(!spfa_trackone(d,p,src) || p[snk]==-1)
 				return {};
@@ -174,30 +173,33 @@ struct Flow:public GraphWD<FlowW>{
 	}
 };
 
-struct FlowLB:public Flow{
+template<class T>
+struct FlowLB:public Flow<T>{
+	using P=Flow<T>;
+	using E=P::E;using P::edg;using P::adj; using P::n;
 	int SRC,SNK,demands=0;
-	FlowLB(int n):Flow(n+2),SRC(n),SNK(n+1){}
+	FlowLB(int n):P(n+2),SRC(n),SNK(n+1){}
 
 	//NOTE: cost처리 잘 된건지 모름. 검증필요(Library Checker에 있을듯?)
 	void add_edge(int s,int e,pint cap,int cost){
 		auto [lo,hi]=cap;
 		demands+=lo;
 		if(lo){
-			Flow::add_edge(SRC,e,lo,cost);
-			Flow::add_edge(s,SNK,lo,cost);
-			Flow::add_edge(s,e,hi-lo,cost);
+			P::add_edge(SRC,e,lo,cost);
+			P::add_edge(s,SNK,lo,cost);
+			P::add_edge(s,e,hi-lo,cost);
 		}else
-			Flow::add_edge(s,e,hi,cost);
+			P::add_edge(s,e,hi,cost);
 	}
 
 	int dinic(int src,int snk,int flow=inf<int>()){
-		Flow::add_edge(snk,src,inf<int>(),0);
-		if(Flow::dinic(SRC,SNK,flow)!=demands)
+		P::add_edge(snk,src,inf<int>(),0);
+		if(P::dinic(SRC,SNK,flow)!=demands)
 			return -1;
 		int r=edg[-1].w.cap;
 		adj[edg[-1].v[0]].popb(),edg.popb();
 		adj[edg[-1].v[0]].popb(),edg.popb();
-		r+=Flow::dinic(src,snk,flow);
+		r+=P::dinic(src,snk,flow);
 		return r;
 	}
 };

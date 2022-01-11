@@ -20,8 +20,8 @@ template<class T> struct Bipartite{
 //NOTE: minimum weighted bipartite matching
 //NOTE: 단순히 가중치를 음수로 바꾸면 max매칭이 되는게 맞는데 어째선지 잘 안됨(TLE남). 일단 max매칭은 mcmf로 풀자
 //NOTE: 매칭안된거 판별을 inf<int>()대신 inf<int>()/max(n,m)써야 오버플로 안나는듯? 아니면 매칭결과의 가중치 확인으로도 가능
-using T=i64;
 struct Hungarian{
+	using T=i64;
 	Hungarian(int n,int m):n(n),m(m),g(n+1,Arr<T>(m+1,inf<int>()/max({1ll,(i64)n,(i64)m}))){}
 
 	void add_edge(int a,int b,T c){g[a+1][b+1]=c;}
