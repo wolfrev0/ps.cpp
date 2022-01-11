@@ -62,7 +62,7 @@ template<class T>struct MFunc{
 	static T fn(T x,int n){return fn(x,n);}
 };
 struct TMaxSubArr{
-	int s=0,l=0,m=0,r=0;
+	int s=0,l=-inf<int>(),m=-inf<int>(),r=-inf<int>();
 	TMaxSubArr f(TMaxSubArr x)const{return {s+x.s,max(l,s+x.l),max({m,r+x.l,x.m}),max(r+x.s,x.r)};}
 	TMaxSubArr nan()const{return {::nan<int>(),::nan<int>(),::nan<int>(),::nan<int>()};}
 	friend strong_ordering operator<=>(const TMaxSubArr&,const TMaxSubArr&)=default;
