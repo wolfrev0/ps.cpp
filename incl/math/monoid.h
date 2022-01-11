@@ -61,17 +61,29 @@ template<class T>struct MFunc{
 	static T f(T x,T y){return x.f(y);}
 	static T fn(T x,int n){return fn(x,n);}
 };
-// template<class M>
-// auto cumf(const auto& a){
-// 	Arr<M::T> b(sz(a)+1,M::id);
-// 	for(int i=0;i<sz(a);i++)
-// 		b[i]=M::f(b[i-1],a[i]);
-// 	return b;
-// }
-// template<class T>
-// auto cumb(const Arr<M::T>& a){
-// 	Arr<M::T> b(sz(a)+1,M::id);
-// 	for(int i=sz(a)-1;~i;i--)
-// 		b[i]=M::f(b[i-1],a[i]);
-// 	return b;
-// }
+struct TMaxSubArr{
+	int s=0,l=0,m=0,r=0;
+	TMaxSubArr f(TMaxSubArr x)const{return {s+x.s,max(l,s+x.l),max({m,r+x.l,x.m}),max(r+x.s,x.r)};}
+	TMaxSubArr nan()const{return {::nan<int>(),::nan<int>(),::nan<int>(),::nan<int>()};}
+	friend strong_ordering operator<=>(const TMaxSubArr&,const TMaxSubArr&)=default;
+};
+#ifdef CPP20
+template<Monoid M>
+auto scanl(auto s,auto e){
+	using T=decltype(M::id()); int n=e-s;
+	Arr<T> b={M::id()};
+	while(s!=e)
+		b.emplace_back(M::f(b.back(),*s++));
+	rotate(b.begin(),b.begin()+1,b.end());
+	return b;
+}
+template<Monoid M>
+auto scanr(auto s,auto e){
+	using T=decltype(M::id()); int n=e-s;
+	Arr<T> b={M::id()};
+	while(s!=e)
+		b.emplace_back(M::f(b.back(),*--e));
+	reverse(b.begin(),b.end());
+	return b;
+}
+#endif
