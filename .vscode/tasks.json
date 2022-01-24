@@ -14,17 +14,17 @@
 		{
 			"label": "Run",
 			"type": "shell",
-			"command": "case ${file} in *.py) python3 ${file} < in && stickytape ${file} --add-python-path libpy > submit.py ;; *) ./a.out<in ;; esac",
+			"command": "ulimit -s 1048576 && case ${file} in *.py) python3 ${file} < in && stickytape ${file} --add-python-path libpy > submit.py ;; *) ./a.out<in ;; esac",
 		},
 		{
 			"label": "Run with time",
 			"type": "shell",
-			"command": "/usr/bin/time -v ./a.out<in 2>&1 | grep -e User -e System -e Elap -e Max && ./a.out<in",
+			"command": "ulimit -s 1048576 && /usr/bin/time -v ./a.out<in 2>&1 | grep -e User -e System -e Elap -e Max && ./a.out<in",
 		},
 		{
 			"label": "RunAll",
 			"type": "shell",
-			"command": "case ${file} in *.py) python3 ${file} < in && stickytape ${file} --add-python-path libpy > submit.py ;; *) ./testtc.sh ;; esac",
+			"command": "ulimit -s 1048576 && case ${file} in *.py) python3 ${file} < in && stickytape ${file} --add-python-path libpy > submit.py ;; *) ./testtc.sh ;; esac",
 		},
 		{
 			"label": "tc_save",
