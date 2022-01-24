@@ -16,3 +16,17 @@ f64 rdf() {
 #if ARGAUTO
 void shuffle(auto is, auto ie) { shuffle(is, ie, _rng); }
 #endif
+
+//0이상 sum이하 랜덤. 1이상 필요하면 미리 n만큼 빼두고 구한다음 나중에 +1
+Arr<int> rdarrsum(int n,int sum){
+	Arr<int> p;
+	p.pushb(0);
+	for(int i=0;i<n-1;i++)
+		p.pushb(rd(0,sum+1));
+	p.pushb(sum);
+	sort(p.begin(),p.end());
+	Arr<int> arr;
+	for(int i=1;i<sz(p);i++)
+		arr.pushb(p[i]-p[i-1]);
+	return arr;
+}
