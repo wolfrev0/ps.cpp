@@ -1,15 +1,10 @@
 #include "core/base.h"
-
-//Don't use it at interactive
-#include "core/fastio.h"
-#define endl '\n'
-
 #include "misc/random.h"
 #include "misc/gccext.h"
 
 void solve(){
 	int n=6;
-	Xet<int> a,b;
+	pbds_set<int> a,b;
 	a.insert(rd(n));
 	cout<<n<<endl;
 	for(int i=0;i<n;i++)
