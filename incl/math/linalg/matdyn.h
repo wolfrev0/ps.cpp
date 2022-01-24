@@ -79,6 +79,7 @@ template<class T> struct MatDyn{
 	int RREF(int rm){REF(false);flipX(rank),flipY(rm),REF(true),flipY(rm),flipX(rank);return rank;}
 	void flipX(int rn){for(int i=0;i<rn/2;i++)for(int j=0;j<m;j++)swap(a[i][j],a[rn-1-i][j]);}
 	void flipY(int rm){for(int i=0;i<n;i++)for(int j=0;j<rm/2;j++)swap(a[i][j],a[i][rm-1-j]);}
+	void rot90(){*this=transpose();flipX();}
 private:
 	int rank=-1;
 };

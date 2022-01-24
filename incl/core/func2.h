@@ -26,3 +26,6 @@ Arr<Arr<int>> occur(const Arr<int>& a){
 	for(auto [i,v]:enumer(a))r[v].pushb(i);
 	return r;
 }
+template<class T> ostream& operator<<(ostream& s,const Arr<T>& a){for(auto i:a)cout<<i<<' ';return s;}
+template<class T> ostream& operator<<(ostream& o,const pair<T,T>& x){return o<<x.fi<<' '<<x.se;}
+template<class... A,char sepch=' ',char endch='\n'> void PRINT(A...a){((cout<<a<<sepch),...,(cout<<endch));}

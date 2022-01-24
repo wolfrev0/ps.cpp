@@ -23,12 +23,3 @@ struct FastCIN{
 	template<class T,class U> FastCIN& operator>>(pair<T,U>& a){*this>>a.fi>>a.se;return *this;}
 }fcin;
 #define cin fcin
-
-template<class... A> void _cinread(A&...a){((cin>>(a)),...);}
-#define READ(T,...) T __VA_ARGS__;_cinread(__VA_ARGS__);
-
-template<class T> ostream& operator<<(ostream& s,const Arr<T>& a){for(auto i:a)cout<<i<<' ';return s;}
-template<class T> ostream& operator<<(ostream& o,const pair<T,T>& x){return o<<x.fi<<' '<<x.se;}
-template<class... A> void PRINT(A...a){((cout<<a<<' '),...,(cout<<endl));}
-
-//

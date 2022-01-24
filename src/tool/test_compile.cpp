@@ -36,6 +36,7 @@
 #include "misc/bucketbias.h"
 #include "misc/cumulQ.h"
 #include "misc/debug.h"
+#include "misc/fastio.h"
 #include "misc/gccext.h"
 #include "misc/hashval.h"
 #include "misc/heapset.h"

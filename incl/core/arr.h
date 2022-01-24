@@ -9,9 +9,7 @@ struct Arr:public P{
 	explicit Arr(signed n):P(n){}
 	explicit Arr(signed n,T init):P(n,init){}
 	Arr(initializer_list<T>il):P(il){}
-#if ARGAUTO
 	Arr(auto its, auto ite):P(its,ite){}
-#endif
 	inline T& operator[](signed i){
 		int n=sz(*this);
 		if(i<0)i+=n,WARN(1,"Neg Index Found");
@@ -27,7 +25,5 @@ struct Arr:public P{
 	T& at(signed i){return *this[i];}
 	const T& at(signed i)const{return *this[i];}
 };
-#if ARGAUTO
 template<class... A> auto ARR(auto n,A&&... a)
 {if constexpr(!sizeof...(a)) return n; else return Arr(n,ARR(a...));}
-#endif

@@ -16,7 +16,13 @@ void WARN(bool cond,const char* str){
 	if(cond&&!z.count(str))z.insert(str),cerr<<"[WARN] "<<str<<endl;
 	#endif
 }
-
+#include <csignal>
+void BP(bool cond){
+#if DEBUG
+	if(cond)
+		std::raise(SIGINT);
+#endif
+}
 template<class T>cxp T inf(){return numeric_limits<T>::max()/2;}
 template<class T>cxp T nan(){return inf<T>()+1;}
 #ifdef CONCEPT
