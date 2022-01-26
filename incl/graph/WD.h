@@ -19,11 +19,12 @@ struct GraphWD{
 		adj[s].pushb(sz(edg)-1);
 	}
 
-	void dijkstra_trackall(Arr<T>& d,Arr<Arr<int>>& p,int s){
+	void dijkstra_trackall(Arr<T>& d,Arr<Arr<int>>& p,Arr<int> src){
 		d=Arr<T>(n,inf<T>());
 		p=Arr<Arr<int>>(n);
 		PQ<pair<T,int>,greater<>> pq;
-		pq.push({d[s]=T(),s});
+		for(auto s:src)
+			pq.push({d[s]=T(),s});
 		while(sz(pq)){
 			auto [dist,x]=pq.top(); pq.pop();
 			if(dist!=d[x])continue;
@@ -37,11 +38,12 @@ struct GraphWD{
 			}
 		}
 	}
-	void dijkstra_trackone(Arr<T>& d,Arr<int>& p,int s){
+	void dijkstra_trackone(Arr<T>& d,Arr<int>& p,Arr<int> src){
 		d=Arr<T>(n,inf<T>());
 		p=Arr<int>(n,-1);
 		PQ<pair<T,int>,greater<>> pq;
-		pq.push({d[s]=T(),s});
+		for(auto s:src)
+			pq.push({d[s]=T(),s});
 		while(sz(pq)){
 			auto [dist,x]=pq.top(); pq.pop();
 			if(dist!=d[x])continue;
@@ -88,16 +90,17 @@ struct GraphWD{
 		return a;
 	}
 
-	bool spfa_trackall(Arr<T>& ub,Arr<Arr<int>>& p,int s){
+	bool spfa_trackall(Arr<T>& ub,Arr<Arr<int>>& p,Arr<int> src){
 		deque<int> q;
 		Arr<char> inq(n);
 		ub=Arr<T>(n,inf<T>());
 		p=Arr<Arr<int>>(n);
 		Arr<int> c(n);
-
-		ub[s]=0;
-		inq[s]=true;
-		q.pushb(s);
+		for(auto s:src){
+			ub[s]=0;
+			inq[s]=true;
+			q.pushb(s);
+		}
 		while(sz(q)){
 			int x=q.front(); inq[x]=false, q.popf();
 			for(auto i:adj[x]){
@@ -119,16 +122,17 @@ struct GraphWD{
 		}
 		return q.empty();
 	}
-	bool spfa_trackone(Arr<T>& ub,Arr<int>& p,int s){
+	bool spfa_trackone(Arr<T>& ub,Arr<int>& p,Arr<int> src){
 		deque<int> q;
 		Arr<char> inq(n);
 		ub=Arr<T>(n,inf<T>());
 		p=Arr<int>(n,-1);
 		Arr<int> c(n);
-
-		ub[s]=0;
-		inq[s]=true;
-		q.pushb(s);
+		for(auto s:src){
+			ub[s]=0;
+			inq[s]=true;
+			q.pushb(s);
+		}
 		while(sz(q)){
 			int x=q.front(); inq[x]=false, q.popf();
 			for(auto i:adj[x]){
