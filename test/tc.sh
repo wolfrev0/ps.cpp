@@ -6,9 +6,9 @@
 # done
 
 shopt -s nullglob
-for i in tc/*.in;
+for i in test/tc/*.in;
 do
 	echo "### "${i%.*}" ###"
-	./a.out<$i>${i%.*}.o
+	res/a.out<$i>${i%.*}.o
 	diff ${i%.*}.o ${i%.*}.ans -B -Z
 done

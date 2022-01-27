@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/incl"
             ],
-            "defines": [],
+            "defines": ["DEBUG=1"],
             "compilerPath": "/usr/bin/g++",
             "cStandard": "gnu17",
             "cppStandard": "c++20",

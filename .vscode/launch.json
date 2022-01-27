@@ -8,17 +8,17 @@
 			"name": "Debug Py",
 			"type": "python",
 			"request": "launch",
-			"program": "${file}<in",
+			"program": "${file}<test/tc/in",
 			"console": "integratedTerminal"
 		},
 		{
 			"name": "Debug Cpp",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/a.out",
+			"program": "${workspaceFolder}/res/a.out",
 			"args": [
 				"<",
-				"in"
+				"test/tc/in"
 			],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",

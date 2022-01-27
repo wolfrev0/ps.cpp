@@ -2,3 +2,11 @@
 dp 람다안에 static으로 선언하는거 절대 하지말자. 호출되는 순간 생성되는거라 참조값 이상하게 적용될 수 있음.
 
 분할수 dfs만들어두기) https://atcoder.jp/contests/abc226/editorial/2892
+
+평균: K가정하고 a[i]-K로 미리 정규화
+중앙: K가정하고 -1,0,+1로 미리 원자화
+https://atcoder.jp/contests/abc236/editorial/3303
+
++-1로 구성된 배열을 양수가 되도록 K개의 연속부분배열로 쪼갤 수 있다 <=> sum(arr)>=k이다 
+https://codeforces.com/contest/1630/problem/B
+연속성정리?borsuk ulam인가 stolen necklace문제같은느낌이 있다.

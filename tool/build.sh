@@ -2,6 +2,8 @@
 
 #build <*.cpp|*.h> <R|D>
 
+mkdir -p res
+
 src=${1:-"src/main.cpp"}
 
 base_arg=" -iquote ./incl -std=c++2a -Wall -Wno-unused-variable -fconcepts"
@@ -29,7 +31,7 @@ function f(){
 }
 if ! [[ "$2" =~ ?*.h ]]; then
 	#f
-	awk '//' $(f|tac) | grep -Ev '#include *"|#pragma once' > submit.cpp
+	awk '//' $(f|tac) | grep -Ev '#include *"|#pragma once' > res/submit.cpp
 fi
 
 for i in incl/core/*
@@ -39,4 +41,4 @@ do
 	fi
 done
 
-g++ $src $base_arg $option
+g++ $src $base_arg $option -o res/a.out

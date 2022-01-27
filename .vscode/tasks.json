@@ -4,32 +4,32 @@
 		{
 			"label": "Build(Debug)",
 			"type": "shell",
-			"command": "source build.sh ${relativeFile}",
+			"command": "case ${file} in *.py) stickytape ${file} --add-python-path libpy > res/submit.py ;; *) source tool/build.sh ${relativeFile} ;; esac",
 		},
 		{
 			"label": "Build(Release)",
 			"type": "shell",
-			"command": "source build.sh ${relativeFile} R",
+			"command": "case ${file} in *.py) stickytape ${file} --add-python-path libpy > res/submit.py ;; *) source tool/build.sh ${relativeFile} R ;; esac",
 		},
 		{
 			"label": "Run",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && case ${file} in *.py) python3 ${file} < in && stickytape ${file} --add-python-path libpy > submit.py ;; *) ./a.out<in ;; esac",
+			"command": "ulimit -s 1048576 && case ${file} in *.py) python3 ${file} < test/tc/in ;; *) res/a.out<test/tc/in ;; esac",
 		},
 		{
 			"label": "Run with time",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && /usr/bin/time -v ./a.out<in 2>&1 | grep -e User -e System -e Elap -e Max && ./a.out<in",
+			"command": "ulimit -s 1048576 && /usr/bin/time -v res/a.out<test/tc/in 2> >(awk '/User/||/System/||/Elap/||/Max/')",
 		},
 		{
 			"label": "RunAll",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && case ${file} in *.py) python3 ${file} < in && stickytape ${file} --add-python-path libpy > submit.py ;; *) ./testtc.sh ;; esac",
+			"command": "ulimit -s 1048576 && test/tc.sh",
 		},
 		{
 			"label": "tc_save",
       "type": "shell",
-      "command": "node src/tool/tcsaver.js",
+      "command": "node tool/tcsaver.js",
       "runOptions": {
         "runOn": "folderOpen"
       }

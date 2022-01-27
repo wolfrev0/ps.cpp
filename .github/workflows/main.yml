@@ -12,5 +12,4 @@ jobs:
       - uses: actions/checkout@v2
       - name: compile test
         run: |
-          sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 20
-          ./build.sh src/tool/test_compile.cpp
+          tool/build.sh test/compile.cpp

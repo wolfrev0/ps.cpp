@@ -13,14 +13,14 @@ app.post('/', (req, res) => {
   const data = req.body;
   console.log('['+data.name+'] parsed.');
 	fs = require('fs');
-	if(fs.existsSync('tc'))
-		fs.rmdirSync('tc',{recursive:true});
-	fs.mkdirSync('tc');
+	if(fs.existsSync('test/tc'))
+		fs.rmdirSync('test/tc',{recursive:true});
+	fs.mkdirSync('test/tc');
 	for(let i=0;i<data.tests.length;i++){
 		if(!i)
-			fs.writeFileSync('in', data.tests[i].input);
-		fs.writeFileSync('tc/'+i+'.in', data.tests[i].input);
-		fs.writeFileSync('tc/'+i+'.ans', data.tests[i].output);
+			fs.writeFileSync('test/tc/in', data.tests[i].input);
+		fs.writeFileSync('test/tc/'+i+'.in', data.tests[i].input);
+		fs.writeFileSync('test/tc/'+i+'.ans', data.tests[i].output);
 	}
   res.sendStatus(200);
 });
