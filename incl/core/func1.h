@@ -11,16 +11,16 @@ cxp i64 lg2c(i64 x){return 64-__builtin_clzll(x-1);}
 template<class T>T sq(T x){return x*x;}
 
 void WARN(bool cond,const char* str){
-	#if DEBUG
+#if DEBUG
 	static set<const char*> z;
 	if(cond&&!z.count(str))z.insert(str),cerr<<"[WARN] "<<str<<endl;
-	#endif
+#endif
 }
-#include <csignal>
-void BP(bool cond){
+void MUST(bool expr){
 #if DEBUG
-	if(cond)
-		std::raise(SIGINT);
+	#include <csignal>
+	if(!expr)
+		raise(SIGINT);
 #endif
 }
 template<class T>cxp T inf(){return numeric_limits<T>::max()/2;}
