@@ -15,7 +15,7 @@
 			"name": "Debug Cpp",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/res/a.out",
+			"program": "${workspaceFolder}/res/${fileBasenameNoExtension}.out",
 			"args": [
 				"<",
 				"test/tc/in"

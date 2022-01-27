@@ -14,17 +14,17 @@
 		{
 			"label": "Run",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && case ${file} in *.cpp) res/a.out<test/tc/in ;; *.py) stickytape ${file} --add-python-path libpy > res/submit.py && python3 ${file} < test/tc/in ;; *.sh) chmod +x ${file} && ${file} ;; *) echo Unknown Extension ;; esac",
+			"command": "ulimit -s 1048576 && case ${file} in *.cpp) res/${fileBasenameNoExtension}.out<test/tc/in ;; *.py) stickytape ${file} --add-python-path libpy > res/submit.py && python3 ${file} < test/tc/in ;; *.sh) chmod +x ${file} && ${file} ;; *) echo Unknown Extension ;; esac",
 		},
 		{
 			"label": "Run with time",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && /usr/bin/time -v res/a.out<test/tc/in 2> >(awk '/User/||/System/||/Elap/||/Max/')",
+			"command": "ulimit -s 1048576 && /usr/bin/time -v res/${fileBasenameNoExtension}.out<test/tc/in 2> >(awk '/User/||/System/||/Elap/||/Max/')",
 		},
 		{
 			"label": "RunAll",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && test/tc.sh",
+			"command": "ulimit -s 1048576 && test/tc.sh ${fileBasenameNoExtension}",
 		},
 		{
 			"label": "tc_save",

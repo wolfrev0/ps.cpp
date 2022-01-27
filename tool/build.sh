@@ -41,4 +41,4 @@ do
 	fi
 done
 
-g++ $src $base_arg $option -o res/a.out
+g++ $src $base_arg $option -o res/$(echo ${src##*/} | cut -d'.' -f1).out
