@@ -13,4 +13,4 @@ jobs:
       - name: compile test
         run: |
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 20
-          tool/build.sh test/compile.cpp
+          test/compile.sh
