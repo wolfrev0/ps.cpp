@@ -4,17 +4,17 @@
 		{
 			"label": "Build(Debug)",
 			"type": "shell",
-			"command": "case ${file} in *.py) stickytape ${file} --add-python-path libpy > res/submit.py ;; *) source tool/build.sh ${relativeFile} ;; esac",
+			"command": "source tool/build.sh ${relativeFile}",
 		},
 		{
 			"label": "Build(Release)",
 			"type": "shell",
-			"command": "case ${file} in *.py) stickytape ${file} --add-python-path libpy > res/submit.py ;; *) source tool/build.sh ${relativeFile} R ;; esac",
+			"command": "source tool/build.sh ${relativeFile} R",
 		},
 		{
 			"label": "Run",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && case ${file} in *.py) python3 ${file} < test/tc/in ;; *) res/a.out<test/tc/in ;; esac",
+			"command": "ulimit -s 1048576 && case ${file} in *.cpp) res/a.out<test/tc/in ;; *.py) stickytape ${file} --add-python-path libpy > res/submit.py && python3 ${file} < test/tc/in ;; *.sh) chmod +x ${file} && ${file} ;; *) echo Unknown Extension ;; esac",
 		},
 		{
 			"label": "Run with time",
