@@ -9,10 +9,9 @@
 //propagate = u(u(a,x),y)=u(a,z)
 //읽어볼것: https://github.com/atcoder/ac-library
 
-template<class MQ,class MU, auto fcomb=lamp(MU::f(a,MQ::fn(b,c)),MQ::T a,MU::T b,int c)>
+template<Monoid Q,Monoid U, class T=decltype(Q::id()),auto fcomb=lamp(U::f(a,Q::fn(b,c)),T a,T b,int c)>
 struct SegLazy{
-	using T=MQ::T;
-	SegLazy(int n=0):n(n),tr(n<<2,MU::id()),lz(n<<2,MU::id()){}
+	SegLazy(int n=0):n(n),tr(n<<2,Q::id()),lz(n<<2,U::id()){}
 	T q(int p){return q(p,p+1);}
 	T q(int s,int e){return q(s,e,1,0,n);}
 	void upd(int p,T val){upd(p,p+1,val);}
@@ -20,28 +19,28 @@ struct SegLazy{
 private:
 	T q(int s,int e,int c,int cs,int ce){
 		propa(c,cs,ce);
-		if(s>=ce||e<=cs) return MQ::id();
+		if(s>=ce||e<=cs) return Q::id();
 		if(s<=cs&&ce<=e) return tr[c];
 		int m=(cs+ce)/2;
-		return MQ::f(q(s,e,c<<1,cs,m),q(s,e,c<<1|1,m,ce));
+		return Q::f(q(s,e,c<<1,cs,m),q(s,e,c<<1|1,m,ce));
 	}
 	T upd(int s,int e,T val,int c,int cs,int ce){
 		propa(c,cs,ce);
 		if(s>=ce||e<=cs) return tr[c];
 		if(s<=cs&&ce<=e){ addlz(c,val),propa(c,cs,ce);return tr[c]; }
 		int m=(cs+ce)/2;
-		return tr[c]=MQ::f(upd(s,e,val,c<<1,cs,m),upd(s,e,val,c<<1|1,m,ce));
+		return tr[c]=Q::f(upd(s,e,val,c<<1,cs,m),upd(s,e,val,c<<1|1,m,ce));
 	}
 	void propa(int c,int cs,int ce){
-		if(lz[c]==MU::id()) return;
+		if(lz[c]==U::id()) return;
 		tr[c]=fcomb(tr[c],lz[c],ce-cs);
 		if(ce-cs>1){
 			addlz(c<<1,lz[c]);
 			addlz(c<<1|1,lz[c]);
 		}
-		lz[c]=MU::id();
+		lz[c]=U::id();
 	}
-	void addlz(int v,T val){lz[v]=lz[v]==MU::id()?val:MU::f(lz[v],val);}
+	void addlz(int v,T val){lz[v]=lz[v]==U::id()?val:U::f(lz[v],val);}
 
 	int n;
 	Arr<T> tr, lz;
