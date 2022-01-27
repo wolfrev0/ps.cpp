@@ -1,13 +1,14 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid2.h"
+#include "math/monoid.h"
 
 //NOTE: Upd없어도 삭제 후 삽입하면 됨
 //NOTE: using half open range [lb,ub), 1 mock nodes
-template<class T, class F>
+template<Monoid Q, Monoid U>
 struct Splay{
+	using T=decltype(Q::id());
 	struct N;
-	Splay(): root(new N(F::idT())){}
+	Splay(): root(new N(Q::id())){}
 	~Splay(){delete root;}
 
 	int size()const{return root->s-1;}//remove one mock node
@@ -28,6 +29,7 @@ struct Splay{
 		delete x;
 	}
 	T q(int s, int e){ return interval(s,e)->a; }
+	void upd(int i,T x){del(i),ins(i,x);}
 
 private:
 	N* nth(N* x, int n){
@@ -61,7 +63,7 @@ private:
 	struct N{
 		N *l=0,*r=0,*p=0;
 		int s=1;
-		T v=F::idT(),a=F::idT();
+		T v=Q::id(),a=Q::id();
 		N(T v):v(v){}
 		~N(){
 			if(l) delete l;
@@ -89,7 +91,7 @@ private:
 			this->renew();
 		}
 		void renew(){
-			a=F::f(F::f(l?l->a:F::idT(),v),r?r->a:F::idT());
+			a=Q::f(Q::f(l?l->a:Q::id(),v),r?r->a:Q::id());
 			s=(l?l->s:0)+(r?r->s:0)+1;
 		}
 	} *root;

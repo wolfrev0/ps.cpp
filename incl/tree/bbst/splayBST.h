@@ -1,12 +1,13 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid2.h"
+#include "math/monoid.h"
 
 //NOTE: Upd없어도 삭제 후 삽입하면 됨
 //NOTE: using open range (lb,ub), not half open range [lb,ub), 2 mock nodes
 //ex: https://atcoder.jp/contests/jsc2021/tasks/jsc2021_f
-template<class T, class F>
+template<Monoid Q, Monoid U>
 struct SplayBST{
+	using T=decltype(Q::id());
 	struct N;
 	SplayBST(): root(new N(inf<T>()*2)){root->setL(new N(-inf<T>()*2)); root->renew();}
 	~SplayBST(){delete root;}
@@ -62,7 +63,7 @@ struct SplayBST{
 	struct N{
 		N *l=0,*r=0,*p=0;
 		int s=1;
-		T v=F::idT(),a=F::idT();
+		T v=Q::id(),a=Q::id();
 		N(T v):v(v){}
 		~N(){
 			if(l) delete l;
@@ -90,7 +91,7 @@ struct SplayBST{
 			this->renew();
 		}
 		void renew(){
-			a=F::f(F::f(l?l->a:F::idT(),v),r?r->a:F::idT());
+			a=Q::f(Q::f(l?l->a:Q::id(),v),r?r->a:Q::id());
 			s=(l?l->s:0)+(r?r->s:0)+1;
 		}
 		N* lb(T x, N* z=0){

@@ -56,7 +56,7 @@ private:
 	virtual bool valid_intersect(const Vec2<T>& p) const { return true; }
 	virtual bool valid_foot(const Vec2<T>& p) const { return true; }
 	virtual bool valid_contains(const Vec2<T>& p) const { return true; }
-	virtual bool line_same_handler(const LineLegacy& a,Vec2<T>&res)const{throw LineSame();}
+	virtual bool line_same_handler(const LineLegacy& a,Vec2<T>&res)const{throw "Line Same";}
 };
 
 template<class T> struct Segment : public LineLegacy<T> {
@@ -87,7 +87,7 @@ template<class T> struct Segment : public LineLegacy<T> {
 		if(seg1.sv==seg2.sv and !seg1.is_valid(seg2.ev) or seg1.sv==seg2.ev and !seg1.is_valid(seg2.sv)){res=sv;return true;}
 		if(seg1.ev==seg2.sv and !seg1.is_valid(seg2.ev) or seg1.ev==seg2.ev and !seg1.is_valid(seg2.sv)){res=ev;return true;}
 		if(!seg1.is_valid(seg2.sv) and !seg1.is_valid(seg2.ev)) return false;
-		throw LineSame();
+		throw "Line Same";
 	}
 };
 
