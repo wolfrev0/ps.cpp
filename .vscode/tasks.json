@@ -2,24 +2,14 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Build(Debug)",
+			"label": "Run(Debug)",
 			"type": "shell",
-			"command": "source tool/build.sh ${relativeFile}",
+			"command": "ulimit -s 1048576 && case ${file} in *.cpp) tool/build.sh ${relativeFile} D && res/${fileBasenameNoExtension}D.out<test/tc/in ;; *.py) stickytape ${file} --add-python-path libpy > res/submit.py && python3 ${file} < test/tc/in ;; *.sh) chmod +x ${file} && ${file} ;; *) echo Unknown Extension ;; esac",
 		},
 		{
-			"label": "Build(Release)",
+			"label": "Run(Release)",
 			"type": "shell",
-			"command": "source tool/build.sh ${relativeFile} R",
-		},
-		{
-			"label": "Run",
-			"type": "shell",
-			"command": "ulimit -s 1048576 && case ${file} in *.cpp) res/${fileBasenameNoExtension}.out<test/tc/in ;; *.py) stickytape ${file} --add-python-path libpy > res/submit.py && python3 ${file} < test/tc/in ;; *.sh) chmod +x ${file} && ${file} ;; *) echo Unknown Extension ;; esac",
-		},
-		{
-			"label": "Run with time",
-			"type": "shell",
-			"command": "ulimit -s 1048576 && /usr/bin/time -v res/${fileBasenameNoExtension}.out<test/tc/in 2> >(awk '/User/||/System/||/Elap/||/Max/')",
+			"command": "ulimit -s 1048576 && tool/build.sh ${relativeFile} R && /usr/bin/time -v res/${fileBasenameNoExtension}R.out<test/tc/in 2> >(awk '/User/||/System/||/Elap/||/Max/')",
 		},
 		{
 			"label": "RunAll",

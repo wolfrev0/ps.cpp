@@ -15,7 +15,7 @@
 			"name": "Debug Cpp",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/res/${fileBasenameNoExtension}.out",
+			"program": "${workspaceFolder}/res/${fileBasenameNoExtension}D.out",
 			"args": [
 				"<",
 				"test/tc/in"
@@ -31,7 +31,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "Build(Debug)",
+			"preLaunchTask": "Run(Debug)",
 			"miDebuggerPath": "/usr/bin/gdb"
 		}
 	]

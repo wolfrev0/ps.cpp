@@ -5,12 +5,13 @@
 mkdir -p res
 
 src=${1:-"src/main.cpp"}
+dbgrel=${2:-"D"}
 
 base_arg=" -iquote ./incl -std=c++2a -Wall -Wno-unused-variable -fconcepts"
-if [ "$2" == "R" ]; then #release
-	option="-O2"
-else #debug
+if [ $dbgrel == "D" ]; then #debug
 	option="-O0 -D DEBUG=1 -ggdb3"
+else #release
+	option="-O2"
 fi
 
 function f(){
@@ -41,4 +42,15 @@ do
 	fi
 done
 
-g++ $src $base_arg $option -o res/$(echo ${src##*/} | cut -d'.' -f1).out
+RED='\033[0;31m'
+LIGHTCYAN='\033[1;36m'
+LIGHTGREEN='\033[1;32m'
+NC='\033[0m' # No Color
+
+path_out=res/$(echo ${src##*/} | cut -d'.' -f1)$dbgrel.out
+if [ $path_out -ot $src ]; then
+	echo -e "${LIGHTCYAN}[BUILD]: newly built${NC}"
+	g++ $src $base_arg $option -o $path_out
+else
+	echo -e "${LIGHTGREEN}[BUILD]: up to date${NC}"
+fi
