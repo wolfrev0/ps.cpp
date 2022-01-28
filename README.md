@@ -4,6 +4,7 @@ Algo & D.S. library for problem-solving written in Modern C++.
 ## Feature
   1. Balanced abstraction among flexibility, performance, and readability.
   2. Resolve all headerfile dependancy and merge to one file. (just submit res/sumit.cpp file. That's all!)
+  3. Various convenient tools. (pretty print debugger, testcase checker, etc...)
 
 ## Interface
   1. [s, e) half opened range
