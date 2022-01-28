@@ -12,9 +12,14 @@
 			"command": "ulimit -s 1048576 && tool/build.sh ${relativeFile} R && /usr/bin/time -v res/${fileBasenameNoExtension}R.out<test/tc/in 2> >(awk '/User/||/System/||/Elap/||/Max/')",
 		},
 		{
-			"label": "RunAll",
+			"label": "RunAll(Debug)",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && test/tc.sh ${fileBasenameNoExtension}",
+			"command": "ulimit -s 1048576 && tool/build.sh ${relativeFile} D && test/tc.sh ${fileBasenameNoExtension}D",
+		},
+		{
+			"label": "RunAll(Release)",
+			"type": "shell",
+			"command": "ulimit -s 1048576 && tool/build.sh ${relativeFile} R && test/tc.sh ${fileBasenameNoExtension}R",
 		},
 		{
 			"label": "tc_save",

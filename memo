@@ -10,3 +10,5 @@ https://atcoder.jp/contests/abc236/editorial/3303
 +-1로 구성된 배열을 양수가 되도록 K개의 연속부분배열로 쪼갤 수 있다 <=> sum(arr)>=k이다 
 https://codeforces.com/contest/1630/problem/B
 연속성정리?borsuk ulam인가 stolen necklace문제같은느낌이 있다.
+
+bash표현식 종류: https://unix.stackexchange.com/questions/270591/are-and-used-for-arithmetic-expressions-or-conditiona
