@@ -17,6 +17,5 @@ template<class T>map<T,Arr<int>> classify(const Arr<T>& a){
 		r[a[i]].push_back(i);
 	return r;
 }
-template<class T> ostream& operator<<(ostream& s,const Arr<T>& a){for(auto i:a)cout<<i<<' ';return s;}
-template<class T> ostream& operator<<(ostream& o,const pair<T,T>& x){return o<<x.fi<<' '<<x.se;}
-template<class... A,char sepch=' ',char endch='\n'> void PRINT(A...a){((cout<<a<<sepch),...,(cout<<endch));}
+template<class... A,char sepch=' ',char endch='\n'>
+void PRINT(A...a){((cout<<a<<sepch),...,(cout<<endch));}
