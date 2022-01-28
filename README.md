@@ -31,6 +31,6 @@ Algo & D.S. library for problem-solving written in Modern C++.
   TODO
 
 ## Limitation
-  1. Don't use Subtyping-Polymorphism. (pslib doesn't use virtual method for performance issue)
-  2. due to dependancy resolving, #include must be located on top of source file. if you need to define(or whatever) something above the header, use core/config.h(or other headers) instead.
+  1. Don't use Subtyping-Polymorphism. (pslib doesn't use virtual method due to performance issue)
+  2. #include must be located on top of source file. if you need to define(or whatever) something above the header, use core/config.h(or other headers) instead. (due to dependancy resolving logic)
   3. License is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License Version 2.0</a>
