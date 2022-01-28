@@ -15,7 +15,7 @@ pair<Arr<pint>, Arr<int>> xor_basis(const Arr<int>& a){
 			if(~b and x>(x^b))
 				x^=b,xc^=bc;
 		if(x)
-			r[__builtin_clzll(x)]={x,xc^(1ll<<sz(bi))},bi.pushb(i);
+			r[__builtin_clzll(x)]={x,xc^(1ll<<sz(bi))},bi.emplace_back(i);
 	}
 	return{move(r),move(bi)};
 }

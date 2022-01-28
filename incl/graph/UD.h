@@ -27,7 +27,7 @@ struct GraphUD: public GraphWD<int>{
 		Arr<int> ret;
 		while(sz(q)){
 			auto x=q.front(); q.pop();
-			ret.pushb(x);
+			ret.emplace_back(x);
 			for(auto& i:adj[x])
 				if(!--in[edg[i].v[1]])
 					q.push(edg[i].v[1]);
@@ -47,7 +47,7 @@ struct GraphUD: public GraphWD<int>{
 		Arr<int> ret;
 		while(sz(q)){
 			auto x=q.top();q.pop();
-			ret.pushb(x);
+			ret.emplace_back(x);
 			for(auto& i:adj[x])
 				if(!--in[edg[i].v[1]])
 					q.push(edg[i].v[1]);
@@ -77,10 +77,10 @@ struct GraphUD: public GraphWD<int>{
 			}
 			// nothing goes to ancestor => root of scc
 			if(ret==ord[v]){
-				scc.pushb();
+				scc.emplace_back();
 				int prv=-1;
 				while(sz(stk) && prv!=v)
-					scc.back().pushb(prv=stk.top()), stat[prv]=3, stk.pop();
+					scc.back().emplace_back(prv=stk.top()), stat[prv]=3, stk.pop();
 			}else stat[v]=2;
 			return ret;
 		};
@@ -101,7 +101,7 @@ struct GraphUD: public GraphWD<int>{
 			for(auto i:g.adj[v])
 				if(!vis[edg[i].v[1]])
 					dfs(edg[i].v[1], out, g);
-			out.pushb(v);
+			out.emplace_back(v);
 		};
 		for(int i=0;i<n;i++)
 			if(!vis[i])
@@ -113,7 +113,7 @@ struct GraphUD: public GraphWD<int>{
 		Arr<Arr<int>> scc;
 		for(auto i:post_ord)
 			if(!vis[i])
-				scc.pushb(),dfs(i,scc.back(),rg);
+				scc.emplace_back(),dfs(i,scc.back(),rg);
 		return scc_util(scc);
 	}
 
@@ -132,7 +132,7 @@ struct GraphUD: public GraphWD<int>{
 		func(int,eval,int x){find(x);return val[x];};
 		func(void,link,int x,int y){r[x]=y;};
 		func(void,dfs,int x){
-			sdom[x]=sz(o),o.pushb(x);
+			sdom[x]=sz(o),o.emplace_back(x);
 			for(auto i:adj[x])
 				if(int y=edg[i].v[1];!~sdom[y])
 					p[y]=x,dfs(y);
@@ -147,7 +147,7 @@ struct GraphUD: public GraphWD<int>{
 				int x=eval(rg.edg[j].v[1]);
 				if(sdom[o[i]]>sdom[x])sdom[o[i]]=sdom[x];
 			}
-			buf[o[sdom[o[i]]]].pushb(o[i]);
+			buf[o[sdom[o[i]]]].emplace_back(o[i]);
 			for(auto x:buf[p[o[i]]])u[x]=eval(x);
 			buf[p[o[i]]].clear();
 			link(o[i],p[o[i]]);

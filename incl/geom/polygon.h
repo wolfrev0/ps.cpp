@@ -9,20 +9,20 @@ template<class T> struct Polygon{
 	explicit Polygon(int n):vtx(n){}
 	explicit Polygon(const Arr<Vec2<T>>& v):vtx(v){}
 	int size()const{ return sz(vtx);}
-	void push_back(const Vec2<T>& v){ vtx.pushb(v);}
+	void push_back(const Vec2<T>& v){ vtx.emplace_back(v);}
 	void eb(){ vtx.eb();}
 	Vec2<T>& operator[](int idx){ return vtx[idx];}
 
 	f64 area(){
 		f64 ans=0;
-		for(int i=1;i<size()-1;i++) ans += vtx[0].cross(vtx[i], vtx[i+1]);
-		return ans / 2;
+		for(int i=1;i<size()-1;i++) ans += vtx[0].cross(vtx[i],vtx[i+1]);
+		return ans/2;
 	}
 
 	Arr<Segment<T>> to_segments()const{
 		Arr<Segment<T>> ret;
 		for(int i=0;i<sz(vtx);i++)
-			ret.emplace_back(vtx[i], vtx[(i+1)%sz(vtx)]);
+			ret.emplace_back(vtx[i],vtx[(i+1)%sz(vtx)]);
 		return ret;
 	}
 
@@ -31,7 +31,7 @@ template<class T> struct Polygon{
 		for(auto i:arr)
 			if(i.contains(v)) return true;
 		int cnt=0;
-		auto l=Segment<T>(v, v+Vec2<T>(int(1e9+9), 1));
+		auto l=Segment<T>(v,v+Vec2<T>(int(1e9+9),1));
 		for(auto i:arr){
 			if(i.intersect_det(l)) cnt++;
 		}
@@ -66,15 +66,15 @@ template<class T> struct ConvexPolygon:public Polygon<T>{
 				else
 					break;
 			}
-			res.pushb(vtx[i]);
+			res.emplace_back(vtx[i]);
 		}
 		vtx=res;
 	}
 
 	virtual bool contains(const Vec2<T>& v)const override{
-		T tmp=v.cross(vtx[0], vtx[1]);
+		T tmp=v.cross(vtx[0],vtx[1]);
 		for(int i=0;i<sz(vtx);i++)
-			if(tmp*v.cross(vtx[i], vtx[(i+1)%sz(vtx)])<0) return false;
+			if(tmp*v.cross(vtx[i],vtx[(i+1)%sz(vtx)])<0) return false;
 		return true;
 	}
 
@@ -83,18 +83,18 @@ template<class T> struct ConvexPolygon:public Polygon<T>{
 		//퇴화케이스 처리
 		if(sz(r)<sz(*this))return r.intersect(*this);
 		if(sz(*this)==1){
-			if(sz(r)==1 and vtx[0]==r.vtx[0]) ret.pushb(vtx[0]);
-			else if(sz(r)==2 and Segment<T>(r.vtx[0],r.vtx[1]).contains(vtx[0])) ret.pushb(vtx[0]); 
+			if(sz(r)==1 and vtx[0]==r.vtx[0]) ret.emplace_back(vtx[0]);
+			else if(sz(r)==2 and Segment<T>(r.vtx[0],r.vtx[1]).contains(vtx[0])) ret.emplace_back(vtx[0]); 
 		}else if(sz(*this)==2){
-			if(sz(r)==1 and Segment<T>(vtx[0],vtx[1]).contains(r.vtx[0])) ret.pushb(r.vtx[0]);
-			else if(sz(r)==2 and Segment<T>(vtx[0],vtx[1]).intersect_det({r.vtx[0],r.vtx[1]})) ret.pushb(inf<int>(),inf<int>());
+			if(sz(r)==1 and Segment<T>(vtx[0],vtx[1]).contains(r.vtx[0])) ret.emplace_back(r.vtx[0]);
+			else if(sz(r)==2 and Segment<T>(vtx[0],vtx[1]).intersect_det({r.vtx[0],r.vtx[1]})) ret.emplace_back(inf<int>(),inf<int>());
 		}else{
 			for(auto i:vtx)
 				if(r.contains(i))
-					ret.pushb(i);
+					ret.emplace_back(i);
 			for(auto i:r.vtx)
 				if(contains(i))
-					ret.pushb(i);
+					ret.emplace_back(i);
 		}
 		auto s1=to_segments();
 		auto s2=r.to_segments();
@@ -102,7 +102,7 @@ template<class T> struct ConvexPolygon:public Polygon<T>{
 			for(auto j:s2){
 				try{
 					Vec2<T> res;
-					if(i.intersect(j, res)) ret.pushb(res);
+					if(i.intersect(j,res)) ret.emplace_back(res);
 				} catch(...){}
 			}
 		return ConvexPolygon(ret);

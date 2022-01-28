@@ -21,7 +21,7 @@ struct GraphUU:public GraphWU<int>{
 					sc++;
 				}else mo=min(mo,ord[edg[i].opp(v)]);
 			}
-			if(fail and sc>=2) ret.pushb(v);
+			if(fail and sc>=2) ret.emplace_back(v);
 			return mo;
 		};
 
@@ -41,7 +41,7 @@ struct GraphUU:public GraphWU<int>{
 			for(auto i:adj[v])
 				if(edg[i].opp(v)!=p)
 					mo = min(mo, ord[edg[i].opp(v)]==-1 ? dfs(edg[i].opp(v),v) : ord[edg[i].opp(v)]);
-			if(~p and mo==ord[v])ret.pushb(v,p);
+			if(~p and mo==ord[v])ret.emplace_back(v,p);
 			return mo;
 		};
 		for(int i=0;i<n;i++)

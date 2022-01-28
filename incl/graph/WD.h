@@ -15,8 +15,8 @@ struct GraphWD{
 	GraphWD(int n):n(n),adj(n){}
 
 	void add_edge(int s,int e,T w){
-		edg.pushb(E{{s,e},{sz(adj[e]),sz(adj[s])},sz(edg),w});
-		adj[s].pushb(sz(edg)-1);
+		edg.emplace_back(E{{s,e},{sz(adj[e]),sz(adj[s])},sz(edg),w});
+		adj[s].emplace_back(sz(edg)-1);
 	}
 
 	void dijkstra_trackall(Arr<T>& d,Arr<Arr<int>>& p,Arr<int> src){
@@ -34,7 +34,7 @@ struct GraphWD{
 				if(d[y]>dist+w)
 					p[y]={i}, pq.push({d[y]=dist+w,y});
 				else if(d[y]==dist+w)
-					p[y].pushb(i);
+					p[y].emplace_back(i);
 			}
 		}
 	}
@@ -99,10 +99,10 @@ struct GraphWD{
 		for(auto s:src){
 			ub[s]=0;
 			inq[s]=true;
-			q.pushb(s);
+			q.emplace_back(s);
 		}
 		while(sz(q)){
-			int x=q.front(); inq[x]=false, q.popf();
+			int x=q.front(); inq[x]=false, q.pop_front();
 			for(auto i:adj[x]){
 				int y=edg[i].opp(x);
 				auto w=edg[i].w;
@@ -112,11 +112,11 @@ struct GraphWD{
 						if(!inq[y]){
 							inq[y]=true;
 							if(++c[y]>n)return false;
-							if(sz(q) && ub[y]<ub[q.front()])q.pushf(y);
-							else q.pushb(y);
+							if(sz(q) && ub[y]<ub[q.front()])q.emplace_front(y);
+							else q.emplace_back(y);
 						}
 					}else if(ub[y]==ub[x]+w)
-						p[y].pushb(i);
+						p[y].emplace_back(i);
 				}
 			}
 		}
@@ -131,10 +131,10 @@ struct GraphWD{
 		for(auto s:src){
 			ub[s]=0;
 			inq[s]=true;
-			q.pushb(s);
+			q.emplace_back(s);
 		}
 		while(sz(q)){
-			int x=q.front(); inq[x]=false, q.popf();
+			int x=q.front(); inq[x]=false, q.pop_front();
 			for(auto i:adj[x]){
 				int y=edg[i].opp(x);
 				auto w=edg[i].w;
@@ -144,8 +144,8 @@ struct GraphWD{
 						if(!inq[y]){
 							inq[y]=true;
 							if(++c[y]>n)return false;
-							if(sz(q) && ub[y]<ub[q.front()])q.pushf(y);
-							else q.pushb(y);
+							if(sz(q) && ub[y]<ub[q.front()])q.emplace_front(y);
+							else q.emplace_back(y);
 						}
 					}
 				}

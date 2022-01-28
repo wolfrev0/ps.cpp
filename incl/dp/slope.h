@@ -64,12 +64,12 @@ struct LeftHullMap{
 			int cnt=min(mincnt(),k);
 			ans+=(argmin()-x)*cnt;
 			a[x-bias]+=cnt;
-			ret.pushb(argmin(),cnt);
+			ret.emplace_back(argmin(),cnt);
 			pop(cnt);
 			k-=cnt;
 		}
 		if(k)
-			ret.pushb(x,k);
+			ret.emplace_back(x,k);
 		return ret;
 	}
 	void add_bias(int x,int y){bias+=x;ans+=y;}//그래프 x축 평행이동
@@ -87,7 +87,7 @@ struct LeftHullMap{
 		while(k and sz(a)){
 			int c=min(k,tail(a)->se);
 			k-=c;
-			ret.pushb(argmin(),c);
+			ret.emplace_back(argmin(),c);
 			if((tail(a)->se-=c)==0)
 				a.erase(tail(a));
 		}

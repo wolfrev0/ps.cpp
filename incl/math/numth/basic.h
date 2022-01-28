@@ -1,20 +1,18 @@
 #pragma once
 #include "core/base.h"
 
-int lgf(i64 n, int base = 2) {
-	int ret = 0;
-	while(n) n /= base, ret++;
-	return ret - 1;
+int lgf(i64 n,int base=2) {
+	int ret=0;
+	while(n) n/=base,ret++;
+	return ret-1;
 }
-int lgc(i64 n, int base = 2) {
-	int ret = 0, rem = 0;
-	while(n) rem += n % base, n /= base, ret++;
-	return ret - (rem <= 1);
+int lgc(i64 n,int base=2) {
+	int ret=0,rem=0;
+	while(n) rem+=n%base,n/=base,ret++;
+	return ret-(rem<=1);
 }
-int sqrt_f(i64 n) {i64 i=1;while(i*i<=n)i++;return i-1;}
-int sqrt_c(i64 n) {i64 i=1;while(i*i<n)i++;return i;}
 template<class T> Arr<T> factorials(int n) {Arr<T> r(n,1);for(int i=1;i<n;i++)r[i]=r[i-1]*i;return r;}
-template<class T, int n, int k> Arr<Arr<T>> binoms(){
+template<class T,int n,int k> Arr<Arr<T>> binoms(){
 	Arr<Arr<T>> r(n,Arr<T>(k));
 	for(int i=1;i<n;i++){
 		r[i][0]=1;
@@ -27,9 +25,9 @@ Arr<i64> divs(i64 n) {
 	Arr<i64> r,s;
 	for(i64 i=1;i*i<=n;i++)
 		if(n%i==0){
-			r.pushb(i);
+			r.emplace_back(i);
 			if(i!=n/i)
-				s.pushb(n/i);
+				s.emplace_back(n/i);
 		}
 	reverse(s.begin(),s.end());
 	r.insert(r.end(),s.begin(),s.end());
@@ -41,9 +39,9 @@ Arr<i64> facts(i64 n) {
 	for(i64 i=2;i*i<=n;i++)
 		while(!(c%i)){
 			c/=i;
-			r.pushb(i);
+			r.emplace_back(i);
 		}
-	if(c>1)r.pushb(c);
+	if(c>1)r.emplace_back(c);
 	return r;
 }
 

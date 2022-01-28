@@ -13,7 +13,7 @@ Arr<int> primes(int n) {
 	auto s=sieve_primes(n);
 	Arr<int> r;
 	for(int i=0;i<n;i++)
-		if(s[i]) r.pushb(i);
+		if(s[i]) r.emplace_back(i);
 	return r;
 }
 //NOTE: Arr<Arr<int>>가 병목이라면 https://www.acmicpc.net/source/30452059 이거처럼 최적화 가능
@@ -21,7 +21,7 @@ Arr<Arr<int>> sieve_divs(int n) {
 	Arr<Arr<int>> r(n);
 	for(int i=1;i<n;i++)
 		for(int j=i;j<n;j+=i)
-			r[j].pushb(i);
+			r[j].emplace_back(i);
 	return r;
 }
 //NOTE: minfac[p]=p

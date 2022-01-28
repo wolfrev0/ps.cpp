@@ -24,8 +24,7 @@ struct IntervalSet{
 			if(l==r){ans=l;return {};}
 			if(x<=l){ans=l;return {A{l+1,r}};}
 			if(x>=r){ans=r;return {A{l,r-1}};}
-			ans=x; return {A{l,x-1},A{x+1,r}};
-		}
+			ans=x; return {A{l,x-1},A{x+1,r}};}
 	};
 	set<A> a;
 
@@ -35,8 +34,7 @@ struct IntervalSet{
 		auto it=a.lb({x,0});
 		if(it==a.end() or x<it->l or x>it->r)
 			throw "Not Found";
-		return *it;
-	}
+		return *it;}
 	A nearest(int x){
 		auto it=a.lb({x,0});
 		if(it==a.end())
@@ -44,8 +42,7 @@ struct IntervalSet{
 		else if(it==a.begin())
 			return *it;
 		else
-			return prev(it)->dist(x)<=it->dist(x)?*prev(it):*it;
-	}
+			return prev(it)->dist(x)<=it->dist(x)?*prev(it):*it;}
 };
 
 pair<Arr<Arr<int>>,Arr<int>> intervals2forest(const Arr<pint>& a){
@@ -61,15 +58,14 @@ pair<Arr<Arr<int>>,Arr<int>> intervals2forest(const Arr<pint>& a){
 		while(sz(s) and a[s.top()].se<=a[i].fi)
 			s.pop();
 		if(s.empty()){
-			roots.pushb(i);
+			roots.emplace_back(i);
 			s.push(i);
 		}else{
 			if(a[s.top()].se<a[i].se)
 				throw "not tree?";
-			g[s.top()].pushb(i);
-			g[i].pushb(s.top());
+			g[s.top()].emplace_back(i);
+			g[i].emplace_back(s.top());
 			s.push(i);
 		}
 	}
-	return {g,roots};
-}
+	return {g,roots};}

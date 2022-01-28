@@ -21,13 +21,13 @@ void transpose(Arr<Arr<T>>& a){
 		a.resize(m);
 		for(int i=0;i<n;i++){
 			for(int j=n;j<m;j++)
-				a[j].pushb(a[i][j]);
+				a[j].emplace_back(a[i][j]);
 			a[i].resize(n),a[i].shrink_to_fit();
 		}
 	}else{
 		for(int i=m;i<n;i++){
 			for(int j=0;j<m;j++)
-				a[j].pushb(a[i][j]);
+				a[j].emplace_back(a[i][j]);
 			a[i].clear(),a[i].shrink_to_fit();
 		}
 		a.resize(m);
@@ -68,7 +68,7 @@ tuple<T,Arr<T>,Arr<T>> simplex(Arr<Arr<T>> a,Arr<T> b,Arr<T> obj){
 	for(int i=0;i<m;i++)
 		if(b[i]<0){
 			for(auto& j:a[i])j=-j;
-			for(auto& r:a)r.pushb(0);
+			for(auto& r:a)r.emplace_back(0);
 			a[i][-1]=-1,b[i]=-b[i],geq[i]=true,s++;
 		}
 
@@ -81,7 +81,7 @@ tuple<T,Arr<T>,Arr<T>> simplex(Arr<Arr<T>> a,Arr<T> b,Arr<T> obj){
 	//z=f(x) == z-f(x)=0
 	for(auto &i:obj)i=-i;
 	obj[-2]=1;
-	a.pushb(obj);
+	a.emplace_back(obj);
 
 	for(int i=0;i<m;i++)
 		elim(i,m,p[i]);

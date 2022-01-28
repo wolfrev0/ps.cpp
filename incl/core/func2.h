@@ -14,7 +14,7 @@ Arr<int> permuinv(const Arr<int>& a){Arr<int> r(sz(a));for(int i=0;i<sz(a);i++)r
 template<class T>map<T,Arr<int>> classify(const Arr<T>& a){
 	map<T,Arr<int>> r;
 	for(int i=0;i<sz(a);i++)
-		r[a[i]].pushb(i);
+		r[a[i]].push_back(i);
 	return r;
 }
 template<class T> ostream& operator<<(ostream& s,const Arr<T>& a){for(auto i:a)cout<<i<<' ';return s;}

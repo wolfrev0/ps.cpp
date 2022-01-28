@@ -2,41 +2,41 @@
 #include "graph/WD.h"
 
 template<class T>
-struct FlowW {
+struct FlowW{
 	int cap; T cost;
 	int inv;
-	FlowW(T cost=0) : cost(cost) {}
-	FlowW(int cap, T cost): cap(cap), cost(cost) {}
-	bool operator<(const FlowW& r) const { return cost < r.cost; }
-	bool operator>(const FlowW& r) const { return cost > r.cost; }
+	FlowW(T cost=0):cost(cost){}
+	FlowW(int cap,T cost):cap(cap),cost(cost){}
+	bool operator<(const FlowW& r)const{return cost<r.cost;}
+	bool operator>(const FlowW& r)const{return cost>r.cost;}
 	bool operator==(const FlowW& r)const{return !(cost<r.cost) and !(cost>r.cost);}
-	FlowW operator+(const FlowW& r) const { return cost + r.cost; }
-	FlowW operator/(const FlowW& r) const { return cost / r.cost; }
+	FlowW operator+(const FlowW& r)const{return cost+r.cost;}
+	FlowW operator/(const FlowW& r)const{return cost/r.cost;}
 	FlowW inf()const{return inf<int>();}
 };
 
-//이분그래프 최대독립집합 재구성: 종만북참고
+//이분그래프 최대독립집합 재구성:종만북참고
 template<class T=i64>
 struct Flow:public GraphWD<FlowW<T>>{
 	using W=FlowW<T>;
 	using P=GraphWD<W>;
-	using E=P::E;using P::edg;using P::adj; using P::n;
+	using E=P::E;using P::edg;using P::adj;using P::n;
 	Flow(int n):P(n){}
 
-	void add_edge(int s, int e, int cap, T cost){
+	void add_edge(int s,int e,int cap,T cost){
 		P::add_edge(s,e,{cap,cost});
 		P::add_edge(e,s,{0,-cost});
 		edg[-2].w.inv=sz(edg)-1;
 		edg[-1].w.inv=sz(edg)-2;
 	}
 
-	int mf(int src,int snk,int flow = inf<int>()){
+	int mf(int src,int snk,int flow=inf<int>()){
 		func(int,step,int v,int ubf,Arr<char>& vis){
-			if(v == snk) return ubf;
+			if(v==snk) return ubf;
 			vis[v]=true;
 			for(auto i:adj[v]){
 				if(!vis[edg[i].v[1]] && edg[i].w.cap){
-					int f=step(edg[i].v[1],min(ubf, edg[i].w.cap),vis);
+					int f=step(edg[i].v[1],min(ubf,edg[i].w.cap),vis);
 					if(f>0){
 						edg[i].w.cap-=f;
 						edg[edg[i].w.inv].w.cap+=f;
@@ -49,10 +49,8 @@ struct Flow:public GraphWD<FlowW<T>>{
 
 		int sum=0;
 		auto vis=Arr<char>(n);
-		while(int f=step(src,flow-sum,vis)){
-			sum+=f;
-			vis=Arr<char>(n);
-		}
+		while(int f=step(src,flow-sum,vis))
+			sum+=f,vis=Arr<char>(n);
 		return sum;
 	}
 
@@ -68,18 +66,18 @@ struct Flow:public GraphWD<FlowW<T>>{
 					if(edg[i].w.cap and d[edg[i].v[1]]>d[x]+1)
 						d[edg[i].v[1]]=d[x]+1,q.push(edg[i].v[1]);
 			}
-			decltype(adj) l(n);  // level graph, DAG
+			decltype(adj) l(n);//level graph,DAG
 			for(auto i:adj)
 				for(auto j:i)
 					if(edg[j].w.cap and d[edg[j].v[1]]==d[edg[j].v[0]]+1)
-						l[edg[j].v[0]].pushb(j);
+						l[edg[j].v[0]].emplace_back(j);
 			Arr<int> ii(n);
 			func(int,block_flow,int u,int flow){
 				if(u==snk) return flow;
-				for(auto& _i=ii[u]; _i<sz(l[u]); _i++) {
+				for(auto& _i=ii[u]; _i<sz(l[u]); _i++){
 					auto i=l[u][_i];
-					if(edg[i].w.cap) {
-						int f=block_flow(edg[i].v[1], min(flow, edg[i].w.cap));
+					if(edg[i].w.cap){
+						int f=block_flow(edg[i].v[1],min(flow,edg[i].w.cap));
 						if(f>0){
 							edg[i].w.cap-=f;
 							edg[edg[i].w.inv].w.cap+=f;
@@ -104,7 +102,7 @@ struct Flow:public GraphWD<FlowW<T>>{
 			Arr<W> d;
 			Arr<int> p;
 			if(!spfa_trackone(d,p,src) || p[snk]==-1)
-				return {};
+				return{};
 			int x=snk;
 			for(;x!=src;x=edg[p[x]].opp(x))
 				flow=min(flow,edg[p[x]].w.cap);
@@ -115,7 +113,7 @@ struct Flow:public GraphWD<FlowW<T>>{
 				edg[edg[p[x]].w.inv].w.cap+=flow;
 				cost+=edg[p[x]].w.cost*flow;
 			}
-			return {cost,flow};
+			return{cost,flow};
 		};
 		pair<T,int> ret;
 		while(true){
@@ -129,9 +127,8 @@ struct Flow:public GraphWD<FlowW<T>>{
 	void gomory_hu(){}
 
 	//not tested
-	tuple<Arr<E>, Arr<int>, Arr<int>> cuts(int src,int snk){
+	tuple<Arr<E>,Arr<int>,Arr<int>> cuts(int src,int snk){
 		Arr<E> r;
-		
 		Arr<char> vis1(n);
 		func(void,dfs1,int v){
 			if(vis1[v]) return;
@@ -147,7 +144,7 @@ struct Flow:public GraphWD<FlowW<T>>{
 			if(vis2[v])return;
 			vis2[v]=true;
 			for(auto i:adj[v]){
-				if(!edg[i].w.cap and !vis1[edg[i].v[1]])r.pushb(edg[i]);
+				if(!edg[i].w.cap and !vis1[edg[i].v[1]])r.emplace_back(edg[i]);
 				else dfs2(edg[i].v[1]);
 			}
 		};
@@ -156,10 +153,10 @@ struct Flow:public GraphWD<FlowW<T>>{
 		sort(r.begin(),r.end(),lam(mkp(x.v[0],x.v[1])<mkp(y.v[0],y.v[1]),auto x,auto y));
 		r.erase(unique(r.begin(),r.end(),lam(mkp(x.v[0],x.v[1])==mkp(y.v[0],y.v[1]),auto x,auto y)),r.end());
 
-		Arr<int> srcv, snkv;
+		Arr<int> srcv,snkv;
 		for(int i=0;i<n-2;i++)
-			(vis1[i]?srcv:snkv).pushb(i);
-		return {r,srcv,snkv};
+			(vis1[i]?srcv:snkv).emplace_back(i);
+		return{r,srcv,snkv};
 	}
 	
 	virtual bool isvalid(const E& e)const override{return e.w.cap;}
@@ -180,7 +177,7 @@ struct FlowLB:public Flow<T>{
 	int SRC,SNK,demands=0;
 	FlowLB(int n):P(n+2),SRC(n),SNK(n+1){}
 
-	//NOTE: cost처리 잘 된건지 모름. 검증필요(Library Checker에 있을듯?)
+	//NOTE:cost처리 잘 된건지 모름. 검증필요(Library Checker에 있을듯?)
 	void add_edge(int s,int e,pint cap,int cost){
 		auto [lo,hi]=cap;
 		demands+=lo;

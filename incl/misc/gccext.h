@@ -38,8 +38,7 @@ template<class T> struct pbds_multiset{
 	auto end()const{return s.end();}
 	auto find(const T& v)const{
 		auto it=s.lb({v,0});
-		return it->fi==v?it:s.end();
-	}
+		return it->fi==v?it:s.end();}
 	auto insert(const T& v){return s.insert({v,counter++});}
 	auto erase(const typename pbds_set<pair<T,int>>::iterator& it){return s.erase(it);}
 	int order_of_key(const T& v,bool ub=true)const{return s.order_of_key({v,ub?counter:0});}

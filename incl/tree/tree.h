@@ -3,7 +3,7 @@
 
 template<class T> struct Tree{
 	Tree(int n=0):n(n),g(n){}
-	void add_edge(int s,int e,T w){g[s].pushb(e,w),g[e].pushb(s,w);}
+	void add_edge(int s,int e,T w){g[s].emplace_back(e,w),g[e].emplace_back(s,w);}
 	T diameter()const{
 		auto x=furthest(0,0,0).se;
 		return furthest(x,x,0).fi;
@@ -64,7 +64,7 @@ template<class T> struct RootedTree{
 	RootedTree(const Tree<T>& t,int r,Arr<T> vw={}):n(t.n),r(r),ch(t.n),p(t.n),tsz(t.n),dpt(t.n),cost(t.n){
 		func(int,rootize,int x,int y,int yw,int d,T c){
 			p[x]={y,yw},dpt[x]=d,cost[x]=c,tsz[x]=1;
-			if(x!=y)ch[y].pushb(x,yw);
+			if(x!=y)ch[y].emplace_back(x,yw);
 			for(auto [i,ew]:t.g[x])
 				if(i!=y){
 					T w=sz(vw)?vw[i]:ew;
@@ -76,17 +76,17 @@ template<class T> struct RootedTree{
 	}
 	Arr<int> euler(){
 		Arr<int> z;
-		func(void,f,int x){z.pushb(x);for(auto [i,_]:ch[x])f(i),z.pushb(x);};
+		func(void,f,int x){z.emplace_back(x);for(auto [i,_]:ch[x])f(i),z.emplace_back(x);};
 		f(r);return z;
 	}
 	Arr<int> pre(){
 		Arr<int> z;
-		func(void,f,int x){z.pushb(x);for(auto [i,_]:ch[x])f(i);};
+		func(void,f,int x){z.emplace_back(x);for(auto [i,_]:ch[x])f(i);};
 		f(r);return z;
 	}
 	Arr<int> post(){
 		Arr<int> z;
-		func(void,f,int x){for(auto [i,_]:ch[x])f(i);z.pushb(x);};
+		func(void,f,int x){for(auto [i,_]:ch[x])f(i);z.emplace_back(x);};
 		f(r);return z;
 	}
 	int n, r;

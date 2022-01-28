@@ -7,12 +7,10 @@ template<class T> struct MonoQ {
 	void push(T val){
 		val-=bias;
 		while(sz(q) && ((val<q.back().fi)^ismax))q.popb();
-		q.pushb({val,e++});
-	}
+		q.emplace_back({val,e++});}
 	void pop(){
 		if(q.front().se==s++)
-			q.pop_front();
-	}
+			q.pop_front();}
 	T get()const{return q.front().fi+bias;}
 
 	bool ismax;

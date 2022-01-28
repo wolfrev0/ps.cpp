@@ -8,12 +8,9 @@ template<int n>int hilbert_ord(int x,int y){//n-bit order
 		bool rx=x>>i&1,ry=y>>i&1;
 		d=d<<2|(rx*3^ry);
 		if(!ry){
-			if(rx) x=(1<<n)-x,y=(1<<n)-y;
-			swap(x,y);
-		}
-	}
-	return d;
-}
+			if(rx)x=(1<<n)-x,y=(1<<n)-y;
+			swap(x,y);}}
+	return d;}
 // template<int B>
 struct MOQ{
 	int s,e,i,o;

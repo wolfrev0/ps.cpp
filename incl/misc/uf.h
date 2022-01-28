@@ -13,8 +13,7 @@ struct UF{
 		// union by size
 		if(s[a]<s[b])swap(a,b);
 		p[b]=a,s[a]+=s[b],s[b]=0,gc--;
-		return true;
-	}
+		return true;}
 	int r(int a){return p[a]==a?a:p[a]=r(p[a]);}//root of a
 	bool eq(int a,int b){return r(a)==r(b);}
 	int gsz(int a){return s[r(a)];}
@@ -32,19 +31,16 @@ struct UFundo{
 		if(a!=b){
 			// union by size
 			if(s[a]<s[b])swap(a,b);
-			uis.push_(b,s[b]);
+			uis.emplace(b,s[b]);
 			p[b]=a,s[a]+=s[b],s[b]=0,gc--;
-			return true;
-		}
-		uis.push_();
-		return a!=b;
-	}
+			return true;}
+		uis.emplace();
+		return a!=b;}
 	void undo(){
 		auto ui=uis.top();uis.pop();
 		if(ui.b==-1)return;
 		int a=r(ui.b),b=ui.b;
-		gc++,s[b]=ui.sb,s[a]-=s[b],p[b]=b;
-	}
+		gc++,s[b]=ui.sb,s[a]-=s[b],p[b]=b;}
 	int r(int a){return p[a]==a?a:r(p[a]);}
 	bool eq(int a,int b){return r(a)==r(b);}
 	int gsz(int a){return s[r(a)];}

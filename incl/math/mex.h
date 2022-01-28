@@ -8,7 +8,7 @@ struct Mex{
 	void add(int x){a[x]++;}
 	void del(int x){
 		auto it=a.find(x);
-		assert(it!=a.end());
+		MUST(it!=a.end());
 		if(!--(it->se))
 			a.erase(it);
 	}

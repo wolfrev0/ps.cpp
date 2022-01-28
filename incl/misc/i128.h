@@ -10,5 +10,4 @@ ostream& operator<<(ostream& s,i128 a){
 		b*=10,b+=a%10,a/=10;
 	while(b!=1)
 		cout<<signed(b%10),b/=10;
-	return s;
-}
+	return s;}
