@@ -2,6 +2,7 @@
 #include "core/func1.h"
 #include "core/config.h"
 
+#undef watch
 #if DEBUG
 	template<class T>concept Printable=requires(T x){cout<<x<<endl;};
 	template<class T>concept NotPrintable=not Printable<T>;

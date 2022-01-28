@@ -12,3 +12,11 @@ https://codeforces.com/contest/1630/problem/B
 연속성정리?borsuk ulam인가 stolen necklace문제같은느낌이 있다.
 
 bash표현식 종류: https://unix.stackexchange.com/questions/270591/are-and-used-for-arithmetic-expressions-or-conditiona
+
+#command substitution
+$ echo "$( t=1234; echo "$t" )"
+1234
+#process substitution
+$ cat <( t=4321; echo "$t" )
+4321
+#차이: 출력을 스트링으로 넘기냐 스트림으로 넘기냐 차이인듯

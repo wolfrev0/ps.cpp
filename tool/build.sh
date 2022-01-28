@@ -19,7 +19,7 @@ function f(){
 	arr="${arr//\\}"
 	if (( 1 < $(echo $arr | wc -w | cat) )); then
 		for i in $arr
-		do			
+		do
 			echo $(awk -F'"' '/^#include *"/{print FILENAME, "incl/"$2}' $i)
 			z=$(awk -F'"' '/^#include *"/{print "incl/"$2, "incl/"$2}' $i)
 			if (( 1 < $(echo $z | wc -w | cat) )); then
@@ -31,8 +31,7 @@ function f(){
 	fi
 }
 if ! [[ "$2" =~ ?*.h ]]; then
-	#f
-	awk '//' $(f|tac) | grep -Ev '#include *"|#pragma once' > res/submit.cpp
+	awk '//' $(f|tac|grep -Ev "incl/core/debug.h") | grep -Ev '#include *"|#pragma once' > res/submit.cpp
 fi
 
 for i in incl/core/*
