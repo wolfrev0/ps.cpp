@@ -1,4 +1,6 @@
 #include "core/base.h"
+// #include "misc/debug.h"
+#define watch(...) 
 
 void solve(){
 }

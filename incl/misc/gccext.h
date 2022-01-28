@@ -15,6 +15,8 @@ struct pbds_pq
 	pbds_pq(){}
 	pbds_pq(pbds_pq&& r){this->swap(r);}
 	void operator=(pbds_pq&& r){this->swap(r);}
+	pbds_pq(const pbds_pq& r)=default;
+	pbds_pq& operator=(const pbds_pq& r)=default;
 };
 
 //NOTE: pbds_tree.join은 중복키 있으면 join_error 예외발생
@@ -24,6 +26,8 @@ struct pbds_set
 	pbds_set(){}
 	pbds_set(pbds_set&& r){this->swap(r);}
 	void operator=(pbds_set&& r){this->swap(r);}
+	pbds_set(const pbds_set& r)=default;
+	pbds_set& operator=(const pbds_set& r)=default;
 };
 template<class K,class V>
 struct pbds_map
@@ -31,6 +35,8 @@ struct pbds_map
 	pbds_map(){}
 	pbds_map(pbds_map&& r){this->swap(r);}
 	void operator=(pbds_map&& r){this->swap(r);}
+	pbds_map(const pbds_map& r)=default;
+	pbds_map& operator=(const pbds_map& r)=default;
 };
 template<class T> struct pbds_multiset{
 	pbds_set<pair<T,int>> s;
