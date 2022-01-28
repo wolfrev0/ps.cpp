@@ -1,6 +1,5 @@
 #pragma once
 #include "core/base.h"
-#include "misc/util.h"
 
 //입력: Ax<=b, obj
 //출력: maximize obj*x
@@ -12,6 +11,28 @@
 //듀얼후 리덕션한 결과값 primal로 복원하기
 //https://math.stackexchange.com/questions/1226186/recovering-the-optimal-primal-solution-from-dual-solution
 //왠지 모르겠지만 double속도가 더 빨라서 확실한 실수오차문제가 아니면 그냥 f64로 냅두는게 좋은듯
+template<class T>//inplace transpose (메모리절약)
+void transpose(Arr<Arr<T>>& a){
+	int n=sz(a),m=sz(a[0]);
+	for(int i=0;i<min(n,m);i++)
+		for(int j=i+1;j<min(n,m);j++)
+			swap(a[i][j],a[j][i]);
+	if(n<m){
+		a.resize(m);
+		for(int i=0;i<n;i++){
+			for(int j=n;j<m;j++)
+				a[j].pushb(a[i][j]);
+			a[i].resize(n),a[i].shrink_to_fit();
+		}
+	}else{
+		for(int i=m;i<n;i++){
+			for(int j=0;j<m;j++)
+				a[j].pushb(a[i][j]);
+			a[i].clear(),a[i].shrink_to_fit();
+		}
+		a.resize(m);
+	}
+}
 template<class T=f64,int M>
 void dualize(Arr<Arr<T>> &a,Arr<T> &b,Arr<T>& obj){
 	int m=sz(a), n=sz(a[0]);

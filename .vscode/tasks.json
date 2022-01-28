@@ -4,7 +4,7 @@
 		{
 			"label": "Run(Debug)",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && case ${file} in *.cpp) tool/build.sh ${relativeFile} D && res/${fileBasenameNoExtension}D.out<test/tc/in ;; *.py) stickytape ${file} --add-python-path libpy > res/submit.py && python3 ${file} < test/tc/in ;; *.sh) chmod +x ${file} && ${file} ;; *) echo Unknown Extension ;; esac",
+			"command": "ulimit -s 1048576 && case ${file} in *.cpp) tool/build.sh ${relativeFile} D && res/${fileBasenameNoExtension}D.out<test/tc/in ;; *.py) stickytape ${file} --add-python-path libpy > res/submit.py && python3 ${file} < test/tc/in ;; *.sh) chmod +x ${file} && ${file} ;; *) echo '${fileExtname} isnt supported (available: cpp,py,sh)' ;; esac",
 		},
 		{
 			"label": "Run(Release)",
