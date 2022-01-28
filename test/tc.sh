@@ -8,6 +8,6 @@ trap "echo -e '${RED}FAIL${NONE}'" ERR
 for i in test/tc/*.in;
 do
 	echo "########## "${i%.*}" ##########"
-	diff <(res/$1.out<$i) ${i%.*}.ans -BZ
+	diff <($1<$i) ${i%.*}.ans -BZ
 done
 echo -e "${GREEN}OK${NONE}"

@@ -14,12 +14,12 @@
 		{
 			"label": "RunAll(Debug)",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && tool/build.sh ${relativeFile} D && test/tc.sh ${fileBasenameNoExtension}D",
+			"command": "ulimit -s 1048576 && tool/build.sh ${relativeFile} D && test/tc.sh res/${fileBasenameNoExtension}D.out",
 		},
 		{
 			"label": "RunAll(Release)",
 			"type": "shell",
-			"command": "ulimit -s 1048576 && tool/build.sh ${relativeFile} R && test/tc.sh ${fileBasenameNoExtension}R",
+			"command": "ulimit -s 1048576 && tool/build.sh ${relativeFile} R && test/tc.sh res/${fileBasenameNoExtension}R.out",
 		},
 		{
 			"label": "tc_save",
