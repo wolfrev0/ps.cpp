@@ -11,6 +11,55 @@ Algo & D.S. library for problem-solving written in Modern C++.
   2. 0-based-index
   3. Support negative index (same as python) (only suppoerted in Arr&lt;T&gt; as of now)
 
+## Sample Code
+``` cpp
+#include "core/base.h"
+signed main(){
+	int n=5;
+	auto arr=ARR(2,3,2,n,'#');//(2*3*2*n shaped 4D array)
+	for(int i=0;i<2;i++)
+		for(int j=0;j<3;j++)
+			for(int k=0;k<2;k++)
+				for(int l=0;l<n;l++)
+					arr[i][j][k][l]='a'+i+j+k+l;;
+	debug(arr,n,mkt(3,"hi",'@'),Arr<int>(n,7));//ez debug
+	print(1,'2',"3",string("4"),n,"hello?",endl);//ez print
+}
+```
+## Sample Output (Debug)
+```
+arr,n,mkt(3,"hi",'@'),Arr<int>(n,7);=
+<
+-{
+--(
+---[
+----{  a,  b,  c,  d,  e,},
+----{  b,  c,  d,  e,  f,},],
+---[
+----{  b,  c,  d,  e,  f,},
+----{  c,  d,  e,  f,  g,},],
+---[
+----{  c,  d,  e,  f,  g,},
+----{  d,  e,  f,  g,  h,},],),
+--(
+---[
+----{  b,  c,  d,  e,  f,},
+----{  c,  d,  e,  f,  g,},],
+---[
+----{  c,  d,  e,  f,  g,},
+----{  d,  e,  f,  g,  h,},],
+---[
+----{  d,  e,  f,  g,  h,},
+----{  e,  f,  g,  h,  i,},],),},  5,
+-<  3, hi,  @,>,
+-{  7,  7,  7,  7,  7,},>
+1 2 3 4 5 hello? 
+```
+## Sample Output (Release)
+```
+1 2 3 4 5 hello? 
+```
+
 ## Getting Started
   Requirements: ubuntu20.04+, c++20, g++
   1. git clone https://github.com/tuxedcat/pslib
