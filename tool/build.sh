@@ -53,3 +53,8 @@ if [ $path_out -ot $src ]; then
 else
 	echo -e "${GREEN}[BUILD($dbgrel)]: up to date${NONE}"
 fi
+
+# 일단 표준라이브러리 include문 제거하면 아래와 같은 전처리기 활용도 가능하긴 하다.
+# g++ src/tpl.cpp -std=c++20 -iquote ./incl -E | grep -Ev '# *'
+# 다만 이거쓰면 매크로도 전부 풀어버려서 코드가 좀 길어지는 단점이 있는듯.
+# 제출과 코드저장을 분리하면 쓸만할지도 모르겠지만 지금은 build.sh로 충분한거같다.
