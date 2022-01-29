@@ -12,7 +12,7 @@
 #define itos to_string
 #define head(x) (x.begin())
 #define tail(x) prev(x.end())
-#define watch(...)
+#define debug(...)
 using i64=long long;using u64=unsigned long long;
 using pint=pair<int,int>;using tint=tuple<int,int,int>;
 template<class T>using Str=basic_string<T>;

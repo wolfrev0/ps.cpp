@@ -2,7 +2,7 @@
 #include "core/func1.h"
 #include "core/config.h"
 
-#undef watch
+#undef debug
 #if DEBUG
 	template<class T>concept Printable=requires(T x){cout<<x<<endl;};
 	template<class T>concept NotPrintable=not Printable<T>;
@@ -42,7 +42,7 @@
 	template<class... T> void _dbgprint_(const tuple<T...>& _tup,int d){
 		_dbgprint_(_tup,make_index_sequence<sizeof...(T)>(),d);}
 	
-	#define watch(...)(cerr<<(#__VA_ARGS__)<<";=",_dbgprint_(mkt(__VA_ARGS__)),cerr<<endl)
+	#define debug(...)(cerr<<(#__VA_ARGS__)<<";=",_dbgprint_(mkt(__VA_ARGS__)),cerr<<endl)
 #else
-	#define watch(...)
+	#define debug(...)
 #endif
