@@ -7,9 +7,9 @@ Algo & D.S. library for problem-solving written in Modern C++.
   3. Various convenient tools. (pretty print debugger, testcase checker, etc...)
 
 ## Interface
-  1. [s, e) half opened range
-  2. 0-based index
-  3. Support negative index (same as python)
+  1. [s,e) half opened range
+  2. 0-based-index
+  3. Support negative index (same as python) (only suppoerted in Arr&lt;T&gt; as of now)
 
 ## Getting Started
   Requirements: ubuntu20.04+, c++20, g++
