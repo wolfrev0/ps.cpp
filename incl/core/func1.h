@@ -22,8 +22,8 @@ template<MemberNan T>T nan(){return T().nan();}
 #endif
 
 //IO & misc
-template<char endch='\n',char sepch=' ',class... A>
-void print(A...a){((cout<<a<<sepch),...,(cout<<endch));}
+template<char sepch=' ',class... A>
+void print(A...a){((cout<<a<<sepch),...);}
 template<class T,class U>bool assmin(T& a,U&& b){return a>b?a=b,true:false;}
 template<class T,class U>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}
 void WARN(bool cond,const char* str){
