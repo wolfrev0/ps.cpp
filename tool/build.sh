@@ -47,7 +47,7 @@ GREEN='\033[1;32m'
 NONE='\033[0m' # No Color
 
 path_out=res/$(echo ${src##*/} | cut -d'.' -f1)$dbgrel.out
-if [ $path_out -ot $src ]; then
+if [ $path_out -ot $src ] || [ $path_out -ot incl/core/base.h.gch ]; then
 	echo -e "${CYAN}[BUILD($dbgrel)]: newly built${NONE}"
 	g++ $src $base_arg $option -o $path_out
 else
