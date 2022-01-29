@@ -48,10 +48,10 @@ NONE='\033[0m' # No Color
 
 path_out=res/$(echo ${src##*/} | cut -d'.' -f1)$dbgrel.out
 if [ $path_out -ot $src ] || [ $path_out -ot incl/core/base.h.gch ]; then
-	echo -e "${CYAN}[BUILD($dbgrel)]: newly built${NONE}"
+	echo -e "${CYAN}newly built ($dbgrel)${NONE}"
 	g++ $src $base_arg $option -o $path_out
 else
-	echo -e "${GREEN}[BUILD($dbgrel)]: up to date${NONE}"
+	echo -e "${GREEN}up to date ($dbgrel)${NONE}"
 fi
 
 # 일단 표준라이브러리 include문 제거하면 아래와 같은 전처리기 활용도 가능하긴 하다.
