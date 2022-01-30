@@ -139,7 +139,7 @@ struct GraphUD: public GraphWD<int>{
 		};
 		dfs(src);
 		int m=sz(o);
-		WARN(m!=n,"Not Connected");
+		dbg1if(m!=n,"Not Connected");
 
 		for(int i=m-1;~i;i--){
 			for(auto j:rg.adj[o[i]]){

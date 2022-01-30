@@ -2,7 +2,6 @@
 #include "core/func1.h"
 #include "core/config.h"
 
-#undef debug
 #if DEBUG
 	template<class T>concept Printable=requires(T x){cout<<x<<endl;};
 	template<class T>concept NotPrintable=not Printable<T>;
@@ -42,7 +41,13 @@
 	template<class... T> void _dbgprint_(const tuple<T...>& _tup,int d){
 		_dbgprint_(_tup,make_index_sequence<sizeof...(T)>(),d);}
 	
-	#define debug(...)(cerr<<(#__VA_ARGS__)<<";=",_dbgprint_(mkt(__VA_ARGS__)),cerr<<endl)
-#else
-	#define debug(...)
+	#undef dbg
+	#undef dbgif
+	#undef dbg1
+	#undef dbg1if
+	#define dbg(...)(cerr<<(#__VA_ARGS__)<<";=",_dbgprint_(mkt(__VA_ARGS__)),cerr<<endl)
+	#define dbgif(bex,...)((bex)&&dbg(__VA_ARGS__))
+	static set<const char*> z;
+	#define dbg1(...) (!z.count(#__VA_ARGS__)&&(z.insert(#__VA_ARGS__),dbg(__VA_ARGS__)))
+	#define dbg1if(bex,...) (!z.count(#bex#__VA_ARGS__)&&(bex)&&(z.insert(#bex#__VA_ARGS__),dbg(__VA_ARGS__)))
 #endif

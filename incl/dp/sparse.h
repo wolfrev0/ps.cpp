@@ -7,7 +7,7 @@ template<class M>
 struct SparseTable{
 	using T=M::T;
 	SparseTable(int n,int m):n(n),m(m),dp(ARR(m,n,M::id())){}
-	~SparseTable(){WARN(!_build,"SparseTable not builded");}
+	~SparseTable(){dbg1if(!_build,"SparseTable not builded");}
 	bool _build=false;
 	void build(){
 		_build=true;

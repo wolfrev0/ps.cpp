@@ -2,6 +2,7 @@
 #include "core/std.h"
 #include "core/config.h"
 #include "core/func1.h"
+#include "core/debug.h"
 
 template<class T, class P=vector<T>>
 struct Arr:public P{
@@ -12,14 +13,14 @@ struct Arr:public P{
 	Arr(auto its, auto ite):P(its,ite){}
 	inline T& operator[](signed i){
 		int n=sz(*this);
-		if(i<0)i+=n,WARN(1,"Neg Index Found");
-		if(i>=n)i-=n,WARN(1,"Over Index Found");
+		if(i<0)i+=n,dbg1("Neg Index Found");
+		if(i>=n)i-=n,dbg1("Over Index Found");
 		return P::operator[](i);
 	}
 	const T& operator[](signed i)const{	
 		int n=sz(*this);
-		if(i<0)i+=n,WARN(1,"Neg Index Found");
-		if(i>=n)i-=n,WARN(1,"Over Index Found");
+		if(i<0)i+=n,dbg1("Neg Index Found");
+		if(i>=n)i-=n,dbg1("Over Index Found");
 		return P::operator[](i);
 	}
 	T& at(signed i){return *this[i];}

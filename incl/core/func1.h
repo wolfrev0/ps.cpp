@@ -23,15 +23,9 @@ template<MemberNan T>T nan(){return T().nan();}
 
 //IO & misc
 template<char endch=0,char sepch=' ',class... A>
-void print(A...a){((cout<<a<<sepch),...,(cout<<(!endch?"":string(1,endch))));}
+void print(A...a){((cout<<a<<(!sepch?"":string(1,sepch))),...,(cout<<(!endch?"":string(1,endch))));}
 template<class T,class U>bool assmin(T& a,U&& b){return a>b?a=b,true:false;}
 template<class T,class U>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}
-void WARN(bool cond,const char* str){
-#if DEBUG
-	static set<const char*> z;
-	if(cond&&!z.count(str))z.insert(str),cerr<<"[WARN] "<<str<<endl;
-#endif
-}
 void MUST(bool expr){
 #if DEBUG
 	#include <csignal>
