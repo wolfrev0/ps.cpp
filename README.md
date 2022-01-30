@@ -11,6 +11,16 @@ Algo & D.S. library for problem-solving written in Modern C++.
   2. 0-based-index
   3. Support negative index (same as python) (only suppoerted in Arr&lt;T&gt; as of now)
 
+## Getting Started
+  Requirements: ubuntu20.04+, c++20, g++
+  1. git clone https://github.com/tuxedcat/pslib
+  2. cd pslib
+  3. cp src/tpl.cpp src/main.cpp
+  4. source tool/build.sh src/main.cpp D #(Debug Build) generates res/mainD.out and res/submit.cpp
+  5. source tool/build.sh src/main.cpp R #(Release Build) generates res/mainR.out and res/submit.cpp
+  6. res/mainD.out (run debug excutable)
+  7. res/mainR.out (run release excutable)
+
 ## Sample Code
 ``` cpp
 #include "core/base.h"
@@ -59,16 +69,6 @@ arr,n,mkt(3,"hi",'@'),Arr<int>(n,7);=
 ```
 1 2 3 4 5 hello? 
 ```
-
-## Getting Started
-  Requirements: ubuntu20.04+, c++20, g++
-  1. git clone https://github.com/tuxedcat/pslib
-  2. cd pslib
-  3. cp src/tpl.cpp src/main.cpp
-  4. source tool/build.sh src/main.cpp D #(Debug Build) generates res/mainD.out and res/submit.cpp
-  5. source tool/build.sh src/main.cpp R #(Release Build) generates res/mainR.out and res/submit.cpp
-  6. res/mainD.out (run debug excutable)
-  7. res/mainR.out (run release excutable)
 
 ## Optional Settings: Testcase Download  
   1. Install <a href="https://addons.mozilla.org/en-US/firefox/addon/competitive-companion">CompetitiveCompanion</a> extension to your webbrowser  
