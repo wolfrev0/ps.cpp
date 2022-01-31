@@ -2,7 +2,7 @@
 Algo & D.S. library for problem-solving written in Modern C++.
 
 ## Feature
-  1. Balanced abstraction among flexibility, performance, and readability.
+  1. Balanced abstraction among flexibility, performance, code length, and readability.
   2. Resolve all headerfile dependancy and merge to one file. (just submit res/sumit.cpp file. That's all!)
   3. Various convenient tools. (pretty print debugger, testcase checker, etc...)
 
@@ -32,7 +32,7 @@ signed main(){
 			for(int k=0;k<2;k++)
 				for(int l=0;l<n;l++)
 					arr[i][j][k][l]='a'+i+j+k+l;;
-	debug(arr,n,mkt(3,"hi",'@'),Arr<int>(n,7));//ez debug
+	dbg(arr,n,mkt(3,"hi",'@'),Arr<int>(n,7));//ez debug
 	print(1,'2',"3",string("4"),n,"hello?",endl);//ez print
 }
 ```

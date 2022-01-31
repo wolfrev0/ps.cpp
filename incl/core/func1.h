@@ -7,8 +7,8 @@
 template<class T>int sz(const T& x){return x.size();}
 int fdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?a/b:(a-b+1)/b;}
 int cdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?(a+b-1)/b:a/b;}
-i64 flg2(i64 x){return 63-__builtin_clzll(x);}
-i64 clg2(i64 x){return 64-__builtin_clzll(x-1);}
+i64 flg2(u64 x){return 63-countl_zero(x);}
+i64 clg2(u64 x){return 64-countl_zero(x-1);}
 int fsqrt(i64 n) {i64 i=1;while(i*i<=n)i++;return i-1;}
 int csqrt(i64 n) {i64 i=1;while(i*i<n)i++;return i;}
 template<class T>T sq(T x){return x*x;}
@@ -22,7 +22,7 @@ template<MemberNan T>T nan(){return T().nan();}
 #endif
 
 //IO & misc
-template<char endch=0,char sepch=' ',class... A>
+template<char sepch=' ',char endch=0,class... A>
 void print(A...a){((cout<<a<<(!sepch?"":string(1,sepch))),...,(cout<<(!endch?"":string(1,endch))));}
 template<class T,class U>bool assmin(T& a,U&& b){return a>b?a=b,true:false;}
 template<class T,class U>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}
