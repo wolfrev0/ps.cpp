@@ -3,7 +3,7 @@
 #include "core/config.h"
 #include "core/arr.h"
 
-#ifdef CONCEPT
+#ifdef CPP20
 	template<typename T>
 	concept Monoid=requires(T t){
 		T::f(T::id(),T::id());

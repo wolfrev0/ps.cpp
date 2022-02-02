@@ -15,7 +15,7 @@ bool fraclt(pint a,pint b){
 }
 template<class T>
 struct CHTint{
-	Arr<pair<Line,T>> stk;
+	Arr<pair<Line,T>> stk;//pair<직선,추가정보>
 	i128 det(Line x,Line y,Line z){return (i128)x.a*y.b*z.c+(i128)x.b*y.c*z.a+(i128)x.c*y.a*z.b-(i128)x.c*y.b*z.a-(i128)x.b*y.a*z.c-(i128)x.a*y.c*z.b;}
 	void push(Line a,T v){
 		while(sz(stk)>=2 and det(stk[-2].fi,stk[-1].fi,a)>=0)

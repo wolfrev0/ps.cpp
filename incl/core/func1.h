@@ -14,7 +14,7 @@ int csqrt(i64 n) {i64 i=1;while(i*i<n)i++;return i;}
 template<class T>T sq(T x){return x*x;}
 template<class T>T inf(){return numeric_limits<T>::max()/2;}
 template<class T>T nan(){return inf<T>()+1;}
-#ifdef CONCEPT
+#ifdef CPP20
 template<typename T> concept MemberInf=requires(T t){t.inf();};
 template<typename T> concept MemberNan=requires(T t){t.nan();};
 template<MemberInf T>T inf(){return T().inf();}
