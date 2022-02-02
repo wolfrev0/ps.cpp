@@ -18,8 +18,8 @@ Algo & D.S. library for problem-solving written in Modern C++.
   3. cp src/tpl.cpp src/main.cpp
   4. source tool/build.sh src/main.cpp D #(Debug Build) generates res/mainD.out and res/submit.cpp
   5. source tool/build.sh src/main.cpp R #(Release Build) generates res/mainR.out and res/submit.cpp
-  6. res/mainD.out (run debug excutable)
-  7. res/mainR.out (run release excutable)
+  6. res/mainD.out #run debug excutable
+  7. res/mainR.out #run release excutable
 
 ## Sample Code
 ``` cpp
