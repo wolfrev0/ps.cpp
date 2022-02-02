@@ -12,7 +12,7 @@ Algo & D.S. library for problem-solving written in Modern C++.
   3. Support negative index (same as python) (only suppoerted in Arr&lt;T&gt; as of now)
 
 ## Getting Started
-  Requirements: ubuntu20.04+, c++20, g++
+  Requirements: ubuntu (20.04+), g++ (10.3.0+)
   1. git clone https://github.com/tuxedcat/pslib
   2. cd pslib
   3. cp src/tpl.cpp src/main.cpp
@@ -81,6 +81,6 @@ arr,n,mkt(3,"hi",'@'),Arr<int>(n,7);=
   TODO
 
 ## Limitation
-  1. Don't use Subtyping-Polymorphism. (pslib doesn't use virtual method due to performance issue)
+  1. Don't use Subtyping-Polymorphism. (pslib assume this for simple code)
   2. #include must be located on top of source file. if you need to define(or whatever) something above the header, use core/config.h(or other headers) instead. (due to dependancy resolving logic)
   3. License is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License Version 2.0</a>

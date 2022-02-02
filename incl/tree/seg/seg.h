@@ -5,7 +5,7 @@
 template<Monoid Q, Monoid U> struct Seg{
 	// static_assert(Q::T()==U::T());
 	using T=decltype(Q::id());
-	Seg(int n=0):n(1<<clg2(n)),tr(this->n*2,Q::id()){}
+	Seg(int n=0):n(bit_ceil(n)),tr(this->n*2,Q::id()){}
 	void upd(int i,T val){
 		i+=n,tr[i]=U::f(tr[i],val);
 		while(i>>=1)tr[i]=Q::f(tr[i<<1],tr[i<<1|1]);
