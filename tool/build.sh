@@ -58,7 +58,7 @@ else
 	echo -e "${GREEN}up to date ($dbgrel)${NONE}"
 fi
 
-if [ $(cat res/submit.cpp | grep -E "(input.*){2}") ]; then
+if [[ $(cat res/submit.cpp | grep -E "(input.*){2}") ]]; then
 	echo -e "${RED}[WARNING]: multiple call input() in one line (beware param eval order)${NONE}"
 fi
 

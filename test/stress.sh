@@ -9,7 +9,7 @@ NONE='\033[0m'
 set -e
 trap "echo -e '${RED}FAIL${NONE}'" ERR
 for((i=0;;++i));do
-	res/$1.out>test/tc/in
-	diff <(res/$2.out<test/tc/in) <(res/$3.out<test/tc/in) -BZ
+	$1>test/tc/in
+	diff <($2<test/tc/in) <($3<test/tc/in) -BZ
 	echo -e "${GREEN}OK, $i tests${NONE}"
 done
