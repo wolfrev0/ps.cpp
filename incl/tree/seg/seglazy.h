@@ -11,11 +11,19 @@
 
 template<Monoid Q,Monoid U, class T=decltype(Q::id()),auto fcomb=lamp(U::f(a,Q::fn(b,c)),T a,T b,int c)>
 struct SegLazy{
+	int n; Arr<T> tr,lz;
 	SegLazy(int n=0):n(n),tr(n<<2,Q::id()),lz(n<<2,U::id()){}
+	void init(){fill(tr.begin(),tr.end(),U::id()); fill(lz.begin(),lz.end(),U::id());}
 	T q(int p){return q(p,p+1);}
 	T q(int s,int e){return q(s,e,1,0,n);}
 	void upd(int p,T val){upd(p,p+1,val);}
 	void upd(int s,int e,T val){upd(s,e,val,1,0,n);}
+	//pred(acc[s,i))를 만족하는 최소i
+	int liftLR(auto pred,int s=0){T acc=Q::id();return liftLR(1,0,n,s,pred,acc);}
+	//pred(acc[i,e))를 만족하는 최대i
+	int liftRL(auto pred){return liftRL(pred,n);}
+	int liftRL(auto pred,int e){T acc=Q::id();return liftRL(1,0,n,e,pred,acc);}
+	//ex) kth(boj2243), mex(폴리곤_숲게임_lib.cpp), nextgreateridx(boj2493)
 private:
 	T q(int s,int e,int c,int cs,int ce){
 		propa(c,cs,ce);
@@ -42,6 +50,32 @@ private:
 	}
 	void addlz(int v,T val){lz[v]=lz[v]==U::id()?val:U::f(lz[v],val);}
 
-	int n;
-	Arr<T> tr, lz;
+	int liftLR(int c,int cs,int ce,int s,auto pred,T& acc){
+		int cm=(cs+ce)/2,ret=inf<int>();
+		if(ce<=s);
+		else if(cs<s)
+			assmin(ret,liftLR(c<<1,cs,cm,s,pred,acc))||assmin(ret,liftLR(c<<1|1,cm,ce,s,pred,acc));
+		else{
+			if(!pred(Q::f(acc,tr[c]),cs,ce))return inf<int>();
+			//now, pred(acc[s,ce))=True
+			if(ce-cs==1)return ce;
+			assmin(ret,liftLR(c<<1,cs,cm,s,pred,acc))||assmin(ret,liftLR(c<<1|1,cm,ce,s,pred,acc));
+			acc=Q::f(acc,tr[c]);
+		}
+		return ret;
+	}
+	int liftRL(int c,int cs,int ce,int e,auto pred,T& acc){
+		int cm=(cs+ce)/2,ret=-1;
+		if(e<=cs);
+		else if(e<ce)
+			assmax(ret,liftRL(c<<1|1,cm,ce,e,pred,acc))||assmax(ret,liftRL(c<<1,cs,cm,e,pred,acc));
+		else{
+			if(!pred(Q::f(tr[c],acc),cs,ce))return -1;
+			//now, pred(acc[cs,e))=True
+			if(ce-cs==1)return cs;
+			assmax(ret,liftRL(c<<1|1,cm,ce,e,pred,acc))||assmax(ret,liftRL(c<<1,cs,cm,e,pred,acc));
+			acc=Q::f(tr[c],acc);
+		}
+		return ret;
+	}
 };
