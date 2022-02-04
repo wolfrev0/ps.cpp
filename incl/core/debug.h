@@ -47,7 +47,7 @@
 	#undef dbg1if
 	#define dbg(...)(cerr<<(#__VA_ARGS__)<<";=",_dbgprint_(mkt(__VA_ARGS__)),cerr<<endl)
 	#define dbgif(bex,...)((bex)&&dbg(__VA_ARGS__))
-	static set<const char*> z;
-	#define dbg1(...) (!z.count(#__VA_ARGS__)&&(z.insert(#__VA_ARGS__),dbg(__VA_ARGS__)))
-	#define dbg1if(bex,...) (!z.count(#bex#__VA_ARGS__)&&(bex)&&(z.insert(#bex#__VA_ARGS__),dbg(__VA_ARGS__)))
+	static set<const char*> __z;
+	#define dbg1(...) (!__z.count(#__VA_ARGS__)&&(__z.insert(#__VA_ARGS__),dbg(__VA_ARGS__)))
+	#define dbg1if(bex,...) (!__z.count(#bex#__VA_ARGS__)&&(bex)&&(__z.insert(#bex#__VA_ARGS__),dbg(__VA_ARGS__)))
 #endif
