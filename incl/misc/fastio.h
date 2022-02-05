@@ -4,7 +4,6 @@
 #include "core/abbr.h"
 #include "core/arr.h"
 
-//INPUT, strstream으로 더 깔끔하게 가능할까?
 struct FastCIN{
 	static const int SZ=1<<24;
 	unsigned cnt=0;char a[SZ+1],*p;

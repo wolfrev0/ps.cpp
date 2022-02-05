@@ -63,11 +63,11 @@ arr,n,mkt(3,"hi",'@'),Arr<int>(n,7);=
 ----{  e,  f,  g,  h,  i,},],),},  5,
 -<  3, hi,  @,>,
 -{  7,  7,  7,  7,  7,},>
-1 2 3 4 5 hello? 
+12345hello? 
 ```
 ## Sample Output (Release)
 ```
-1 2 3 4 5 hello? 
+12345hello? 
 ```
 
 ## Optional Settings: Testcase Download  
@@ -83,4 +83,4 @@ arr,n,mkt(3,"hi",'@'),Arr<int>(n,7);=
 ## Limitation
   1. Don't use Subtyping-Polymorphism. (pslib assume this for simple code)
   2. #include must be located on top of source file. if you need to define(or whatever) something above the header, use core/config.h(or other headers) instead. (due to dependancy resolving logic)
-  3. License is <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License Version 2.0</a>
+  3. <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>

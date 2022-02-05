@@ -35,6 +35,7 @@ if ! [[ "$2" =~ ?*.h ]]; then
 	echo "//[Date]     $(date +%Y.%m.%d)" >> res/submit.cpp
 	echo "//[File]     $1" >> res/submit.cpp
 	echo "//[Library]  https://github.com/tuxedcat/pslib" >> res/submit.cpp
+	echo "#pragma GCC optimize("O3")" >> res/submit.cpp
 	awk '//' $(f|tac|grep -Ev "incl/core/debug.h") | grep -Ev '#include *"|#pragma once' >> res/submit.cpp
 fi
 
