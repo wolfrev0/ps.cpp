@@ -20,6 +20,11 @@ template<typename T> concept MemberNan=requires(T t){t.nan();};
 template<MemberInf T>T inf(){return T().inf();}
 template<MemberNan T>T nan(){return T().nan();}
 #endif
+#if !(CPP20)
+	#define countl_zero(x) __builtin_clzll(x)
+	#define popcount(x) __builtin_popcountll(x)
+	#define bit_ceil(x) 1<<clg2(x)
+#endif
 
 //IO & misc
 template<char endch=0,class... A>

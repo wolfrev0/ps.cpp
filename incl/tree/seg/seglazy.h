@@ -12,12 +12,12 @@
 template<Monoid Q,Monoid U, class T=decltype(Q::id()),auto fcomb=lamp(U::f(a,Q::fn(b,c)),T a,T b,int c)>
 struct SegLazy{
 	int n; Arr<T> tr,lz;
-	SegLazy(int n=0):n(n),tr(n<<2,Q::id()),lz(n<<2,U::id()){}
-	void init(){fill(tr.begin(),tr.end(),U::id()); fill(lz.begin(),lz.end(),U::id());}
-	T q(int p){return q(p,p+1);}
+	SegLazy(u32 n=0):n(bit_ceil(n)),tr(this->n*2,Q::id()),lz(this->n*2,U::id()){}
+	T q(int i){return q(i,i+1);}
 	T q(int s,int e){return q(s,e,1,0,n);}
-	void upd(int p,T val){upd(p,p+1,val);}
+	void upd(int i,T val){upd(i,i+1,val);}
 	void upd(int s,int e,T val){upd(s,e,val,1,0,n);}
+	void updass(int i,T val){upd<true>(i,i+1,val,1,0,n);}//only point-update-able
 	//pred(acc[s,i),i)를 만족하는 최소i
 	int liftLR(auto pred,int s=0){T acc=Q::id();return liftLR(1,0,n,s,pred,acc);}
 	//pred(acc[i,e),i)를 만족하는 최대i
@@ -32,12 +32,17 @@ private:
 		int m=(cs+ce)/2;
 		return Q::f(q(s,e,c<<1,cs,m),q(s,e,c<<1|1,m,ce));
 	}
+	template<bool ass=false>
 	T upd(int s,int e,T val,int c,int cs,int ce){
 		propa(c,cs,ce);
 		if(s>=ce||e<=cs) return tr[c];
-		if(s<=cs&&ce<=e){ addlz(c,val),propa(c,cs,ce);return tr[c]; }
+		if(s<=cs&&ce<=e){
+			if(ass) MUST(e-s==1),tr[c]=val;
+			else addlz(c,val),propa(c,cs,ce);
+			return tr[c]; 
+		}
 		int m=(cs+ce)/2;
-		return tr[c]=Q::f(upd(s,e,val,c<<1,cs,m),upd(s,e,val,c<<1|1,m,ce));
+		return tr[c]=Q::f(upd<ass>(s,e,val,c<<1,cs,m),upd<ass>(s,e,val,c<<1|1,m,ce));
 	}
 	void propa(int c,int cs,int ce){
 		if(lz[c]==U::id()) return;

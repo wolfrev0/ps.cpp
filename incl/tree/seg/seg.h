@@ -5,7 +5,7 @@
 template<Monoid Q> struct Seg{
 	using T=decltype(Q::id());
 	int n; Arr<T> tr;
-	Seg(u64 n=0):n(bit_ceil(n)),tr(this->n*2,Q::id()){}
+	Seg(u32 n=0):n(bit_ceil(n)),tr(this->n*2,Q::id()){}
 	void upd(int i,T val){for(tr[i+=n]=val;i>>=1;)tr[i]=Q::f(tr[i<<1],tr[i<<1|1]);}
 	T q(int i){return tr[n+i];}
 	T q(int s,int e){
