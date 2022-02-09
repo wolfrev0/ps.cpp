@@ -4,6 +4,11 @@
 #include "core/abbr.h"
 
 //Math
+#if !(CPP20)
+	#define countl_zero(x) __builtin_clzll(x)
+	#define popcount(x) __builtin_popcountll(x)
+	#define bit_ceil(x) 1<<clg2(x)
+#endif
 template<class T>int sz(const T& x){return x.size();}
 int fdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?a/b:(a-b+1)/b;}
 int cdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?(a+b-1)/b:a/b;}
@@ -12,23 +17,18 @@ i64 clg2(u64 x){return 64-countl_zero(x-1);}
 int fsqrt(i64 n) {i64 i=1;while(i*i<=n)i++;return i-1;}
 int csqrt(i64 n) {i64 i=1;while(i*i<n)i++;return i;}
 template<class T>T sq(T x){return x*x;}
-template<class T>T inf(){return numeric_limits<T>::max()/2;}
-template<class T>T nan(){return inf<T>()+1;}
+template<class T>constexpr T inf(){return numeric_limits<T>::max()/2;}
+template<class T>constexpr T nan(){return inf<T>()+1;}
 #ifdef CPP20
 template<typename T> concept MemberInf=requires(T t){t.inf();};
 template<typename T> concept MemberNan=requires(T t){t.nan();};
 template<MemberInf T>T inf(){return T().inf();}
 template<MemberNan T>T nan(){return T().nan();}
 #endif
-#if !(CPP20)
-	#define countl_zero(x) __builtin_clzll(x)
-	#define popcount(x) __builtin_popcountll(x)
-	#define bit_ceil(x) 1<<clg2(x)
-#endif
 
 //IO & misc
-template<char endch=0,class... A>
-void print(A...a){((cout<<a),...,(cout<<(!endch?"":string(1,endch))));}
+template<class...A>void print(A...a){((cout<<a),...);}
+template<class...A>void println(A...a){((cout<<a),...,(cout<<endl));}
 template<class T=int>T input(){T x;cin>>x;return x;}
 template<class T,class U>bool assmin(T& a,U&& b){return a>b?a=b,true:false;}
 template<class T,class U>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}

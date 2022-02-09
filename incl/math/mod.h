@@ -1,9 +1,9 @@
 #pragma once
 #include "core/base.h"
 
-//Mod객체로 DP하는법: 지금 inf<mod>어느정도 지원됨. optional 사용하는게 더 깔끔할까?
+//Mod객체로 DP: optional 사용해야할듯
 template<int m> struct Mod{
-	Mod(i64 n=0):n(n>=i64(m)*m?n:(n%m+m)%m){}
+	Mod(i64 n=0):n((n%m+m)%m){}
 	explicit operator int()const{return n;}
 	explicit operator bool()const{return !!n;}
 
@@ -35,7 +35,5 @@ template<int m> struct Mod{
 		auto [g,x,y]=xgcd(b,a%b);
 		return{g,y,x-(a/b)*y};
 	}
-	Mod inf()const{return ::inf<int>();}
-	Mod nan()const{return ::nan<int>();}
 };
 template<int m> ostream& operator<<(ostream& s,const Mod<m>& n){return s<<n.n;}

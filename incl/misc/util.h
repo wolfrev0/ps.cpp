@@ -1,12 +1,13 @@
 #pragma once 
 #include "core/base.h"
 
-auto split(auto s,auto p) {
+template<class T>
+auto split(auto s,T p) {
 	Arr<decltype(s)> ret;
 	auto it1=s.begin();
 	for(auto it2=it1;(it2=find(it1,s.end(),p))!=s.end();it1=it2+1)
-		ret.emplace_back({it1,it2});
-	ret.emplace_back({it1,s.end()});
+		ret.push_back({it1,it2});
+	ret.push_back({it1,s.end()});
 	return ret;}
 
 struct defer{defer(auto f):f(f){}~defer(){f();}function<void()> f;};
