@@ -1,6 +1,7 @@
 #pragma once
 #include "core/base.h"
 #include "misc/i128.h"
+#include "misc/random.h"
 
 //아래 링크자료 정독하자
 //https://rkm0959.tistory.com/category/PS/PS%20%EC%A0%95%EC%88%98%EB%A1%A0%20%EA%B0%80%EC%9D%B4%EB%93%9C
@@ -8,7 +9,7 @@
 //<Adjust Formaula>
 // xgcd(a,b)solves ax+by=gcd(a,b)=g
 // ax+by=c satisfied iff c=g*k     so,do x*=k and y*=k.
-// if (x,y)is one of root,(x+t*b/g,y-t*a/g)is also root.
+// if(x,y)is one of root,(x+t*b/g,y-t*a/g)is also root.
 tint xgcd(i64 a,i64 b){
 	if(!b)return{a,1,0};
 	auto [g,x,y]=xgcd(b,a%b);
@@ -27,8 +28,8 @@ int eutot(int n){
 	return r;
 }
 
-#include "misc/i128.h"
 bool miller_rabin(u64 n){
+	dbg1("[deprecated] use faster version Rho::isprime");
 	func(u64,fp,u64 x,u64 p){
 		if(!p)return 1;
 		i128 z=fp(x,p/2);
@@ -55,12 +56,13 @@ bool miller_rabin(u64 n){
 		ret&=test(n,i);
 	return ret;
 }
-//출처불명
+
 Arr<i64> pollard_rho(i64 n){
+	dbg1("[deprecated] use faster version Rho::factorize");
 	func(i64,rho,i64 n){
 		while(true){
-			i64 x=rand()%(n-2)+2;
-			i64 y=x,c=rand()%(n-1)+1;
+			i64 x=rd()%(n-2)+2;
+			i64 y=x,c=rd()%(n-1)+1;
 			while(true){
 				x=(i128(x)*x%n+c)%n;
 				y=(i128(y)*y%n+c)%n;
@@ -102,13 +104,13 @@ int lucas(int n,int m,int p){
 
 //chinese remainder theorem
 //https://rkm0959.tistory.com/180?category=828364
-//merge two equation [ x=a.fi (mod a.se),x=b.fi (mod b.se)]
+//merge two equation [ x=a.fi(mod a.se),x=b.fi(mod b.se)]
 //these are equivalent with
-//x=a.se*y+a.fi=b.fi (mod b.se)
+//x=a.se*y+a.fi=b.fi(mod b.se)
 //=> a.se*y1+b.se*y2=b.fi-a.fi
 //=> 이제 xgcd로 y1,y2 구할 수 있다. 정확히는 y1=t(mod b.se/g)를 알수있다.
 //=> 위와 동치인 y1=t+b.se/g*m을 x=a.se*y1+a.fi에 대입하면
-//=> x=a.se*b.se/g*m+a.se*t+a.fi => x=a.se*t+a.fi (mod lcm)끝!
+//=> x=a.se*b.se/g*m+a.se*t+a.fi => x=a.se*t+a.fi(mod lcm)끝!
 pint crt(pint a,pint b){
 	if(a==pint{-1,-1} or b==pint{-1,-1})return{-1,-1};
 	if(a.fi>b.fi)swap(a,b);
@@ -121,3 +123,68 @@ pint crt(pint a,pint b){
 
 void discrete_log(){}  // baby step giant step
 void discrete_sqrt(){}  // tonelli-shanks
+
+//Author: anachor(https://judge.yosupo.jp/submission/39301)
+namespace Rho{
+	typedef long long LL;
+	typedef unsigned long long ULL;
+	ULL mult(ULL a,ULL b,ULL mod){
+		LL ret=a*b-mod*(ULL)(1.0L/mod*a*b);
+		return ret+mod*(ret<0)-mod*(ret>=(LL)mod);
+	}
+	ULL power(ULL x,ULL p,ULL mod){
+		ULL s=1,m=x;
+		while(p){
+			if(p&1)s=mult(s,m,mod);
+			p>>=1,m=mult(m,m,mod);
+		}
+		return s;
+	}
+	vector<LL> bases={2,325,9375,28178,450775,9780504,1795265022};
+	bool isprime(LL n){
+		if(n<2)return 0;
+		if(n%2==0)return n==2;
+		ULL s=__builtin_ctzll(n-1),d=n>>s;
+		for(ULL x:bases){
+			ULL p=power(x%n,d,n),t=s;
+			while(p!=1&&p!=n-1&&x%n&&t--)p=mult(p,p,n);
+			if(p!=n-1&&t!=s)return 0;
+		}
+		return 1;
+	}
+	///Binary gcd algo,optional. if omitted use __gcd
+	ULL gcd(ULL u,ULL v){
+		if(u==0)return v;
+		if(v==0)return u;
+		int shift=__builtin_ctzll(u|v);
+		u>>=__builtin_ctzll(u);
+		do{
+			v>>=__builtin_ctzll(v);
+			if(u>v)swap(u,v);
+			v=v-u;
+		} while(v);
+		return u << shift;
+	}
+	///Returns a proper divisor if n is composite,n otherwise
+	mt19937_64 rng(chrono::system_clock::now().time_since_epoch().count());
+	ULL FindFactor(ULL n){
+		if(n==1||isprime(n))return n;
+		ULL c=1,x=0,y=0,t=0,prod=2,x0=1,q;
+		auto f=[&](ULL X){return mult(X,X,n)+c;};
+		while(t++%40 or gcd(prod,n)==1){
+			if(x==y)c=rng()%(n-1)+1,x=x0,y=f(x);
+			if((q=mult(prod,max(x,y)-min(x,y),n)))prod=q;
+			x=f(x),y=f(f(y));
+		}
+		return gcd(prod,n);
+	}
+	///Returns all prime factors
+	vector<ULL> factorize(ULL x){
+		if(x==1) return{};
+		ULL a=FindFactor(x),b=x/a;
+		if(a==x) return{a};
+		vector<ULL> L=factorize(a),R=factorize(b);
+		L.insert(L.end(),R.begin(),R.end());
+		return L;
+	}
+}
