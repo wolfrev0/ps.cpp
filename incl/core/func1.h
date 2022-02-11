@@ -13,7 +13,7 @@ template<class T>int sz(const T& x){return x.size();}
 int fdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?a/b:(a-b+1)/b;}
 int cdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?(a+b-1)/b:a/b;}
 i64 flg2(u64 x){return 63-countl_zero(x);}
-i64 clg2(u64 x){return 64-countl_zero(x-1);}
+i64 clg2(u64 x){return x-1==0?0:64-countl_zero(x-1);}
 int fsqrt(i64 n) {i64 i=1;while(i*i<=n)i++;return i-1;}
 int csqrt(i64 n) {i64 i=1;while(i*i<n)i++;return i;}
 template<class T>T sq(T x){return x*x;}
