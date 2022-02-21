@@ -1,4 +1,4 @@
-// not my code
+//not my code (출처불명)
 
 #pragma once
 #include "core/base.h"

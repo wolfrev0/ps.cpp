@@ -10,7 +10,6 @@ template<class T> struct Polygon{
 	explicit Polygon(const Arr<Vec2<T>>& v):vtx(v){}
 	int size()const{ return sz(vtx);}
 	void push_back(const Vec2<T>& v){ vtx.emplace_back(v);}
-	void eb(){ vtx.eb();}
 	Vec2<T>& operator[](int idx){ return vtx[idx];}
 
 	f64 area(){

@@ -9,7 +9,11 @@
 	#define popcount(x) __builtin_popcountll(x)
 	#define bit_ceil(x) 1<<clg2(x)
 #endif
-template<class T>int sz(const T& x){return x.size();}
+#if CPP20
+	#define sz ssize
+#else
+	template<class T>int sz(const T& x){return x.size();}
+#endif
 int fdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?a/b:(a-b+1)/b;}
 int cdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?(a+b-1)/b:a/b;}
 i64 flg2(u64 x){return 63-countl_zero(x);}
