@@ -17,17 +17,19 @@ template<class T> struct HLD:public RootedTree<T>{
 		dfs(r);
 		idx=permuinv(RT::pre()),top[0]=r;
 	}
-	Arr<pint> q(int a, int b, bool vtxw, int* plca=0){
-		Arr<pint> ret;
+	pair<Arr<pint>,Arr<pint>> q(int a, int b, bool vtxw, int* plca=0){
+		Arr<pint> reta,retb;
 		while(c[a]!=c[b])
 			if(dpt[top[c[a]]]<dpt[top[c[b]]])
-				ret.pushb(idx[top[c[b]]],idx[b]+1),b=p[top[c[b]]].fi;
+				retb.emplace_back(idx[top[c[b]]],idx[b]+1),b=p[top[c[b]]].fi;
 			else
-				ret.pushb(idx[top[c[a]]],idx[a]+1),a=p[top[c[a]]].fi;
-		if(dpt[a]>dpt[b]) swap(a,b);
-		ret.pushb(idx[a]+!vtxw,idx[b]+1);
+				reta.emplace_back(idx[top[c[a]]],idx[a]+1),a=p[top[c[a]]].fi;
+		if(dpt[a]>dpt[b])
+			reta.emplace_back(idx[b]+!vtxw,idx[a]+1);
+		else
+			retb.emplace_back(idx[a]+!vtxw,idx[b]+1);
 		if(plca)*plca=a;
-		return ret;
+		return {move(reta),move(retb)};
 	}
 	int lca(int a, int b) { int ret; q(a,b,0,&ret); return ret; }
 
@@ -36,5 +38,5 @@ template<class T> struct HLD:public RootedTree<T>{
 };
 
 //<See Also>
-// https://www.acmicpc.net/source/32842689
-// https://codeforces.com/group/q4aFsZ9De9/contest/288125/submission/99012892
+//https://atcoder.jp/contests/abc235/submissions/28577099
+//commutative vertex HLD: BOJ23566
