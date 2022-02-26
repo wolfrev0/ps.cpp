@@ -2,7 +2,7 @@
 #include "core/base.h"
 #include "math/monoid.h"
 
-template<Monoid Q,Monoid U,int xlo=0,int xhi=inf<signed>()> struct SegPersi{
+template<Monoid Q,auto fupd,int xlo=0,int xhi=inf<signed>()> struct SegPersi{
 	using T=decltype(Q::id());
 	T v=Q::id();
 	SegPersi *l{},*r{};
@@ -10,7 +10,7 @@ template<Monoid Q,Monoid U,int xlo=0,int xhi=inf<signed>()> struct SegPersi{
 
 	SegPersi* upd(int i,T x,int cs=xlo,int ce=xhi){
 		if(ce<=i or i+1<=cs) return this;
-		if(i<=cs and ce<=i+1) return new SegPersi{U::f(v,x)};
+		if(i<=cs and ce<=i+1) return new SegPersi{fupd(v,x)};
 		int cm=(cs+ce)/2;
 		if(!l)l=new SegPersi;
 		if(!r)r=new SegPersi;

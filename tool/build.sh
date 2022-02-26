@@ -7,7 +7,7 @@ mkdir -p res
 src=${1:-"src/main.cpp"}
 dbgrel=${2:-"D"}
 
-base_arg=" -iquote ./incl -std=c++2a -Wall -Wno-unused-variable -fconcepts"
+base_arg=" -iquote ./incl -std=c++20 -Wall -Wno-unused-variable"
 if [ $dbgrel == "D" ]; then #debug
 	option="-O0 -D DEBUG=1 -ggdb3"
 else #release

@@ -34,3 +34,20 @@ bool test_monge(int n,int m,auto f){
 				}
 	return true;
 }
+//min_opt_idx right monotonicity check
+//max는 f에서 부호뒤집어 반환
+//L은 함수 따로 만들자
+//j>=i 제약 없을때도 있는데 일단 넣음
+bool test_monoptiR(int n,int m,auto f){
+	int popti=-1;
+	for(int i=0;i<n;i++){
+		pint val={inf<int>(),-1};
+		for(int j=i;j<=m;j++)
+			assmin(val,pint{f(i,j),j});
+		if(val.se < popti)
+			return false;
+		// println("OK");
+		popti=val.se;
+	}
+	return true;
+}
