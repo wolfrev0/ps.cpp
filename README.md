@@ -1,5 +1,5 @@
 # pslib (Problem Solving Library)
-Algo & D.S. library for problem-solving written in Modern C++.
+Algo & D.S. library for problem-solving written with Modern C++.
 
 ## Feature
   1. Balanced abstraction among flexibility, performance, code length, and readability.
