@@ -1,10 +1,11 @@
 # pslib (Problem Solving Library)
-Algo & D.S. library for problem-solving written with Modern C++.
+Algorithm and DataStructure library for problem-solving written in modern c++.
 
 ## Feature
   1. Balanced abstraction among flexibility, performance, code length, and readability.
   2. Resolve all headerfile dependancy and merge to one file. (just submit res/sumit.cpp file. That's all!)
   3. Various convenient tools. (pretty print debugger, testcase checker, etc...)
+  4. Header-only library
 
 ## Interface
   1. [s,e) half opened range
@@ -33,7 +34,7 @@ signed main(){
 				for(int l=0;l<n;l++)
 					arr[i][j][k][l]='a'+i+j+k+l;;
 	dbg(arr,n,mkt(3,"hi",'@'),Arr<int>(n,7));//ez debug
-	print(1,'2',"3",string("4"),n,"hello?",endl);//ez print
+	println(1,'2',"3",string("4"),n,"hello?");//ez print
 }
 ```
 ## Sample Output (Debug)
