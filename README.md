@@ -27,7 +27,7 @@ Algorithm and DataStructure library for problem-solving written in modern c++.
 #include "core/base.h"
 signed main(){
 	int n=5;
-	auto arr=ARR(2,3,2,n,'#');//(2*3*2*n shaped 4D array)
+	auto arr=ARR(2,3,2,n,'#');//(2*3*2*n shaped 4D vector)
 	for(int i=0;i<2;i++)
 		for(int j=0;j<3;j++)
 			for(int k=0;k<2;k++)
