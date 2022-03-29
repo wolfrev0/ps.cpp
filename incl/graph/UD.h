@@ -7,14 +7,6 @@ struct GraphUD: public GraphWD<int>{
 
 	void add_edge(int s,int e){GraphWD::add_edge(s,e,1);}
 
-	GraphUD inv(){
-		GraphUD ret(n);
-		for(auto& i:adj)
-			for(auto j:i)
-				ret.add_edge(edg[j].v[1],edg[j].v[0]);
-		return ret;
-	}
-
 	Arr<int> topo_sort(){
 		Arr<int> in(n);
 		for(int i=0;i<n;i++)
@@ -96,7 +88,7 @@ struct GraphUD: public GraphWD<int>{
 		Arr<int> post_ord;
 		Arr<char> vis(n);
 
-		func(void,dfs,int v,Arr<int>& out,GraphUD& g){
+		func(void,dfs,int v,Arr<int>& out,GraphWD<int>& g){
 			vis[v]=true;
 			for(auto i:g.adj[v])
 				if(!vis[edg[i].v[1]])

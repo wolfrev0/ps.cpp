@@ -13,14 +13,20 @@ struct GraphWD{
 	};
 	GraphWD(int n):n(n),adj(n){}
 
+	GraphWD<T> inv(){
+		GraphWD<T> ret(n);
+		for(auto& i:adj)
+			for(auto j:i)
+				ret.add_edge(edg[j].v[1],edg[j].v[0],edg[j].w);
+		return ret;
+	}
 	void add_edge(int s,int e,T w){
 		edg.emplace_back(E{{s,e},{sz(adj[e]),sz(adj[s])},sz(edg),w});
 		adj[s].emplace_back(sz(edg)-1);
 	}
-
-	void dijkstra_trackall(Arr<T>& d,Arr<Arr<int>>& p,Arr<int> src){
-		d=Arr<T>(n,inf<T>());
-		p=Arr<Arr<int>>(n);
+	//dist[]와 inv()로 prv알 수 있음
+	Arr<T> dijkstra(Arr<int> src){
+		Arr<T> d(n,inf<T>());
 		PQ<pair<T,int>,greater<>> pq;
 		for(auto s:src)
 			pq.push({d[s]=T(),s});
@@ -31,30 +37,47 @@ struct GraphWD{
 				int y=edg[i].opp(x);
 				T w=edg[i].w;
 				if(d[y]>dist+w)
-					p[y]={i}, pq.push({d[y]=dist+w,y});
-				else if(d[y]==dist+w)
-					p[y].emplace_back(i);
+					pq.push({d[y]=dist+w,y});
 			}
 		}
+		return d;
 	}
-	void dijkstra_trackone(Arr<T>& d,Arr<int>& p,Arr<int> src){
-		d=Arr<T>(n,inf<T>());
-		p=Arr<int>(n,-1);
-		PQ<pair<T,int>,greater<>> pq;
-		for(auto s:src)
-			pq.push({d[s]=T(),s});
-		while(sz(pq)){
-			auto [dist,x]=pq.top(); pq.pop();
-			if(dist!=d[x])continue;
-			for(auto& i:adj[x]){
+	bool spfa_trackone(Arr<int> src){
+		deque<int> q;
+		Arr<char> inq(n);
+		Arr<T> d(n,inf<T>());
+		Arr<int> c(n);
+		for(auto s:src){
+			d[s]=0;
+			inq[s]=true;
+			q.emplace_back(s);
+		}
+		while(sz(q)){
+			int x=q.front(); inq[x]=false, q.pop_front();
+			for(auto i:adj[x]){
 				int y=edg[i].opp(x);
-				T w=edg[i].w;
-				if(d[y]>dist+w)
-					p[y]=x, pq.push({d[y]=dist+w,y});
+				auto w=edg[i].w;
+				if(isvalid(edg[i])){
+					if(d[y]>d[x]+w){
+						d[y]=d[x]+w;
+						if(!inq[y]){
+							inq[y]=true;
+							if(sz(q) && d[y]<d[q.front()])
+								q.emplace_front(y);
+							else
+								q.emplace_back(y);
+							if(++c[y]>n)
+								break;
+						}
+					}
+				}
 			}
 		}
+		if(q.size())//failed
+			d.clear();
+		return d;
 	}
-	// //이론상 O(E)인데 더 느린듯, gccext include필요
+	// //이론상 O(E+VlogV), gccext include필요
 	// void dijkstra_trackone2(Arr<T>& d,Arr<int>& p,int s){
 	// 	d=Arr<T>(n,inf<T>());
 	// 	p=Arr<int>(n,-1);
@@ -87,70 +110,6 @@ struct GraphWD{
 				for(int j=0;j<n;j++)
 					a[i][j]=min(a[i][j],a[i][k]+a[k][j]);
 		return a;
-	}
-
-	bool spfa_trackall(Arr<T>& ub,Arr<Arr<int>>& p,Arr<int> src){
-		deque<int> q;
-		Arr<char> inq(n);
-		ub=Arr<T>(n,inf<T>());
-		p=Arr<Arr<int>>(n);
-		Arr<int> c(n);
-		for(auto s:src){
-			ub[s]=0;
-			inq[s]=true;
-			q.emplace_back(s);
-		}
-		while(sz(q)){
-			int x=q.front(); inq[x]=false, q.pop_front();
-			for(auto i:adj[x]){
-				int y=edg[i].opp(x);
-				auto w=edg[i].w;
-				if(isvalid(edg[i])){
-					if(ub[y]>ub[x]+w){
-						p[y]={i}, ub[y]=ub[x]+w;
-						if(!inq[y]){
-							inq[y]=true;
-							if(++c[y]>n)return false;
-							if(sz(q) && ub[y]<ub[q.front()])q.emplace_front(y);
-							else q.emplace_back(y);
-						}
-					}else if(ub[y]==ub[x]+w)
-						p[y].emplace_back(i);
-				}
-			}
-		}
-		return q.empty();
-	}
-	bool spfa_trackone(Arr<T>& ub,Arr<int>& p,Arr<int> src){
-		deque<int> q;
-		Arr<char> inq(n);
-		ub=Arr<T>(n,inf<T>());
-		p=Arr<int>(n,-1);
-		Arr<int> c(n);
-		for(auto s:src){
-			ub[s]=0;
-			inq[s]=true;
-			q.emplace_back(s);
-		}
-		while(sz(q)){
-			int x=q.front(); inq[x]=false, q.pop_front();
-			for(auto i:adj[x]){
-				int y=edg[i].opp(x);
-				auto w=edg[i].w;
-				if(isvalid(edg[i])){
-					if(ub[y]>ub[x]+w){
-						p[y]=i, ub[y]=ub[x]+w;
-						if(!inq[y]){
-							inq[y]=true;
-							if(++c[y]>n)return false;
-							if(sz(q) && ub[y]<ub[q.front()])q.emplace_front(y);
-							else q.emplace_back(y);
-						}
-					}
-				}
-			}
-		}
-		return q.empty();
 	}
 
 	int n;
