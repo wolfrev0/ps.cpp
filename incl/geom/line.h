@@ -6,13 +6,21 @@ class LineSame:public LineException{};
 class LineParallel:public LineException{};
 
 //NOTE: 직선의 방정식과 2by2연립solver
+//normalized(),operator==,operator<는 아직 테스트 안된듯?
 struct Line{
 	//ax+by+c=0
 	int a,b,c;
-	Line(int a,int b,int c):a(a),b(b),c(c){}
+	Line(int a,int b,int c):a(a),b(b),c(c){*this=normalized();}
 	Line(pint a,pint b):Line(a.se-b.se,b.fi-a.fi,-a.se*(b.fi-a.fi)+a.fi*(b.se-a.se)){}
 	Line(pint tangent, pint pt, void* dummy_param):Line(pt,mkp(pt.fi+tangent.fi,pt.se-tangent.se)){}
+	Line normalized(){
+		int g=gcd(gcd(a,b),c);
+		if(mkt(a/g,b/g,c/g)>mkt(-a/g,-b/g,-c/g))
+			g*=-1;//더 작은쪽으로 부호 설정
+		return {a/g,b/g,c/g};
+	}
 	bool operator==(const Line&r)const{return mkt(a,b,c)==mkt(r.a,r.b,r.c) or mkt(-a,-b,-c)==mkt(r.a,r.b,r.c);}
+	bool operator<(const Line& r)const{return mkt(a,b,c)<mkt(r.a,r.b,r.c);}
 	pint tan()const{return !b?pint{1,0}:(b>=0?pint{-a,b}:pint{a,-b});}//기울기=[0]/[1]
 	tint intersect(const Line& r)const{
 		int det=a*r.b-b*r.a;
