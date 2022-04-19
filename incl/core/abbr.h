@@ -19,4 +19,4 @@
 using i64=long long;using u64=unsigned long long;using u32=unsigned;
 using pint=pair<int,int>;using tint=tuple<int,int,int>;
 template<class T>using Str=basic_string<T>;
-template<class T,class CMP=greater<>>using PQ=std::priority_queue<T,vector<T>,CMP>;
+template<class T,class CMP=less<>>using PQ=std::priority_queue<T,vector<T>,CMP>;
