@@ -1,8 +1,10 @@
+//https://codeforces.com/contest/1670/problem/C
 #include "core/base.h"
 
 const int mod=1e9+7;
 
 Arr<Arr<int>> permu_decomp(const Arr<int>& a, const Arr<int>& b){
+	//순서상관없으면 union find로 그룹짓는게 제일 편함.
 	int n=sz(a);
 	Arr<Arr<int>> ret;
 	Arr<char> vis(n);
@@ -40,7 +42,7 @@ void solve(){
 		for(auto i:g)
 			ok&=d[i]==-1;
 		if(ok)
-			ans*=min(2,sz(g)),ans%=mod;
+			ans*=min<int>(2,sz(g)),ans%=mod;
 	}
 	println(ans);
 }
