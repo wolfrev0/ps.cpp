@@ -16,8 +16,15 @@ template<class T> struct Vec2{
 	Vec2 operator-=(const Vec2& r){return *this=*this-r;}
 	Vec2 operator*=(T r){return *this=*this*r;}
 	Vec2 operator/=(T r){return *this=*this/r;}
-
-	friend strong_ordering operator<=>(const Vec2&,const Vec2&)=default;
+	
+	//호환성때문에 잠시 보류
+	// friend strong_ordering operator<=>(const Vec2&, const Vec2&)=default;
+	bool operator==(const Vec2& r)const{return x==r.x&&y==r.y;}
+	bool operator!=(const Vec2& r)const{return !(*this==r);}
+	bool operator<(const Vec2& r)const{return x==r.x?y<r.y:x<r.x;}
+	bool operator<=(const Vec2& r)const{return *this==r||*this<r;}
+	bool operator>(const Vec2& r)const{return x==r.x?y>r.y:x>r.x;}
+	bool operator>=(const Vec2& r)const{return *this==r||*this>r;}
 	
 	f64 len()const{return hypot(x,y);}
 	T lensq()const{return dot(*this);}

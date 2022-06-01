@@ -61,14 +61,14 @@ template<class T> struct Segment:public LineLegacy<T>{
 	}
 	virtual bool valid_foot(const Vec2<T>& p)const override{return is_valid(p);}
 	virtual bool valid_contains(const Vec2<T>& p)const override{return is_valid(p);}
-	virtual bool LineLegacy_same_handler(const LineLegacy<T>& a,Vec2<T>& res)const override{
-		Segment<T> seg1=*this,seg2={a.sv,a.ev};
-		if(seg1.len()<seg2.len())swap(seg1,seg2);
-		if(seg1.sv==seg2.sv and !seg1.is_valid(seg2.ev)or seg1.sv==seg2.ev and !seg1.is_valid(seg2.sv)){res=sv;return true;}
-		if(seg1.ev==seg2.sv and !seg1.is_valid(seg2.ev)or seg1.ev==seg2.ev and !seg1.is_valid(seg2.sv)){res=ev;return true;}
-		if(!seg1.is_valid(seg2.sv)and !seg1.is_valid(seg2.ev))return false;
-		throw "Line Same";
-	}
+	// virtual bool LineLegacy_same_handler(const LineLegacy<T>& a,Vec2<T>& res)const override{
+	// 	Segment<T> seg1=*this,seg2={a.sv,a.ev};
+	// 	if(seg1.len()<seg2.len())swap(seg1,seg2);
+	// 	if(seg1.sv==seg2.sv and !seg1.is_valid(seg2.ev)or seg1.sv==seg2.ev and !seg1.is_valid(seg2.sv)){res=sv;return true;}
+	// 	if(seg1.ev==seg2.sv and !seg1.is_valid(seg2.ev)or seg1.ev==seg2.ev and !seg1.is_valid(seg2.sv)){res=ev;return true;}
+	// 	if(!seg1.is_valid(seg2.sv)and !seg1.is_valid(seg2.ev))return false;
+	// 	throw "Line Same";
+	// }
 };
 
 //https://www.geeksforgeeks.org/check-if-two-given-LineLegacy-segments-intersect/
