@@ -62,6 +62,7 @@ template<class T>struct MFunc{
 	static T fn(T x,int n){return ::fn<T,MFunc<T>>(x,n);}
 };
 #ifdef CPP20
+//https://codeforces.com/contest/1691/submission/159072343
 //NOTE: non-empty. empty-able일시 max(0,val.m)하면 됨
 struct TMaxSubArr{
 	int s=0,l=-inf<int>(),m=-inf<int>(),r=-inf<int>();

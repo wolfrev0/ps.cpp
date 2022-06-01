@@ -3,8 +3,7 @@
 void solve(){
 }
 signed main(){
-	// int ti=0,t;cin>>t;
-	// while(++ti<=t)
+	// for(int ti=1,t=input();ti<=t;ti++)
 	// 	cout<<"Case #"<<ti<<": ",
 		solve();
 }

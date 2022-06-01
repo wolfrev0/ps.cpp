@@ -21,7 +21,9 @@ template<Monoid Q> struct Seg{
 	//pred(acc[i,e),i)를 만족하는 최대i
 	int liftRL(auto pred){return liftRL(pred,n);}
 	int liftRL(auto pred,int e){T acc=Q::id();return liftRL(1,0,n,e,pred,acc);}
-	//ex) kth(boj2243), mex(폴리곤_숲게임_lib.cpp), nextgreateridx(boj2493)
+	//kth: boj2243
+	//mex: 폴리곤_숲게임_lib.cpp
+	//nearest_greaters: https://codeforces.com/contest/1691/submission/159109187
 private:
 	int liftLR(int c,int cs,int ce,int s,auto pred,T& acc){
 		int cm=(cs+ce)/2,ret=inf<int>();
