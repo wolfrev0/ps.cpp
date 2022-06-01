@@ -22,6 +22,11 @@
 			"command": "ulimit -s 1048576 && tool/build.sh ${relativeFile} R && test/tc.sh res/${fileBasenameNoExtension}R.out",
 		},
 		{
+			"label": "Build(Debug)",
+			"type": "shell",
+			"command": "ulimit -s 1048576 && case ${file} in *.cpp) tool/build.sh ${relativeFile} D ;; *.py) stickytape ${file} --add-python-path libpy > res/submit.py ;; *.sh) chmod +x ${file} ;; *) echo '${fileExtname} isnt supported (available: cpp,py,sh)' ;; esac",
+		},
+		{
 			"label": "tc_save",
       "type": "shell",
       "command": "node tool/tcsaver.js",
