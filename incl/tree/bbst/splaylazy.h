@@ -1,6 +1,6 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid.h"
+#include "math/struct/monoid.h"
 
 // template<class T, class F>
 // struct SplayLazy{

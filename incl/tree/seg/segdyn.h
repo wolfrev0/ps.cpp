@@ -1,6 +1,6 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid.h"
+#include "math/struct/monoid.h"
 
 template<Monoid Q, auto fupd, int xlo=0,int xhi=inf<signed>()>
 struct SegDyn{

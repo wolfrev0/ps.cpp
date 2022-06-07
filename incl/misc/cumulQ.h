@@ -1,6 +1,6 @@
 #pragma once
 #include "core/base.h"
-#include "math/mod.h"
+#include "math/struct/mod.h"
 
 template<class T> struct CumulQ{
 	T acc;

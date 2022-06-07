@@ -1,6 +1,6 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid.h"
+#include "math/struct/monoid.h"
 
 //길이처리나 온라인추가 필요하면 직접 짜자(20931)
 template<class M>

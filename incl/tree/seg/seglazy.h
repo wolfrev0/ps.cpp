@@ -1,6 +1,6 @@
 #pragma once
 #include "core/base.h"
-#include "math/monoid.h"
+#include "math/struct/monoid.h"
 
 //q(u(a[l],x),u(a[l+1],x),...,u(a[r],x))
 //=u'(q(a[l],...,a[r]),x) 이러한 분배법칙변형? 이 빠르게 가능해야 한다.
