@@ -14,8 +14,23 @@ int clg(i64 n,int base=2) {
 	return ret-(rem<=1);
 }
 
+template<class T> T factorial(int x){
+	if(x<=1)return 1;
+	static Arr<optional<T>> dp;
+	while(dp.size()<=x)
+		dp.push_back(optional<T>());
+	auto& r=dp[x];
+	return (r?r:r=factorial<T>(x-1)*x).value();
+}
+template<class T> T binomial(int x,int y){
+	if(y<-1 or y>x) return 0;
+	if(y==0 or y==x) return 1;
+	if(x-y<y)
+		y=x-y;
+	return factorial<T>(x)/(factorial<T>(y)*factorial<T>(x-y));
+}
 template<class T> Arr<T> factorials(int n) {Arr<T> r(n,1);for(int i=1;i<n;i++)r[i]=r[i-1]*i;return r;}
-template<class T,int n,int k> Arr<Arr<T>> binoms(){
+template<class T,int n,int k> Arr<Arr<T>> binomials(){
 	Arr<Arr<T>> r(n,Arr<T>(k));
 	for(int i=1;i<n;i++){
 		r[i][0]=1;
@@ -24,7 +39,7 @@ template<class T,int n,int k> Arr<Arr<T>> binoms(){
 	}
 	return r;
 }
-Arr<i64> divs(i64 n) {
+Arr<i64> divisor(i64 n) {
 	Arr<i64> r,s;
 	for(i64 i=1;i*i<=n;i++)
 		if(n%i==0){
@@ -36,7 +51,7 @@ Arr<i64> divs(i64 n) {
 	r.insert(r.end(),s.begin(),s.end());
 	return r;
 }
-Arr<i64> facts(i64 n) {
+Arr<i64> factorize(i64 n) {
 	i64 c=n;
 	Arr<i64> r;
 	for(i64 i=2;i*i<=n;i++)
