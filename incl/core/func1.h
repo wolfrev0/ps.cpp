@@ -23,7 +23,7 @@ int csqrt(i64 n) {i64 i=1;while(i*i<n)i++;return i;}
 template<class T>T sq(T x){return x*x;}
 template<class T>constexpr T inf(){return numeric_limits<T>::max()/2;}
 template<class T>constexpr T nan(){return inf<T>()+1;}
-#ifdef CPP20
+#if CPP20
 template<typename T> concept MemberInf=requires(T t){t.inf();};
 template<typename T> concept MemberNan=requires(T t){t.nan();};
 template<MemberInf T>T inf(){return T().inf();}
@@ -33,7 +33,6 @@ template<MemberNan T>T nan(){return T().nan();}
 //IO & misc
 template<class...A>void print(A...a){((cout<<a),...);}
 template<class...A>void println(A...a){((cout<<a),...,(cout<<endl));}
-template<class T=int>T input(){T x;cin>>x;return x;}
 template<class T,class U>bool assmin(T& a,U&& b){return a>b?a=b,true:false;}
 template<class T,class U>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}
 void MUST(bool expr){
