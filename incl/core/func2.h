@@ -11,8 +11,24 @@ template<class T>map<T,Arr<int>> classify(const Arr<T>& a){
 		r[a[i]].push_back(i);
 	return r;
 }
-template<class T=int>T input(){T x;cin>>x;return x;}
-template<class T=int,int n>std::array<T,n> input(){std::array<T,n> a; for(auto&i:a)cin>>i; return a;}
 #if CPP20
-template<Iterable T=Arr<int>>T input(int n){T a(n); for(auto&i:a)cin>>i; return a;}
+template<class T=int> requires (!Iterable<T>) T input(){T x;cin>>x;return x;}
+template<class T> requires Iterable<T> T input(){
+	T a;
+	for(auto&i:a)
+		i=input<typename remove_reference<decltype(i)>::type>();
+	return a;
+}
+template<class T=int,int n>std::array<T,n> input(){
+	std::array<T,n> a;
+	for(auto&i:a)
+		i=input<T>();
+	return a;
+}
+template<class T=Arr<int>> requires Iterable<T> T input(int n){
+	T a(n);
+	for(auto&i:a)
+		i=input<typename remove_reference<decltype(i)>::type>();
+	return a;
+}
 #endif
