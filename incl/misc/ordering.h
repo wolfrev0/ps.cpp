@@ -1,11 +1,13 @@
 #pragma once
 #include "core/base.h"
 
+//usecase: BOJ5896
 template<class T, class CMP, class ...Rest> struct Ordering{
 	static const int cmpcnt=1+sizeof...(Rest);
 	multiset<T,CMP> a;
 	Ordering<T,Rest...> b;
 	Ordering(CMP cmp, Rest... rest):a(cmp),b(rest...){}
+	int size()const{return a.size();}
 	void insert(const T& x){a.insert(x);b.insert(x);}
 	void erase(const T& x){a.erase(a.find(x));b.erase(x);}
 	T front(int idx, int cur=0){return cur==idx?*head(a):b.front(idx,cur+1);}
