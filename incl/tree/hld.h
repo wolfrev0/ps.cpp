@@ -30,7 +30,7 @@ template<class T> struct HLD:public RootedTree<T>{
 			reta.emplace_back(idx[b]+!vtxw,idx[a]+1);
 		else
 			retb.emplace_back(idx[a]+!vtxw,idx[b]+1);
-		if(plca)*plca=a;
+		if(plca)*plca=dpt[a]<dpt[b]?a:b;
 		return {move(reta),move(retb)};
 	}
 	int lca(int a, int b) { int ret; q(a,b,0,&ret); return ret; }
