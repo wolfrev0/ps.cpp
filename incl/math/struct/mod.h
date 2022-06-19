@@ -37,3 +37,6 @@ template<int m> struct Mod{
 	}
 };
 template<int m> ostream& operator<<(ostream& s,const Mod<m>& n){return s<<n.n;}
+template<int m> Mod<m> operator+(int a,const Mod<m>& b){return b+a;}
+template<int m> Mod<m> operator-(int a,const Mod<m>& b){return -b+a;}
+template<int m> Mod<m> operator*(int a,const Mod<m>& b){return b*a;}
