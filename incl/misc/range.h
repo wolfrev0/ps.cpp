@@ -3,7 +3,12 @@
 
 struct Range{
 	int s,e;
+#if CPP20
 	auto operator<=>(const Range& o)const{ return mkp(s,-e)<=>mkp(o.s,-o.e);}
+#else
+	auto operator<(const Range& o)const{ return mkp(s,-e)<mkp(o.s,-o.e);}
+#endif
+
 	Range operator+(const Range& r)const{return {min(s,r.s),max(e,r.e)};}//union
 	Range operator*(const Range& r)const{return {max(s,r.s),min(e,r.e)};}//join
 	Range operator+=(const Range& r){return *this=*this+r;}
@@ -12,6 +17,7 @@ struct Range{
 };
 ostream& operator<<(ostream&os,Range x){return os<<'['<<x.s<<','<<x.e<<')';}
 
+//NOTE: [a,b)+[b,c) => not intersect
 //https://codeforces.com/contest/1630/submission/144473300
 Arr<Range> ranges_cover(Arr<Range> a){
 	if(a.empty())return {};
@@ -27,6 +33,22 @@ Arr<Range> ranges_cover(Arr<Range> a){
 			b.emplace_back(a[k]);
 		i=j;}
 	return b;}
+
+//NOTE: [a,b)+[b,c) = [a,c)
+Arr<Range> ranges_union(Arr<Range> a){
+	sort(a.begin(),a.end());
+	Arr<Range> b;
+	for(int i=0;i<sz(a);){
+		b.emplace_back(a[i]);
+		int j=i,k=i;
+		for(;j<sz(a) and a[j].s<=a[k].e;j++)
+			if(a[k].e<a[j].e)
+				k=j;
+		b[-1].e=a[k].e;
+		i=j;
+	}
+	return b;
+}
 
 //parklife (반열린구간 맞는거같다? 아마도?)
 pair<Arr<Arr<int>>,Arr<int>> ranges2forest(const Arr<Range>& a){
