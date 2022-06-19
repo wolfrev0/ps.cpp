@@ -31,4 +31,7 @@ template<class T=Arr<int>> requires Iterable<T> T input(int n){
 		i=input<typename remove_reference<decltype(i)>::type>();
 	return a;
 }
+#else
+	#define input() [](){int x;cin>>x;return x;}()
+	// #define input(n) [](){Arr<int> a(n);for(auto&i:a)cin>>i;return a;}()
 #endif

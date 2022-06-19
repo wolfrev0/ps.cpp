@@ -5,7 +5,9 @@
 #if DEBUG
 	//declaration
 	template<Printable T>void _dbgprint_(const T& a,int d=0);
+	#if CPP20
 	template<class T> requires Iterable<T>&&NotPrintable<T> void _dbgprint_(const T& a,int d=0);
+	#endif
 	template<class A,class B>void _dbgprint_(const pair<A,B>& a,int d);
 	template<class TupType,size_t... I>void _dbgprint_(const TupType& _tup,index_sequence<I...>,int d=0);
 	template<class... T> void _dbgprint_(const tuple<T...>& _tup,int d=0);
@@ -14,6 +16,7 @@
 	template<Printable T>
 	void _dbgprint_(const T& a,int d){cerr<<setw(DBG_SETW)<<a;}
 	
+	#if CPP20
 	//iterable debug
 	template<class T> requires Iterable<T>&&NotPrintable<T>
 	void _dbgprint_(const T& a,int d){
@@ -21,6 +24,7 @@
 		cerr<<endl<<string(d,'-')+ob[d%sz(ob)];
 		for(const auto& i:a)_dbgprint_(i,d+1),cerr<<',';
 		cerr<<cb[d%sz(ob)];}
+	#endif
 	
 	//pair debug
 	template<class A,class B>void _dbgprint_(const pair<A,B>& a,int d){
