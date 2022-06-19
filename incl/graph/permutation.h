@@ -24,3 +24,4 @@ Arr<Arr<int>> permutation_decompose(const Arr<int>& a, const Arr<int>& b){
 	}
 	return ret;
 }
+//TODO: 순열 하나만 받아서 그 인덱스와 값으로 처리하는함수 만들기
