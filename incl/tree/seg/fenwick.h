@@ -22,14 +22,19 @@ template<class T> struct Fenwick{
 		while(i<=n)
 			tr[i]+=delta,i+=i&-i;
 	}
+	void updass(int i,T x){
+		T delta=x-q(i++);
+		while(i<=n)
+			tr[i]+=delta,i+=i&-i;
+	}
 	void RUPQu(int s,int e,T d){upd(s,d),upd(e,-d);}
 	T RUPQq(int i){return sum(i+1);}
-private:
+ private:
 	int n;
 	Arr<T> tr;
 	T sum(int i){
 		T ans=T();
-		while(i>0 and ans<inf<signed>())
+		while(i>0)
 			ans+=tr[i],i-=i&-i;
 		return ans;
 	}
