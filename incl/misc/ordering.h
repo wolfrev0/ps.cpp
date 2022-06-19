@@ -8,8 +8,8 @@ template<class T, class CMP, class ...Rest> struct Ordering{
 	Ordering<T,Rest...> b;
 	Ordering(CMP cmp, Rest... rest):a(cmp),b(rest...){}
 	int size()const{return a.size();}
-	void insert(const T& x){a.insert(x);b.insert(x);}
-	void erase(const T& x){a.erase(a.find(x));b.erase(x);}
+	void add(const T& x){a.insert(x);b.add(x);}
+	void del(const T& x){a.erase(a.find(x));b.del(x);}
 	T front(int idx, int cur=0){return cur==idx?*head(a):b.front(idx,cur+1);}
 	T back(int idx, int cur=0){return cur==idx?*tail(a):b.back(idx,cur+1);}
 	optional<T> lb(int idx, const T& x, int cur=0){
@@ -31,10 +31,12 @@ template<class T, class CMP, class ...Rest> struct Ordering{
 	}
 };
 template<class T, class CMP> struct Ordering<T,CMP>{
+	static const int cmpcnt=1;
 	multiset<T,CMP> a;
 	Ordering(CMP cmp):a(cmp){}
-	void insert(const T& x){a.insert(x);}
-	void erase(const T& x){a.erase(a.find(x));}
+	int size()const{return a.size();}
+	void add(const T& x){a.insert(x);}
+	void del(const T& x){a.erase(a.find(x));}
 	T front(int idx, int cur=0){return *head(a);}
 	T back(int idx, int cur=0){return *tail(a);}
 	optional<T> lb(int idx, const T& x, int cur=0){
