@@ -20,7 +20,7 @@ void solve(){
 		decltype(ord_b)> ordering(
 			gt,ord_m2,ord_a,ord_b);
 	for(int i=0;i<n;i++)
-		ordering.insert(i);
+		ordering.add(i);
 	for(int i=0;i<ordering.cmpcnt;i++){
 		Arr<int> arr(n); iota(arr.begin(),arr.end(),0);
 		sort(arr.begin(),arr.end(),ordering.cmptor(i));
