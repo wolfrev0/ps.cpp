@@ -12,7 +12,12 @@ template<class T>map<T,Arr<int>> classify(const Arr<T>& a){
 	return r;
 }
 #if CPP20
-template<class T=int> requires (!Iterable<T>) T input(){T x;cin>>x;return x;}
+
+template<class T=int,class... Ts> requires (!Iterable<T>) tuple<T,Ts...> input(){
+	T x; cin>>x;
+	if constexpr (sizeof...(Ts)==0) return mkt(x);
+	else return tuple_cat(mkt(x),input<Ts...>());
+}
 template<class T> requires Iterable<T> T input(){
 	T a;
 	for(auto&i:a)
