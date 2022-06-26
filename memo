@@ -11,6 +11,8 @@ https://atcoder.jp/contests/abc236/editorial/3303
 https://codeforces.com/contest/1630/problem/B
 연속성정리?borsuk ulam인가 stolen necklace문제같은느낌이 있다.
 
+모든 부분배열에서 k이상 <=> max_subarray>=k
+
 bash표현식 종류: https://unix.stackexchange.com/questions/270591/are-and-used-for-arithmetic-expressions-or-conditiona
 
 #command substitution
