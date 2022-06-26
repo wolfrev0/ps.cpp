@@ -38,3 +38,9 @@ template<class T> Arr<int> z(const Str<T> &a) {
 	}
 	return z;
 }
+
+//z[i]=match length start from i
+template<class T> Arr<int> z(const Str<T> &s, const Str<T>& p) {
+	auto za=z(p+"|"+s);
+	return {za.begin()+sz(p)+1,za.end()};
+}
