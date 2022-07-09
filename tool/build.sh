@@ -59,9 +59,9 @@ else
 	echo -e "${GREEN}up to date ($dbgrel)${NONE}"
 fi
 
-if [[ $(cat res/submit.cpp | grep -E "(input.*){2}") ]]; then
-	echo -e "${RED}[WARNING]: multiple call input() in one line (beware param eval order)${NONE}"
-fi
+# if [[ $(cat res/submit.cpp | grep -E "(input.*){2}") ]]; then
+# 	echo -e "${RED}[WARNING]: multiple call input() in one line (beware param eval order)${NONE}"
+# fi
 
 # std헤더와 매크로 제거하면 아래와 같은 전처리기 활용도 가능하긴 하다.
 # g++ src/tpl.cpp -std=c++20 -iquote ./incl -E | grep -Ev '# *'
