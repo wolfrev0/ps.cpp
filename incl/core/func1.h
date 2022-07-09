@@ -46,3 +46,5 @@ void MUST(bool expr){
 #define func(RetT,fname,...) function<RetT(__VA_ARGS__)> fname=[&](__VA_ARGS__)->RetT
 #define lam(expr,...) [&](__VA_ARGS__){return expr;}
 #define lamp(expr,...) [](__VA_ARGS__){return expr;}
+
+auto val2cmp(auto val){return [val](auto x, auto y){return mkp(val(x),x)<mkp(val(y),y);};}
