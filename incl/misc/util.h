@@ -10,7 +10,7 @@ auto split(auto s,T p) {
 	ret.push_back({it1,s.end()});
 	return ret;}
 
-//NOTE: Arr<Op>는 재할당때문에 망한다. list<Defer>::emplace_back만 쓰자.
+//NOTE: Arr<Op>는 재할당때문에 망한다. list<Op>::emplace_back만 쓰자.
 //연산을 저장할땐 캡쳐변수 생명주기를 고려해야함.
 //polygon, 르블랑의 트리순회, AC-downup-defer.cpp
 struct Op{

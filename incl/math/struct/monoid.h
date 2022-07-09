@@ -67,7 +67,6 @@ template<class T>struct MFunc{
 struct TMaxSubArr{
 	int s=0,l=-inf<int>(),m=-inf<int>(),r=-inf<int>();
 	TMaxSubArr f(TMaxSubArr x)const{return {s+x.s,max(l,s+x.l),max({m,r+x.l,x.m}),max(r+x.s,x.r)};}
-	TMaxSubArr nan()const{return {::nan<int>(),::nan<int>(),::nan<int>(),::nan<int>()};}
 	friend strong_ordering operator<=>(const TMaxSubArr&,const TMaxSubArr&)=default;
 	TMaxSubArr rev()const{return {s,r,m,l};}//for commutativeless query, refer boj13519
 };
