@@ -18,24 +18,15 @@ template<class T=int,class... Ts> requires (!Iterable<T>) tuple<T,Ts...> input()
 	if constexpr (sizeof...(Ts)==0) return mkt(x);
 	else return tuple_cat(mkt(x),input<Ts...>());
 }
-template<class T> requires Iterable<T> T input(){
-	T a;
-	for(auto&i:a)
-		i=input<typename remove_reference<decltype(i)>::type>();
-	return a;
-}
 template<class T=int,int n>std::array<T,n> input(){
 	std::array<T,n> a;
 	for(auto&i:a)
-		i=input<T>();
+		i=get<0>(input<T>());
 	return a;
 }
-template<class T=Arr<int>> requires Iterable<T> T input(int n){
-	T a(n);
-	for(auto&i:a)
-		i=input<typename remove_reference<decltype(i)>::type>();
-	return a;
-}
+string input(string& str){ cin>>str; return str; }
+template<class T> requires (!Iterable<T>) T& input(T& a){ cin>>a; return a;}
+template<class T> requires Iterable<T> T& input(T& a){ for(auto&i:a)input(i); return a; }
 #else
 	#define input() [](){int x;cin>>x;return x;}()
 	// #define input(n) [](){Arr<int> a(n);for(auto&i:a)cin>>i;return a;}()
