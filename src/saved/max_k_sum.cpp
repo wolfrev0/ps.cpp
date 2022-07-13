@@ -14,7 +14,7 @@ signed main(){
 	// };
 	// func(int,qry,int k){
 	// 	int m=st0.liftRL(lam(acc>=k,int acc,int i));
-	// 	return st1.q(m,n);
+	// 	return st1.q(m,n)-(st0.q(m,n)-k)*m;
 	// };
 	SegDyn<MAdd<int>,lamp(x+y,int x,int y)> st0,st1;
 	func(void,add,int x){
@@ -27,7 +27,7 @@ signed main(){
 	};
 	func(int,qry,int k){
 		int m=st0.liftRL(lam(acc>=k,int acc,int i));
-		return st1.q(m,inf<int>());
+		return st1.q(m,inf<int>())-(st0.q(m,inf<int>())-k)*m;
 	};
 	add(3);
 	add(4);
