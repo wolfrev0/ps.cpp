@@ -14,6 +14,12 @@ int clg(i64 n,int base=2) {
 	return ret-(rem<=1);
 }
 
+template<class T> T fastpow(T n,int m){
+	if(m==0)return T(1);
+	T z=fastpow(n,m/2);
+	return z*z*(m%2?n:T(1));
+}
+
 template<class T> T factorial(int x){
 	if(x<=1)return 1;
 	static Arr<optional<T>> dp;
