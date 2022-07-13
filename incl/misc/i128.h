@@ -2,7 +2,7 @@
 #include "core/base.h"
 
 using i128=__int128;
-istream& operator>>(istream& s,i128& a){a=input();return s;}
+istream& operator>>(istream& s,i128& a){tie(a)=input();return s;}
 ostream& operator<<(ostream& s,i128 a){
 	if(!a){cout<<0;return s;}
 	if(a<0)cout<<'-',a*=-1;

@@ -7,7 +7,7 @@
 #if !(CPP20)
 	#define countl_zero(x) __builtin_clzll(x)
 	#define popcount(x) __builtin_popcountll(x)
-	#define bit_ceil(x) 1<<clg2(x)
+	#define bit_ceil(x) (1<<clg2(x))
 #endif
 #if CPP20
 	#define sz ssize

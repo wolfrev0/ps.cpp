@@ -28,6 +28,6 @@ string input(string& str){ cin>>str; return str; }
 template<class T> requires (!Iterable<T>) T& input(T& a){ cin>>a; return a;}
 template<class T> requires Iterable<T> T& input(T& a){ for(auto&i:a)input(i); return a; }
 #else
-	#define input() [](){int x;cin>>x;return x;}()
+	#define input() [](){int x;cin>>x;return mkt(x);}()
 	// #define input(n) [](){Arr<int> a(n);for(auto&i:a)cin>>i;return a;}()
 #endif
