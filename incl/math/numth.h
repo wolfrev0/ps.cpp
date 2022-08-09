@@ -132,35 +132,6 @@ bool miller_rabin(u64 n){
 	return ret;
 }
 
-Arr<i64> pollard_rho(i64 n){
-	dbg1("[deprecated] use faster version Rho::factorize");
-	func(i64,rho,i64 n){
-		while(true){
-			i64 x=rd()%(n-2)+2;
-			i64 y=x,c=rd()%(n-1)+1;
-			while(true){
-				x=(i128(x)*x%n+c)%n;
-				y=(i128(y)*y%n+c)%n;
-				y=(i128(y)*y%n+c)%n;
-				i64 d=gcd(abs(x-y),n);
-				if(d==1)continue;
-				if(!miller_rabin(d)){n=d;break;}
-				else return d;
-			}
-		}
-	};
-	Arr<i64> v;
-	while(~n&1)n>>=1,v.push_back(2);
-	if(n==1)return v;
-	while(!miller_rabin(n)){
-		i64 d=rho(n);
-		while(n%d==0)v.push_back(d),n/=d;
-		if(n==1)break;
-	}
-	if(n!=1)v.push_back(n);
-	return v;
-}
-
 int lucas(int n,int m,int p){
 	Arr<int> fac(p),inv(p*2);
 	fac[0]=1;

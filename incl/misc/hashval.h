@@ -1,6 +1,7 @@
 #pragma once
 #include "core/base.h"
 
+template<int m1=u64(1e9+9),int m2=u64(1e9+7)>
 struct HashVal{
 	u64 h[2];
 	HashVal(u64 h1=0,u64 h2=0,int cnt=0):cnt(cnt){h[0]=h1,h[1]=h2;}
@@ -47,7 +48,7 @@ struct HashVal{
 		return h[0]==r.h[0]?h[1]<r.h[1]:h[0]<r.h[0];}
 private:
 	int cnt;
-	static constexpr u64 p[2]={u64(1e9+9),u64(1e9+7)};
+	static constexpr u64 p[2]={m1,m2};
 
 	//지금은 cnt 길이가 가변이라 constexpr효과를 못받지만,직접 짜거나 개선하면
 	//cxp효과로 log제거 가능하다.
@@ -59,5 +60,6 @@ private:
 	constexpr u64 inv(u64 x){return fp(x,9223372036854775807);}
 };
 
-ostream& operator<<(ostream& s,const HashVal& n){
+template<int m1,int m2>
+ostream& operator<<(ostream& s,const HashVal<m1,m2>& n){
 	return s<<'('<<(unsigned)n.h[0]<<','<<(unsigned)n.h[1]<<')';}

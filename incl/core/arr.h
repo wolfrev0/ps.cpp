@@ -13,14 +13,18 @@ struct Arr:public P{
 	Arr(auto its, auto ite):P(its,ite){}
 	inline T& operator[](signed i){
 		int n=sz(*this);
-		if(i<0)i+=n,dbg1("Neg Index Found");
-		if(i>=n)i-=n,dbg1("Over Index Found");
+		if(i<0)
+			i+=n,dbg1("Neg Index Found");
+		if(i>=n)
+			i-=n,dbg1("Over Index Found");
 		return P::operator[](i);
 	}
 	const T& operator[](signed i)const{	
 		int n=sz(*this);
-		if(i<0)i+=n,dbg1("Neg Index Found");
-		if(i>=n)i-=n,dbg1("Over Index Found");
+		if(i<0)
+			i+=n,dbg1("Neg Index Found");
+		if(i>=n)
+			i-=n,dbg1("Over Index Found");
 		return P::operator[](i);
 	}
 	T& at(signed i){return *this[i];}
