@@ -211,14 +211,13 @@ namespace Rho{
 		} while(v);
 		return u << shift;
 	}
-	///Returns a proper divisor if n is composite,n otherwise
-	mt19937_64 rng(chrono::system_clock::now().time_since_epoch().count());
+	///Returns a proper divisor if n is composite, n otherwise
 	ULL FindFactor(ULL n){
 		if(n==1||isprime(n))return n;
 		ULL c=1,x=0,y=0,t=0,prod=2,x0=1,q;
 		auto f=[&](ULL X){return mult(X,X,n)+c;};
 		while(t++%40 or gcd(prod,n)==1){
-			if(x==y)c=rng()%(n-1)+1,x=x0,y=f(x);
+			if(x==y)c=_rng()%(n-1)+1,x=x0,y=f(x);
 			if((q=mult(prod,max(x,y)-min(x,y),n)))prod=q;
 			x=f(x),y=f(f(y));
 		}

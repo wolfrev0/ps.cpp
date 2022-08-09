@@ -2,7 +2,12 @@
 #include "core/base.h"
 
 // Random
-mt19937 _rng(i64(new int)^time(0));
+
+#if SYSCALL_ALLOWED
+	mt19937_64 _rng(chrono::system_clock::now().time_since_epoch().count()^i64(new int)^time(0));
+#else
+	mt19937_64 _rng(1243);
+#endif
 int rd(){static uniform_int_distribution<int> dist(0,inf<int>());return dist(_rng);}
 int rd(int e){return rd()%e;}
 int rd(int s,int e){return rd()%(e-s)+s;}
