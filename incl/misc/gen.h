@@ -46,9 +46,10 @@ namespace gen{
 		return tree(n,lam(rdf()<randomness?rd(idx):idx-1,int idx));
 	}
 
-	template<bool simple=true>
+	template<bool simple=true,bool loop=false>
 	Arr<pint> graph(int v,int e){
 		//if not simple, graph can have (self-loop, multi-edge, disconnection)
+		static_assert(!simple or !loop); //'simple&&loop==true' is non-sense
 		Arr<pint> a;
 		if(v<5000){
 			if(simple){
@@ -58,8 +59,14 @@ namespace gen{
 				shuffle(a.begin(),a.end());
 				a.erase(a.begin()+e,a.end());
 			}else{
-				for(int i=0;i<e;i++)
-					a.emplace_back(rd(v),rd(v));
+				for(int i=0;i<e;i++){
+					int x,y;
+					do{
+						x=rd(v);
+						y=rd(v);
+					}while(!loop and x==y);
+					a.emplace_back(x,y);
+				}
 			}
 		}else{
 			set<pint> z;
@@ -68,9 +75,11 @@ namespace gen{
 					z.emplace(min(x,y),max(x,y));
 			}
 			while(sz(z)<e){
-				int x=rd(v),y=rd(v);
-				if(simple && x==y)
-					continue;
+				int x,y;
+				do{
+					x=rd(v);
+					y=rd(v);
+				}while(!loop && x==y);
 				z.emplace(min(x,y),max(x,y));
 			}
 			for(auto [x,y]:z)
@@ -101,5 +110,29 @@ namespace gen{
 		for(int i=0;i+2<v;i+=2)
 			a.emplace_back(b[i],b[i+2]);
 		return a;
+	}
+	
+	Arr<vector<bool>> enum_ncr(int n,int r){
+		vector<bool>a(n);
+		for(int i=0;i<r;i++)
+			a[n-1-i]=1;
+		Arr<vector<bool>> b;
+		do{
+			b.push_back(a);
+		}while(next_permutation(a.begin(),a.end()));
+		return b;
+	}
+	Arr<Arr<int>> enum_npr(int n,int r){
+		Arr<Arr<int>> ret;
+		for(auto&a:enum_ncr(n,r)){
+			Arr<int> b;
+			for(int i=0;i<n;i++)
+				if(a[i])
+					b.push_back(i);
+			do{
+				ret.push_back(b);
+			}while(next_permutation(b.begin(),b.end()));
+		}
+		return ret;
 	}
 }
