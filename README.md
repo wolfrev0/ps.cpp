@@ -1,4 +1,4 @@
-# pslib (Problem Solving Library)
+# ps.cpp
 Algorithm and DataStructure library for problem-solving written in modern c++.
 
 ## Feature
