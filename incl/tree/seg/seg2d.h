@@ -1,8 +1,25 @@
-//not my code (출처불명)
-
 #pragma once
-#include "core/base.h"
+#include "tree/seg/seg.h"
 
+//not tested
+template<Monoid Q>
+struct Seg2D{
+	using T=decltype(Q::id());
+	int n;
+	Arr<Seg<Q>> tr;
+	Seg2D(u32 n=0,u32 m=0):n(bit_ceil(n)),tr(this->n*2,Seg<Q>(m)){}
+	void upd(int y, int x,T val){for(y+=n;y;y>>=1)tr[y].upd(x,val);}
+	T q(int ys,int ye,int xs,int xe){
+		T rs=Q::id(),re=Q::id();
+		for(ys+=n,ye+=n;ys<ye;ys>>=1,ye>>=1){
+			if(ys&1)rs=Q::f(rs,tr[ys++].q(xs,xe));
+			if(ye&1)re=Q::f(tr[--ye].q(xs,xe),re);
+		}
+		return Q::f(rs,re);
+	}
+};
+
+//not my code (출처불명)
 struct seg2d {
 	static const int N = 1 << 10;
 	struct Seg {
