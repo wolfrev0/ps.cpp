@@ -23,7 +23,13 @@ template<class T> Arr<int> kmp(const Str<T> &s, const Str<T> &p) {
 	return ret;
 }
 
-//z[i]=match length of s[0,n-1] and s[i,n-1]
+//z[i]=match length of a[0,n-1] and a[i,n-1]
+//[s,e): rightest range such that a[0..e-s)==a[s,e)
+//if i>=e then naive
+//else
+//  a[0..e-s)==a[s,e) => a[i-s,e-s)==a[i,e) => z[i]>=z[i-s]
+//  if(z[i-s] <= e-i) z[i]=z[i-s]
+//  else z[i]=z[i-s] && naive start from e
 template<class T> Arr<int> z(const Str<T> &a) {
 	Arr<int> z(sz(a));
 	z[0]=sz(a);
