@@ -1,7 +1,29 @@
 #pragma once
 #include "core/base.h"
 
-template<class T> pair<Arr<int>,Arr<int>> manacher(Str<T> a){
+//only finds odd palindromes
+//to find even palindromes, convert string "abcd" to "#a#b#c#d#"
+//https://www.acmicpc.net/submit/11046/48519822
+template<class T> Arr<int> manacher(Str<T> a){
+	int n=sz(a);
+	Arr<int> b(n+1);
+	int c=-1;
+	//b[i] = a[i-b[i],i+b[i]] is palindrome
+	//c: rightest palindrome index
+	//let j = c-(i-c) = flipped index of i based on c
+	//generally, a[c-b[c],j] is inversion of a[i,c+b[c]]
+	//but we takes only as much b[c-(i-c)] which is palindrome, so that two is identical
+	for(int i=0;i<n;i++){
+		b[i] = i>c+b[c] ? 0 : min(c+b[c]-i,b[c-(i-c)]);
+		while(i+b[i]+1<n and i-b[i]-1>=0 and a[i+b[i]+1]==a[i-b[i]-1])
+			b[i]++;
+		if(c+b[c]<i+b[i])
+			c=i;
+	}
+	return b;
+}
+
+template<class T> pair<Arr<int>,Arr<int>> manacher_legacy(Str<T> a){
 	int n=sz(a);
 	Arr<int> od(n),ed(n);
 	//od[i]==k ->i중심으로 길이k 팰린드롬 존재
