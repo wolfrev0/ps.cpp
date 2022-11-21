@@ -3,6 +3,8 @@ __pycache__/
 *.gch
 
 node_modules
+package-lock.json
+
 test/tc
 res
 tmp

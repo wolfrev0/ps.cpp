@@ -1,0 +1,25 @@
+{
+  "name": "ps.cpp",
+  "version": "1.0.0",
+  "description": "Algorithm and DataStructure library for problem-solving written in modern c++.",
+  "main": "tool/tcsaver.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuxedcat/ps.cpp.git"
+  },
+  "author": "tuxedcat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuxedcat/ps.cpp/issues"
+  },
+  "homepage": "https://github.com/tuxedcat/ps.cpp#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
