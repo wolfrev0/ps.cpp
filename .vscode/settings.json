@@ -99,5 +99,7 @@
 		"queue": "cpp",
 		"stack": "cpp",
 		"version": "cpp"
-	}
+	},
+	"editor.tabSize": 2,
+  "editor.insertSpaces": false
 }

@@ -2,6 +2,7 @@
 #include "core/base.h"
 #include "math/struct/monoid.h"
 
+//SplayBST는 splay+a(자료구조)로 변환가능할듯.
 //NOTE: Upd없어도 삭제 후 삽입하면 됨
 //NOTE: using open range (lb,ub), not half open range [lb,ub), 2 mock nodes
 //ex: https://atcoder.jp/contests/jsc2021/tasks/jsc2021_f

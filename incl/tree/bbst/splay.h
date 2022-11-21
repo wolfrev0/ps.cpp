@@ -64,7 +64,7 @@ private:
 		N *l=0,*r=0,*p=0;
 		int s=1;
 		T v=Q::id(),a=Q::id();
-		N(T v):v(v){}
+		N(T v):v(v),a(v){}
 		~N(){
 			if(l) delete l;
 			if(r) delete r;

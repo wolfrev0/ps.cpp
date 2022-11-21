@@ -5,13 +5,6 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Debug Py",
-			"type": "python",
-			"request": "launch",
-			"program": "${file}<test/tc/in",
-			"console": "integratedTerminal"
-		},
-		{
 			"name": "Debug Cpp",
 			"type": "cppdbg",
 			"request": "launch",
@@ -33,6 +26,13 @@
 			],
 			"preLaunchTask": "Build(Debug)",
 			"miDebuggerPath": "/usr/bin/gdb"
-		}
+		},
+		{
+			"name": "Debug Py",
+			"type": "python",
+			"request": "launch",
+			"program": "${file}<test/tc/in",
+			"console": "integratedTerminal"
+		},
 	]
 }
