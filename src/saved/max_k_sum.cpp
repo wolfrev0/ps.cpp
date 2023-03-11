@@ -1,6 +1,7 @@
 #include "tree/seg/seg.h"
 #include "tree/seg/segdyn.h"
 
+//min k: https://atcoder.jp/contests/abc281/submissions/37162839
 signed main(){
 	// int n=10;
 	// Seg<MAdd<int>> st0(n),st1(n);
