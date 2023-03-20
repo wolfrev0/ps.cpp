@@ -51,8 +51,9 @@ void solve(){
 	println(ans);
 }
 signed main(){
-	// int ti=0,t;cin>>t;
-	// while(++ti<=t)
-	// 	cout<<"Case #"<<ti<<": ",
+	for(int ti=1,t=TC;ti<=t;ti++)
+		print(TC_OUT_PREFIX),
 		solve();
+	assert(cin.get()=='\n');
+	assert(cin.get()==EOF);
 }
