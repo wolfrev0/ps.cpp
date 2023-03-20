@@ -12,8 +12,8 @@ template<class T> struct Polygon{
 	void push_back(const Vec2<T>& v){ vtx.emplace_back(v);}
 	Vec2<T>& operator[](int idx){ return vtx[idx];}
 
-	f64 area(){
-		f64 ans=0;
+	fp area(){
+		fp ans=0;
 		for(int i=1;i<size()-1;i++) ans += vtx[0].cross(vtx[i],vtx[i+1]);
 		return ans/2;
 	}

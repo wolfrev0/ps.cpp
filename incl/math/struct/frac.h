@@ -24,7 +24,7 @@ struct Frac {
 	Frac operator*=(const Frac& r){return *this=*this*r;}
 	Frac operator/=(const Frac& r){return *this=*this/r;}
 	explicit operator int()const{return a/b;}
-	explicit operator f64()const{return f64(a)/b;}
+	explicit operator fp()const{return fp(a)/b;}
 	bool is_singular()const{return !b;}
 	bool is_infpos()const{return a>0&&!b;}
 	bool is_infneg()const{return a<0&&!b;}

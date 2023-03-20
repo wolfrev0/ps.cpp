@@ -1,7 +1,7 @@
 #pragma once
 #include "core/base.h"
 
-using C=complex<f64>;
+using C=complex<fp>;
 
 Arr<C> toC(const Arr<i64>& a){
 	Arr<C> ret;
@@ -41,7 +41,7 @@ Arr<C> fft(Arr<C> a){
 		if(i<j)swap(a[i],a[j]);
 	}
 	for(int i=1;i<n;i*=2){
-		f64 x=-pi/i;
+		fp x=-pi/i;
 		C w(cos(x),sin(x));
 		for(int j=0;j<n;j+=i*2){
 			C th(1,0);

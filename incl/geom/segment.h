@@ -49,7 +49,7 @@ template<class T> struct Segment:public LineLegacy<T>{
 	using LineLegacy<T>::sv,LineLegacy<T>::ev;
 	Segment():LineLegacy<T>(){}
 	Segment(const Vec2<T>& sv,const Vec2<T>& ev):LineLegacy<T>(sv,ev){}
-	f64 len()const{return (sv-ev).len();}
+	fp len()const{return (sv-ev).len();}
 	bool is_valid(const Vec2<T>& p)const{
 		return sv.x-eps<=p.x and p.x<=ev.x+eps and min(sv.y,ev.y)-eps<=p.y and p.y<=max(sv.y,ev.y)+eps;}
 	virtual bool valid_intersect(const Vec2<T>& p)const override{

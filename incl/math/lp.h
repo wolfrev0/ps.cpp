@@ -5,7 +5,7 @@
 //출력: maximize obj*x
 //numeric stability is sensitive by M
 //디버깅 노트
-//1. T=f64 해보기(정수값만 나오는거같아도 중간에 유리수나올때 있음)
+//1. T=fp 해보기(정수값만 나오는거같아도 중간에 유리수나올때 있음)
 //2. M값 조절(답의 상한정도의 크기가 적절. Road Times처럼 1일수도 있음)
 //3. eps값 최대한 크게(오차가 상당한편이라..Road Times에서 고생함)
 //듀얼후 리덕션한 결과값 primal로 복원하기
@@ -33,7 +33,7 @@ void transpose(Arr<Arr<T>>& a){
 		a.resize(m);
 	}
 }
-template<class T=f64,int M>
+template<class T=fp,int M>
 void dualize(Arr<Arr<T>> &a,Arr<T> &b,Arr<T>& obj){
 	int m=sz(a), n=sz(a[0]);
 	transpose(a),swap(b,obj);
@@ -43,7 +43,7 @@ void dualize(Arr<Arr<T>> &a,Arr<T> &b,Arr<T>& obj){
 	}
 	for(auto& i:obj)i=-i;
 }
-template<class T=f64,int M>
+template<class T=fp,int M>
 tuple<T,Arr<T>,Arr<T>> simplex(Arr<Arr<T>> a,Arr<T> b,Arr<T> obj){
 	//return {maxval,argmax,dual_argmin}
 	int m=sz(a),n=sz(a[0]),s=0;

@@ -26,7 +26,7 @@ template<class T> struct Vec2{
 	bool operator>(const Vec2& r)const{return x==r.x?y>r.y:x>r.x;}
 	bool operator>=(const Vec2& r)const{return *this==r||*this>r;}
 	
-	f64 len()const{return hypot(x,y);}
+	fp len()const{return hypot(x,y);}
 	T lensq()const{return dot(*this);}
 	T taxi()const{return abs(x)+abs(y);}
 	Vec2 normalized()const{return *this/len();}
@@ -35,7 +35,7 @@ template<class T> struct Vec2{
 	T cross(const Vec2& r)const{return x*r.y-y*r.x;}
 	T cross(const Vec2& a,const Vec2& b)const{return (a-*this).cross(b-*this);}
 	T ccw(const Vec2& a,const Vec2& b)const{return cross(a,b)?cross(a,b)/abs(cross(a,b)):0;}
-	f64 angle()const{return atan2(-y,-x)+pi;}
+	fp angle()const{return atan2(-y,-x)+pi;}
 	Frac tan()const{return x==0?Frac{1,0}:Frac{y,x};}
 	Vec2 project(const Vec2& p)const{Vec2 base=normalized();return base*base.dot(p);}
 	Vec2 ortho()const{return Vec2(y,-x);}

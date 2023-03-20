@@ -41,13 +41,13 @@ struct CHTint{
 auto mri(auto it){return make_reverse_iterator(it);}//*mri(it)==*prev(it)
 auto rerase(auto& c,auto ri){return mri(c.erase(prev(ri.base())));}
 
-using T=f64;
+using T=fp;
 struct L{
 	T tan,yic;
-	mutable f64 lx=-1/0.0,rx=1/0.0;
+	mutable fp lx=-1/0.0,rx=1/0.0;
 	bool operator<(const L& r)const{return tan<r.tan;}
 	bool operator<(const T x)const{return rx<x;}
-	f64 cpx(const L& r)const{return (r.yic-yic)/f64(tan-r.tan);}
+	fp cpx(const L& r)const{return (r.yic-yic)/fp(tan-r.tan);}
 	T f(T x)const{return tan*x+yic;}
 };
 

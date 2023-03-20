@@ -39,10 +39,10 @@ namespace gen{
 		shuffle(a.begin(),a.end());
 		return a;
 	}
-	Arr<pint> star(int n, f64 randomness=0){
+	Arr<pint> star(int n, fp randomness=0){
 		return tree(n,lam(rdf()<randomness?rd(idx):0,int idx));
 	}
-	Arr<pint> bamboo(int n, f64 randomness=0){
+	Arr<pint> bamboo(int n, fp randomness=0){
 		return tree(n,lam(rdf()<randomness?rd(idx):idx-1,int idx));
 	}
 
