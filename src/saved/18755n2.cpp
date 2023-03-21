@@ -36,10 +36,3 @@ void solve(){
 		ans=max(ans,dp[i][k]);
 	cout<<ans<<endl;
 }
-signed main(){
-	for(int ti=1,t=TC;ti<=t;ti++)
-		print(TC_OUT_PREFIX),
-		solve();
-	assert(cin.get()=='\n');
-	assert(cin.get()==EOF);
-}

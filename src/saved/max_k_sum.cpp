@@ -1,6 +1,5 @@
 #include "tree/seg/seg.h"
 #include "tree/seg/segdyn.h"
-
 //min k: https://atcoder.jp/contests/abc281/submissions/37162839
 void solve(){
 	// int n=10;
@@ -38,11 +37,4 @@ void solve(){
 	println(qry(2));
 	add(5);
 	println(qry(2));
-}
-signed main(){
-	for(int ti=1,t=TC;ti<=t;ti++)
-		print(TC_OUT_PREFIX),
-		solve();
-	assert(cin.get()=='\n');
-	assert(cin.get()==EOF);
 }

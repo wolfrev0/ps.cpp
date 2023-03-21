@@ -8,10 +8,3 @@ void solve(){
 	for(auto [u,v]:gen::tree(n))
 		println(u+1,' ',v+1,' ',rd(max_len));
 }
-signed main(){
-	for(int ti=1,t=TC;ti<=t;ti++)
-		print(TC_OUT_PREFIX),
-		solve();
-	assert(cin.get()=='\n');
-	assert(cin.get()==EOF);
-}
