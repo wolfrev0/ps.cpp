@@ -4,25 +4,31 @@
 template<int m1=u64(1e9+9),int m2=u64(1e9+7)>
 struct HashVal{
 	u64 h[2];
-	HashVal(u64 h1=0,u64 h2=0,int cnt=0):cnt(cnt){h[0]=h1,h[1]=h2;}
+	HashVal():HashVal(0,0,0){}
+	HashVal(u64 h1):HashVal(h1,h1,1){}
+	HashVal(u64 h1,u64 h2,int cnt):cnt(cnt){h[0]=h1,h[1]=h2;}
 
 	//Sequential Hash
 	void push_back(HashVal x){
 		for(int i=0;i<2;i++)
-			h[i]*=p[i],h[i]+=x.h[i];
-		cnt++;}
+			h[i]=h[i]*fp(p[i],x.cnt)+x.h[i];
+		cnt+=x.cnt;
+	}
 	void push_front(HashVal x){
 		for(int i=0;i<2;i++)
-			h[i]+=x.h[i]*fp(p[i],cnt);
-		cnt++;}
+			h[i]=x.h[i]*fp(p[i],cnt)+h[i];
+		cnt+=x.cnt;
+	}
 	void pop_back(HashVal x){
 		for(int i=0;i<2;i++)
-			h[i]-=x.h[i],h[i]*=inv(p[i]);
-		cnt--;}
+			h[i]=(h[i]-x.h[i])*inv(fp(p[i],x.cnt));
+		cnt-=x.cnt;
+	}
 	void pop_front(HashVal x){
 		for(int i=0;i<2;i++)
-			h[i]-=x.h[i]*fp(p[i],cnt-1);
-		cnt--;}
+			h[i]-=x.h[i]*fp(p[i],cnt);
+		cnt-=x.cnt;
+	}
 
 	//Set Hash
 	void insert(HashVal x){
@@ -36,16 +42,19 @@ struct HashVal{
 
 	int size()const{return cnt;}
 	HashVal operator+(const HashVal& r)const{
-		return HashVal(h[0]+r.h[0],h[1]+r.h[1],cnt+r.cnt);}
+		auto ret=*this;
+		ret.push_back(r);
+		return ret;
+	}
 	HashVal operator-(const HashVal& r)const{
-		return HashVal(h[0]-r.h[0],h[1]-r.h[1],cnt+r.cnt);}
+		auto ret=*this;
+		ret.pop_back(r);
+		return ret;
+	}
 	HashVal operator+=(const HashVal& r){return *this=*this+r;}
 	HashVal operator-=(const HashVal& r){return *this=*this-r;}
-	HashVal operator-()const{return HashVal(-h[0],-h[1]);}
-	bool operator==(const HashVal& r)const{
-		return h[0]==r.h[0] and h[1]==r.h[1];}
-	bool operator<(const HashVal& r)const{
-		return h[0]==r.h[0]?h[1]<r.h[1]:h[0]<r.h[0];}
+	bool operator==(const HashVal& r)const{return h[0]==r.h[0] and h[1]==r.h[1];}
+	bool operator<(const HashVal& r)const{return h[0]==r.h[0]?h[1]<r.h[1]:h[0]<r.h[0];}
 private:
 	int cnt;
 	static constexpr u64 p[2]={m1,m2};
