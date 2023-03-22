@@ -1,6 +1,7 @@
 #pragma once
 #include "core/base.h"
 
+//almost O(logN) due to fp()
 template<class T, unsigned pn=2>
 struct Hash{
 	static_assert(pn<=4);
@@ -68,12 +69,11 @@ private:
 };
 //TODO: make it constexpr by Mod<> update
 template<class T,unsigned pn>
-const T Hash<T,pn>::p[4]={T((1ll<<61)-1),T(3),T((1ll<<31)-1),T(1e9+33)};
+const T Hash<T,pn>::p[4]={T(3),T(5),T(7),T(11)};
 
 //NOTE: thuemorse sequence can break it
 template <>
 u64 Hash<u64,2>::fp(u64 x,u64 p){
-	//NOTE: cnt를 고정하면 log 제거 가능함.
 	if(!p) return 1;
 	if(p==1) return x;
 	u64 z=fp(x,p/2);
@@ -91,3 +91,69 @@ ostream& operator<<(ostream& s,const Hash<T, pn>& n){
 		s<<(unsigned)n.h[i]<<',';
 	return s<<')';
 }
+
+//almost O(1)
+template<class T, unsigned pn=2>
+struct HashSeq{
+	static_assert(pn<=4);
+	static const T p[4];
+	static Arr<T> memopow[pn];
+	T h[pn];
+	HashSeq():HashSeq(0){}
+	HashSeq(T hv):HashSeq({hv,hv,hv,hv},1){} //4 because maximum 4 mods
+	HashSeq(initializer_list<T> hil,int cnt):cnt(cnt){
+		auto it=hil.begin();
+		for(int i=0;i<pn;i++)
+			h[i]=*it++;
+	}
+	void push_back(HashSeq x){
+		for(int i=0;i<pn;i++)
+			h[i]=h[i]*pow(i,x.cnt)+x.h[i];
+		cnt+=x.cnt;
+	}
+	void push_front(HashSeq x){
+		for(int i=0;i<pn;i++)
+			h[i]=x.h[i]*pow(i,cnt)+h[i];
+		cnt+=x.cnt;
+	}
+	void pop_back(HashSeq x){
+		for(int i=0;i<pn;i++)
+			h[i]=(h[i]-x.h[i])*inv(pow(i,x.cnt));
+		cnt-=x.cnt;
+	}
+	void pop_front(HashSeq x){
+		for(int i=0;i<pn;i++)
+			h[i]-=x.h[i]*pow(i,cnt);
+		cnt-=x.cnt;
+	}
+	int size()const{return cnt;}
+	HashSeq operator+(const HashSeq& r)const{
+		auto ret=*this;
+		ret.push_back(r);
+		return ret;
+	}
+	HashSeq operator-(const HashSeq& r)const{
+		auto ret=*this;
+		ret.pop_back(r);
+		return ret;
+	}
+	HashSeq operator+=(const HashSeq& r){return *this=*this+r;}
+	HashSeq operator-=(const HashSeq& r){return *this=*this-r;}
+	bool operator==(const HashSeq& r)const{return h[0]==r.h[0] and h[1]==r.h[1];}
+	bool operator<(const HashSeq& r)const{return h[0]==r.h[0]?h[1]<r.h[1]:h[0]<r.h[0];}
+private:
+	int cnt;
+	T inv(T x){return x.inv();}
+	T pow(int pidx, int y){
+		if(memopow[pidx].empty())
+			memopow[pidx].emplace_back(1);
+		while(memopow[pidx].size()<y+1)
+			memopow[pidx].emplace_back(memopow[pidx].back()*p[pidx]);
+		return memopow[pidx][y];
+	}
+};
+//TODO: make it constexpr by Mod<> update
+template<class T,unsigned pn>
+const T HashSeq<T,pn>::p[4]={T(3),T(5),T(7),T(11)};
+template<class T,unsigned pn>
+Arr<T> HashSeq<T,pn>::memopow[pn];
