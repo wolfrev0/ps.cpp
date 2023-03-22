@@ -3,7 +3,7 @@
 
 //Mod객체로 DP할거면 반드시 optional 사용해야함. nan같은거 사용x
 template<int m> struct Mod{
-	Mod(i64 n=0):n((n%m+m)%m){}
+	Mod(i64 n=0):n(n<m?n:n-m){if(n<0||n>=m)n=(n%m+m)%m;}
 	explicit operator int()const{return n;}
 	explicit operator bool()const{return !!n;}
 
@@ -40,3 +40,11 @@ template<int m> ostream& operator<<(ostream& s,const Mod<m>& n){return s<<n.n;}
 template<int m> Mod<m> operator+(int a,const Mod<m>& b){return b+a;}
 template<int m> Mod<m> operator-(int a,const Mod<m>& b){return -b+a;}
 template<int m> Mod<m> operator*(int a,const Mod<m>& b){return b*a;}
+
+// TODO: Optimize for special modes
+// template<> struct Mod<(1<<16)>{
+// 	static const int m=(1ll<<31)-1;
+//  n%m = n&m
+// template<> struct Mod<(1ll<<31)-1>{
+// 	static const int m=(1ll<<31)-1;
+//  n%m = ?
