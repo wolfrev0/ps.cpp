@@ -42,7 +42,7 @@ struct GraphWD{
 		}
 		return d;
 	}
-	bool spfa_trackone(Arr<int> src){
+	Arr<T> spfa_trackone(Arr<int> src){
 		deque<int> q;
 		Arr<char> inq(n);
 		Arr<T> d(n,inf<T>());
