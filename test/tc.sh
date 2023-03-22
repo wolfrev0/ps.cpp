@@ -11,7 +11,7 @@ fail=0
 for i in test/tc/*.in;
 do
 	echo "Running "${i%.*}" ("$(( ($succ+$fail)*100/$test_cnt ))"%)"
-	if diff <($1<$i) ${i%.*}.ans -BZ > /dev/null 2>&1; then
+	if /usr/bin/time -v diff <($1<$i) ${i%.*}.ans 2> >(awk '/Elap|Max/') 1> >(head -n 4); then
 		succ=$((succ+1))
 	else
 		fail=$(($fail+1))
