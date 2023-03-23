@@ -9,7 +9,7 @@ struct randomhasher{int operator()(int x)const{return x^__RANDOM;}};
 template<class K,class V> using HashMap=gp_hash_table<K,V,randomhasher>;
 //MLE or RLE or WA 날땐 cc_hash_table or unordered_map 사용
 
-template<class T,class CMP=greater<>,class Policy=pairing_heap_tag>
+template<class T,class CMP=less<>,class Policy=pairing_heap_tag>
 struct pbds_pq
 :public __gnu_pbds::priority_queue<T,CMP,Policy>{
 	pbds_pq(){}
