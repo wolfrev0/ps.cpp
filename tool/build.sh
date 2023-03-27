@@ -9,7 +9,7 @@ dbgrel=${2:-"D"}
 
 base_arg=" -iquote ./incl -std=c++20 -Wall -Wno-unused-variable"
 if [ $dbgrel == "D" ]; then #debug
-	option="-O0 -D DEBUG=1 -ggdb3"
+	option="-D DEBUG=1 -O0 -g -fsanitize=address"
 else #release
 	option="-O2"
 fi
