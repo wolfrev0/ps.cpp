@@ -17,20 +17,19 @@ signed main(){
 
 int k;
 struct Hull{
-	int zp=0;
+	int sum=0;
 	vector<int> sl;//slopes
 	void minkowski_sum(Hull&& r){
-		zp+=r.zp;
+		sum+=r.sum;
 		sl.insert(sl.end(),r.sl.begin(),r.sl.end());
 
 		sort(sl.begin(),sl.end());
 		reverse(sl.begin(),sl.end());
 		while(sl.size()>k)
-			sl.pop_back();
+			sum-=sl.back(),sl.pop_back();
 	}
 	//add a*min(i,b-i) to graph
 	void update(int a, int b){
-		zp+=0; //a*b should be even
 		int i=0;
 		vector<int> z;
 		for(auto& x:sl){
@@ -42,25 +41,22 @@ struct Hull{
 		}
 		swap(z,sl);
 
+		sum=reduce(sl.begin(),sl.end());
 		sort(sl.begin(),sl.end());
 		reverse(sl.begin(),sl.end());
 		while(sl.size()>k)
-			sl.pop_back();
+			sum-=sl.back(),sl.pop_back();
 	}
 	int get(){
-		if(sl.size()<k)
-			return 0;
-		return reduce(sl.begin(),sl.end(),0ll);
+		return sum;
 	}
 	void dbgstatus(){
-		sort(sl.begin(),sl.end());
-		reverse(sl.begin(),sl.end());
 		dbgprint("slopes: ");
 		for(auto i:sl)
 			dbgprint(i,' ');
 		dbgprintln("");
 		dbgprint("values: ");
-		int y=zp;
+		int y=0;
 		dbgprint(y,' ');
 		for(auto i:sl)
 			dbgprint(y+=i,' ');
