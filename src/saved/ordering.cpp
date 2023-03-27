@@ -1,6 +1,21 @@
 #include "core/base.h"
 #include "misc/ordering.h"
 
+#define endl '\n' // Remove it when interactive
+#define CHECK_INPUT 0
+#define TC 1
+#define TC_OUT_PREFIX ""//"Case #",ti,": "
+signed main(){
+	void solve();
+	for(int ti=1,t=TC;ti<=t;ti++)
+		print(TC_OUT_PREFIX),
+		solve();
+#if CHECK_INPUT
+	assert(cin.get()=='\n');
+	assert(cin.get()==EOF);
+#endif
+}
+
 void solve(){
 	int n=6;
 	Arr<int> a(n); iota(a.begin(),a.end(),0);
@@ -28,12 +43,12 @@ void solve(){
 		print("Sorted: ");
 		for(auto i:arr)
 			print(i,' ');
-		println();
+		println("");
 
 		println("Front: ",ordering.front(i));
 		println("Back: ",ordering.back(i));
 		for(int j=0;j<n;j++)
 			println("next(",j,")=",ordering.ub(i,j).value_or(-1),' ');
-		println();
+		println("");
 	}
 }

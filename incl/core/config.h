@@ -1,5 +1,6 @@
 #pragma once
 #include "core/std.h"
+#pragma GCC diagnostic ignored "-Wparentheses"
 #define SYSCALL_ALLOWED 1
 #if SYSCALL_ALLOWED
 	#include <bits/extc++.h>
@@ -13,9 +14,5 @@ using fp=double; //long double,__float128
 
 #define CPP20 1
 #define DBG_SETW 3
-#define CHECK_INPUT 1
 
 // Frequently used options
-#define endl '\n' // Remove it when interactive
-#define TC 1//get<0>(input()) //1
-#define TC_OUT_PREFIX ""//"Case #",ti,": "

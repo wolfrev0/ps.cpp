@@ -14,6 +14,6 @@ pint bisect(auto det,int s=-inf<int>(),int e=inf<int>()){
 };
 template<auto cmp>
 tint ternary(auto val,int s=-inf<int>(),int e=inf<int>()){
-	auto [rs,re]=bisect(lam(cmp(f(mid),f(mid+1)),int mid),s,e-1);
+	auto [rs,re]=bisect(lam(cmp(val(mid),val(mid+1)),int mid),s,e-1);
 	return {rs,re,re+1};
 };

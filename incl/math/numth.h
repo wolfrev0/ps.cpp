@@ -171,6 +171,8 @@ void discrete_log(){}  // baby step giant step
 void discrete_sqrt(){}  // tonelli-shanks
 
 //Author: anachor(https://judge.yosupo.jp/submission/39301)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wsign-compare"
 namespace Rho{
 	typedef long long LL;
 	typedef unsigned long long ULL;
@@ -233,3 +235,4 @@ namespace Rho{
 		return L;
 	}
 }
+#pragma GCC diagnostic pop

@@ -1,5 +1,6 @@
 #pragma once
 #include "graph/WD.h"
+#include "misc/uf.h"
 
 template<class T>
 struct GraphWU: GraphWD<T>{
@@ -17,7 +18,7 @@ struct GraphWU: GraphWD<T>{
 	Arr<E> mst(){
 		auto e=edg;
 		sort(e.begin(),e.end());
-		UF uf(n);
+		UFgroup uf(n);
 		Arr<E> ret;
 		ret.reserve(n-1);
 		for(auto i:e) {

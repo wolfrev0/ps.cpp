@@ -1,5 +1,20 @@
 #include "core/base.h"
 
+#define endl '\n' // Remove it when interactive
+#define CHECK_INPUT 1
+#define TC 1
+#define TC_OUT_PREFIX ""//"Case #",ti,": "
+signed main(){
+	void solve();
+	for(int ti=1,t=TC;ti<=t;ti++)
+		print(TC_OUT_PREFIX),
+		solve();
+#if CHECK_INPUT
+	assert(cin.get()=='\n');
+	assert(cin.get()==EOF);
+#endif
+}
+
 //https://atcoder.jp/contests/abc241/tasks/abc241_e
 //sparse table 풀이도 괜찮은듯.
 void solve(){

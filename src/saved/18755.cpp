@@ -1,40 +1,76 @@
 #include "core/base.h"
-#include "misc/gccext.h"
 
+#define endl '\n' // Remove it when interactive
+#define CHECK_INPUT 1
+#define TC get<0>(input()) //1
+#define TC_OUT_PREFIX ""//"Case #",ti,": "
+signed main(){
+	void solve();
+	for(int ti=1,t=TC;ti<=t;ti++)
+		print(TC_OUT_PREFIX),
+		solve();
+#if CHECK_INPUT
+	assert(cin.get()=='\n');
+	assert(cin.get()==EOF);
+#endif
+}
+
+int k;
 struct Hull{
 	int zp=0;
-	pbds_pq<int> pq;//slopes
+	vector<int> sl;//slopes
 	void minkowski_sum(Hull&& r){
 		zp+=r.zp;
-		pq.join(r.pq);
+		sl.insert(sl.end(),r.sl.begin(),r.sl.end());
+
+		sort(sl.begin(),sl.end());
+		reverse(sl.begin(),sl.end());
+		while(sl.size()>k)
+			sl.pop_back();
 	}
 	//add a*min(i,b-i) to graph
 	void update(int a, int b){
 		zp+=0; //a*b should be even
 		int i=0;
-		pbds_pq<int> z;
-		for(auto& x:pq){
+		vector<int> z;
+		for(auto& x:sl){
 			if(i*2<b)
-				z.push((i+1)*2<=b?x:x+a);
+				z.push_back((i+1)*2<=b?x+a:x);
 			else
-				z.push(x-a);
+				z.push_back(x-a);
 			i++;
 		}
-		swap(z,pq);
+		swap(z,sl);
+
+		sort(sl.begin(),sl.end());
+		reverse(sl.begin(),sl.end());
+		while(sl.size()>k)
+			sl.pop_back();
 	}
 	int get(){
-		int ret=zp;
-		int acc=0;
-		for(auto i:pq){
-			acc+=i;
-			ret=max(ret,ret+acc);
-		}
-		return ret;
+		if(sl.size()<k)
+			return 0;
+		return reduce(sl.begin(),sl.end(),0ll);
+	}
+	void dbgstatus(){
+		sort(sl.begin(),sl.end());
+		reverse(sl.begin(),sl.end());
+		dbgprint("slopes: ");
+		for(auto i:sl)
+			dbgprint(i,' ');
+		dbgprintln("");
+		dbgprint("values: ");
+		int y=zp;
+		dbgprint(y,' ');
+		for(auto i:sl)
+			dbgprint(y+=i,' ');
+		dbgprintln("");
 	}
 };
 
 void solve(){
 	auto[n,k]=input<int,2>();
+	::k=k;
 	Arr<Arr<pint>> g(n);
 	for(int i=0;i<n-1;i++){
 		auto[u,v,w]=input<int,3>();
@@ -42,17 +78,32 @@ void solve(){
 		g[u].emplace_back(v,w);
 		g[v].emplace_back(u,w);
 	}
+	int ans=0;
 	func(Hull,dfs,int x,int p){
 		Hull a;
-		a.pq.push(0);
+		a.sl.push_back(0);
+		sort(g[x].begin(),g[x].end(),val2cmp([&](pint i){return -sz(g[i.first]);}));
 		for(auto [y,w]:g[x]){
 			if(y!=p){
 				auto b=dfs(y,x);
+				dbgprintln("status of ",x,' ',y);
+				b.dbgstatus();
 				b.update(2*w,k);
-				a.minkowski_sum(move(b));
+				b.dbgstatus();
+				if(sz(a.sl) > sz(b.sl))
+					a.minkowski_sum(move(b));
+				else{
+					b.minkowski_sum(move(a));
+					swap(a,b);
+				}
 			}
 		}
+		dbgprintln("status of ",x);
+		a.dbgstatus();
+		dbgprintln("=======================");
+		ans=max(ans,a.get());
 		return a;
 	};
-	cout<<dfs(0,0).get()<<endl;
+	dfs(0,0);
+	println(ans);
 }
