@@ -32,16 +32,8 @@ template<MemberNan T> [[deprecated("use optional")]] T nan(){return T().nan();}
 
 //IO & misc
 template<class...A>void osprint(ostream& os, A...a){((os<<a),...);}
-template<class...A>void osprintln(ostream& os, A...a){((os<<a),...,(cout<<endl));}
 #define print(...) osprint(cout,__VA_ARGS__)
-#define println(...) osprintln(cout,__VA_ARGS__)
-#if DEBUG
-	#define dbgprint(...) osprint(cerr,"\033[0;33m",__VA_ARGS__,"\033[0m")
-	#define dbgprintln(...) osprintln(cerr,"\033[0;33m",__VA_ARGS__,"\033[0m")
-#else
-	#define dbgprint(...)
-	#define dbgprintln(...)
-#endif
+#define println(...) osprint(cout,__VA_ARGS__,'\n')
 template<class T,class U>bool assmin(T& a,U&& b){return a>b?a=b,true:false;}
 template<class T,class U>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}
 void MUST(bool expr){
