@@ -1,6 +1,8 @@
 #pragma once
 #include "graph/WD.h"
 
+// TODO: dinic과 push relabel등의 bfs는
+// snk에서부터 역방향으로 진행해주는 간단한 휴리스틱의 성능향상이 크다
 template<class T>
 struct FlowW{
 	int cap; T cost;
@@ -96,7 +98,6 @@ struct Flow:public GraphWD<FlowW<T>>{
 		return r;
 	}
 
-	// successive shortest path || primal-dual
 	pair<T,int> mcmf(int src,int snk,int flow=inf<int>()){
 		func(ARG(pair<T,int>),step,int flow){
 			Arr<W> d;
