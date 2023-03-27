@@ -3,6 +3,11 @@
 #include "core/config.h"
 
 #if DEBUG
+	#undef dbgprint
+	#undef dbgprintln
+	#define dbgprint(...) osprint(cerr,"\033[0;33m",__VA_ARGS__,"\033[0m")
+	#define dbgprintln(...) osprint(cerr,"\033[0;33m",__VA_ARGS__,"\033[0m",'\n')
+
 	//declaration
 	template<Printable T>void _dbgprint_(const T& a,int d=0);
 	#if CPP20

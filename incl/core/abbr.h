@@ -16,6 +16,8 @@
 #define dbgif(...) void(0)
 #define dbg1(...) void(0)
 #define dbg1if(...) void(0)
+#define dbgprint(...) void(0)
+#define dbgprintln(...) void(0)
 using i64=long long;using u64=unsigned long long;using u32=unsigned;
 using pint=pair<int,int>;using tint=tuple<int,int,int>;
 template<class T>using Str=basic_string<T>;
