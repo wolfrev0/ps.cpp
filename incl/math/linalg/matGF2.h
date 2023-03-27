@@ -70,5 +70,5 @@ template<int m> ostream& operator<<(ostream& os, const MatGF2<m>& mat){
 			osprint(os,mat.a[i][j],' ');
 		osprint(os,'\n');
 	}
-	return s;
+	return os;
 }

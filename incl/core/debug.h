@@ -6,7 +6,7 @@
 	#undef dbgprint
 	#undef dbgprintln
 	#define dbgprint(...) osprint(cerr,"\033[0;33m",__VA_ARGS__,"\033[0m").flush()
-	#define dbgprintln(...) osprint(cerr,"\033[0;33m",__VA_ARGS__,"\033[0m",endl)
+	#define dbgprintln(...) osprint(cerr,"\033[0;33m",__VA_ARGS__,"\033[0m",'\n').flush()
 
 	//declaration
 	template<Printable T>void _dbgprint_(const T& a,int d=0);
