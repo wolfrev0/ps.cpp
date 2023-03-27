@@ -5,7 +5,7 @@ onFail() {
 trap onFail ERR
 
 rm -f res/_tmp_compile_.cpp
-touch res/_tmp_compile_.cpp
+mkdir -p res
 for i in $(find incl -name '*.h' ! -wholename 'incl/testlib.h')
 do
 	echo '#include "'${i#*incl/}'"' >> res/_tmp_compile_.cpp
