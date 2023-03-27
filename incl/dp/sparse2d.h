@@ -58,9 +58,3 @@ void solve(){
 				}
 	println(ans);
 }
-signed main(){
-	signed t; cin>>t;
-	for(int ti=1;ti<=t;ti++)
-		print("Case #",ti,"\n"),
-		solve();
-}
