@@ -14,5 +14,3 @@ using fp=double; //long double,__float128
 
 #define CPP20 1
 #define DBG_SETW 3
-
-// Frequently used options

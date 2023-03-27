@@ -1,4 +1,5 @@
 #include "core/base.h"
+#define endl '\n'//Remove it when interactive
 #define CHECK_INPUT 0
 #define TC 1
 #define TC_OUT_PREFIX ""//"Case #",ti,": "
@@ -13,4 +14,5 @@ signed main(){
 #endif
 }
 void solve(){
+	println("hello",1,'2').flush();
 }

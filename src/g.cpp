@@ -1,5 +1,6 @@
 #include "core/base.h"
-#define CHECK_INPUT 0
+#define endl '\n'//Remove it when interactive
+#define CHECK_INPUT 1
 #define TC 1
 #define TC_OUT_PREFIX ""//"Case #",ti,": "
 signed main(){

@@ -7,7 +7,6 @@ int to_num(u64 mask){assert(ispow2(mask));return flg2(mask);}
 void subsetk(int n,int k,const function<void(int)>&f){
 	for(int i=(1<<k)-1;i and i<(1<<n);){
 		int a=i&-i,b=i+a;
-		// cout<<bitset<32>(i)<<endl;
 		f(i);
 		i=((i^b)>>2)/a|b;
 	}

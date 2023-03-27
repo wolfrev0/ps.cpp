@@ -64,10 +64,11 @@ private:
 	int rank=-1;
 };
 
-template<int m> ostream& operator<<(ostream& s, const MatGF2<m>& mat){
+template<int m> ostream& operator<<(ostream& os, const MatGF2<m>& mat){
 	for(int i=0;i<mat.n;i++){
-		for(int j=0;j<m;j++) s << mat.a[i][j] << ' ';
-		s << endl;
+		for(int j=0;j<m;j++)
+			osprint(os,mat.a[i][j],' ');
+		osprint(os,'\n');
 	}
 	return s;
 }

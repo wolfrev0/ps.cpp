@@ -31,7 +31,7 @@ template<MemberNan T> [[deprecated("use optional")]] T nan(){return T().nan();}
 #endif
 
 //IO & misc
-template<class...A>void osprint(ostream& os, A...a){((os<<a),...);}
+template<class...A>ostream& osprint(ostream& os, A...a){return ((os<<a),...);}
 #define print(...) osprint(cout,__VA_ARGS__)
 #define println(...) osprint(cout,__VA_ARGS__,'\n')
 template<class T,class U>bool assmin(T& a,U&& b){return a>b?a=b,true:false;}
