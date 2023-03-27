@@ -18,49 +18,55 @@ signed main(){
 int k;
 struct Hull{
 	int sum=0;
-	vector<int> sl;//slopes
+	PQ<int,greater<int>> sl;//slopes, idx = sz(sl)-1 to 0
 	void minkowski_sum(Hull&& r){
 		sum+=r.sum;
-		sl.insert(sl.end(),r.sl.begin(),r.sl.end());
-
-		sort(sl.begin(),sl.end());
-		reverse(sl.begin(),sl.end());
+		while(sz(r.sl))
+			sl.push(r.sl.top()),r.sl.pop();
 		while(sl.size()>k)
-			sum-=sl.back(),sl.pop_back();
+			sum-=sl.top(),sl.pop();
 	}
 	//add a*min(i,b-i) to graph
 	void update(int a, int b){
-		int i=0;
-		vector<int> z;
-		for(auto& x:sl){
-			if(i*2<b)
-				z.push_back((i+1)*2<=b?x+a:x);
+		int zsum=0;
+		PQ<int,greater<int>> z;
+		while(sz(sl)){
+			int x=sl.top();sl.pop();
+			int idx=sz(sl);
+			int val;
+			if(idx*2<b)
+				val=(idx+1)*2<=b?x+a:x;
 			else
-				z.push_back(x-a);
-			i++;
+				val=x-a;
+			z.push(val);
+			zsum+=val;
 		}
 		swap(z,sl);
+		swap(zsum,sum);
 
-		sum=reduce(sl.begin(),sl.end());
-		sort(sl.begin(),sl.end());
-		reverse(sl.begin(),sl.end());
-		while(sl.size()>k)
-			sum-=sl.back(),sl.pop_back();
+		while(sz(sl)>k)
+			sum-=sl.top(),sl.pop();
 	}
 	int get(){
 		return sum;
 	}
 	void dbgstatus(){
 		dbgprint("slopes: ");
-		for(auto i:sl)
+		auto z=sl;
+		Arr<int> a;
+		while(sz(z))
+			a.push_back(z.top()),z.pop();
+		reverse(a.begin(),a.end());
+		for(auto i:a)
 			dbgprint(i,' ');
 		dbgprintln("");
 		dbgprint("values: ");
 		int y=0;
 		dbgprint(y,' ');
-		for(auto i:sl)
+		for(auto i:a)
 			dbgprint(y+=i,' ');
 		dbgprintln("");
+		dbgprintln("sum: ",sum);
 	}
 };
 
@@ -77,7 +83,7 @@ void solve(){
 	int ans=0;
 	func(Hull,dfs,int x,int p){
 		Hull a;
-		a.sl.push_back(0);
+		a.sl.push(0);
 		sort(g[x].begin(),g[x].end(),val2cmp([&](pint i){return -sz(g[i.first]);}));
 		for(auto [y,w]:g[x]){
 			if(y!=p){
