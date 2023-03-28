@@ -34,10 +34,4 @@ template<int m> struct Mod{
 };
 template<int m> ostream& operator<<(ostream& s,const Mod<m>& n){return osprint(s,n.n);}
 
-// TODO: Optimize for special modes
-// template<> struct Mod<(1<<16)>{
-// 	static const int m=(1ll<<31)-1;
-//  n%m = n&m
-// template<> struct Mod<(1ll<<31)-1>{
-// 	static const int m=(1ll<<31)-1;
-//  n%m = ?
+//TODO: dynamic modint (barrett, montgomery)
