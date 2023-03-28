@@ -5,7 +5,7 @@ __pycache__/
 node_modules
 package-lock.json
 
-test/tc
+test
 res
 tmp
 main.cpp

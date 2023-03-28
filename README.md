@@ -75,8 +75,8 @@ arr,n,mkt(3,"hi",'@'),Arr<int>(n,7);=
   1. Install <a href="https://addons.mozilla.org/en-US/firefox/addon/competitive-companion">CompetitiveCompanion</a> extension to your webbrowser  
   2. Install nodev14+ and expressjs
   3. Run 'node tool/tcsaver.js'
-  4. Click the extension on webbrowser will download all examples on current page into ./test/tc
-  5. Run 'test/tc.sh src/${fileBasenameNoExtension}D.out' will check all output automatically.
+  4. Click the extension on webbrowser will download all examples on current page into ./test/*
+  5. Run 'tool/tc.sh src/${fileBasenameNoExtension}D.out' will check all output automatically.
 
 ## Optional Settings: VSCode  
   TODO

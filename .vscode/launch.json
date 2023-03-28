@@ -11,7 +11,7 @@
 			"program": "${workspaceFolder}/res/${fileBasenameNoExtension}D.out",
 			"args": [
 				"<",
-				"test/tc/in"
+				"test/in"
 			],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
@@ -31,7 +31,7 @@
 			"name": "Debug Py",
 			"type": "python",
 			"request": "launch",
-			"program": "${file}<test/tc/in",
+			"program": "${file}<test/in",
 			"console": "integratedTerminal"
 		},
 	]
