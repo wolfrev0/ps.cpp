@@ -10,7 +10,7 @@
 		{
 			"label": "Run(Release)",
 			"type": "shell",
-			"command": "/usr/bin/time tool/exec.sh ${fileBasenameNoExtension}R 2> >(awk '/Elap|Max/')",
+			"command": "/usr/bin/time -v tool/exec.sh ${fileBasenameNoExtension}R 2> >(awk '/Elap|Max/')",
 			"dependsOn": "Build(Release)"
 		},
 		{
