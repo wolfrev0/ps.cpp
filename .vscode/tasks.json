@@ -16,13 +16,13 @@
 		{
 			"label": "RunAll(Debug)",
 			"type": "shell",
-			"command": "test/tc.sh res/${fileBasenameNoExtension}D.out",
+			"command": "tool/tc.sh res/${fileBasenameNoExtension}D.out",
 			"dependsOn": "Build(Debug)"
 		},
 		{
 			"label": "RunAll(Release)",
 			"type": "shell",
-			"command": "test/tc.sh res/${fileBasenameNoExtension}R.out",
+			"command": "tool/tc.sh res/${fileBasenameNoExtension}R.out",
 			"dependsOn": "Build(Release)"
 		},
 		{
