@@ -14,5 +14,4 @@ signed main(){
 #endif
 }
 void solve(){
-	println("hello",1,'2').flush();
 }
