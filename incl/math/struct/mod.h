@@ -32,7 +32,7 @@ template<int m> struct Mod{
 		return{g,y,x-(a/b)*y};
 	}
 };
-template<int m> ostream& operator<<(ostream& s,const Mod<m>& n){return s<<n.n;}
+template<int m> ostream& operator<<(ostream& s,const Mod<m>& n){return osprint(s,n.n);}
 
 // TODO: Optimize for special modes
 // template<> struct Mod<(1<<16)>{

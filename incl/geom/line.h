@@ -33,5 +33,3 @@ struct Line{
 	tint foot(pint v){return {b*(b*v.fi-a*v.se)-a*c,a*(-b*v.fi+a*v.se)-b*c,a*a+b*b};}//점=([0]/[2],[1]/[2])
 	pint calY(int x){return {-a*x-c,b};}//val=[0]/[1]
 };
-
-ostream& operator<<(ostream& s,const Line& x){return s<<showpos<<x.a<<"x"<<x.b<<"y"<<x.c<<"=0";}

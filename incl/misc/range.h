@@ -15,7 +15,7 @@ struct Range{
 	Range operator*=(const Range& r){return *this=*this*r;}
 	i64 len()const{return e-s;}
 };
-ostream& operator<<(ostream&os,Range x){return os<<'['<<x.s<<','<<x.e<<')';}
+ostream& operator<<(ostream&os,Range x){return osprint(os,'[',x.s,',',x.e,')');}
 
 //NOTE: [a,b)+[b,c) => not intersect
 //https://codeforces.com/contest/1630/submission/144473300

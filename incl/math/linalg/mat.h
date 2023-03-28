@@ -86,8 +86,8 @@ private:
 };
 
 template<typename T,int n,int m> ostream& operator<<(ostream& s, const Mat<T,n,m>& mat) {
-	for(int i=0;i<mat.n;i++,s<<'\n')
+	for(int i=0;i<mat.n;i++,osprint(s,'\n'))
 		for(int j=0;j<mat.m;j++)
-			s<<mat.a[i][j]<<' ';
+			osprint(s,mat.a[i][j],' ');
 	return s;
 }

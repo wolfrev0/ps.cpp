@@ -59,7 +59,7 @@
 	#undef dbgif
 	#undef dbg1
 	#undef dbg1if
-	#define dbg(...) (cerr<<(#__VA_ARGS__)<<";=",_dbgprint_(mkt(__VA_ARGS__)),dbgprintln(""))
+	#define dbg(...) (dbgprint((#__VA_ARGS__),";="),_dbgprint_(mkt(__VA_ARGS__)),dbgprintln(""))
 	#define dbgif(bex,...) ((bex)&&dbg(__VA_ARGS__))
 	static set<const char*> __z;
 	#define dbg1(...) (!__z.count(#__VA_ARGS__)&&(__z.insert(#__VA_ARGS__),dbg(__VA_ARGS__)))
