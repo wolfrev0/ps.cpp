@@ -7,8 +7,8 @@ struct Hash{
 	static_assert(pn<=4);
 	static const T p[4];
 	T h[pn];
-	Hash():Hash(0){}
-	Hash(T hv):Hash({hv,hv,hv,hv},1){} //4 because maximum 4 mods
+	Hash():Hash(0,0){}
+	Hash(T hv,int cnt=1):Hash({hv,hv,hv,hv},cnt){} //4 because maximum 4 mods
 	Hash(initializer_list<T> hil,int cnt):cnt(cnt){
 		auto it=hil.begin();
 		for(int i=0;i<pn;i++)
@@ -86,7 +86,7 @@ template<class T, unsigned pn>
 ostream& operator<<(ostream& s,const Hash<T, pn>& n){
 	osprint(s,'(');
 	for(int i=0;i<pn;i++)
-		osprint(s,(unsigned)n.h[i],',');
+		osprint(s,n.h[i],',');
 	return osprint(s,')');
 }
 
@@ -98,8 +98,8 @@ struct HashSeq{
 	static const T p[4];
 	static Arr<T> memopow[pn];
 	T h[pn];
-	HashSeq():HashSeq(0){}
-	HashSeq(T hv):HashSeq({hv,hv,hv,hv},1){} //4 because maximum 4 mods
+	HashSeq():HashSeq(0,0){}
+	HashSeq(T hv,int cnt=1):HashSeq({hv,hv,hv,hv},cnt){} //4 because maximum 4 mods
 	HashSeq(initializer_list<T> hil,int cnt):cnt(cnt){
 		auto it=hil.begin();
 		for(int i=0;i<pn;i++)
@@ -107,22 +107,18 @@ struct HashSeq{
 	}
 	void push_back(HashSeq x){
 		for(int i=0;i<pn;i++)
-			h[i]=h[i]*pow(i,x.cnt)+x.h[i];
+			h[i]=h[i]*pow(p[i],x.cnt)+x.h[i];
 		cnt+=x.cnt;
 	}
-	void push_front(HashSeq x){
-		for(int i=0;i<pn;i++)
-			h[i]=x.h[i]*pow(i,cnt)+h[i];
-		cnt+=x.cnt;
-	}
+	void push_front(HashSeq x){*this=x+*this;}
 	void pop_back(HashSeq x){
 		for(int i=0;i<pn;i++)
-			h[i]=(h[i]-x.h[i])*inv(pow(i,x.cnt));
+			h[i]=(h[i]-x.h[i])*inv(pow(p[i],x.cnt));
 		cnt-=x.cnt;
 	}
 	void pop_front(HashSeq x){
 		for(int i=0;i<pn;i++)
-			h[i]-=x.h[i]*pow(i,cnt);
+			h[i]-=x.h[i]*pow(p[i],cnt);
 		cnt-=x.cnt;
 	}
 	int size()const{return cnt;}
@@ -144,6 +140,8 @@ private:
 	int cnt;
 	T inv(T x){return x.inv();}
 	T pow(T x, int y){
+		if(y==1)
+			return x;
 		int pidx = find(p,p+pn,x)-p;
 		assert(pidx<pn);
 		if(memopow[pidx].empty())
@@ -173,6 +171,6 @@ template<class T, unsigned pn>
 ostream& operator<<(ostream& s,const HashSeq<T, pn>& n){
 	osprint(s,'(');
 	for(int i=0;i<pn;i++)
-		osprint(s,(unsigned)n.h[i],',');
+		osprint(s,n.h[i],',');
 	return osprint(s,')');
 }
