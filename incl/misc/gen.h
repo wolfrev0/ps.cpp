@@ -46,10 +46,15 @@ namespace gen{
 		return tree(n,lam(rdf()<randomness?rd(idx):idx-1,int idx));
 	}
 
-	template<bool simple=true,bool loop=false>
+	template<bool connected=false,bool simple=true,bool loop=false>
 	Arr<pint> graph(int v,int e){
 		//if not simple, graph can have (self-loop, multi-edge, disconnection)
 		static_assert(!simple or !loop); //'simple&&loop==true' is non-sense
+		if(connected){
+			auto ret=graph<false,simple,loop>(v,e-(v-1));
+			throw "TODO: add tree to ret";
+			return ret;
+		}
 		Arr<pint> a;
 		if(v<5000){
 			if(simple){
