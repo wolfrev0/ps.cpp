@@ -4,7 +4,7 @@
 // Random
 
 #if SYSCALL_ALLOWED
-	mt19937_64 _rng(chrono::system_clock::now().time_since_epoch().count()^i64(new int)^time(0));
+	mt19937_64 _rng(chrono::system_clock::now().time_since_epoch().count()^i64("")^time(0));
 #else
 	mt19937_64 _rng(1243);
 #endif
