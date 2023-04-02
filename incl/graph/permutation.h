@@ -24,4 +24,13 @@ Arr<Arr<int>> permutation_decompose(const Arr<int>& a, const Arr<int>& b){
 	}
 	return ret;
 }
-//TODO: 순열 하나만 받아서 그 인덱스와 값으로 처리하는함수 만들기
+#include "tree/seg/fenwick.h"
+int inversion_count(const Arr<int>& a){
+	int n=sz(a),cnt=0;
+	Fenwick<int> fw(n);
+	for(int i=0;i<n;i++){
+		cnt+=i-fw.q(0,a[i]);
+		fw.upd(a[i],+1);
+	}
+	return cnt;
+}
