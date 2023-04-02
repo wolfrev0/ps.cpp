@@ -1,11 +1,11 @@
 #pragma once
 #include "core/base.h"
+#include "misc/random.h"
 
 using namespace __gnu_pbds;
 using namespace __gnu_cxx;
 
-int __RANDOM=i64(new int)^time(0);
-struct randomhasher{int operator()(int x)const{return x^__RANDOM;}};
+struct randomhasher{int operator()(int x)const{return x^__RANDOM_SEED;}};
 template<class K,class V> using HashMap=gp_hash_table<K,V,randomhasher>;
 //MLE or RLE or WA 날땐 cc_hash_table or unordered_map 사용
 
