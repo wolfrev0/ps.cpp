@@ -8,20 +8,15 @@
 //3x3 determinant로 교점안구하고 cht가능
 //https://www.geeksforgeeks.org/check-three-straight-lines-concurrent-not/
 //point-line duality로 y=ax+b==(a,-b)형태 변환하고 ccw사용하는것도 가능
-bool fraclt(pint a,pint b){
-	if(a.se<0)a.fi*=-1,a.se*=-1;
-	if(b.se<0)b.fi*=-1,b.se*=-1;
-	return a.fi*b.se<b.fi*a.se;
-}
 template<class T>
 struct CHTint{
-	Arr<pair<Line,T>> stk;//pair<직선,추가정보>
-	i128 det(Line x,Line y,Line z){return (i128)x.a*y.b*z.c+(i128)x.b*y.c*z.a+(i128)x.c*y.a*z.b-(i128)x.c*y.b*z.a-(i128)x.b*y.a*z.c-(i128)x.a*y.c*z.b;}
-	void push(Line a,T v){
+	Arr<pair<Line<T>,T>> stk;//pair<직선,추가정보>
+	i128 det(Line<T> x,Line<T> y,Line<T> z){return (i128)x.a*y.b*z.c+(i128)x.b*y.c*z.a+(i128)x.c*y.a*z.b-(i128)x.c*y.b*z.a-(i128)x.b*y.a*z.c-(i128)x.a*y.c*z.b;}
+	void push(Line<T> a,T v){
 		while(sz(stk)>=2 and det(stk[-2].fi,stk[-1].fi,a)>=0)
 			stk.popb();
 		if(sz(stk)and stk.back().fi.tan()==a.tan()){
-			if(fraclt(stk.back().fi.calY(0),a.calY(0)))
+			if(stk.back().fi.calcY(0)<a.calcY(0))
 				stk.back()={a,v};
 			return;
 		}
@@ -30,8 +25,8 @@ struct CHTint{
 	int i=0;
 	pair<pint,T> q(int x){
 		while(i+1<sz(stk)){
-			auto [a,b,c]=stk[i].fi.intersect(stk[i+1].fi);
-			if(fraclt({x,1},{a,c}))break;
+			if(x<stk[i].fi.intersect(stk[i+1].fi).x)
+				break;
 			i++;
 		};
 		return{stk[i].fi.calY(x),stk[i].se};
