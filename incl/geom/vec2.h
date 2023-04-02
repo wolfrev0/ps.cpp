@@ -56,4 +56,9 @@ template<class T> struct Vec2{
 template<typename T>
 ostream& operator<<(ostream& s,const Vec2<T>& v){return osprint(s,'(',v.x,',',v.y,')');}
 template<typename T>
-bool ccw(const Vec2<T>& a,const Vec2<T>& b,const Vec2<T>& c){return a.ccw(b,c)<0;}
+T cross(const Vec2<T>& a,const Vec2<T>& b,const Vec2<T>& c){return a.cross(b,c);}
+template<typename T>
+T boxed(const pair<Vec2<T>,Vec2<T>>& box,const Vec2<T>& p){
+	return min(box.fi.x,box.se.x)<=p.x&&p.x<=max(box.fi.x,box.se.x)
+			&&min(box.fi.y,box.se.y)<=p.y&&p.y<=max(box.fi.y,box.se.y);
+}

@@ -1,5 +1,7 @@
 #pragma once
 #include "core/base.h"
+#include "geom/vec2.h"
+#include "math/numth.h"
 
 class LineException{};
 class LineSame:public LineException{};
@@ -7,12 +9,14 @@ class LineParallel:public LineException{};
 
 //NOTE: 직선의 방정식과 2by2연립solver
 //normalized(),operator==,operator<는 아직 테스트 안된듯?
+//Frac<T> 사용 권장
+template<class T>
 struct Line{
 	//ax+by+c=0
-	int a,b,c;
-	Line(int a,int b,int c):a(a),b(b),c(c){*this=normalized();}
-	Line(pint a,pint b):Line(a.se-b.se,b.fi-a.fi,-a.se*(b.fi-a.fi)+a.fi*(b.se-a.se)){}
-	Line(pint tangent, pint pt, void* dummy_param):Line(pt,mkp(pt.fi+tangent.fi,pt.se-tangent.se)){}
+	T a,b,c;
+	Line(T a,T b,T c):a(a),b(b),c(c){*this=normalized();}
+	Line(Vec2<T> a,Vec2<T> b):Line(a.y-b.y,b.x-a.x,-a.y*(b.x-a.x)+a.x*(b.y-a.y)){}
+	Line(Vec2<T> tangent, Vec2<T> pt, void* dummy_param):Line(pt,mkp(pt.x+tangent.x,pt.y-tangent.y)){}
 	Line normalized(){
 		int g=gcd(gcd(a,b),c);
 		if(mkt(a/g,b/g,c/g)>mkt(-a/g,-b/g,-c/g))
@@ -21,15 +25,25 @@ struct Line{
 	}
 	bool operator==(const Line&r)const{return mkt(a,b,c)==mkt(r.a,r.b,r.c) or mkt(-a,-b,-c)==mkt(r.a,r.b,r.c);}
 	bool operator<(const Line& r)const{return mkt(a,b,c)<mkt(r.a,r.b,r.c);}
-	pint tan()const{return !b?pint{1,0}:(b>=0?pint{-a,b}:pint{a,-b});}//기울기=[0]/[1]
-	tint intersect(const Line& r)const{
+	T tan()const{return -a/b;}
+	T calcY(int x)const{return (-a*x-c)/b;}
+	T calcX(int y)const{return (-b*y-c)/a;}
+	Vec2<T> foot(Vec2<T> v)const{return {(b*(b*v.x-a*v.y)-a*c)/a*a+b*b,(a*(-b*v.x+a*v.y)-b*c)/a*a+b*b};}
+	Vec2<T> project(Vec2<T> v)const{return foot(v);}
+	Vec2<T> point(int offset=0)const{return {offset,calcY(offset)};}
+	bool contains(Vec2<T> p)const{return p.cross(point(0),point(1))<eps;}
+	Vec2<T> intersect(const Line& r)const{
 		int det=a*r.b-b*r.a;
-		if(det==0){//det=0
-			if(a*r.c==r.a*c) throw LineSame();//a/r.a==c/r.c
+		if(det==0){
+			if(a*r.c==r.a*c) throw LineSame();
 			else throw LineParallel();
 		}
-		return {(b*r.c-r.b*c),(c*r.a-r.c*a),det};//교점=([0]/[2],[1]/[2])
+		return {(b*r.c-r.b*c)/det,(c*r.a-r.c*a)/det};
 	}
-	tint foot(pint v){return {b*(b*v.fi-a*v.se)-a*c,a*(-b*v.fi+a*v.se)-b*c,a*a+b*b};}//점=([0]/[2],[1]/[2])
-	pint calY(int x){return {-a*x-c,b};}//val=[0]/[1]
 };
+template<>
+Vec2<int> Line<int>::point(int offset)const{
+	auto [g,x,y]=xgcd(a,b);
+	if(c%g) throw "No integer point";
+	return {(x+offset*b/g)*-c/g,(y-offset*a/g)*-c/g};
+}
