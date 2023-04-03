@@ -11,21 +11,19 @@ template<class T,class U=Arr<int>>map<T,U> classify(const Arr<T>& a){
 	return r;
 }
 #if CPP20
-
-template<class T=int,class... Ts> requires (!Iterable<T>) tuple<T,Ts...> input(){
-	T x; cin>>x;
+template<class T=int,class... Ts> requires InputPrimitive<T>
+tuple<T,Ts...> input(istream& is=cin){
+	T x; is>>x;
 	if constexpr (sizeof...(Ts)==0) return mkt(x);
 	else return tuple_cat(mkt(x),input<Ts...>());
 }
-template<class T=int,int n>std::array<T,n> input(){
-	std::array<T,n> a;
-	for(auto&i:a)
-		i=get<0>(input<T>());
-	return a;
-}
-string input(string& str){ cin>>str; return str; }
-template<class T> requires (!Iterable<T>) T& input(T& a){ cin>>a; return a;}
-template<class T> requires Iterable<T> T& input(T& a){ for(auto&i:a)input(i); return a; }
+template<class T> requires InputPrimitive<T>
+T& input(T&& a, istream& is=cin){ is>>a; return a;}
+template<class T> requires NotInputPrimitive<T>&&Iterable<T>
+T& input(T&& a){ for(auto&i:a)input(i); return a; }
+
+template<class T, class U> istream& operator>>(istream& is, pair<T,U>& a){ return is>>a.fi>>a.se; }
+template<class... T> istream& operator>>(istream& is, tuple<T...>& a){ a=input<T...>(); return is; }
 #else
 	#define input() [](){int x;cin>>x;return mkt(x);}()
 	// #define input(n) [](){Arr<int> a(n);for(auto&i:a)cin>>i;return a;}()

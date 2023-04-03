@@ -18,8 +18,10 @@ template<class T>using Str=basic_string<T>;
 template<class T,class CMP=less<>>using PQ=std::priority_queue<T,vector<T>,CMP>;
 
 #if CPP20
-template<class T>concept Printable=requires(T x){cout<<x;};
-template<class T>concept NotPrintable=not Printable<T>;
+template<class T>concept PrintPrimitive=requires(T x){cout<<x;};
+template<class T>concept NotPrintPrimitive=not PrintPrimitive<T>;
+template<class T>concept InputPrimitive=requires(T x){cin>>x;};
+template<class T>concept NotInputPrimitive=not InputPrimitive<T>;
 template<class T>concept Iterable=requires(T x){x.begin();x.end();begin(x);end(x);};
 #else
 #define Printable class
