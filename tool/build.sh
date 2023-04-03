@@ -71,3 +71,5 @@ fi
 # std헤더와 매크로 제거하면 아래와 같은 전처리기 활용도 가능하긴 하다.
 # g++ src/tpl.cpp -std=c++20 -iquote ./incl -E | grep -Ev '# *'
 # 다만 커스텀헤더 안의 std헤더를 제거하는게 좀 귀찮은거같다. 제거한 헤더와 매크로도 제자리 "찾아"서 돌려놓는것도 생각하면 그냥 현재상태가 나은듯
+
+#bash 괄호의미 헷갈리면 https://dev.to/rpalo/bash-brackets-quick-reference-4eh6 이거 보자.
