@@ -90,7 +90,7 @@ tint xgcd(i64 a,i64 b){
 	auto [g,x,y]=xgcd(b,a%b);
 	return{g,y,x-(a/b)*y};
 }
-int modinv(int n,int m){auto [g,x,y]=xgcd(n,m);MUST(g==1);while(x<0)x+=m;return x;}
+int modinv(int n,int m){auto [g,x,y]=xgcd(n,m);assert(g==1);while(x<0)x+=m;return x;}
 
 int eutot(int n){
 	int r=1,x=n;

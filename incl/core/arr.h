@@ -2,6 +2,7 @@
 #include "core/std.h"
 #include "core/config.h"
 #include "core/func1.h"
+#include "core/debug.h"
 
 template<class T, class P=vector<T>>
 struct Arr:public P{
@@ -10,8 +11,8 @@ struct Arr:public P{
 	explicit Arr(signed n,T init):P(n,init){}
 	Arr(initializer_list<T>il):P(il){}
 	Arr(auto its, auto ite):P(its,ite){}
-	inline T& operator[](signed i){return P::operator[](i<0?i+sz(*this):i);}
-	const T& operator[](signed i)const{return P::operator[](i<0?i+sz(*this):i);}
+	inline T& operator[](signed i){assert(-sz(*this)<=i&&i<sz(*this));return P::operator[](i<0?i+sz(*this):i);}
+	const T& operator[](signed i)const{assert(-sz(*this)<=i&&i<sz(*this));return P::operator[](i<0?i+sz(*this):i);}
 	T& at(signed i){return *this[i];}
 	const T& at(signed i)const{return *this[i];}
 };

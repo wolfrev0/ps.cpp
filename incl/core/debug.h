@@ -2,9 +2,14 @@
 #include "core/func1.h"
 #include "core/config.h"
 
-#if DEBUG
-	#undef dbgprint
-	#undef dbgprintln
+#if !DEBUG
+#define dbgprint(...) void(0)
+#define dbgprintln(...) void(0)
+#define dbg(...) void(0)
+#define dbgif(...) void(0)
+#define dbg1(...) void(0)
+#define dbg1if(...) void(0)
+#else
 	#define dbgprint(...) osprint(cerr,"\033[0;33m",__VA_ARGS__,"\033[0m").flush()
 	#define dbgprintln(...) osprint(cerr,"\033[0;33m",__VA_ARGS__,"\033[0m",'\n').flush()
 
@@ -55,10 +60,6 @@
 		_dbgprint_(_tup,make_index_sequence<sizeof...(T)>(),d);
 	}
 	
-	#undef dbg
-	#undef dbgif
-	#undef dbg1
-	#undef dbg1if
 	#define dbg(...) (dbgprint((#__VA_ARGS__),";="),_dbgprint_(mkt(__VA_ARGS__)),dbgprintln(""))
 	#define dbgif(bex,...) ((bex)&&dbg(__VA_ARGS__))
 	static set<const char*> __z;

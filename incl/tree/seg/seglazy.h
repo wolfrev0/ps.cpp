@@ -37,7 +37,7 @@ private:
 		propa(c,cs,ce);
 		if(s>=ce||e<=cs) return tr[c];
 		if(s<=cs&&ce<=e){
-			if(ass) MUST(e-s==1),tr[c]=val;
+			if(ass) assert(e-s==1),tr[c]=val;
 			else addlz(c,val),propa(c,cs,ce);
 			return tr[c]; 
 		}
