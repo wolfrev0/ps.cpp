@@ -52,7 +52,12 @@ GREEN='\033[1;32m'
 NONE='\033[0m' # No Color
 
 path_out=res/$(echo ${src##*/} | cut -d'.' -f1)$dbgrel.out
-if [ $path_out -ot $src ] || [ $path_out -ot incl/core/base.h.gch ]; then
+need_rebuild=$( test $path_out -nt $src )$?
+for i in $(find incl -name '*.h')
+do
+	need_rebuild="$(( $need_rebuild + $( test $path_out -nt $i )$? ))"
+done
+if [[ $need_rebuild > 0 ]]; then
 	echo -e "${CYAN}newly built ($dbgrel)${NONE}"
 	g++ $src $base_arg $option -o $path_out
 else
