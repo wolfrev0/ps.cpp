@@ -24,4 +24,4 @@ app.post('/', (req, res) => {
 	}
   res.sendStatus(200);
 });
-app.listen(port, err => {console.log('Server started.');});
+app.listen(port, "localhost", err => {console.log('Server started.');});
