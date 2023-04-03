@@ -26,7 +26,8 @@ template<class T> T factorial(int x){
 	while(dp.size()<=x)
 		dp.push_back(optional<T>());
 	auto& r=dp[x];
-	return (r?r:r=factorial<T>(x-1)*x).value();
+	if(r)return r.value();
+	return (r=factorial<T>(x-1)*x).value();
 }
 template<class T> T binomial(int x,int y){
 	if(y<-1 or y>x) return 0;

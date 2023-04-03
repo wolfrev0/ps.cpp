@@ -2,7 +2,8 @@
 #include "core/base.h"
 #include "math/struct/monoid.h"
 
-template<Monoid Q, auto fupd, int xlo=0,int xhi=inf<signed>()>
+// potential bug in SegDyn (#31)
+template<Monoid Q, int xlo=-inf<signed>(),int xhi=inf<signed>()>
 struct SegDyn{
 	using T=decltype(Q::id());
 	T v=Q::id();
@@ -11,7 +12,7 @@ struct SegDyn{
 
 	T upd(int i, T x, int cs=xlo, int ce=xhi){
 		if(ce<=i or i+1<=cs)return v;
-		if(i<=cs and ce<=i+1)return v=fupd(v,x);
+		if(i<=cs and ce<=i+1)return v=x;
 		int cm=(cs+ce)/2;
 		if(!l)l=new SegDyn;
 		if(!r)r=new SegDyn;
