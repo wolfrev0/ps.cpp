@@ -101,5 +101,10 @@
 		"version": "cpp"
 	},
 	"editor.tabSize": 2,
+	"editor.detectIndentation": false,
 	"editor.insertSpaces": false,
+	"editor.wordWrap": "on",
+	"editor.autoClosingBrackets": "never",
+	"editor.autoClosingOvertype": "never",
+	"editor.autoClosingQuotes": "never",
 }
