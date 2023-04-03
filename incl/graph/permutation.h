@@ -1,9 +1,16 @@
 #pragma once
 #include "core/base.h"
 
+Arr<int> permu_inv(const Arr<int>& a){
+	Arr<int> r(sz(a));
+	for(int i=0;i<sz(a);i++)
+		r[a[i]]=i;
+	return r;
+}
+
 //https://codeforces.com/contest/1690/submission/159807563 (순열 순서 중요)
 //순서상관없으면 union find로 그룹짓는게 더 편함
-Arr<Arr<int>> permutation_decompose(const Arr<int>& a, const Arr<int>& b){
+Arr<Arr<int>> permu_decompose(const Arr<int>& a, const Arr<int>& b){
 	int n=sz(a);
 	Arr<Arr<int>> ret;
 	Arr<char> vis(n);
