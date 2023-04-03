@@ -4,10 +4,11 @@
 
 template<class T>int argmin(const Arr<T>& a){return min_element(a.begin(),a.end())-a.begin();}
 template<class T>int argmax(const Arr<T>& a){return max_element(a.begin(),a.end())-a.begin();}
-template<class T,class U=Arr<int>>map<T,U> classify(const Arr<T>& a){
-	map<T,U> r;
-	for(int i=0;i<sz(a);i++)
-		r[a[i]].push_back(i);
+template<Iterable T> map<typename T::value_type,Arr<int>> classify(const T& a){
+	map<typename T::value_type,Arr<int>> r;
+	int idx=0;
+	for(auto x:a)
+		r[x].push_back(idx++);
 	return r;
 }
 #if CPP20

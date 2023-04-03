@@ -24,7 +24,9 @@ template<class T>concept InputPrimitive=requires(T x){cin>>x;};
 template<class T>concept NotInputPrimitive=not InputPrimitive<T>;
 template<class T>concept Iterable=requires(T x){x.begin();x.end();begin(x);end(x);};
 #else
-#define Printable class
-#define NotPrintable class
+#define PrintPrimitive class
+#define NotPrintPrimitive class
+#define InputPrimitive class
+#define NotInputPrimitive class
 #define Iterable class
 #endif
