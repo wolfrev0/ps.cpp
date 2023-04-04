@@ -46,7 +46,9 @@
 	template<class A,class B>void _dbgprint_(const pair<A,B>& a,int d){
 		dbgprint('\n',string(d,'-')+'<');
 		_dbgprint_(a.fi,d+1);
-		dbgprint(',',_dbgprint_(a.se,d+1),'>');
+		dbgprint(',');
+		_dbgprint_(a.se,d+1);
+		dbgprint('>');
 	}
 	
 	//tuple debug

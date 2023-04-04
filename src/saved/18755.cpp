@@ -15,37 +15,48 @@ signed main(){
 #endif
 }
 
+//현재 문제점: lazy더했을때 순서가 변경되는데(내림차순정렬인데 더하는값은 오름차순임) 그걸 처리못하고 있다.
+//아이디어1: PQ보다 강력한 자료구조 혹은 PQ에서 변경점을 로그만에 찾을 수 있다?
+//아이디어2: 센트로이드 분할 가능해보임
+
 int k;
 struct Hull{
 	int sum=0;
+	int lazy=0;//add lazy*idx to all values lazily
 	PQ<int,greater<int>> sl;//slopes, idx = sz(sl)-1 to 0
+	//infimal convolution of two convex set = minkowski sum
 	void minkowski_sum(Hull&& r){
 		sum+=r.sum;
 		while(sz(r.sl))
-			sl.push(r.sl.top()),r.sl.pop();
+			sl.push(r.sl.top()+r.lazy-lazy),r.sl.pop();
 		while(sl.size()>k)
 			sum-=sl.top(),sl.pop();
 	}
-	//add a*min(i,b-i) to graph
+	// add a*min(i,b-i) to graph
+	// we can ignore a*(b-i) case because
+	// b is always k
+	// we(and infimal convolution) do not use values which idx>k
+	// Therefore, considering only a*idx is sufficient
 	void update(int a, int b){
-		int zsum=0;
-		PQ<int,greater<int>> z;
-		while(sz(sl)){
-			int x=sl.top();sl.pop();
-			int idx=sz(sl);
-			int val;
-			if(idx*2<b)
-				val=(idx+1)*2<=b?x+a:x;
-			else
-				val=x-a;
-			z.push(val);
-			zsum+=val;
-		}
-		swap(z,sl);
-		swap(zsum,sum);
+		// int zsum=0;
+		// PQ<int,greater<int>> z;
+		// while(sz(sl)){
+		// 	int x=sl.top();sl.pop();
+		// 	int idx=sz(sl);
+		// 	int val;
+		// 	if(idx*2<b)
+		// 		val=(idx+1)*2<=b?x+a:x;
+		// 	else
+		// 		val=x-a;
+		// 	z.push(val);
+		// 	zsum+=val;
+		// }
+		// swap(z,sl);
+		// swap(zsum,sum);
 
-		while(sz(sl)>k)
-			sum-=sl.top(),sl.pop();
+		// while(sz(sl)>k)
+		// 	sum-=sl.top(),sl.pop();
+		lazy+=a;
 	}
 	int get(){
 		return sum;

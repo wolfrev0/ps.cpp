@@ -38,7 +38,7 @@
 		{
 			"label": "tc_save",
       "type": "shell",
-      "command": "node tool/tcsaver.js",
+      "command": "kill -9 `sudo lsof -t -i:10043` && node tool/tcsaver.js",
       "runOptions": {
         "runOn": "folderOpen"
       }

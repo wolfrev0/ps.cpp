@@ -15,6 +15,9 @@ template<class T> struct Tree{
 	}
 
 	//Usage: https://www.acmicpc.net/problem/13514
+	//centroid_tree에 centroid정보만 있는데,
+	//부모정점이 어느 자식간선 타는지 정보도 같이 줘야 유용할듯?
+	//x,cent[x],y,cent[y] 정보를 다 알 수 있도록 코딩?
 	pair<Tree<T>,int> centroid_tree(){
 		Arr<char> av(n,true);
 		Arr<int> tsz(n);
