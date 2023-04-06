@@ -43,7 +43,6 @@ template<class T> struct Vec2{
 	Vec2 rot(double s,double c)const{return{c*x-s*y,s*x+c*y};}
 	Vec2 rot90()const{return {y,-x};}
 	static Vec2 inf(){return{::inf<T>(),::inf<T>()};}
-	static Vec2 nan(){return{::nan<T>(),::nan<T>()};}
 	static bool cmpccw(const Vec2& l,const Vec2& r,const Vec2& base){
 		T val=base.ccw(l,r);
 		assert(base<=l&&base<=r);

@@ -40,10 +40,7 @@ struct Frac {
 		if(b<0) a*=-1,b*=-1;
 	}
 };
-
 template<> Frac inf() {return {1,0};}
-template<> Frac nan() {return {0,0};}
-
 ostream& operator<<(ostream& s,const Frac& n) {
 	return (n.is_int()?osprint(s,int(n)):osprint(s,n.a,'/',n.b));
 }
