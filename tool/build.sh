@@ -31,14 +31,8 @@ function f(){
 	fi
 }
 if ! [[ "$2" =~ ?*.h ]]; then
-	echo "//[Author]   tuxedcat" > res/submit.cpp
-	echo "//[Date]     $(date +%Y.%m.%d)" >> res/submit.cpp
-	echo "//[File]     $1" >> res/submit.cpp
-	echo "//[Library]  https://github.com/tuxedcat/pslib" >> res/submit.cpp
-	echo "#pragma GCC optimize(\"O3\")" >> res/submit.cpp
-	awk '//' $(f|tac) | grep -Ev '#include *"|#pragma once' >> res/submit.cpp
+	awk '//' $(f|tac) | grep -Ev '#include *"|#pragma once' > res/submit.cpp
 fi
-
 for i in incl/core/*
 do
 	if [ "$i" != "$src" ] && [ incl/core/base.h.gch -ot $i ]; then
@@ -62,6 +56,24 @@ if [[ $need_rebuild > 0 ]]; then
 	g++ $src $base_arg $option -o $path_out
 else
 	echo -e "${GREEN}up to date ($dbgrel)${NONE}"
+fi
+if ! [[ "$2" =~ ?*.h ]]; then
+	cat res/submit.cpp | head -n 11 > res/build0.tmp
+	cat res/submit.cpp | tail -n +12 > res/build1.tmp
+
+	echo "//[Author]   tuxedcat" > res/submit.cpp
+	echo "//[Date]     $(date +%Y.%m.%d)" >> res/submit.cpp
+	echo "//[File]     $1" >> res/submit.cpp
+	echo "//[Library]  https://github.com/tuxedcat/pslib" >> res/submit.cpp
+	echo "#pragma GCC optimize(\"O3\")" >> res/submit.cpp
+	#echo "#pragma GCC target(\"avx2\")" >> res/submit.cpp
+	echo "#define NDEBUG" >> res/submit.cpp
+
+	echo "/* ORIGINAL_MAIN_SOURCE" >> res/submit.cpp
+	cat $src >> res/submit.cpp
+	echo "*/" >> res/submit.cpp
+	cat res/build0.tmp >> res/submit.cpp
+	cpp res/build1.tmp | clang-format -style=Google >> res/submit.cpp
 fi
 
 # if [[ $(cat res/submit.cpp | grep -E "(input.*){2}") ]]; then
