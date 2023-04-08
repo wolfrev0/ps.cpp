@@ -25,11 +25,11 @@ Algorithm and DataStructure library for problem-solving written in modern c++.
 ``` cpp
 #include "core/base.h"
 signed main(){
-	//Can get arbitary tuple from stdin
+	//Can get arbitrary tuple from stdin
 	auto [n,m,k,x]=input<int,short,int,string>();
-	//Can create and read dynamic array of arbitary dimension
+	//Can create and read dynamic array of arbitrary dimension
 	auto a=input(ARR(n,m,k,0ll));
-	//Can print an arbitary tuple and dynamic array
+	//Can print an arbitrary tuple and dynamic array
 	dbg(n,m,make_tuple(k,x),a);
 }
 ```
