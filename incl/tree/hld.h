@@ -1,5 +1,6 @@
 #pragma once
 #include "tree/tree.h"
+#include "graph/permutation.h"
 
 template<class T> struct HLD:public RootedTree<T>{
 	HLD(){}
@@ -15,7 +16,7 @@ template<class T> struct HLD:public RootedTree<T>{
 			}
 		};
 		dfs(r);
-		idx=permuinv(RT::pre()),top[0]=r;
+		idx=permu_inv(RT::pre()),top[0]=r;
 	}
 	//NOTE: reta는 전체순서는 맞지만 개별구간이 뒤집혀있음, 개별구간.rev()
 	//NOTE: retb는 개별구간은 맞지만 전체순서가 뒤집혀있음, reverse(retb)
