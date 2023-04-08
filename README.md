@@ -28,6 +28,7 @@ signed main(){
 	//Can get arbitrary tuple from stdin
 	auto [n,m,k,x]=input<int,short,int,string>();
 	//Can create and read dynamic array of arbitrary dimension
+	//This creates n*m*k dynamic array, then read values from stdin
 	auto a=input(ARR(n,m,k,0ll));
 	//Can print an arbitrary tuple and dynamic array
 	dbg(n,m,make_tuple(k,x),a);
