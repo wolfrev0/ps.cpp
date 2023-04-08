@@ -3,9 +3,8 @@ Algorithm and DataStructure library for problem-solving written in modern c++.
 
 ## Feature
   1. Balanced abstraction among flexibility, performance, code length, and readability.
-  2. Resolve all headerfile dependancy and merge to one file. (just submit res/sumit.cpp file. That's all!)
-  3. Various convenient tools. (pretty print debugger, testcase checker, etc...)
-  4. Header-only library
+  2. Resolve all headerfile dependancy and merge them into one file. (res/sumit.cpp)
+  3. Header-only library
 
 ## Interface
   1. [s,e) half opened range
@@ -14,8 +13,8 @@ Algorithm and DataStructure library for problem-solving written in modern c++.
 
 ## Getting Started
   Requirements: ubuntu (20.04+), g++ (10.3.0+)
-  1. git clone https://github.com/tuxedcat/pslib
-  2. cd pslib
+  1. git clone https://github.com/tuxedcat/ps.cpp
+  2. cd ps.cpp
   3. cp src/tpl.cpp src/main.cpp
   4. source tool/build.sh src/main.cpp D #(Debug Build) generates res/mainD.out and res/submit.cpp
   5. source tool/build.sh src/main.cpp R #(Release Build) generates res/mainR.out and res/submit.cpp
@@ -26,49 +25,28 @@ Algorithm and DataStructure library for problem-solving written in modern c++.
 ``` cpp
 #include "core/base.h"
 signed main(){
-	int n=5;
-	auto arr=ARR(2,3,2,n,'#');//(2*3*2*n shaped 4D vector)
-	for(int i=0;i<2;i++)
-		for(int j=0;j<3;j++)
-			for(int k=0;k<2;k++)
-				for(int l=0;l<n;l++)
-					arr[i][j][k][l]='a'+i+j+k+l;;
-	dbg(arr,n,mkt(3,"hi",'@'),Arr<int>(n,7));//ez debug
-	println(1,'2',"3",string("4"),n,"hello?");//ez print
+	//Can get arbitary tuple from stdin
+	auto [n,m,k,x]=input<int,short,int,string>();
+	//Can create and read dynamic array of arbitary dimension
+	auto a=input(ARR(n,m,k,0ll));
+	//Can print an arbitary tuple and dynamic array
+	dbg(n,m,make_tuple(k,x),a);
 }
 ```
-## Sample Output (Debug)
+## Sample Output
 ```
-arr,n,mkt(3,"hi",'@'),Arr<int>(n,7);=
-<
+n,m,make_tuple(k,x),a;=
+<  2,  3,
+-<  2, hi,>,
 -{
 --(
----[
-----{  a,  b,  c,  d,  e,},
-----{  b,  c,  d,  e,  f,},],
----[
-----{  b,  c,  d,  e,  f,},
-----{  c,  d,  e,  f,  g,},],
----[
-----{  c,  d,  e,  f,  g,},
-----{  d,  e,  f,  g,  h,},],),
+---[  1,  2,],
+---[  3,  4,],
+---[  5,  6,],),
 --(
----[
-----{  b,  c,  d,  e,  f,},
-----{  c,  d,  e,  f,  g,},],
----[
-----{  c,  d,  e,  f,  g,},
-----{  d,  e,  f,  g,  h,},],
----[
-----{  d,  e,  f,  g,  h,},
-----{  e,  f,  g,  h,  i,},],),},  5,
--<  3, hi,  @,>,
--{  7,  7,  7,  7,  7,},>
-12345hello? 
-```
-## Sample Output (Release)
-```
-12345hello? 
+---[  0,  0,],
+---[  1,  1,],
+---[  2,  2,],),},>
 ```
 
 ## Optional Settings: Testcase Download  
