@@ -33,6 +33,16 @@ signed main(){
 	dbg(n,m,make_tuple(k,x),a);
 }
 ```
+## Sample Input
+```
+2 3 2 hi
+1 2
+3 4
+5 6
+0 0
+1 1
+2 2
+```
 ## Sample Output
 ```
 n,m,make_tuple(k,x),a;=
