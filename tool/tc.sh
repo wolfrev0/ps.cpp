@@ -9,9 +9,9 @@ test_cnt=$(find test/ -name "*.in" -printf '.' | wc -m)
 succ=0
 fail=0
 input_pattern=test/*.in
-answer_pattern=${i%.*}.ans
 for i in $input_pattern;
 do
+	answer_pattern=${i%.*}.ans
 	echo "Running "${i%.*}" ("$(( ($succ+$fail)*100/$test_cnt ))"%)"
 	if /usr/bin/time -v diff <($1<$i) $answer_pattern -BZ 2> >(awk '/Elap|Max/') 1> >(head -n 4); then
 		succ=$((succ+1))
