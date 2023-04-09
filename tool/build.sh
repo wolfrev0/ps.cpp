@@ -65,9 +65,9 @@ if ! [[ "$2" =~ ?*.h ]]; then
 	echo "//[Date]     $(date +%Y.%m.%d)" >> res/submit.cpp
 	echo "//[File]     $1" >> res/submit.cpp
 	echo "//[Library]  https://github.com/tuxedcat/pslib" >> res/submit.cpp
-	echo "#pragma GCC optimize(\"O3\")" >> res/submit.cpp
-	#echo "#pragma GCC target(\"avx2\")" >> res/submit.cpp
-	echo "#define NDEBUG" >> res/submit.cpp
+	# echo "#pragma GCC optimize(\"O3\")" >> res/submit.cpp
+	# echo "#pragma GCC target(\"avx2\")" >> res/submit.cpp
+	# echo "#define NDEBUG" >> res/submit.cpp
 
 	echo "/* ORIGINAL_MAIN_SOURCE" >> res/submit.cpp
 	cat $src >> res/submit.cpp

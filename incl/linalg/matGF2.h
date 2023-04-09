@@ -1,7 +1,9 @@
 #pragma once
 #include "core/base.h"
 
-#pragma GCC optimize ("Ofast")
+#if !(DEBUG)
+	#pragma GCC optimize ("Ofast")
+#endif
 //NOTE: n*m행렬이다. m*n행렬이 아님(코드상으로는 <m> (n)형태라 헷갈리니 조심)
 template<int m> struct MatGF2{
 	const int n;

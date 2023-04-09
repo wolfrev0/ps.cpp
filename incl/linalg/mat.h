@@ -1,7 +1,9 @@
 #pragma once
 #include "core/base.h"
 
-#pragma GCC optimize ("Ofast")
+#if !(DEBUG)
+	#pragma GCC optimize ("Ofast")
+#endif
 template<class T,int _n,int _m> struct Mat{
 	static constexpr int n=_n,m=_m;
 	array<array<T,m>,n> a;

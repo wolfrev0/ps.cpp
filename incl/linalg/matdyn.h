@@ -1,7 +1,9 @@
 #pragma once
 #include "core/base.h"
 
-#pragma GCC optimize ("Ofast")
+#if !(DEBUG)
+	#pragma GCC optimize ("Ofast")
+#endif
 template<class T> struct MatDyn{
 	int n, m;
 	Arr<Arr<T>> a;
