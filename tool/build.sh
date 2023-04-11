@@ -62,9 +62,10 @@ if ! [[ "$2" =~ ?*.h ]]; then
 	cat res/submit.cpp | tail -n +12 > res/build1.tmp
 
 	echo "//[Author]   tuxedcat" > res/submit.cpp
-	echo "//[Date]     $(date +%Y.%m.%d)" >> res/submit.cpp
+	echo "//[Date]     $(date "+%Y.%m.%d %H:%M:%S %Z")" >> res/submit.cpp
 	echo "//[File]     $1" >> res/submit.cpp
-	echo "//[Library]  https://github.com/tuxedcat/pslib" >> res/submit.cpp
+	echo "//[Library]  https://github.com/tuxedcat/ps.cpp" >> res/submit.cpp
+	echo "//[Revision] $(git rev-parse HEAD)" >> res/submit.cpp
 	# echo "#pragma GCC optimize(\"O3\")" >> res/submit.cpp
 	# echo "#pragma GCC target(\"avx2\")" >> res/submit.cpp
 	# echo "#define NDEBUG" >> res/submit.cpp
@@ -73,7 +74,7 @@ if ! [[ "$2" =~ ?*.h ]]; then
 	cat $src >> res/submit.cpp
 	echo "*/" >> res/submit.cpp
 	cat res/build0.tmp >> res/submit.cpp
-	cpp res/build1.tmp | clang-format -style=Google >> res/submit.cpp
+	cpp -P res/build1.tmp | clang-format -style=Google >> res/submit.cpp
 fi
 
 # if [[ $(cat res/submit.cpp | grep -E "(input.*){2}") ]]; then
