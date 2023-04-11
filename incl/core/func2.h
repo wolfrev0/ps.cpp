@@ -19,9 +19,9 @@ tuple<T,Ts...> input(istream& is=cin){
 	else return tuple_cat(mkt(x),input<Ts...>());
 }
 template<class T> requires InputPrimitive<T>
-T& input(T&& a, istream& is=cin){ is>>a; return a;}
+T input(T&& a, istream& is=cin){ is>>a; return a;}
 template<class T> requires NotInputPrimitive<T>&&Iterable<T>
-T& input(T&& a){ for(auto&i:a)input(i); return a; }
+T input(T&& a){ for(auto&i:a)input(i); return a; }
 
 template<class T, class U> istream& operator>>(istream& is, pair<T,U>& a){ return is>>a.fi>>a.se; }
 template<class... T> istream& operator>>(istream& is, tuple<T...>& a){ a=input<T...>(); return is; }

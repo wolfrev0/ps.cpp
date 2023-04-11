@@ -37,11 +37,11 @@
 		},
 		{
 			"label": "tc_save",
-      "type": "shell",
-      "command": "node tool/tcsaver.js",
-      "runOptions": {
-        "runOn": "folderOpen"
-      }
+			"type": "shell",
+			"command": "node tool/tcsaver.js",
+			"runOptions": {
+				"runOn": "folderOpen"
+			}
 		}
 	],
 	// "inputs": [
