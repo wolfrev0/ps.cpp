@@ -39,4 +39,4 @@ template<class T,class U>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}
 #define lam(expr,...) [&](__VA_ARGS__){return expr;}
 #define lamp(expr,...) [](__VA_ARGS__){return expr;}
 
-auto val2cmp(auto val){return [val](auto x, auto y){return mkp(val(x),x)<mkp(val(y),y);};}
+auto key2cmp(auto key){return [key](auto x, auto y){return mkp(key(x),x)<mkp(key(y),y);};}

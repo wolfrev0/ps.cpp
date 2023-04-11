@@ -84,7 +84,7 @@ void solve(){
 	func(Hull,dfs,int x,int p){
 		Hull a;
 		a.sl.push(0);
-		sort(g[x].begin(),g[x].end(),val2cmp([&](pint i){return -sz(g[i.first]);}));
+		sort(g[x].begin(),g[x].end(),key2cmp([&](pint i){return -sz(g[i.first]);}));
 		for(auto [y,w]:g[x]){
 			if(y!=p){
 				auto b=dfs(y,x);
