@@ -3,7 +3,6 @@
 #build <*.cpp|*.h> <R|D>
 
 mkdir -p res
-
 src=${1:-"src/main.cpp"}
 dbgrel=${2:-"D"}
 
@@ -53,7 +52,11 @@ do
 done
 if [[ $need_rebuild > 0 ]]; then
 	echo -e "${CYAN}newly built ($dbgrel)${NONE}"
-	g++ $src $base_arg $option -o $path_out
+	if g++ $src $base_arg $option -o $path_out; then
+		true;
+	else
+		exit 1;
+	fi
 else
 	echo -e "${GREEN}up to date ($dbgrel)${NONE}"
 fi
