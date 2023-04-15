@@ -33,7 +33,7 @@ struct Hash{
 	}
 	void pop_front(Hash x){
 		for(int i=0;i<pn;i++)
-			h[i]-=x.h[i]*pow(p[i],cnt);
+			h[i]-=x.h[i]*pow(p[i],cnt-1);
 		cnt-=x.cnt;
 	}
 
@@ -118,7 +118,7 @@ struct HashSeq{
 	}
 	void pop_front(HashSeq x){
 		for(int i=0;i<pn;i++)
-			h[i]-=x.h[i]*pow(p[i],cnt);
+			h[i]-=x.h[i]*pow(p[i],cnt-1);
 		cnt-=x.cnt;
 	}
 	int size()const{return cnt;}
