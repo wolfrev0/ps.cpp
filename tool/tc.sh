@@ -13,7 +13,7 @@ for i in $input_pattern;
 do
 	answer_pattern=${i%.*}.ans
 	echo "Running "${i%.*}" ("$(( ($succ+$fail)*100/$test_cnt ))"%)"
-	if /usr/bin/time -v diff <($1<$i) $answer_pattern -BZ 2> >(awk '/Elap|Max/') 1> >(head -n 4); then
+	if /usr/bin/time -v diff <($1<$i) $answer_pattern -u -BZ 2> >(awk '/Elap|Max/') 1> >(tail -n +4); then
 		succ=$((succ+1))
 	else
 		fail=$(($fail+1))
