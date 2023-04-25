@@ -5,14 +5,12 @@
 struct Frac {
 	i64 a,b;
 	Frac(i64 a=0,i64 b=1):a(a),b(b) {normalize();}
-	
-	// //호환성때문에 일단 보류
-	// auto operator<=>(const Frac& r)const{
-	// 	// if(is_nan())return strong_ordering::less;
-	// 	// if(r.is_nan())return strong_ordering::greater;
-	// 	assert(!is_nan() and !r.is_nan());
-	// 	return i128(a)*r.b<=>i128(r.a)*b;
-	// }
+	auto operator<=>(const Frac& r)const{
+		// if(is_nan())return strong_ordering::less;
+		// if(r.is_nan())return strong_ordering::greater;
+		assert(!is_nan() and !r.is_nan());
+		return i128(a)*r.b<=>i128(r.a)*b;
+	}
 	
 	Frac operator-()const{return {-a,b};}
 	Frac operator+(const Frac& r)const{return {a*r.b+r.a*b,b*r.b};}

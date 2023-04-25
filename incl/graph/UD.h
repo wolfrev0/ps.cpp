@@ -47,6 +47,7 @@ struct GraphUD: public GraphWD<int>{
 		return ret;
 	}
 
+	// https://www.acmicpc.net/source/59882090
 	tuple<Arr<Arr<int>>, Arr<int>, GraphUD> scc_tarjan() {
 		Arr<Arr<int>> scc;
 		Arr<int> stat(n),ord(n);
@@ -83,35 +84,42 @@ struct GraphUD: public GraphWD<int>{
 		return scc_util(scc);
 	}
 	
-	//지금 동작이 이상함. 고칠때까지 SCC필요하면 scc_tarjan을 사용할것
+	//https://www.acmicpc.net/source/59897682
 	tuple<Arr<Arr<int>>, Arr<int>, GraphUD> scc_kosaraju(){
 		Arr<int> post_ord;
 		Arr<char> vis(n);
-
-		func(void,dfs,int v,Arr<int>& out,GraphWD<int>& g){
-			vis[v]=true;
-			for(auto i:g.adj[v])
-				if(!vis[edg[i].v[1]])
-					dfs(edg[i].v[1], out, g);
-			out.emplace_back(v);
+		func(void,dfs,int x){
+			if(vis[x])return;
+			vis[x]=true;
+			for(auto i:adj[x])
+				dfs(edg[i].v[1]);
+			post_ord.emplace_back(x);
 		};
 		for(int i=0;i<n;i++)
 			if(!vis[i])
-				dfs(i,post_ord,*this);
+				dfs(i);
 		
-		auto rg=inv();
-		reverse(post_ord.begin(),post_ord.end());
+		auto rg=reversed();
 		vis=Arr<char>(n);
 		Arr<Arr<int>> scc;
-		for(auto i:post_ord)
-			if(!vis[i])
-				scc.emplace_back(),dfs(i,scc.back(),rg);
+		func(void,get_scc,int x){
+			if(vis[x]) return;
+			vis[x]=true;
+			for(auto i:rg.adj[x])
+				get_scc(rg.edg[i].v[1]);
+			scc.back().push_back(x);
+		};
+		for(auto i:views::reverse(post_ord))
+			if(!vis[i]){
+				scc.emplace_back();
+				get_scc(i);
+			}
 		return scc_util(scc);
 	}
 
 	//based on https://github.com/ei1333/library/blob/master/graph/others/dominator-tree.hpp
 	Arr<int> domtree(int src){
-		auto rg=inv();
+		auto rg=reversed();
 		Arr<int> r(n),val(n),idom(n,-1),sdom(n,-1),o,p(n),u(n);
 		Arr<Arr<int>> buf(n);
 		iota(r.begin(),r.end(),0),iota(val.begin(),val.end(),0);

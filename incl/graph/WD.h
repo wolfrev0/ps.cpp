@@ -13,7 +13,7 @@ struct GraphWD{
 	};
 	GraphWD(int n):n(n),adj(n){}
 
-	GraphWD<T> inv(){
+	GraphWD<T> reversed(){
 		GraphWD<T> ret(n);
 		for(auto& i:adj)
 			for(auto j:i)
@@ -24,7 +24,7 @@ struct GraphWD{
 		edg.emplace_back(E{{s,e},{sz(adj[e]),sz(adj[s])},sz(edg),w});
 		adj[s].emplace_back(sz(edg)-1);
 	}
-	//dist[]와 inv()로 prv알 수 있음
+	//dist[]와 reversed()로 prv알 수 있음
 	Arr<T> dijkstra(Arr<int> src){
 		Arr<T> d(n,inf<T>());
 		PQ<pair<T,int>,greater<>> pq;
