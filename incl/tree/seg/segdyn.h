@@ -2,10 +2,12 @@
 #include "core/base.h"
 #include "math/struct/monoid.h"
 
-// potential bug in SegDyn (#31)
-template<Monoid Q, int xlo=-inf<signed>(),int xhi=inf<signed>()>
+//example https://www.acmicpc.net/source/59898625
+template<Monoid Q, int _xlo=-inf<signed>(),int _xhi=inf<signed>()>
 struct SegDyn{
 	using T=decltype(Q::id());
+	const static int xlo=_xlo;
+	const static int xhi=_xhi;
 	T v=Q::id();
 	SegDyn *l{},*r{};
 	~SegDyn(){if(l)delete l; if(r)delete r;}

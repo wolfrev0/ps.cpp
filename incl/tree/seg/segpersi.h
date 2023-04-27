@@ -2,8 +2,11 @@
 #include "core/base.h"
 #include "math/struct/monoid.h"
 
-template<Monoid Q,auto fupd,int xlo=0,int xhi=inf<signed>()> struct SegPersi{
+//example https://www.acmicpc.net/source/59898625
+template<Monoid Q,auto fupd,int _xlo=-inf<signed>(),int _xhi=inf<signed>()> struct SegPersi{
 	using T=decltype(Q::id());
+	const static int xlo=_xlo;
+	const static int xhi=_xhi;
 	T v=Q::id();
 	SegPersi *l{},*r{};
 	~SegPersi(){/*double free?*/}
