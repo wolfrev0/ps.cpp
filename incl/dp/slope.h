@@ -31,7 +31,17 @@ private:
 	PQ<int,less<>> pq;
 	int ans=0,bias=0;
 };
-
+// WARNING: To be tested
+struct RightHull{
+	void pf_dec(int x){r.sf_inc(-x);}
+	void sf_inc(int x){r.pf_dec(-x);}
+	void add_bias(int x,int y){r.add_bias(-x,y);}
+	int minval(){return r.minval();}
+	int argmin(){return -r.argmin();}
+	void operator+=(RightHull& a){r+=a.r;}
+	int size()const{return r.size();}
+	LeftHull r;
+};
 //NOTE: f(x)=min{f(x+i),a<i<b}+|x-k|+m -> pf(k)sf(k)ab(-a,b,m)
 struct SlopeTrick{
 	void pf_dec(int x){l.pf_dec(-r.sf_inc(-x));}
