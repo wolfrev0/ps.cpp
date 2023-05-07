@@ -4,7 +4,8 @@
 //Mod객체로 DP할거면 반드시 optional 사용해야함. nan같은거 사용x
 template<int m> struct Mod{
 	static_assert(m<numeric_limits<int>::max()/2);
-	Mod(int n=0):n(n){assert(0<=n && n<m);}
+	// Mod(int n=0):n(n){assert(0<=n && n<m);}
+	Mod(int n=0):n((n%m+m)%m){}
 	explicit operator int()const{return n;}
 	explicit operator bool()const{return !!n;}
 

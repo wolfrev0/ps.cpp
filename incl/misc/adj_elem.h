@@ -13,7 +13,7 @@ pair<Arr<int>,Arr<int>> adj_eq(const Arr<T>& a){
 		}
 		b[a[i]]=i;
 	}
-	return {move(r),move(l)};
+	return {move(l),move(r)};
 }
 
 template<class T, class CMP=less_equal<T>>

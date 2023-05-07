@@ -10,7 +10,8 @@ struct SegDyn{
 	const static int xhi=_xhi;
 	T v=Q::id();
 	SegDyn *l{},*r{};
-	~SegDyn(){if(l)delete l; if(r)delete r;}
+	~SegDyn(){release();}
+	void release(){if(l)delete l,l=0; if(r)delete r,r=0;}
 
 	T upd(int i, T x, int cs=xlo, int ce=xhi){
 		if(ce<=i or i+1<=cs)return v;
