@@ -5,7 +5,6 @@
 //길이처리나 온라인추가 필요하면 직접 짜자(20931)
 template<class M>
 struct SparseTable{
-	using T=M::T;
 	SparseTable(int n,int m):n(n),m(m),dp(ARR(m,n,M::id())){}
 	~SparseTable(){dbg1if(!_build,"SparseTable not builded");}
 	bool _build=false;
@@ -24,5 +23,5 @@ struct SparseTable{
 		return x;
 	}
 	int n,m;
-	Arr<Arr<T>> dp;
+	Arr<Arr<decltype(M::id())>> dp;
 };
