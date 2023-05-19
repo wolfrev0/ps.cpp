@@ -18,8 +18,8 @@ int fdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?a/b:(a-b+1)/b;}
 int cdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?(a+b-1)/b:a/b;}
 i64 flg2(u64 x){return 63-countl_zero(x);}
 i64 clg2(u64 x){return x-1==0?0:64-countl_zero(x-1);}
-int fsqrt(i64 n) {i64 i=0;while(i*i<=n)i++;return i-1;}
-int csqrt(i64 n) {i64 i=0;while(i*i<n)i++;return i;}
+int fsqrt(i64 n) {i64 i=sqrtl(n);while(i*i>n)i--;while(i*i<=n)i++;return i-1;}
+int csqrt(i64 n) {i64 i=sqrtl(n);while(i*i>=n)i--;while(i*i<n)i++;return i;}
 template<class T>T sq(T x){return x*x;}
 template<class T>constexpr T inf(){return numeric_limits<T>::max()/2;}
 template<class T>constexpr T nan(){return numeric_limits<T>::max();}
