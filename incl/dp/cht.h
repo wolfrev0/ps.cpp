@@ -98,10 +98,19 @@ struct CHTSet{
 		if(l!=s.rend())l->rx=z.lx;
 	}
 
-	T q(T x){
+	T q(T x)const{
 		auto it=s.lb(x);
 		return it->tan*x+it->yic;
 	}
+	T qmax(int s,int e)const{
+		while(e-s>2){
+			int m=(s+e)/2;
+			if(q(m)>q(m+1))e=m+1;
+			else s=m;
+		}
+		return max({q(s),q(s+1),q(e)});
+	}
+	int next_cross(int x){ return s.lb(x)->rx; }
 private:
 	set<L,less<>> s;
 };
