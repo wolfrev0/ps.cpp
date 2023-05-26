@@ -33,5 +33,5 @@ pair<Arr<int>,Arr<int>> adj_cmp(const Arr<T>& a){
 			l[stk.top()]=i,stk.pop();
 		stk.push(i);
 	}
-	return {move(r),move(l)};
+	return {move(l),move(r)};
 }

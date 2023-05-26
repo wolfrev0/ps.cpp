@@ -99,7 +99,11 @@
 		"queue": "cpp",
 		"stack": "cpp",
 		"version": "cpp",
-		"semaphore": "cpp"
+		"semaphore": "cpp",
+		"barrier": "cpp",
+		"source_location": "cpp",
+		"latch": "cpp",
+		"syncstream": "cpp"
 	},
 	"editor.tabSize": 2,
 	"editor.detectIndentation": false,
