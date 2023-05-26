@@ -13,6 +13,19 @@ struct SegDyn{
 	~SegDyn(){release();}
 	void release(){if(l)delete l,l=0; if(r)delete r,r=0;}
 
+	void join(SegDyn* o){
+		if(!o)return;
+		v=Q::f(v,o->v);
+		if(l)
+			l->join(o->l);
+		else if(o->l)
+			l=o->l, o->l=nullptr;
+		if(r)
+			r->join(o->r);
+		else if(o->r)
+			r=o->r, o->r=nullptr;
+	}
+
 	T upd(int i, T x, int cs=xlo, int ce=xhi){
 		if(ce<=i or i+1<=cs)return v;
 		if(i<=cs and ce<=i+1)return v=x;
