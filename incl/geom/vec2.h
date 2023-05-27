@@ -53,6 +53,8 @@ template<class T> struct Vec2{
 };
 
 template<typename T>
+istream& operator>>(istream& s,Vec2<T>& v){return s>>v.x>>v.y;}
+template<typename T>
 ostream& operator<<(ostream& s,const Vec2<T>& v){return osprint(s,'(',v.x,',',v.y,')');}
 template<typename T>
 T cross(const Vec2<T>& a,const Vec2<T>& b,const Vec2<T>& c){return a.cross(b,c);}
