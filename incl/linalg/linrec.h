@@ -38,6 +38,7 @@ template<int mod=int(1e9+7)> Arr<int> guess(Arr<int> seq){
 	return c;
 }
 
+// 0-based
 // O(M^2logN). https://codeforces.com/blog/entry/61306 might help to understand.
 // can be improved to O(MlogMlogN). see
 // https://algoshitpo.github.io/2020/05/20/linear-recurrence/

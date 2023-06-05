@@ -41,3 +41,9 @@ template<class T,class U>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}
 #define lamp(expr,...) [](__VA_ARGS__){return expr;}
 
 auto key2cmp(auto key){return [key](auto x, auto y){return mkp(key(x),x)<mkp(key(y),y);};}
+template<class T> Arr<T> apply(const Arr<T>& a, auto f){
+	auto b=a;
+	for(auto&i:b)
+		i=f(i);
+	return b;
+}
