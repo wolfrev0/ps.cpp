@@ -41,7 +41,7 @@ template<class T,class U>bool assmax(T& a,U&& b){return a<b?a=b,true:false;}
 #define lamp(expr,...) [](__VA_ARGS__){return expr;}
 
 auto key2cmp(auto key){return [key](auto x, auto y){return mkp(key(x),x)<mkp(key(y),y);};}
-template<class T> auto apply(auto a, auto f)->remove_reference_t<decltype(a)>{
+auto fmap(auto a, auto f)->remove_reference_t<decltype(a)>{
 	auto b=a;
 	for(auto&i:b)
 		i=f(i);
