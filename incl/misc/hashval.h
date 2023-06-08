@@ -40,11 +40,11 @@ struct Hash{
 	//Set Hash
 	void insert(Hash x){
 		for(int i=0;i<pn;i++)
-			h[i]+=pow(p[i],x.h[i]);
+			h[i]+=pow(p[i],u64(x.h[i]));
 		cnt++;}
 	void erase(Hash x){
 		for(int i=0;i<pn;i++)
-			h[i]-=pow(p[i],x.h[i]);
+			h[i]-=pow(p[i],u64(x.h[i]));
 		cnt--;}
 
 	int size()const{return cnt;}
