@@ -14,21 +14,29 @@ int clg(i64 n,int base=2) {
 	return ret-(rem<=1);
 }
 
-template<class T> T fastpow(T n,int m){
+template<class T> T pow_dnc(T n,int m){
 	if(m==0)return T(1);
-	T z=fastpow(n,m/2);
+	T z=pow_dnc(n,m/2);
 	return z*z*(m%2?n:T(1));
+}
+template<class T> T pow_dp(T n,int m){
+	if(m==0)return T(1);
+	static Arr<optional<T>> dp;
+	dp.resize(max<int>(sz(dp),m+1));
+	auto& r=dp[m];
+	if(r)return r.value();
+	return (r=pow_dp(n,m-1)*n).value();
 }
 
 template<class T> T factorial(int x){
 	if(x<=1)return 1;
 	static Arr<optional<T>> dp;
-	while(dp.size()<=x)
-		dp.push_back(optional<T>());
+	dp.resize(max<int>(sz(dp),x+1));
 	auto& r=dp[x];
 	if(r)return r.value();
 	return (r=factorial<T>(x-1)*x).value();
 }
+
 template<class T> T binomial(int x,int y){
 	if(y<-1 or y>x) return 0;
 	if(y==0 or y==x) return 1;
@@ -36,16 +44,7 @@ template<class T> T binomial(int x,int y){
 		y=x-y;
 	return factorial<T>(x)/(factorial<T>(y)*factorial<T>(x-y));
 }
-template<class T> Arr<T> factorials(int n) {Arr<T> r(n,1);for(int i=1;i<n;i++)r[i]=r[i-1]*i;return r;}
-template<class T,int n,int k> Arr<Arr<T>> binomials(){
-	Arr<Arr<T>> r(n,Arr<T>(k));
-	for(int i=1;i<n;i++){
-		r[i][0]=1;
-		for(int j=1;j<k;j++)
-			r[i][j]=r[i-1][j-1]+r[i-1][j];
-	}
-	return r;
-}
+
 Arr<i64> divisor(i64 n) {
 	Arr<i64> r,s;
 	for(i64 i=1;i*i<=n;i++)
@@ -78,9 +77,6 @@ template<const int m> Mod<m> geom_sum(Mod<m> a,Mod<m> r,int n){
 	if(n==inf<int>())return a/(1-r);
 	return a*(1-r.pow(n+1))/(1-r);
 }
-
-//아래 링크자료 정독하자
-//https://rkm0959.tistory.com/category/PS/PS%20%EC%A0%95%EC%88%98%EB%A1%A0%20%EA%B0%80%EC%9D%B4%EB%93%9C
 
 //<Adjust Formaula>
 // xgcd(a,b)solves ax+by=gcd(a,b)=g
