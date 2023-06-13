@@ -1,8 +1,10 @@
+#!/usr/bin/env bash
 set -e
 mkdir -p build
-
 src=${1:-"src/main.cpp"}
 build_type=${2:-"Debug"}
+
+
 
 #########################
 #   CREATE submit.cpp   #
@@ -26,7 +28,6 @@ function f(){
 awk '//' $(f|tac) | grep -Ev '#include *"|#pragma once' > build/submit.cpp
 cat build/submit.cpp | head -n 11 > build/build0.tmp
 cat build/submit.cpp | tail -n +12 > build/build1.tmp
-
 echo "//[Author]   tuxedcat" > build/submit.cpp
 echo "//[Date]     $(date "+%Y.%m.%d %H:%M:%S %Z")" >> build/submit.cpp
 echo "//[File]     $src" >> build/submit.cpp
@@ -35,7 +36,6 @@ echo "//[Revision] $(git rev-parse HEAD)" >> build/submit.cpp
 # echo "#pragma GCC optimize(\"O3\")" >> build/submit.cpp
 # echo "#pragma GCC target(\"avx2\")" >> build/submit.cpp
 # echo "#define NDEBUG" >> build/submit.cpp
-
 echo "/* ORIGINAL_MAIN_SOURCE" >> build/submit.cpp
 cat $src >> build/submit.cpp
 echo "*/" >> build/submit.cpp
