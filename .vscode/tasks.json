@@ -4,36 +4,36 @@
 		{
 			"label": "Run(Debug)",
 			"type": "shell",
-			"command": "tool/exec.sh ${fileBasenameNoExtension}D",
+			"command": "tool/exec.sh build/${relativeFile}/Debug/ps.cpp",
 			"dependsOn": "Build(Debug)"
 		},
 		{
 			"label": "Run(Release)",
 			"type": "shell",
-			"command": "/usr/bin/time -v tool/exec.sh ${fileBasenameNoExtension}R 2> >(awk '/Elap|Max/')",
+			"command": "/usr/bin/time -v tool/exec.sh build/${relativeFile}/Release/ps.cpp 2> >(awk '/Elap|Max/')",
 			"dependsOn": "Build(Release)"
 		},
 		{
 			"label": "RunAll(Debug)",
 			"type": "shell",
-			"command": "tool/tc.sh res/${fileBasenameNoExtension}D.out",
+			"command": "tool/tc.sh build/${relativeFile}/Debug/ps.cpp",
 			"dependsOn": "Build(Debug)"
 		},
 		{
 			"label": "RunAll(Release)",
 			"type": "shell",
-			"command": "tool/tc.sh res/${fileBasenameNoExtension}R.out",
+			"command": "tool/tc.sh build/${relativeFile}/Release/ps.cpp",
 			"dependsOn": "Build(Release)"
 		},
 		{
 			"label": "Build(Debug)",
 			"type": "shell",
-			"command": "case ${file} in *.cpp) tool/build.sh ${relativeFile} D ;; *) echo '${fileExtname} is unknown' && false ;; esac",
+			"command": "case ${file} in *.cpp) tool/build_cmake.sh ${relativeFile} Debug ;; *) echo '${fileExtname} is unknown' && false ;; esac",
 		},
 		{
 			"label": "Build(Release)",
 			"type": "shell",
-			"command": "case ${file} in *.cpp) tool/build.sh ${relativeFile} R ;; *) echo '${fileExtname} is unknown' && false ;; esac",
+			"command": "case ${file} in *.cpp) tool/build_cmake.sh ${relativeFile} Release ;; *) echo '${fileExtname} is unknown' && false ;; esac",
 		},
 		{
 			"label": "tc_save",
