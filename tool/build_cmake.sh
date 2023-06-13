@@ -48,7 +48,5 @@ cpp -P build/build1.tmp | clang-format -style=Google >> build/submit.cpp
 #   build execution file   #
 ############################
 mkdir -p build/$src/$build_type
-pushd build/$src/$build_type
-cmake ../../../.. -GNinja -DSOURCE_PATH=${src} -DCMAKE_BUILD_TYPE=${build_type}
-cmake --build .
-popd
+cmake -GNinja -Bbuild/$src/$build_type -DSOURCE_PATH=${src} -DCMAKE_BUILD_TYPE=${build_type}
+cmake --build build/$src/$build_type 
