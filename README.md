@@ -11,10 +11,9 @@ Algorithm( and DataStructure) library for problem-solving written in modern c++.
 ``` bash
   git clone https://github.com/tuxedcat/ps.cpp
   cd ps.cpp
-  cp src/tpl.cpp src/main.cpp
   tool/build_cmake.sh src/main.cpp Debug
-  build/src/main.cpp/Debug/ps.cpp.out
   cat build/submit.cpp
+  build/src/main.cpp/Debug/ps.cpp.out
 ```
 
 ## Sample Code
