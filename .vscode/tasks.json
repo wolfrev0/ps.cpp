@@ -4,25 +4,25 @@
 		{
 			"label": "Run(Debug)",
 			"type": "shell",
-			"command": "tool/exec.sh build/${relativeFile}/Debug/ps.cpp",
+			"command": "tool/exec.sh build/${relativeFile}/Debug/ps.cpp.out",
 			"dependsOn": "Build(Debug)"
 		},
 		{
 			"label": "Run(Release)",
 			"type": "shell",
-			"command": "/usr/bin/time -v tool/exec.sh build/${relativeFile}/Release/ps.cpp 2> >(awk '/Elap|Max/')",
+			"command": "/usr/bin/time -v tool/exec.sh build/${relativeFile}/Release/ps.cpp.out 2> >(awk '/Elap|Max/')",
 			"dependsOn": "Build(Release)"
 		},
 		{
 			"label": "RunAll(Debug)",
 			"type": "shell",
-			"command": "tool/tc.sh build/${relativeFile}/Debug/ps.cpp",
+			"command": "tool/tc.sh build/${relativeFile}/Debug/ps.cpp.out",
 			"dependsOn": "Build(Debug)"
 		},
 		{
 			"label": "RunAll(Release)",
 			"type": "shell",
-			"command": "tool/tc.sh build/${relativeFile}/Release/ps.cpp",
+			"command": "tool/tc.sh build/${relativeFile}/Release/ps.cpp.out",
 			"dependsOn": "Build(Release)"
 		},
 		{
