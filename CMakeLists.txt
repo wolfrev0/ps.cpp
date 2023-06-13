@@ -6,44 +6,26 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
 if (DEFINED SOURCE_PATH)
-	set(SOURCES ${SOURCE_PATH})
+	set(SOURCES ${CMAKE_SOURCE_DIR}/${SOURCE_PATH})
 else()
 	message( FATAL_ERROR "You must specify SOURCE_PATH. For example, cmake -DSOURCE_PATH=./main.cpp .." )
 endif()
 
 set(INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/incl)
-
-# set(RESULT_DIR ${CMAKE_BINARY_DIR}/res)
-# file(MAKE_DIRECTORY ${RESULT_DIR})
+include_directories(${INCLUDE_DIRS})
 
 if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Debug)
+	set(CMAKE_BUILD_TYPE Debug)
 endif()
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -iquote ${INCLUDE_DIRS} -DDEBUG=1 -O0 -g -fsanitize=address")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDEBUG=1 -O0 -g fsanitize=address")
 else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -iquote ${INCLUDE_DIRS} -O2")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 endif()
 
-# function(generate_dependency_list source_file output_list)
-#     execute_process(
-#         COMMAND ${CMAKE_CXX_COMPILER} ${source_file} -MM -I${INCLUDE_DIRS}
-#         OUTPUT_VARIABLE dependencies
-#         RESULT_VARIABLE result
-#         ERROR_QUIET
-#     )
-
-#     if (result EQUAL 0)
-#         string(REGEX REPLACE "(^| |\t)([^/\\.\n]*\\.cpp)" "${CMAKE_CURRENT_SOURCE_DIR}/\\2" dependencies "${dependencies}")
-#         string(REGEX REPLACE "[ \\\t]*\\\\[\n \\\t]*" " " dependencies "${dependencies}")
-#         string(REPLACE "\\\n" "" dependencies "${dependencies}")
-#         string(REGEX REPLACE "\n" ";" dependencies "${dependencies}")
-#         set(${output_list} ${dependencies} PARENT_SCOPE)
-#     else()
-#         message(FATAL_ERROR "Failed to generate dependency list for ${source_file}")
-#     endif()
-# endfunction()
+# set(RESULT_DIR ${CMAKE_BINARY_DIR}/res)
+# file(MAKE_DIRECTORY ${RESULT_DIR})
 
 # # Generate the list of source files and their dependencies
 # set(all_sources ${SOURCES})
@@ -52,28 +34,31 @@ endif()
 #     list(APPEND all_sources ${dependencies})
 # endforeach()
 
-set(generated_source ${RESULT_DIR}/submit.cpp)
-add_custom_command(
-		OUTPUT ${generated_source}
-		COMMAND ${CMAKE_CXX_COMPILER} ${SOURCES} -I${INCLUDE_DIRS} -E -C -o ${generated_source}
-		DEPENDS ${all_sources}
-)
+# set(generated_source ${RESULT_DIR}/submit.cpp)
+# add_custom_command(
+# 	OUTPUT ${generated_source}
+# 	COMMAND ${CMAKE_CXX_COMPILER} ${SOURCES} -I${INCLUDE_DIRS} -E -C -o ${generated_source}
+# 	DEPENDS ${all_sources}
+# )
 
-add_custom_target(generate_submit_source DEPENDS ${generated_source})
+# add_custom_target(generate_submit_source DEPENDS ${generated_source})
 
-# Set the properties for generated source file
-set_source_files_properties(${generated_source} PROPERTIES GENERATED TRUE)
+# # Set the properties for generated source file
+# set_source_files_properties(${generated_source} PROPERTIES GENERATED TRUE)
 
-# Copy necessary headers
-file(GLOB_RECURSE headers incl/*.h)
-foreach(header ${headers})
-		add_custom_command(
-				TARGET generate_submit_source
-				COMMAND ${CMAKE_COMMAND} -E copy ${header} ${RESULT_DIR}/
-				DEPENDS ${header}
-		)
-endforeach()
+# # Copy necessary headers
+# file(GLOB_RECURSE headers incl/*.h)
+# foreach(header ${headers})
+# 	add_custom_command(
+# 		TARGET generate_submit_source
+# 		COMMAND ${CMAKE_COMMAND} -E copy ${header} ${RESULT_DIR}/
+# 		DEPENDS ${header}
+# 	)
+# endforeach()
+
+get_filename_component(EXEC_NAME ${SOURCE_PATH} NAME)
+set(EXEC_NAME ${EXEC_NAME}.${CMAKE_BUILD_TYPE})
 
 # Configure the final build target
 # add_executable(${PROJECT_NAME} ${generated_source})
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(${EXEC_NAME} ${SOURCES})
