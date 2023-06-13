@@ -8,7 +8,7 @@
 			"name": "Debug Cpp",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/res/${fileBasenameNoExtension}D.out",
+			"program": "${workspaceFolder}/build/${relativeFile}/Debug/ps.cpp.out",
 			"args": [
 				"<",
 				"test/in"
