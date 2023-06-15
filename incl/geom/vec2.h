@@ -43,11 +43,17 @@ template<class T> struct Vec2{
 	Vec2 rot(double s,double c)const{return{c*x-s*y,s*x+c*y};}
 	Vec2 rot90()const{return {y,-x};}
 	static Vec2 inf(){return{::inf<T>(),::inf<T>()};}
-	static bool cmpccw(const Vec2& l,const Vec2& r,const Vec2& base){
+	static bool cmpccw(const Vec2& base, const Vec2& l,const Vec2& r){
 		T val=base.ccw(l,r);
-		assert(base<=l&&base<=r);
-		//it's because base should be left-bottom element.
-		if(!val)return l<r;
+		// base should be left-bottom or bottom-left.
+		// More precisely, It doesn't matter if base is on convex hull.
+		// If it isn't, for some order a[0]<a[1]<...<a[n-1], a[n-1]<a[0] is also true.
+		// To prevent it, degree of (a[0]-base) to (a[-1]-base) should be less than 180.
+		assert(
+			base<=l&&base<=r or
+			mkp(base.y,base.x)<=mkp(l.y,l.x)&&mkp(base.y,base.x)<=mkp(r.y,r.x));
+		if(!val)
+			return (l-base).lensq()<(r-base).lensq();
 		return val>0;
 	}
 };

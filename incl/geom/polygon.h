@@ -58,7 +58,7 @@ template<class T> struct ConvexPolygon:public Polygon<T>{
 	void normalize(){
 		if(vtx.empty())return;
 		auto me=*min_element(vtx.begin(),vtx.end());
-		sort(vtx.begin(),vtx.end(),lam(Vec2<T>::cmpccw(a,b,me),auto&a,auto&b));
+		sort(vtx.begin(),vtx.end(),lam(Vec2<T>::cmpccw(me,a,b),auto&a,auto&b));
 		Arr<Vec2<T>> res;
 		for(int i=0;i<sz(vtx);i++){
 			while(sz(res)>=2){
