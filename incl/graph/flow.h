@@ -14,7 +14,7 @@ struct FlowW{
 	bool operator==(const FlowW& r)const{return !(cost<r.cost) and !(cost>r.cost);}
 	FlowW operator+(const FlowW& r)const{return cost+r.cost;}
 	FlowW operator/(const FlowW& r)const{return cost/r.cost;}
-	FlowW inf()const{return inf<int>();}
+	FlowW inf()const{return ::inf<int>();}
 };
 
 //이분그래프 최대독립집합 재구성:종만북참고
@@ -100,9 +100,8 @@ struct Flow:public GraphWD<FlowW<T>>{
 
 	pair<T,int> mcmf(int src,int snk,int flow=inf<int>()){
 		func(ARG(pair<T,int>),step,int flow){
-			Arr<W> d;
-			Arr<int> p;
-			if(!spfa_trackone(d,p,src) || p[snk]==-1)
+			auto [d,p]=this->spfa_track({src});
+			if(d[snk]==inf<T>() || p[snk]==-1)
 				return{};
 			int x=snk;
 			for(;x!=src;x=edg[p[x]].opp(x))

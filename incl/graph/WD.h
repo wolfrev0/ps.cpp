@@ -42,7 +42,7 @@ struct GraphWD{
 		}
 		return d;
 	}
-	Arr<T> spfa_trackone(Arr<int> src){
+	Arr<T> spfa(Arr<int> src){
 		deque<int> q;
 		Arr<char> inq(n);
 		Arr<T> d(n,inf<T>());
@@ -76,6 +76,43 @@ struct GraphWD{
 		if(q.size())//failed
 			d.clear();
 		return d;
+	}
+	pair<Arr<T>,Arr<int>> spfa_track(Arr<int> src){
+		deque<int> q;
+		Arr<char> inq(n);
+		Arr<T> d(n,inf<T>());
+		Arr<int> p(n,-1);
+		Arr<int> c(n);
+		for(auto s:src){
+			d[s]=0;
+			inq[s]=true;
+			q.emplace_back(s);
+		}
+		while(sz(q)){
+			int x=q.front(); inq[x]=false, q.pop_front();
+			for(auto i:adj[x]){
+				int y=edg[i].opp(x);
+				auto w=edg[i].w;
+				if(isvalid(edg[i])){
+					if(d[y]>d[x]+w){
+						d[y]=d[x]+w;
+						p[y]=i;
+						if(!inq[y]){
+							inq[y]=true;
+							if(sz(q) && d[y]<d[q.front()])
+								q.emplace_front(y);
+							else
+								q.emplace_back(y);
+							if(++c[y]>n)
+								break;
+						}
+					}
+				}
+			}
+		}
+		if(q.size())//failed
+			d.clear();
+		return {move(d),move(p)};
 	}
 	// //이론상 O(E+VlogV), gccext include필요
 	// void dijkstra_trackone2(Arr<T>& d,Arr<int>& p,int s){
