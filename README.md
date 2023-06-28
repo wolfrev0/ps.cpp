@@ -68,4 +68,3 @@ You can use preset VSCode tasks. For more information, `.vscode/tasks.json`
 ## Limitation
   1. Due to dependancy resolving logic, #include must be located on top of source file.
   2. Don't use Subtyping-Polymorphism. (pslib assume this for simple code)
-  3. <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>
