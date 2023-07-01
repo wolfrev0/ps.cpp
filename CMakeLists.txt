@@ -11,8 +11,7 @@ else()
 	message( FATAL_ERROR "You must specify SOURCE_PATH. For example, cmake -DSOURCE_PATH=./main.cpp .." )
 endif()
 
-set(INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/incl)
-include_directories(${INCLUDE_DIRS})
+include_directories(${CMAKE_SOURCE_DIR}/incl)
 
 if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE Debug)

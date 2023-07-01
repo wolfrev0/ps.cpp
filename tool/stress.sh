@@ -11,6 +11,8 @@ NONE='\033[0m'
 i=0
 
 while $1>test/in && $2<test/in>/tmp/__stress_1.tmp && $3<test/in>/tmp/__stress_2.tmp && diff /tmp/__stress_1.tmp /tmp/__stress_2.tmp -BZ; do
+	# head -n 3 /tmp/__stress_1.tmp
+	# head -n 3 /tmp/__stress_2.tmp
 	echo -e "${GREEN}OK, $((++i)) tests${NONE}"
 done
 echo -e "${RED}FAIL${NONE}"
