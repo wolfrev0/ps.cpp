@@ -18,28 +18,14 @@ signed main(){
 
 //min k: https://atcoder.jp/contests/abc281/submissions/37162839
 void solve(){
-	// int n=10;
-	// Seg<MAdd<int>> st0(n),st1(n);
-	// func(void,add,int x){
-	// 	st0.upd(x,st0.q(x)+1);
-	// 	st1.upd(x,st1.q(x)+x);
-	// };
-	// func(void,del,int x){
-	// 	st0.upd(x,st0.q(x)-1);
-	// 	st1.upd(x,st1.q(x)-x);
-	// };
-	// func(int,qry,int k){
-	// 	int m=st0.liftRL(lam(acc>=k,int acc,int i));
-	// 	return st1.q(m,n)-(st0.q(m,n)-k)*m;
-	// };
-	SegDyn<MAdd<int>,lamp(x+y,int x,int y)> st0,st1;
+	SegDyn<MAdd<int>> st0, st1;
 	func(void,add,int x){
-		st0.upd(x,1);
-		st1.upd(x,x);
+		st0.upd(x,st0.q(x,x+1)+1);
+		st1.upd(x,st1.q(x,x+1)+x);
 	};
 	func(void,del,int x){
-		st0.upd(x,-1);
-		st1.upd(x,-x);
+		st0.upd(x,st0.q(x,x+1)-1);
+		st1.upd(x,st1.q(x,x+1)-x);
 	};
 	func(int,qry,int k){
 		int m=st0.liftRL(lam(acc>=k,int acc,int i));

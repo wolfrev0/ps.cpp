@@ -1,5 +1,5 @@
 #include "core/base.h"
-#include "misc/ordering.h"
+#include "math/struct/ordering.h"
 
 #define endl '\n' // Remove it when interactive
 #define CHECK_INPUT 0
