@@ -1,5 +1,5 @@
 # ps.cpp
-Algorithm( and DataStructure) library for problem-solving written in modern c++. It resolves all header file dependancies and merge them into one file(build/sumit.cpp). It is header-only library.
+General-purpose header-only modern c++(20+) library with rich algorithm and data structure implementations. It's useful for problem-solving, but not limited to it.  
 
 ## Interface
   1. [s,e) half opened range
@@ -7,12 +7,12 @@ Algorithm( and DataStructure) library for problem-solving written in modern c++.
   3. Support negative index (same as python) (only suppoerted in Arr&lt;T&gt; as of now)
 
 ## Getting Started
-  Requirements: ubuntu(20.04+, fine in wsl), g++(10.3.0+)
+  Requirements: ubuntu(20.04+), g++(10.3.0+)
 ``` bash
   git clone https://github.com/tuxedcat/ps.cpp
   cd ps.cpp
   tool/build_cmake.sh src/sample/helloworld.cpp Debug
-  cat build/submit.cpp
+  cat build/submit.cpp #It resolves all header file dependancies and merge them into build/sumit.cpp
   build/src/sample/helloworld.cpp/Debug/ps.cpp.out
 ```
 
