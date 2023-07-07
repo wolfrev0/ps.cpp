@@ -1,5 +1,5 @@
 # ps.cpp
-General-purpose header-only modern c++(20+) library with rich algorithm and data structure implementations. It's useful for solving algorithmic problems, but not limited to it.
+General-purpose header-only modern c++(20+) library with well-abstracted algorithm and data structure implementations. It's useful for solving algorithmic problems, but not limited to it.
 
 ## Interface
   1. [s,e) half opened range
