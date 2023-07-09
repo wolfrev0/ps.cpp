@@ -36,6 +36,21 @@ template<class T> struct HLD:public RootedTree<T>{
 	}
 	int lca(int a, int b) { int ret; q(a,b,0,&ret); return ret; }
 
+	//O(sz(a)), not tested
+	//https://infossm.github.io/blog/2021/09/21/virtual-tree/
+	Arr<pint> auxiliary_tree(Arr<int> a){
+		sort(a.begin(),a.end(),lam(idx[x]<idx[y],int x,int y));
+		int cnt=sz(a);
+		for(int i=0;i+1<cnt;i++)
+			a.push_back(lca(a[i],a[i+1]));
+		sort(a.begin(),a.end()),a.erase(unique(a.begin(),a.end()),a.end());
+		sort(a.begin(),a.end(),lam(idx[x]<idx[y],int x,int y));
+		Arr<pint> ret;
+		for(int i=0;i+1<sz(a);i++)
+			ret.emplace_back(lca(a[i],a[i+1]),a[i+1]);
+		return ret;
+	}
+
 	Arr<int> c,top,idx;  // chain number, top of the chain, vtx to preidx
 	using RT = RootedTree<T>;using RT::ch;using RT::dpt;using RT::n;using RT::p;using RT::r;using RT::tsz;
 };
