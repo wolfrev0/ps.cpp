@@ -26,4 +26,6 @@ template<class T=int> T input1(istream& is=cin){return get<0>(input<T>());}
 
 template<class T, class U> istream& operator>>(istream& is, pair<T,U>& a){ return is>>a.fi>>a.se; }
 template<class... T> istream& operator>>(istream& is, tuple<T...>& a){ a=input<T...>(); return is; }
+#else
+template<class T=int> T input1(istream& is=cin){T x; cin>> x; return x;}
 #endif
