@@ -44,6 +44,8 @@ template<class T> struct Polygon{
 		// see jongman book geometry
 		throw 0;
 	}
+
+	//TODO: triangulate
 };
 
 template<class T> struct ConvexPolygon:public Polygon<T>{

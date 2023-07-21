@@ -17,6 +17,7 @@ signed main(){
 }
 
 //min k: https://atcoder.jp/contests/abc281/submissions/37162839
+//another method: incl/misc/topk.h
 void solve(){
 	SegDyn<MAdd<int>> st0, st1;
 	func(void,add,int x){
