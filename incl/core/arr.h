@@ -7,7 +7,7 @@
 template<class T, class P=vector<T>>
 struct Arr:public P{
 	Arr(){P::shrink_to_fit();}
-	explicit Arr(signed n):P(n){}
+	explicit Arr(signed n):P(n,T()){}
 	explicit Arr(signed n,T init):P(n,init){}
 	Arr(initializer_list<T>il):P(il){}
 	Arr(auto its, auto ite):P(its,ite){}

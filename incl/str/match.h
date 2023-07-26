@@ -30,7 +30,7 @@ template<class T> Arr<int> kmp(const Str<T> &s, const Str<T> &p) {
 //  a[0..e-s)==a[s,e) => a[i-s,e-s)==a[i,e) => z[i]>=z[i-s]
 //  if(z[i-s] <= e-i) z[i]=z[i-s]
 //  else z[i]=z[i-s] && naive start from e
-template<class T> Arr<int> z(const Str<T> &a) {
+template<class T> Arr<int> z_table(const Str<T> &a) {
 	Arr<int> z(sz(a));
 	z[0]=sz(a);
 	int s=0,e=1;
@@ -46,7 +46,7 @@ template<class T> Arr<int> z(const Str<T> &a) {
 }
 
 //z[i]=match length start from i
-template<class T> Arr<int> z(const Str<T> &s, const Str<T>& p) {
-	auto za=z(p+"|"+s);
-	return {za.begin()+sz(p)+1,za.end()};
+template<class T> Arr<int> z_match(const Str<T> &s, const Str<T>& p) {
+	auto zt=z_table(p+Str<T>(1,inf<T>()*2)+s);
+	return {zt.begin()+sz(p)+1,zt.end()};
 }
