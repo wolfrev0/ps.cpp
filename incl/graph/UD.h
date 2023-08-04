@@ -24,6 +24,8 @@ struct GraphUD: public GraphWD<int>{
 				if(!--in[edg[i].v[1]])
 					q.push(edg[i].v[1]);
 		}
+		if(sz(ret)<n)
+			ret.clear();
 		return ret;
 	}
 
