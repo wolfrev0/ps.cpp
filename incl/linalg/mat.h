@@ -7,10 +7,7 @@
 template<class T,int _n,int _m> struct Mat{
 	static constexpr int n=_n,m=_m;
 	array<array<T,m>,n> a;
-	Mat(bool one=false){
-		if(!one)return;
-		for(int i=0;i<min(n,m);i++)a[i][i]=1;
-	}
+	Mat(){}
 	Mat(initializer_list<int> li):Mat(){
 		auto it=li.begin();
 		for(int i=0;i<n;i++)for(int j=0;j<m;j++)a[i][j]=*it++;
@@ -40,7 +37,6 @@ template<class T,int _n,int _m> struct Mat{
 		return ret;
 	}
 	auto inv(){
-		if(n!=m)throw "No MatInv";
 		static_assert(n==m);
 		Mat<T,n,n*2> tmp;
 		for(int i=0;i<n;i++)
@@ -87,7 +83,7 @@ private:
 	int rank=-1;
 };
 
-template<typename T,int n,int m> ostream& operator<<(ostream& s, const Mat<T,n,m>& mat) {
+template<typename T,int n,int M> ostream& operator<<(ostream& s, const Mat<T,n,M>& mat) {
 	for(int i=0;i<mat.n;i++,osprint(s,'\n'))
 		for(int j=0;j<mat.m;j++)
 			osprint(s,mat.a[i][j],' ');

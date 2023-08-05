@@ -4,6 +4,7 @@
 #if !(DEBUG)
 	#pragma GCC optimize ("Ofast")
 #endif
+//https://www.acmicpc.net/submit/9254/64632328
 template<class T> struct MatDyn{
 	int n, m;
 	Arr<Arr<T>> a;
@@ -40,7 +41,6 @@ template<class T> struct MatDyn{
 	}
 	MatDyn<T> inv(){
 		if(n!=m)throw "No MatDynInv";
-		assert(n==m);
 		MatDyn<T> tmp(n,n*2);
 		for(int i=0;i<n;i++)
 			for(int j=0;j<n;j++)
