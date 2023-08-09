@@ -107,21 +107,6 @@ struct Bitset{
 	Bitset& operator>>=(int k){return shiftR(k);}
 	Bitset operator|(const Bitset& r){return Bitset(*this).or_bitwise(r);}
 	Bitset& operator|=(const Bitset& r){return or_bitwise(r);}
-	
-	Bitset& or_shiftR(int k){// b|=b<<k
-		int i=sz(a)-1;
-		int q=k/64, r=k%64;
-		if(r==0){
-			for(;i-q>=0;i--)
-				a[i] = a[i-q];
-		}else{
-			for(;i-q-1>=0;i--)
-				a[i] |= a[i-q]<<r | a[i-q-1]>>(64-r);
-			if(i-q>=0)
-				a[i] |= a[i-q]<<r;
-		}
-		return *this;
-	}
 };
 
 ostream& operator<<(ostream&os, const Bitset& b){
