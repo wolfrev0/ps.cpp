@@ -14,6 +14,12 @@
 			"dependsOn": "Build(Release)"
 		},
 		{
+			"label": "Run(Profile)",
+			"type": "shell",
+			"command": "tool/exec.sh build/${relativeFile}/Profile/ps.cpp.out && gprof build/${relativeFile}/Profile/ps.cpp.out gmon.out > gprof.txt 2> >(awk '/Elap|Max/')",
+			"dependsOn": "Build(Profile)"
+		},
+		{
 			"label": "RunAll(Debug)",
 			"type": "shell",
 			"command": "tool/tc.sh build/${relativeFile}/Debug/ps.cpp.out",
@@ -34,6 +40,11 @@
 			"label": "Build(Release)",
 			"type": "shell",
 			"command": "case ${file} in *.cpp) tool/build_cmake.sh ${relativeFile} Release ;; *) echo '${fileExtname} is unknown' && false ;; esac",
+		},
+		{
+			"label": "Build(Profile)",
+			"type": "shell",
+			"command": "case ${file} in *.cpp) tool/build_cmake.sh ${relativeFile} Profile ;; *) echo '${fileExtname} is unknown' && false ;; esac",
 		},
 		{
 			"label": "tc_save",
