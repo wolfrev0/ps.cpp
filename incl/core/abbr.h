@@ -8,7 +8,6 @@
 #define mkt make_tuple
 #define lb lower_bound
 #define ub upper_bound
-#define bs binary_search
 #define itos to_string
 #define head(x) (x.begin())
 #define tail(x) prev(x.end())

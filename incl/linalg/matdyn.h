@@ -4,7 +4,8 @@
 #if !(DEBUG)
 	#pragma GCC optimize ("Ofast")
 #endif
-//https://www.acmicpc.net/submit/9254/64632328
+//https://www.acmicpc.net/source/64632660
+//https://www.acmicpc.net/source/64632328
 template<class T> struct MatDyn{
 	int n, m;
 	Arr<Arr<T>> a;
