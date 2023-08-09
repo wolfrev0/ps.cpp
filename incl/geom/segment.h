@@ -10,17 +10,17 @@ template<class T> struct Segment:public Line<T>{
 		s(min(s.x,e.x),min(s.y,e.y)),
 		e(max(s.x,e.x),max(s.y,e.y)){}
 	
+	fp len()const{return (s-e).len();}
+	bool contains(Vec2<T> v)const{return Line<T>::contains(v) and boxed({s,e},v);}
 	Vec2<T> intersect(const Segment& r)const{
 		auto ret=Line<T>::intersect(r);
 		if(!boxed({s,e},ret))
 			throw "No cross";
 		return ret;
 	}
-	bool contains(Vec2<T> v)const{return Line<T>::contains(v) and boxed({s,e},v);}
-	fp len()const{return (s-e).len();}
-
 	//https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
-	bool isCross(Vec2<T> p1,Vec2<T> q1,Vec2<T> p2,Vec2<T> q2){
+	bool isIntersect(const Segment& r)const{
+		auto p1=s, q1=e, p2=r.s, q2=r.e;
 		T o1=cross(p1,q1,p2);
 		T o2=cross(p1,q1,q2);
 		T o3=cross(p2,q2,p1);
