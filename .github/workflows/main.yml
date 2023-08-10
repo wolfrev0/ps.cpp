@@ -13,4 +13,5 @@ jobs:
       - name: compile test
         run: |
           sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 20
+          sudo apt install ninja-build
           tool/compile.sh
