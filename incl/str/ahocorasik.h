@@ -1,8 +1,7 @@
 #pragma once
 #include "core/base.h"
 
-// #pragma GCC diagnostic push
-// #pragma GCC diagnostic ignored "-Wparentheses"
+// https://www.acmicpc.net/source/64889705
 template<int m=26> struct AhoCorasick{
 	struct Node{
 		//parent_link, suffix_link, output_link, successor
@@ -56,7 +55,6 @@ template<int m=26> struct AhoCorasick{
 		return a[idx].o=get_olink(get_slink(idx));
 	}
 };
-// #pragma GCC diagnostic pop
 
 // Memory Optimized AhoCorasick
 // Time:O(26N)
