@@ -83,30 +83,29 @@ template<class T> Arr<int> get_lcp(const Str<T> &s, const Arr<int> &sa) {
 template<signed m>
 struct SuffixAutomaton{
 	struct Node{
-		signed len, link;
-		array<signed,m> next;
+		signed len, link, succ[m];
 		Node(signed len, signed link):
 			len(len),
 			link(link){
-			fill(next.begin(),next.end(),-1);
+			memset(succ,0xff,sizeof succ);
 		}
 	};
 	Arr<Node> a;
 	signed last=0;
 	SuffixAutomaton():a(1,Node(0,-1)){}
-	signed& transition(signed from, signed c){
-		return a[from].next[c];
+	signed& get_succ(signed from, signed c){
+		return a[from].succ[c];
 	}
 	void add(signed c){
 		a.emplace_back(a[last].len+1,0);
 		int cur=sz(a)-1;
 		int p=last;
-		while(p!=-1 and transition(p,c)==-1){
-			transition(p,c)=cur;
+		while(p!=-1 and get_succ(p,c)==-1){
+			get_succ(p,c)=cur;
 			p=a[p].link;
 		}
 		if(p!=-1){
-			int q=transition(p,c);
+			int q=get_succ(p,c);
 			if(a[p].len+1==a[q].len){
 				a[cur].link=q;
 			}else{
@@ -114,8 +113,8 @@ struct SuffixAutomaton{
 				a.emplace_back(a[q]);
 				a[r].len=a[p].len+1;
 				a[cur].link=a[q].link=r;
-				while(p!=-1 and transition(p,c)==q){
-					transition(p,c)=r;
+				while(p!=-1 and get_succ(p,c)==q){
+					get_succ(p,c)=r;
 					p=a[p].link;
 				}
 			}
@@ -126,16 +125,16 @@ struct SuffixAutomaton{
 // Memory Optimized SuffixAutomaton
 // Time:O(26N)
 // Memory:O(N)
-// for(int i=0;i<26;i++)transition(x,i)
+// for(int i=0;i<26;i++)get_succ(x,i)
 // 이렇게 쓰면 26개 다 생겨서 도루묵이므로
-// for(auto [x,y]:sa.a[x].next)transition(x,i)
+// for(auto [x,y]:sa.a[x].succ)get_succ(x,i)
 // 이렇게 쓰자
 // https://www.acmicpc.net/source/64612686
 template<signed m>
 struct SuffixAutomaton2{
 	struct Node{
 		signed len, link;
-		Arr<pair<signed,signed>> next;
+		Arr<pair<signed,signed>> succ;
 		Node(signed len, signed link):
 			len(len),
 			link(link){
@@ -144,22 +143,22 @@ struct SuffixAutomaton2{
 	Arr<Node> a;
 	signed last=0;
 	SuffixAutomaton2():a(1,Node(0,-1)){}
-	signed& transition(signed from, signed c){
-		for(auto& [x,y]:a[from].next)
-			if(x==c)
+	signed& get_succ(signed from, signed ch){
+		for(auto& [x,y]:a[from].succ)
+			if(x==ch)
 				return y;
-		return a[from].next.emplace_back(c,-1).se;
+		return a[from].succ.emplace_back(ch,-1).se;
 	}
-	void add(signed c){
+	void add(signed ch){
 		a.emplace_back(a[last].len+1,0);
 		int cur=sz(a)-1;
 		int p=last;
-		while(p!=-1 and transition(p,c)==-1){
-			transition(p,c)=cur;
+		while(p!=-1 and get_succ(p,ch)==-1){
+			get_succ(p,ch)=cur;
 			p=a[p].link;
 		}
 		if(p!=-1){
-			int q=transition(p,c);
+			int q=get_succ(p,ch);
 			if(a[p].len+1==a[q].len){
 				a[cur].link=q;
 			}else{
@@ -167,8 +166,8 @@ struct SuffixAutomaton2{
 				a.emplace_back(a[q]);
 				a[r].len=a[p].len+1;
 				a[cur].link=a[q].link=r;
-				while(p!=-1 and transition(p,c)==q){
-					transition(p,c)=r;
+				while(p!=-1 and get_succ(p,ch)==q){
+					get_succ(p,ch)=r;
 					p=a[p].link;
 				}
 			}
