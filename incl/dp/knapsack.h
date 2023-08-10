@@ -17,7 +17,7 @@ Bitset subset_sum_dyn(const Arr<int>& wa){
 	int wsum=reduce(wa.begin(),wa.end());
 	Arr<pint> a;
 	for(const auto& [k,v]:classify(wa)){
-		int cnt=sz(v);
+		u64 cnt=sz(v);
 		for(int i=0;cnt>=(1ull<<i);i++){
 			cnt-=(1ull<<i);
 			a.emplace_back(k,1ull<<i);

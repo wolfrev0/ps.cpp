@@ -11,5 +11,6 @@ do
 	echo '#include "'${i#*incl/}'"' >> res/_tmp_compile_.cpp
 done
 echo 'signed main(){}' >> res/_tmp_compile_.cpp
-tool/build.sh res/_tmp_compile_.cpp D
-tool/build.sh res/_tmp_compile_.cpp R
+tool/build_cmake.sh res/_tmp_compile_.cpp Debug
+tool/build_cmake.sh res/_tmp_compile_.cpp Release
+tool/build_cmake.sh res/_tmp_compile_.cpp Profile
