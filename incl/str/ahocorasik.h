@@ -114,3 +114,7 @@ template<int m=26> struct AhoCorasick2{
 		return a[idx].o=get_olink(get_slink(idx));
 	}
 };
+
+// incremental
+// https://se.inf.ethz.ch/~meyer/publications/string/string_matching.pdf
+// https://codeforces.com/blog/entry/10725
