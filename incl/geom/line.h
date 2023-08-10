@@ -14,16 +14,16 @@ template<class T>
 struct Line{
 	//ax+by+c=0
 	T a,b,c;
-	Line(T a,T b,T c):a(a),b(b),c(c){*this=normalized();}
-	Line(Vec2<T> a,Vec2<T> b):Line(a.y-b.y,b.x-a.x,-a.y*(b.x-a.x)+a.x*(b.y-a.y)){}
-	Line(Vec2<T> tangent, Vec2<T> pt, void* dummy_param):Line(pt,mkp(pt.x+tangent.x,pt.y-tangent.y)){}
-	Line normalized(){
+	Line(T a,T b,T c):a(a),b(b),c(c){normalize();}
+	Line(Vec2<T> a,Vec2<T> b):Line(a.y-b.y,b.x-a.x,-a.y*(b.x-a.x)+a.x*(b.y-a.y)){normalize();}
+	Line(T tangent,T yic):Line({0,yic},{0+1,yic+tangent}){normalize();}
+	void normalize(){
 		int g=gcd(gcd(a,b),c);
 		if(mkt(a/g,b/g,c/g)>mkt(-a/g,-b/g,-c/g))
 			g*=-1;//더 작은쪽으로 부호 설정
-		return {a/g,b/g,c/g};
+		a/=g,b/=g,c/=g;
 	}
-	bool operator==(const Line&r)const{return mkt(a,b,c)==mkt(r.a,r.b,r.c) or mkt(-a,-b,-c)==mkt(r.a,r.b,r.c);}
+	friend strong_ordering operator<=>(const Line&, const Line&)=default;
 	bool operator<(const Line& r)const{return mkt(a,b,c)<mkt(r.a,r.b,r.c);}
 	T tan()const{return -a/b;}
 	T calcY(int x)const{return (-a*x-c)/b;}
