@@ -14,8 +14,8 @@
 #else
 	template<class T>int sz(const T& x){return x.size();}
 #endif
-int fdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?a/b:(a-b+1)/b;}
-int cdiv(int a,int b){if(b<0)a=-a,b=-b;return (a>0)?(a+b-1)/b:a/b;}
+int fdiv(int a,int b){return a/b-((a^b)<0&&a%b);}
+int cdiv(int a,int b){return (a^b>0)?(a+b-1)/b:a/b;}
 i64 flg2(u64 x){return 63-countl_zero(x);}
 i64 clg2(u64 x){return x-1==0?0:64-countl_zero(x-1);}
 int fsqrt(i64 n) {i64 i=sqrtl(n);while(i*i>n)i--;while(i*i<=n)i++;return i-1;}
