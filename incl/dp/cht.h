@@ -3,7 +3,9 @@
 #include "geom/line.h"
 #include "misc/i128.h"
 
-//max(lower convex envelope), increasing tangent, increasing x query
+// if max, increasing tangent, increasing x query
+// if min, decreasing tangent, increasing x query
+template<bool isMin>
 struct CHTint{
 	Arr<Line<i64>> stk;
 	//3x3 determinant로 교점안구하고 cht가능
@@ -14,8 +16,11 @@ struct CHTint{
 			-(i128)x.c*y.b*z.a-(i128)x.b*y.a*z.c-(i128)x.a*y.c*z.b;
 	}
 	void add(Line<i64> a){
-		assert(stk.empty() or stk.back().tan()<=a.tan());
-		while(sz(stk)>=2 and det(stk[-2],stk[-1],a)>=0)
+		if constexpr(isMin)
+			assert(stk.empty() or stk.back().tan()>=a.tan());
+		else
+			assert(stk.empty() or stk.back().tan()<=a.tan());
+		while(sz(stk)>=2 and det(stk[-2],stk[-1],a)*(isMin?-1:1)>=0)
 			stk.pop_back();
 		if(sz(stk)and stk.back().tan()==a.tan()){
 			if(stk.back().calcY(0)<a.calcY(0))
