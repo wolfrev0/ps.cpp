@@ -3,11 +3,11 @@
 #include "math/struct/monoid.h"
 
 //example https://www.acmicpc.net/source/59898625
-template<Monoid Q, int _xlo=-inf<signed>(),int _xhi=inf<signed>()>
+template<Monoid Q>
 struct SegDyn{
 	using T=decltype(Q::id());
-	const static int xlo=_xlo;
-	const static int xhi=_xhi;
+	const static int xlo=-inf<signed>();
+	const static int xhi=inf<signed>();
 	T v=Q::id();
 	SegDyn *l{},*r{};
 	~SegDyn(){release();}

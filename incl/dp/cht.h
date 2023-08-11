@@ -56,10 +56,10 @@ struct CHTint{
 template<typename T> concept LiChaoType=requires(T t){
 	t(1);
 };
-template<LiChaoType T, class I, auto id, auto cmp>
+template<LiChaoType T, auto id, auto cmp>
 struct LiChao{
 	static constexpr fp eps=1.1;
-	static constexpr I xlo=-inf<int>(), xhi=inf<int>();
+	static constexpr int xlo=-inf<int>(), xhi=inf<int>();
 	struct Node{
 		T v;
 		signed l=-1, r=-1;
@@ -67,33 +67,99 @@ struct LiChao{
 	};
 	Arr<Node> a={Node()};
 	void add(T x){add(0, xlo, xhi, x);}
-	void add(signed idx, I cs, I ce, T x){
+	signed add(signed idx, int cs, int ce, T x){
+		if(idx==-1){
+			a.emplace_back(x);
+			return sz(a)-1;
+		}
 		if(ce-cs<=eps){
 			if(cmp(a[idx].v,x,cs))
 				a[idx].v=x;
-			return;
+			return idx;
 		}
-		I cm=(cs+ce)/2;
-		if(a[idx].l==-1)a[idx].l=sz(a),a.emplace_back(a[idx].v);
-		if(a[idx].r==-1)a[idx].r=sz(a),a.emplace_back(a[idx].v);
+		int cm=(cs+ce)/2;
 		T flo=a[idx].v, fhi=x;
 		//x=cs기준 직선의 lo,hi
 		if(!cmp(flo,fhi,cs))
 			swap(flo,fhi);
-		if(cmp(flo,fhi,ce)) a[idx].v=fhi;
-		else if(cmp(flo,fhi,cm)) a[idx].v=fhi,add(a[idx].r,cm,ce,flo);
-		else a[idx].v=flo,add(a[idx].l,cs,cm,fhi);
+		if(cmp(flo,fhi,ce)){
+			a[idx].v=fhi;
+		}else if(cmp(flo,fhi,cm)){
+			a[idx].v=fhi;
+			a[idx].r=add(a[idx].r,cm,ce,flo);
+		}else{
+			a[idx].v=flo;
+			a[idx].l=add(a[idx].l,cs,cm,fhi);
+		}
+		return idx;
 		//NOTE: flo를 저장할땐 fhi를 넘기고, fhi를 저장할땐 flo를 넘기는 이유는
 		//나중에 쿼리할때, v에 저장된것은 현재 노드에서 체크하고, 남은건 아래로 내려가서 체크해야 하기 때문.
 		//즉, 쿼리방식을 잘 이해하고 보면 update방식도 쉽게 이해할 수 있다.
 		//이부분이 제일 이해하기 tricky한 부분인거같다.
 	}
 
-	T q(I x){return q(0,xlo,xhi,x);}
-	T q(signed idx, I cs, I ce, I x){
+	T q(int x){return q(0,xlo,xhi,x);}
+	T q(signed idx, int cs, int ce, int x){
 		if(idx<0 or idx>=sz(a))
 			return id();
-		I cm=(cs+ce)/2;
+		int cm=(cs+ce)/2;
+		auto ret=a[idx].v;
+		if(x<cm){
+			auto cur = q(a[idx].l,cs,cm,x);
+			if(cmp(ret,cur,x))
+				ret=cur;
+		}else{
+			auto cur = q(a[idx].r,cm,ce,x);
+			if(cmp(ret,cur,x))
+				ret=cur;
+		}
+		return ret;
+	}
+};
+
+template<LiChaoType T, auto id, auto cmp>
+struct LiChaoPersi{
+	static constexpr fp eps=1.1;
+	static constexpr int xlo=-inf<int>(), xhi=inf<int>();
+	struct Node{
+		T v;
+		signed l, r;
+		Node(const T v, signed l, signed r):v(v),l(l),r(r){}
+	};
+	Arr<Node> a;
+	signed alloc(T x=id(), signed l=-1, signed r=-1){
+		a.emplace_back(x,l,r);
+		return sz(a)-1;
+	}
+	signed add(signed idx, T x){return add(idx, xlo, xhi, x);}
+	signed add(signed idx, int cs, int ce, T x){
+		if(idx==-1)
+			return alloc(x);
+		if(ce-cs<=eps)
+			return cmp(a[idx].v,x,cs)?alloc(x):idx;
+		int cm=(cs+ce)/2;
+		T flo=a[idx].v, fhi=x;
+		//x=cs기준 직선의 lo,hi
+		if(!cmp(flo,fhi,cs))
+			swap(flo,fhi);
+		signed ret;
+		if(cmp(flo,fhi,ce)){
+			ret=alloc(fhi,a[idx].l,a[idx].r);
+		}else if(cmp(flo,fhi,cm)){
+			ret=alloc(fhi,a[idx].l,a[idx].r);
+			a[ret].r=add(a[idx].r,cm,ce,flo);
+		}else{
+			ret=alloc(flo,a[idx].l,a[idx].r);
+			a[ret].l=add(a[idx].l,cs,cm,fhi);
+		}
+		return ret;
+	}
+
+	T q(signed idx, int x){return q(idx,xlo,xhi,x);}
+	T q(signed idx, int cs, int ce, int x){
+		if(idx<0 or idx>=sz(a))
+			return id();
+		int cm=(cs+ce)/2;
 		auto ret=a[idx].v;
 		if(x<cm){
 			auto cur = q(a[idx].l,cs,cm,x);

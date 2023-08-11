@@ -3,10 +3,10 @@
 #include "math/struct/monoid.h"
 
 //example https://www.acmicpc.net/source/59898625
-template<Monoid Q,auto fupd,int _xlo=-inf<signed>(),int _xhi=inf<signed>()> struct SegPersi{
+template<Monoid Q,auto fupd> struct SegPersi{
 	using T=decltype(Q::id());
-	const static int xlo=_xlo;
-	const static int xhi=_xhi;
+	const static int xlo=-inf<signed>();
+	const static int xhi=inf<signed>();
 	T v=Q::id();
 	SegPersi *l{},*r{};
 	~SegPersi(){/*double free?*/}
