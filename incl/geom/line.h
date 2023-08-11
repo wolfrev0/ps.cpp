@@ -18,13 +18,16 @@ struct Line{
 	Line(Vec2<T> a,Vec2<T> b):Line(a.y-b.y,b.x-a.x,-a.y*(b.x-a.x)+a.x*(b.y-a.y)){normalize();}
 	Line(T tangent,T yic):Line({0,yic},{0+1,yic+tangent}){normalize();}
 	void normalize(){
-		int g=gcd(gcd(a,b),c);
-		if(mkt(a/g,b/g,c/g)>mkt(-a/g,-b/g,-c/g))
-			g*=-1;//더 작은쪽으로 부호 설정
-		a/=g,b/=g,c/=g;
+		if constexpr(is_integral_v<T>){
+			int g=gcd(gcd(a,b),c);
+			if(mkt(a/g,b/g,c/g)>mkt(-a/g,-b/g,-c/g))
+				g*=-1;//더 작은쪽으로 부호 설정
+			a/=g,b/=g,c/=g;
+		}
 	}
 	friend strong_ordering operator<=>(const Line&, const Line&)=default;
 	bool operator<(const Line& r)const{return mkt(a,b,c)<mkt(r.a,r.b,r.c);}
+	T operator()(T x)const{return (a*x+c)/-b;}
 	T tan()const{return -a/b;}
 	T calcY(int x)const{return (-a*x-c)/b;}
 	T calcX(int y)const{return (-b*y-c)/a;}

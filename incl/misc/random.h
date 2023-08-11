@@ -13,5 +13,5 @@ mt19937_64 _rng(__RANDOM_SEED);
 int rd(){static uniform_int_distribution<int> dist(0,inf<int>());return dist(_rng);}
 int rd(int e){return rd()%e;}
 int rd(int s,int e){return rd()%(e-s)+s;}
-fp rdf(){static uniform_real_distribution<fp> dist(0,1);return dist(_rng);}
+double rdf(){static uniform_real_distribution<double> dist(0,1);return dist(_rng);}
 void shuffle(auto is,auto ie){shuffle(is,ie,_rng);}

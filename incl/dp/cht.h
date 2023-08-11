@@ -1,5 +1,4 @@
 #pragma once
-
 #include "geom/line.h"
 #include "misc/i128.h"
 
@@ -38,5 +37,66 @@ struct CHTint{
 			i++;
 		};
 		return stk[i].calcY(x);
+	}
+};
+
+
+
+//Between for any of two different function, the number of intersection is no more than 1.
+//T: callable data type, Line<long double> recommended
+//T id(): identity element of T
+//bool cmp(T l, T r, fp x): Node will choose larger one by comparing l(x) and r(x).
+//max lichao: id=Line(0,-inf), cmp(l,r,x)=l(x)<r(x)
+//min lichao: id=Line(0,inf), cmp(l,r,x)=r(x)<l(x)
+//https://www.acmicpc.net/source/64946053
+//https://www.acmicpc.net/source/64946135
+template<typename T> concept LiChaoType=requires(T t){
+	t(1);
+};
+template<LiChaoType T, auto id, auto cmp>
+struct LiChao{
+	static constexpr fp eps=1e-0;
+	static constexpr int xlo=-inf<int>(), xhi=inf<int>();
+	struct Node{
+		T v;
+		signed l=-1, r=-1;
+		Node(const T v=id()):v(v){}
+	};
+	Arr<Node> a={Node()};
+	void add(T x){add(0, xlo, xhi, x);}
+	void add(signed idx, fp cs, fp ce, T x){
+		if(ce-cs<eps)return;
+		fp cm=(cs+ce)/2;
+		if(a[idx].l==-1)a[idx].l=sz(a),a.emplace_back(a[idx].v);
+		if(a[idx].r==-1)a[idx].r=sz(a),a.emplace_back(a[idx].v);
+		T flo=a[idx].v, fhi=x;
+		//x=cs기준 직선의 lo,hi
+		if(!cmp(flo,fhi,cs))
+			swap(flo,fhi);
+		if(cmp(flo,fhi,ce)) a[idx].v=fhi;
+		else if(cmp(flo,fhi,cm)) a[idx].v=fhi,add(a[idx].r,cm,ce,flo);
+		else a[idx].v=flo,add(a[idx].l,cs,cm,fhi);
+		//NOTE: flo를 저장할땐 fhi를 넘기고, fhi를 저장할땐 flo를 넘기는 이유는
+		//나중에 쿼리할때, v에 저장된것은 현재 노드에서 체크하고, 남은건 아래로 내려가서 체크해야 하기 때문.
+		//즉, 쿼리방식을 잘 이해하고 보면 update방식도 쉽게 이해할 수 있다.
+		//이부분이 제일 이해하기 tricky한 부분인거같다.
+	}
+
+	T q(fp x){return q(0,xlo,xhi,x);}
+	T q(signed idx, fp cs, fp ce, fp x){
+		if(idx<0 or idx>=sz(a))
+			return id();
+		fp cm=(cs+ce)/2;
+		auto ret=a[idx].v;
+		if(x<cm){
+			auto cur = q(a[idx].l,cs,cm,x);
+			if(cmp(ret,cur,x))
+				ret=cur;
+		}else{
+			auto cur = q(a[idx].r,cm,ce,x);
+			if(cmp(ret,cur,x))
+				ret=cur;
+		}
+		return ret;
 	}
 };
