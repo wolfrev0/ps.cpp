@@ -48,15 +48,18 @@ struct CHTint{
 //bool cmp(T l, T r, fp x): Node will choose larger one by comparing l(x) and r(x).
 //max lichao: id=Line(0,-inf), cmp(l,r,x)=l(x)<r(x)
 //min lichao: id=Line(0,inf), cmp(l,r,x)=r(x)<l(x)
-//https://www.acmicpc.net/source/64946053
-//https://www.acmicpc.net/source/64946135
+
+// NOTE: Integer lichao is bad idea. It requires i128 in most cases and perform bad.
+// 반평면땅따먹기(12795)는 i128로 풀수도 없음. 아래는 나무자르기(13263)결과
+// i128(664ms): https://www.acmicpc.net/source/64946225
+// long double(212ms): https://www.acmicpc.net/source/64946268
 template<typename T> concept LiChaoType=requires(T t){
 	t(1);
 };
-template<LiChaoType T, auto id, auto cmp>
+template<LiChaoType T, class I, auto id, auto cmp>
 struct LiChao{
-	static constexpr fp eps=1e-0;
-	static constexpr int xlo=-inf<int>(), xhi=inf<int>();
+	static constexpr fp eps=1.1;
+	static constexpr I xlo=-inf<int>(), xhi=inf<int>();
 	struct Node{
 		T v;
 		signed l=-1, r=-1;
@@ -64,9 +67,13 @@ struct LiChao{
 	};
 	Arr<Node> a={Node()};
 	void add(T x){add(0, xlo, xhi, x);}
-	void add(signed idx, fp cs, fp ce, T x){
-		if(ce-cs<eps)return;
-		fp cm=(cs+ce)/2;
+	void add(signed idx, I cs, I ce, T x){
+		if(ce-cs<=eps){
+			if(cmp(a[idx].v,x,cs))
+				a[idx].v=x;
+			return;
+		}
+		I cm=(cs+ce)/2;
 		if(a[idx].l==-1)a[idx].l=sz(a),a.emplace_back(a[idx].v);
 		if(a[idx].r==-1)a[idx].r=sz(a),a.emplace_back(a[idx].v);
 		T flo=a[idx].v, fhi=x;
@@ -82,11 +89,11 @@ struct LiChao{
 		//이부분이 제일 이해하기 tricky한 부분인거같다.
 	}
 
-	T q(fp x){return q(0,xlo,xhi,x);}
-	T q(signed idx, fp cs, fp ce, fp x){
+	T q(I x){return q(0,xlo,xhi,x);}
+	T q(signed idx, I cs, I ce, I x){
 		if(idx<0 or idx>=sz(a))
 			return id();
-		fp cm=(cs+ce)/2;
+		I cm=(cs+ce)/2;
 		auto ret=a[idx].v;
 		if(x<cm){
 			auto cur = q(a[idx].l,cs,cm,x);
