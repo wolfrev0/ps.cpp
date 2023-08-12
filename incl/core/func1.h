@@ -4,16 +4,7 @@
 #include "core/abbr.h"
 
 //Math
-#if !(CPP20)
-	#define countl_zero(x) __builtin_clzll(x)
-	#define popcount(x) __builtin_popcountll(x)
-	#define bit_ceil(x) (1<<clg2(x))
-#endif
-#if CPP20
-	#define sz ssize
-#else
-	template<class T>int sz(const T& x){return x.size();}
-#endif
+#define sz ssize
 int fdiv(int a,int b){return a/b-((a^b)<0&&a%b);}
 int cdiv(int a,int b){return (a^b>0)?(a+b-1)/b:a/b;}
 i64 flg2(u64 x){return 63-countl_zero(x);}
@@ -23,11 +14,9 @@ int csqrt(i64 n) {i64 i=sqrtl(n);while(i*i>=n)i--;while(i*i<n)i++;return i;}
 template<class T>T sq(T x){return x*x;}
 template<class T>constexpr T inf(){return numeric_limits<T>::max()/2;}
 template<class T>constexpr T nan(){return numeric_limits<T>::max();}
-#if CPP20
 template<typename T> concept MemberInf=requires(T t){t.inf();};
 template<typename T> concept MemberNan=requires(T t){t.nan();};
 template<MemberInf T>T inf(){return T().inf();}
-#endif
 
 //IO & misc
 template<class...A>ostream& osprint(ostream& os, A...a){return ((os<<a),...);}

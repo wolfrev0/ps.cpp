@@ -11,7 +11,6 @@ template<Iterable T> map<typename T::value_type,Arr<int>> classify(const T& a){
 		r[x].push_back(idx++);
 	return r;
 }
-#if CPP20
 template<class T=int,class... Ts> requires InputPrimitive<T>
 tuple<T,Ts...> input(istream& is=cin){
 	T x; is>>x;
@@ -26,6 +25,3 @@ template<class T=int> T input1(istream& is=cin){return get<0>(input<T>());}
 
 template<class T, class U> istream& operator>>(istream& is, pair<T,U>& a){ return is>>a.fi>>a.se; }
 template<class... T> istream& operator>>(istream& is, tuple<T...>& a){ a=input<T...>(); return is; }
-#else
-template<class T=int> T input1(istream& is=cin){T x; cin>> x; return x;}
-#endif

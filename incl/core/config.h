@@ -11,6 +11,4 @@
 using fp=double; //long double,__float128
 #define COUT_FP 10
 #define FP_EPS 1e-11
-
-#define CPP20 1
 #define DBG_SETW 3

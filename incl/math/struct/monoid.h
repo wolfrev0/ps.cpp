@@ -3,16 +3,12 @@
 #include "core/config.h"
 #include "core/arr.h"
 
-#ifdef CPP20
-	template<typename T>
-	concept Monoid=requires(T t){
-		T::f(T::id(),T::id());
-		T::fn(T::id(),0);
-		//T::T;
-	};
-#else
-	#define Monoid class
-#endif
+template<typename T>
+concept Monoid=requires(T t){
+	T::f(T::id(),T::id());
+	T::fn(T::id(),0);
+	//T::T;
+};
 
 template<class T, class M> T fn(T x,int n){
 	//f(...f(f(id,x),x),...,x) n겹 O(log(n))
@@ -61,7 +57,7 @@ template<class T>struct MFunc{
 	static T f(T x,T y){return x.f(y);}
 	static T fn(T x,int n){return ::fn<T,MFunc<T>>(x,n);}
 };
-#ifdef CPP20
+
 // https://codeforces.com/contest/1691/submission/159072343
 // NOTE: non-empty. empty-able일시 max(0,val.m)하면 됨
 struct TMaxSubArr{
@@ -88,4 +84,3 @@ auto scanr(auto s,auto e){
 	reverse(b.begin(),b.end());
 	return b;
 }
-#endif

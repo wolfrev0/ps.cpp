@@ -3,11 +3,7 @@
 
 struct Range{
 	int s,e;
-#if CPP20
 	auto operator<=>(const Range& o)const{ return mkp(s,-e)<=>mkp(o.s,-o.e);}
-#else
-	auto operator<(const Range& o)const{ return mkp(s,-e)<mkp(o.s,-o.e);}
-#endif
 
 	Range operator+(const Range& r)const{return {min(s,r.s),max(e,r.e)};}//union
 	Range operator*(const Range& r)const{return {max(s,r.s),min(e,r.e)};}//join
