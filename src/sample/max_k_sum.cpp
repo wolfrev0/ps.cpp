@@ -29,8 +29,16 @@ void solve(){
 		st1.upd(x,st1.q(x,x+1)-x);
 	};
 	func(int,qry,int k){
-		int m=st0.liftRL(lam(acc>=k,int acc,int i));
+		int m=st0.suffix_search(lam(acc>=k,int acc,int i));
 		return st1.q(m,inf<int>())-(st0.q(m,inf<int>())-k)*m;
+	};
+	//return k that (max k sum) >= sum
+	//https://atcoder.jp/contests/abc314/submissions/44531493
+	func(int,qry_by_sum,int sum){
+		int m=st1.suffix_search(lam(acc>=sum,int acc,int i));
+		int sum_cur=st1.q(0,m,inf<int>());
+		int x=(sum_cur-sum)/m;
+		return st0.q(0,m,inf<int>())-x;
 	};
 	add(3);
 	add(4);
