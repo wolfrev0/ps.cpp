@@ -119,7 +119,6 @@ struct LiChao{
 
 template<LiChaoType T, auto id, auto cmp>
 struct LiChaoPersi{
-	static constexpr fp eps=1.1;
 	static constexpr int xlo=-inf<int>(), xhi=inf<int>();
 	struct Node{
 		T v;
@@ -135,7 +134,7 @@ struct LiChaoPersi{
 	signed add(signed idx, int cs, int ce, T x){
 		if(idx==-1)
 			return alloc(x);
-		if(ce-cs<=eps)
+		if(ce-cs==1)
 			return cmp(a[idx].v,x,cs)?alloc(x):idx;
 		int cm=(cs+ce)/2;
 		T flo=a[idx].v, fhi=x;

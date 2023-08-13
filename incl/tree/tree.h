@@ -61,9 +61,9 @@ private:
 template<class T> struct RootedTree{
 	RootedTree(){}
 
-	RootedTree(const Tree<T>& t,int r,Arr<T> vw={}):n(t.n),r(r),ch(t.n),p(t.n),tsz(t.n),dpt(t.n),cost(t.n){
+	RootedTree(const Tree<T>& t,int r,Arr<T> vw={}):n(t.n),r(r),ch(t.n),p(t.n),tsz(t.n),dpt(t.n),dist(t.n){
 		func(int,rootize,int x,int y,int yw,int d,T c){
-			p[x]={y,yw},dpt[x]=d,cost[x]=c,tsz[x]=1;
+			p[x]={y,yw},dpt[x]=d,dist[x]=c,tsz[x]=1;
 			if(x!=y)ch[y].emplace_back(x,yw);
 			for(auto [i,ew]:t.g[x])
 				if(i!=y){
@@ -93,5 +93,5 @@ template<class T> struct RootedTree{
 	Arr<Arr<pair<int, T>>> ch;
 	Arr<pair<int, T>> p;
 	Arr<int> tsz, dpt;
-	Arr<T> cost;
+	Arr<T> dist;
 };
