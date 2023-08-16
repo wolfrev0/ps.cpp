@@ -2,6 +2,7 @@
 #include "core/base.h"
 
 // https://www.acmicpc.net/source/64889705
+// Time:O(N)~O(mN) since get_ch is O(m)
 template<int m=26> struct AhoCorasick{
 	struct Node{
 		//parent_link, suffix_link, output_link, successor
@@ -27,9 +28,8 @@ template<int m=26> struct AhoCorasick{
 			a[idx].o=idx;
 		}else{
 			if(get_succ(idx,*its)==-1){
-				get_succ(idx,*its)=sz(a);
 				a.emplace_back();
-				a[get_succ(idx,*its)].p=idx;
+				a[get_succ(idx,*its)=sz(a)-1].p=idx;
 			}
 			add(get_succ(idx,*its),its+1,ite);
 		}
@@ -57,7 +57,7 @@ template<int m=26> struct AhoCorasick{
 };
 
 // Memory Optimized AhoCorasick
-// Time:O(26N)
+// Time:O(mN)~O(mmN)
 // Memory:O(N)
 template<int m=26> struct AhoCorasick2{
 	struct Node{
@@ -86,9 +86,8 @@ template<int m=26> struct AhoCorasick2{
 			a[idx].o=idx;
 		}else{
 			if(get_succ(idx,*its)==-1){
-				get_succ(idx,*its)=sz(a);
 				a.emplace_back();
-				a[get_succ(idx,*its)].p=idx;
+				a[get_succ(idx,*its)=sz(a)-1].p=idx;
 			}
 			add(get_succ(idx,*its),its+1,ite);
 		}
