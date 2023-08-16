@@ -5,31 +5,32 @@
 //example https://www.acmicpc.net/source/59898625
 template<Monoid Q,auto fupd> struct SegPersi{
 	using T=decltype(Q::id());
-	const static int xlo=-inf<signed>();
-	const static int xhi=inf<signed>();
-	T v=Q::id();
-	SegPersi *l{},*r{};
-	~SegPersi(){/*double free?*/}
-
-	SegPersi* upd(int i,T x,int cs=xlo,int ce=xhi){
-		if(ce<=i or i+1<=cs) return this;
-		if(i<=cs and ce<=i+1) return new SegPersi{fupd(v,x)};
+	const static int xlo=-inf<int>();
+	const static int xhi=inf<int>();
+	struct Node{
+		T v=Q::id();
+		signed l=-1,r=-1;
+	};
+	Arr<Node> a;
+	signed alloc(T v=Q::id()){a.emplace_back(Node{v});return sz(a)-1;}
+	signed upd(signed ver, int i,T x,int cs=xlo,int ce=xhi){
+		if(ce<=i or i+1<=cs) return ver;
+		if(i<=cs and ce<=i+1) return alloc(fupd(a[ver].v,x));
 		int cm=(cs+ce)/2;
-		if(!l)l=new SegPersi;
-		if(!r)r=new SegPersi;
-		auto ret=new SegPersi;
-		ret->l=l->upd(i,x,cs,cm);
-		ret->r=r->upd(i,x,cm,ce);
-		ret->v=Q::f(ret->l->v,ret->r->v);
+		auto ret=alloc();
+		a[ret].l=upd(a[ver].l,i,x,cs,cm);
+		a[ret].r=upd(a[ver].r,i,x,cm,ce);
+		T lv=Q::id(), rv=Q::id();
+		if(a[ret].l!=-1) lv=a[a[ret].l].v;
+		if(a[ret].r!=-1) rv=a[a[ret].r].v;
+		a[ret].v=Q::f(lv,rv);
 		return ret;
 	}
-	T q(int s,int e, int cs=xlo, int ce=xhi){
-		if(ce<=s or e<=cs)return Q::id();
-		if(s<=cs and ce<=e) return v;
+	T q(signed ver, int s,int e, int cs=xlo, int ce=xhi){
+		if(ver==-1 or ce<=s or e<=cs) return Q::id();
+		if(s<=cs and ce<=e) return a[ver].v;
 		int cm=(cs+ce)/2;
-		if(!l)l=new SegPersi;
-		if(!r)r=new SegPersi;
-		return Q::f(l->q(s,e,cs,cm),r->q(s,e,cm,ce));
+		return Q::f(q(a[ver].l,s,e,cs,cm),q(a[ver].r,s,e,cm,ce));
 	}
 };
 //USAGE: boj.kr/14898
