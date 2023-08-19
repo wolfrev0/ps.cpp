@@ -1,1 +1,2 @@
-//별걸 다하는 트리라는듯
+//https://taesick.tistory.com/3
+//https://codeforces.com/blog/entry/103726

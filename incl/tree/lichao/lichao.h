@@ -1,5 +1,5 @@
 #pragma once
-#include "tree/seg/lichao/lichao_common.h"
+#include "tree/lichao/lichao_common.h"
 
 template<LiChaoType T, auto id, auto cmp>
 struct LiChao{
@@ -10,13 +10,13 @@ struct LiChao{
 		signed l=-1, r=-1;
 		Node(const T v=id()):v(v){}
 	};
-	Arr<Node> a={Node()};
+	Arr<Node> a;
+	LiChao(){alloc();}
+	int alloc(T v=id()){a.emplace_back(v); return sz(a)-1;}
 	void add(T x){add(0, xlo, xhi, x);}
 	signed add(signed idx, int cs, int ce, T x){
-		if(idx==-1){
-			a.emplace_back(x);
-			return sz(a)-1;
-		}
+		if(idx==-1)
+			return alloc(x);
 		if(ce-cs<=eps){
 			if(cmp(a[idx].v,x,cs))
 				a[idx].v=x;
