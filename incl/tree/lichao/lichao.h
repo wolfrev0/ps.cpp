@@ -13,8 +13,8 @@ struct LiChao{
 	Arr<Node> a;
 	LiChao(){alloc();}
 	int alloc(T v=id()){a.emplace_back(v); return sz(a)-1;}
-	void add(T x){add(0, xlo, xhi, x);}
-	signed add(signed idx, int cs, int ce, T x){
+	void insert(T x){insert(0, xlo, xhi, x);}
+	signed insert(signed idx, int cs, int ce, T x){
 		if(idx==-1)
 			return alloc(x);
 		if(ce-cs<=eps){
@@ -31,10 +31,10 @@ struct LiChao{
 			a[idx].v=fhi;
 		}else if(cmp(flo,fhi,cm)){
 			a[idx].v=fhi;
-			a[idx].r=add(a[idx].r,cm,ce,flo);
+			a[idx].r=insert(a[idx].r,cm,ce,flo);
 		}else{
 			a[idx].v=flo;
-			a[idx].l=add(a[idx].l,cs,cm,fhi);
+			a[idx].l=insert(a[idx].l,cs,cm,fhi);
 		}
 		return idx;
 		//NOTE: flo를 저장할땐 fhi를 넘기고, fhi를 저장할땐 flo를 넘기는 이유는
