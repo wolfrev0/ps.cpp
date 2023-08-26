@@ -43,6 +43,9 @@ struct Line{
 		}
 		return {(b*r.c-r.b*c)/det,(c*r.a-r.c*a)/det};
 	}
+
+	Line<T> operator+(const Line<T>& r)const{return Line<T>(tan()+r.tan(), calcY(0)+r.calcY(0));}
+	Line<T>& operator+=(const Line<T>& r){return *this=*this+r;}
 };
 template<>
 Vec2<int> Line<int>::point(int offset)const{

@@ -72,7 +72,7 @@ Arr<i64> factorize(i64 n) {
 #include "math/struct/mod.h"
 //not tested
 //a(r^0)+a/(r^1)+a/(r^2)+...+a/(r^n)
-template<const int m> Mod<m> geom_sum(Mod<m> a,Mod<m> r,int n){
+template<class T> T geom_sum(T a,T r,int n){
 	assert(r!=1);
 	if(n==inf<int>())return a/(1-r);
 	return a*(1-r.pow(n+1))/(1-r);

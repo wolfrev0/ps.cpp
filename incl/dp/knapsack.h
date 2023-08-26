@@ -50,7 +50,6 @@ int knapsack(const Arr<pint>& a, int cap){
 //a[i].fi=무게, a[i].se=가치, val
 //val이상의 가치를 챙기기 위한 최소 무게
 int knapsack2(const Arr<pint>& a, int val){
-	auto n=sz(a);
 	Arr<pint> b;
 	int vsum=0,wsum=0;
 	for(auto [w,v]:a){
