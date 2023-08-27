@@ -1,31 +1,51 @@
 #pragma once
 #include "core/base.h"
 
-//메모리 적당히 절약: 배열대신 map, 포인터대신 index
-//메모리 갈아엎는 절약: 1.정렬후 이분탐색(채점번호 33273843), 2.RadixTree
+//메모리 적당히 절약법: 배열대신 map, Ahocorasick2방법, 정렬후 이분탐색(채점번호 33273843), RadixTree
 template<int n> struct Trie{
-	Trie(char c=0,Trie* p=0):c(c),cnt(0),p(p){}
-	~Trie(){for(auto i:a)if(i.se)delete i.se;}
-	Trie* next(char x){return a[x]=a[x]?a[x]:new Trie(x,this);}
-	Trie* add(auto s,auto e){cnt++;return s!=e?next(*s)->add(s+1,e):this;}
-	void rem(auto s,auto e){cnt--;if(s^e)a[*s]->rem(s+1,e);}
-	char c;int cnt;Trie *p; array<Trie*,n>a{};
-};
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wchar-subscripts"
-#pragma GCC diagnostic ignored "-Wparentheses"
-//MSB to LSB, maxval=1e9(30bit)
-struct Bitrie {
-	Bitrie(char bit=0,Bitrie* p=0):bit(bit),cnt(0),p(p){}
-	Bitrie* next(char bit){return a[bit]=a[bit]?a[bit]:new Bitrie(bit, this);}
-	Bitrie* add(int x,int i=30){cnt++;return ~i?next(x>>i&1)->add(x,i-1):this;}
-	void rem(int x,int i=30){cnt--;if(~i)next(x>>i&1)->rem(x,i-1);}
-	int mex(int x,int i=30){
-		if(!~i)return 0;
-		if(next(x>>i&1)->cnt<(1<<i)) return next(x>>i&1)->mex(x,i-1);
-		else return (1<<i)+next(x>>i&1^1)->mex(x,i-1);
+	struct Node{
+		u32 cnt;
+		array<u32,n> ch;
+		Node(int cnt=0):cnt(cnt){ch.fill(-1);}
+	};
+	Arr<Node> a;
+	Trie(){alloc();}
+	void insert(auto s, auto e, u32 id=0){
+		a[id].cnt++;
+		if(s==e)
+			return;
+		if(!~transition(id,*s))
+			transition(id,*s)=alloc();
+		insert(s+1,e,transition(id,*s));
 	}
-	char bit;int cnt;Bitrie *p,*a[2]{};
+	void remove(auto s, auto e, u32 id=0){
+		a[id].cnt--;
+		if(s==e)
+			return;
+		remove(s+1, e, transition(id,*s));
+	}
+private:
+	u32 alloc(u32 cnt=0){
+		a.emplace_back(cnt);
+		return sz(a)-1;
+	}
+	u32& transition(u32 id, u32 x){return a[id].ch[x];}
 };
-#pragma GCC diagnostic pop
+template<int bit>
+struct Bitrie:public Trie<2>{
+	array<bool,bit> toArr(u64 x){
+		array<bool,bit> xa;
+		for(int i=0;i<bit;i++)
+			xa[i]=x>>i&1;
+		reverse(xa.begin(),xa.end());
+		return xa;
+	}
+	void insert(u64 x){
+		auto xa=toArr(x);
+		Trie<2>::insert(xa.begin(),xa.end());
+	}
+	void remove(u64 x){
+		auto xa=toArr(x);
+		Trie<2>::remove(xa.begin(),xa.end());
+	}
+};
