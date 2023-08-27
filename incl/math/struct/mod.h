@@ -1,10 +1,10 @@
 #pragma once
 #include "core/base.h"
 
-template<class T=i32, class U=i64, T m=998244353> struct Mod{
+template<class T=u32, class U=u64, T m=998244353> struct Mod{
 	static_assert(m < numeric_limits<T>::max()/2);
-	// Mod(T n=0):n(n){assert(0<=n && n<m);}
-	Mod(U n=0):n((n%m+m)%m){}
+	// Mod(auto n=0):n(n){assert(0<=n && n<m);}
+	Mod(auto n=0):n((n%m+m)%m){}
 	explicit operator T()const{return n;}
 	explicit operator bool()const{return !!n;}
 
