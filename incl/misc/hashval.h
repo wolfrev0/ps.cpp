@@ -2,7 +2,7 @@
 #include "core/base.h"
 
 //almost O(logN) due to pow()
-template<class T, unsigned pn=2>
+template<class T, u32 pn=2>
 struct Hash{
 	static_assert(pn<=4);
 	static const T p[4];
@@ -68,7 +68,7 @@ private:
 	T inv(T x){return x.inv();}
 };
 //TODO: make it constexpr by Mod<> update
-template<class T,unsigned pn>
+template<class T,u32 pn>
 const T Hash<T,pn>::p[4]={T(3),T(5),T(7),T(11)};
 //NOTE: thuemorse sequence can break it
 template <>
@@ -82,7 +82,7 @@ template <>
 u64 Hash<u64,2>::inv(u64 x){
 	return pow(x,u64(-2));
 }
-template<class T, unsigned pn>
+template<class T, u32 pn>
 ostream& operator<<(ostream& s,const Hash<T, pn>& n){
 	osprint(s,'(');
 	for(int i=0;i<pn;i++)
@@ -92,7 +92,7 @@ ostream& operator<<(ostream& s,const Hash<T, pn>& n){
 
 //almost O(1) by pow memoization
 //except inv() which is O(logN)
-template<class T, unsigned pn=2>
+template<class T, u32 pn=2>
 struct HashSeq{
 	static_assert(pn<=4);
 	static const T p[4];
@@ -152,9 +152,9 @@ private:
 	}
 };
 //TODO: make it constexpr by Mod<> update
-template<class T,unsigned pn>
+template<class T,u32 pn>
 const T HashSeq<T,pn>::p[4]={T(3),T(5),T(7),T(11)};
-template<class T,unsigned pn>
+template<class T,u32 pn>
 Arr<T> HashSeq<T,pn>::memopow[pn];
 //NOTE: thuemorse sequence can break it
 template <>
@@ -167,7 +167,7 @@ u64 HashSeq<u64,2>::inv(u64 x){
 	};
 	return pow(x,u64(-2));
 }
-template<class T, unsigned pn>
+template<class T, u32 pn>
 ostream& operator<<(ostream& s,const HashSeq<T, pn>& n){
 	osprint(s,'(');
 	for(int i=0;i<pn;i++)

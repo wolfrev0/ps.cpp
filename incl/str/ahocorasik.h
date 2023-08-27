@@ -6,23 +6,23 @@
 template<int m=26> struct AhoCorasick{
 	struct Node{
 		//parent_link, suffix_link, output_link, successor
-		signed p=0,s=-1,o=-1,succ[m];
+		u32 p=0,s=-1,o=-1,succ[m];
 		bool is_out=false;
 		Node(){
 			memset(succ,0xff,sizeof succ);
 		}
 	};
 	Arr<Node> a={Node()};//root
-	signed& get_succ(signed idx, signed ch){
+	u32& get_succ(u32 idx, u32 ch){
 		return a[idx].succ[ch];
 	}
-	signed get_ch(signed x){
+	u32 get_ch(u32 x){
 		for(int i=0;i<m;i++)
 			if(get_succ(a[x].p,i)==x)
 				return i;
 		return -1;
 	}
-	void add(signed idx,auto its,auto ite){
+	void add(u32 idx,auto its,auto ite){
 		if(its==ite){
 			a[idx].is_out=true;
 			a[idx].o=idx;
@@ -34,21 +34,21 @@ template<int m=26> struct AhoCorasick{
 			add(get_succ(idx,*its),its+1,ite);
 		}
 	}
-	signed transit(signed idx, signed ch){
+	u32 transit(u32 idx, u32 ch){
 		if(get_succ(idx,ch)!=-1)
 			return get_succ(idx,ch);
 		if(a[idx].p==idx)
 			return idx;
 		return transit(get_slink(idx),ch);
 	}
-	signed get_slink(signed idx){
+	u32 get_slink(u32 idx){
 		if(a[idx].p==a[a[idx].p].p)
 			return a[idx].p;
 		if(a[idx].s==-1)
 			a[idx].s=transit(get_slink(a[idx].p),get_ch(idx));
 		return a[idx].s;
 	}
-	signed get_olink(signed idx){
+	u32 get_olink(u32 idx){
 		if(a[idx].p==idx) return idx;
 		if(a[idx].is_out) return idx;
 		if(a[idx].o!=-1) return a[idx].o;
@@ -62,25 +62,25 @@ template<int m=26> struct AhoCorasick{
 template<int m=26> struct AhoCorasick2{
 	struct Node{
 		//parent_link, suffix_link, output_link, successor
-		signed p=0,s=-1,o=-1;
-		Arr<pair<signed,signed>> succ;
+		u32 p=0,s=-1,o=-1;
+		Arr<pair<i32,u32>> succ;
 		bool is_out=false;
 		Node(){}
 	};
 	Arr<Node> a={Node()};//root
-	signed& get_succ(signed idx, signed ch){
+	u32& get_succ(u32 idx, i32 ch){
 		for(auto& [x,y]:a[idx].succ)
 			if(x==ch)
 				return y;
 		return a[idx].succ.emplace_back(ch,-1).se;
 	}
-	signed get_ch(signed x){
+	i32 get_ch(u32 x){
 		for(int i=0;i<m;i++)
 			if(get_succ(a[x].p,i)==x)
 				return i;
 		return -1;
 	}
-	void add(signed idx,auto its,auto ite){
+	void add(u32 idx,auto its,auto ite){
 		if(its==ite){
 			a[idx].is_out=true;
 			a[idx].o=idx;
@@ -92,21 +92,21 @@ template<int m=26> struct AhoCorasick2{
 			add(get_succ(idx,*its),its+1,ite);
 		}
 	}
-	signed transit(signed idx, signed ch){
+	u32 transit(u32 idx, i32 ch){
 		if(get_succ(idx,ch)!=-1)
 			return get_succ(idx,ch);
 		if(a[idx].p==idx)
 			return idx;
 		return transit(get_slink(idx),ch);
 	}
-	signed get_slink(signed idx){
+	u32 get_slink(u32 idx){
 		if(a[idx].p==a[a[idx].p].p)
 			return a[idx].p;
 		if(a[idx].s==-1)
 			a[idx].s=transit(get_slink(a[idx].p),get_ch(idx));
 		return a[idx].s;
 	}
-	signed get_olink(signed idx){
+	u32 get_olink(u32 idx){
 		if(a[idx].p==idx) return idx;
 		if(a[idx].is_out) return idx;
 		if(a[idx].o!=-1) return a[idx].o;

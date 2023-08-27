@@ -6,7 +6,7 @@
 
 struct FastCIN{
 	static const int SZ=1<<24;
-	unsigned cnt=0;char a[SZ+1],*p;
+	u32 cnt=0;char a[SZ+1],*p;
 	FastCIN(){preload();}
 	void tie(int x){}
 	int preload(){return cnt=cin.read(p=a,SZ).gcount();}
