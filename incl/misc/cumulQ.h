@@ -40,8 +40,8 @@ private:
 };
 
 template<int m1=int(1e9+7),int m2=1073741783> struct HashPairQ{
-	HashQ<Mod<m1>,int(1e9+9)> q1;
-	HashQ<Mod<m2>,int(1e9+9)> q2;
+	HashQ<Mod<u32,u64,m1>,int(1e9+9)> q1;
+	HashQ<Mod<u32,u64,m2>,int(1e9+9)> q2;
 	void push(int x){q1.push(x),q2.push(x);}
 	void pop(){q1.pop(),q2.pop();}
 	i64 get()const{return (i64(q1.acc.val()<<32))+q2.acc.val();}
