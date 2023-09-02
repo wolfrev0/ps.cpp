@@ -3,14 +3,13 @@
 
 template<class T=u32, class U=u64, T m=998244353> struct Mod{
 	static_assert(m < numeric_limits<T>::max()/2);
-	// Mod(auto n=0):n(n){assert(0<=n && n<m);}
-	Mod(auto n=0):n((n%m+m)%m){}
+	Mod(auto n=0):n(n<0?((-n)%m?m-(-n)%m:0)%m:n%m){}
 	explicit operator T()const{return n;}
 	explicit operator bool()const{return !!n;}
 
 	Mod operator-()const{return n?m-n:0;}
 	Mod operator+(const Mod& b)const{return n+b.n >= m ? n+b.n-m : n+b.n;}
-	Mod operator-(const Mod& b)const{return n-b.n < 0 ? n-b.n+m : n-b.n;}
+	Mod operator-(const Mod& b)const{return n<b.n ? m+n-b.n : n-b.n;}
 	Mod operator*(const Mod& b)const{return U(n)*b.n%m;}
 	Mod operator/(const Mod& b)const{return *this*b.inv();}
 	Mod operator+=(const Mod& b){return *this=*this+b;}
@@ -19,7 +18,7 @@ template<class T=u32, class U=u64, T m=998244353> struct Mod{
 	Mod operator/=(const Mod& b){return *this=*this/b;}
 	Mod pow(T a)const{ if(!a)return 1;auto z=pow(a>>1);return z*z*(a&1?*this:1);}
 	//Mod inv()const{return this->pow(m-2);}
-	Mod inv()const{auto [g,x,y]=xgcd(n, m);assert(g==1);return (x%m+m)%m;}
+	Mod inv()const{auto [g,x,y]=xgcd(n, m);assert(g==1);return x<0?x+m:x;}
 
 	bool operator==(const Mod& r)const{return n==r.n;}
 	bool operator!=(const Mod& r)const{return !(*this==r);}
