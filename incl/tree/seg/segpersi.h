@@ -9,11 +9,11 @@ template<Monoid Q,auto fupd> struct SegPersi{
 	const static int xhi=inf<int>();
 	struct Node{
 		T v=Q::id();
-		signed l=-1,r=-1;
+		i32 l=-1,r=-1;
 	};
 	Arr<Node> a;
-	signed alloc(T v=Q::id()){a.emplace_back(Node{v});return sz(a)-1;}
-	signed upd(signed ver, int i,T x,int cs=xlo,int ce=xhi){
+	i32 alloc(T v=Q::id()){a.emplace_back(Node{v});return sz(a)-1;}
+	i32 upd(i32 ver, int i,T x,int cs=xlo,int ce=xhi){
 		if(ce<=i or i+1<=cs) return ver;
 		if(i<=cs and ce<=i+1) return alloc(fupd(a[ver].v,x));
 		int cm=(cs+ce)/2;
@@ -26,7 +26,7 @@ template<Monoid Q,auto fupd> struct SegPersi{
 		a[ret].v=Q::f(lv,rv);
 		return ret;
 	}
-	T q(signed ver, int s,int e, int cs=xlo, int ce=xhi){
+	T q(i32 ver, int s,int e, int cs=xlo, int ce=xhi){
 		if(ver==-1 or ce<=s or e<=cs) return Q::id();
 		if(s<=cs and ce<=e) return a[ver].v;
 		int cm=(cs+ce)/2;

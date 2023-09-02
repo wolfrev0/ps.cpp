@@ -80,23 +80,23 @@ template<class T> Arr<int> get_lcp(const Str<T> &s, const Arr<int> &sa) {
 // Suffix Automaton(DAG)
 // Suffix Tree = SuffixAutomaton(reversed(str)).suffix_links
 // https://cp-algorithms.com/string/suffix-automaton.html
-template<signed m>
+template<i32 m>
 struct SuffixAutomaton{
 	struct Node{
-		signed len, link, succ[m];
-		Node(signed len, signed link):
+		i32 len, link, succ[m];
+		Node(i32 len, i32 link):
 			len(len),
 			link(link){
 			memset(succ,0xff,sizeof succ);
 		}
 	};
 	Arr<Node> a;
-	signed last=0;
+	i32 last=0;
 	SuffixAutomaton():a(1,Node(0,-1)){}
-	signed& get_succ(signed from, signed c){
+	i32& get_succ(i32 from, i32 c){
 		return a[from].succ[c];
 	}
-	void add(signed c){
+	void add(i32 c){
 		a.emplace_back(a[last].len+1,0);
 		int cur=sz(a)-1;
 		int p=last;
@@ -130,26 +130,26 @@ struct SuffixAutomaton{
 // for(auto [x,y]:sa.a[x].succ)get_succ(x,i)
 // 이렇게 쓰자
 // https://www.acmicpc.net/source/64612686
-template<signed m>
+template<i32 m>
 struct SuffixAutomaton2{
 	struct Node{
-		signed len, link;
-		Arr<pair<signed,signed>> succ;
-		Node(signed len, signed link):
+		i32 len, link;
+		Arr<pair<i32,i32>> succ;
+		Node(i32 len, i32 link):
 			len(len),
 			link(link){
 		}
 	};
 	Arr<Node> a;
-	signed last=0;
+	i32 last=0;
 	SuffixAutomaton2():a(1,Node(0,-1)){}
-	signed& get_succ(signed from, signed ch){
+	i32& get_succ(i32 from, i32 ch){
 		for(auto& [x,y]:a[from].succ)
 			if(x==ch)
 				return y;
 		return a[from].succ.emplace_back(ch,-1).se;
 	}
-	void add(signed ch){
+	void add(i32 ch){
 		a.emplace_back(a[last].len+1,0);
 		int cur=sz(a)-1;
 		int p=last;

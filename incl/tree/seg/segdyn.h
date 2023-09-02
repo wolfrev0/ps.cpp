@@ -6,8 +6,8 @@
 template<Monoid Q>
 struct SegDyn{
 	using T=decltype(Q::id());
-	const static int xlo=-inf<signed>();
-	const static int xhi=inf<signed>();
+	const static int xlo=-inf<i32>();
+	const static int xhi=inf<i32>();
 	T v=Q::id();
 	SegDyn *l{},*r{};
 	~SegDyn(){release();}
