@@ -27,7 +27,7 @@ template<class T> struct Vec2{
 	T cross(const Vec2& a,const Vec2& b)const{return (a-*this).cross(b-*this);}
 	T ccw(const Vec2& a,const Vec2& b)const{return cross(a,b)?cross(a,b)/abs(cross(a,b)):0;}
 	fp angle()const{return atan2(-y,-x)+pi;}
-	Frac tan()const{return x==0?Frac{1,0}:Frac{y,x};}
+	Frac<T> tan()const{return x==0?Frac<T>{1,0}:Frac<T>{y,x};}
 	Vec2 project(const Vec2& p)const{Vec2 base=normalized();return base*base.dot(p);}
 	Vec2 ortho()const{return Vec2(y,-x);}
 	Vec2 rot(double rad)const{return {cos(rad)*x-sin(rad)*y,sin(rad)*x+cos(rad)*y};}

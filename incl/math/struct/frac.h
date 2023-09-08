@@ -2,15 +2,17 @@
 #include "core/base.h"
 #include "misc/i128.h"
 
+template<class T=i64>
 struct Frac {
-	i64 a,b;
+	T a,b;
 	Frac(i64 a=0,i64 b=1):a(a),b(b) {normalize();}
 	auto operator<=>(const Frac& r)const{
-		// if(is_nan())return strong_ordering::less;
-		// if(r.is_nan())return strong_ordering::greater;
-		assert(!is_nan() and !r.is_nan());
+		if(is_nan() and r.is_nan()) return strong_ordering::equal;
+		if(is_nan())return strong_ordering::less;
+		if(r.is_nan())return strong_ordering::greater;
 		return i128(a)*r.b<=>i128(r.a)*b;
 	}
+	Frac inf()const{return {1,0};}
 	
 	Frac operator-()const{return {-a,b};}
 	Frac operator+(const Frac& r)const{return {a*r.b+r.a*b,b*r.b};}
@@ -38,7 +40,7 @@ struct Frac {
 		if(b<0) a*=-1,b*=-1;
 	}
 };
-template<> Frac inf() {return {1,0};}
-ostream& operator<<(ostream& s,const Frac& n) {
+template<class T>
+ostream& operator<<(ostream& s,const Frac<T>& n) {
 	return (n.is_int()?osprint(s,int(n)):osprint(s,n.a,'/',n.b));
 }
