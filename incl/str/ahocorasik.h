@@ -7,7 +7,6 @@ template<int m=26> struct AhoCorasick{
 	struct Node{
 		//parent_link, char from parent to here, suffix_link, output_link, successor
 		u32 p,c,s=-1,o=-1,succ[m];
-		bool is_out=false;
 		Node():Node(0,-1){}
 		Node(u32 p, u32 c):p(p),c(c){
 			memset(succ,0xff,sizeof succ);
@@ -21,7 +20,6 @@ template<int m=26> struct AhoCorasick{
 	}
 	void add(u32 idx,auto its,auto ite){
 		if(its==ite){
-			a[idx].is_out=true;
 			a[idx].o=idx;
 		}else{
 			if(get_succ(idx,*its)==-1u)
@@ -45,7 +43,6 @@ template<int m=26> struct AhoCorasick{
 	}
 	u32 get_olink(u32 idx){
 		if(a[idx].p==idx) return idx;
-		if(a[idx].is_out) return idx;
 		if(a[idx].o!=-1u) return a[idx].o;
 		return a[idx].o=get_olink(get_slink(idx));
 	}
@@ -59,7 +56,6 @@ template<int m=26> struct AhoCorasick2{
 		//parent_link, char from parent to here, suffix_link, output_link, successor
 		u32 p=0,c=-1,s=-1,o=-1;
 		Arr<pair<i32,u32>> succ;
-		bool is_out=false;
 		Node(){}
 		Node(u32 p, u32 c):p(p),c(c){}
 	};
@@ -74,7 +70,6 @@ template<int m=26> struct AhoCorasick2{
 	}
 	void add(u32 idx,auto its,auto ite){
 		if(its==ite){
-			a[idx].is_out=true;
 			a[idx].o=idx;
 		}else{
 			if(get_succ(idx,*its)==-1u)
@@ -98,7 +93,6 @@ template<int m=26> struct AhoCorasick2{
 	}
 	u32 get_olink(u32 idx){
 		if(a[idx].p==idx) return idx;
-		if(a[idx].is_out) return idx;
 		if(a[idx].o!=-1u) return a[idx].o;
 		return a[idx].o=get_olink(get_slink(idx));
 	}
