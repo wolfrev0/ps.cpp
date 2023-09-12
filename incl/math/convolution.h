@@ -48,7 +48,7 @@ namespace karatsuba{
 		return ret;
 	}
 	Arr<int> conv_mul(Arr<int> a, Arr<int> b){
-		int n=bit_ceil<u32>(max(sz(a),sz(b)));
+		int n=bit_ceil<u32>(max(sz(a),sz(b))*2);
 		a.resize(n);
 		b.resize(n);
 		return conv(a,b);
@@ -147,7 +147,7 @@ namespace fft{
 
 	// c[i]=sigma(j=0~i,a[j]*b[i-j])
 	Arr<i64> conv_mul(Arr<i64> a,Arr<i64> b){
-		int n=bit_ceil<u32>(max(sz(a),sz(b)));
+		int n=bit_ceil<u32>(max(sz(a),sz(b))*2);
 		a.resize(n),b.resize(n);
 		return conv(a,b);
 	}
