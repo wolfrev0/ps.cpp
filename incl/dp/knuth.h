@@ -6,6 +6,7 @@
 // d[i][j]=min{i<k<j}(d[i][k]+d[k][j])+c[i][j]
 // Constraints:
 // c는 사각부등식{c[a][c]+c[b][d]≤c[a][d]+c[b][c] where a≤b≤c≤d}을 만족해야함
+// https://blog.kyouko.moe/75여기 2번도 knuth의 일반화정도?로 볼 수 있을듯?
 Arr<Arr<i64>> knuth_opt(int n,const function<int(int,int)>& c){
 	Arr<Arr<i64>> dp(n+1,Arr<i64>(n+1));
 	Arr<Arr<int>> a(n,Arr<int>(n+1));
