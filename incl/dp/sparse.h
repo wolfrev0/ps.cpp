@@ -1,27 +1,26 @@
 #pragma once
 #include "core/base.h"
 #include "math/struct/monoid.h"
+#include "graph/funcional.h"
 
-//길이처리나 온라인추가 필요하면 직접 짜자(20931)
-template<class M>
+//BOJ20931같이 업데이트 필요한건 어떻게?
+//BOJ12008(USACO262144)같이 중간에 값 들어가는건?
+template<Monoid M, i32 m=62>
 struct SparseTable{
-	SparseTable(int n,int m):n(n),m(m),dp(ARR(m,n,M::id())){}
-	~SparseTable(){dbg1if(!_build,"SparseTable not builded");}
-	bool _build=false;
-	void build(){
-		_build=true;
-		for(int i=1;i<m;i++)
-			for(int j=0;j<n;j++)
-				dp[i][j]=M::f(dp[i][j],dp[i-1][dp[i-1][j]]);
+	using T=decltype(M::id());
+	explicit SparseTable(const FunctionalGraph& fg):n(fg.n),dp(ARR(n,m,M::id())){
+		for(int i=0;i<n;i++)
+			dp[i][0]=fg[i];
+		for(int j=1;j<m;j++)
+			for(int i=0;i<n;i++)
+				dp[i][j]=M::f(dp[i][j],dp[dp[i][j-1]][j-1]);
 	}
-	void set(int x,int y,int val){dp[y][x]=val;}
-	int get(int x,int y){return dp[y][x];}
-	int kth(int x,i64 k){
-		for(int i=0;i<m;i++)
+	T kth(int x,i64 k){
+		for(int i=m-1;i>=0;i--)
 			if(k>>i&1)
-				x=dp[i][x];
+				x=dp[x][i];
 		return x;
 	}
-	int n,m;
-	Arr<Arr<decltype(M::id())>> dp;
+	i32 n;
+	Arr<Arr<T>> dp;
 };

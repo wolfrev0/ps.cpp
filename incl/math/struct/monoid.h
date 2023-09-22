@@ -32,6 +32,11 @@ template<class T>struct MAss{
 	static T f(T x,T y){return y==id()?x:y;}
 	static T fn(T x,int n){return x;}
 };
+template<class T>struct MAssOnce{
+	static T id(){return nan<T>();}
+	static T f(T x,T y){return x==id()?y:x;}
+	static T fn(T x,int n){return x;}
+};
 template<class T>struct MMin{
 	static T id(){return inf<T>();}
 	static T f(T x,T y){return min(x,y);}
