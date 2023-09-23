@@ -18,7 +18,7 @@
 -- Division of polynomials, 996ms (https://judge.yosupo.jp/submission/85707)
 - N = 100'000:
 -- Multipoint evaluation, 2161ms (https://judge.yosupo.jp/submission/85709)
--- Polynomial interpolation, 2551ms (https://judge.yosupo.jp/submission/85711)
+-- Polynomial i32erpolation, 2551ms (https://judge.yosupo.jp/submission/85711)
 -- Kth term of Linear Recurrence, 2913ms (https://judge.yosupo.jp/submission/85727)
 - N = 50'000:
 -- Inv of Polynomials, 1691ms (https://judge.yosupo.jp/submission/85713)
@@ -34,17 +34,17 @@ Therefore, primary purpose of the library is educational and most of constant-ti
 optimizations that may significantly harm the code readability were not used.
 
 The library is reasonably fast and generally can be used in most problems where
-polynomial operations constitute intended solution. However, it is recommended to
+polynomial operations constitute i32ended solution. However, it is recommended to
 seek out other implementations when the time limit is tight or you really want to
-squeeze a solution when it is probably not the intended one.
+squeeze a solution when it is probably not the i32ended one.
 */
 
 namespace algebra {
-	const int maxn = 1 << 20;
-	const int magic = 128;//250; // threshold for sizes to run the naive algo
+	const i32 maxn = 1 << 20;
+	const i32 magic = 128;//250; // threshold for sizes to run the naive algo
 
 	template<typename T>
-	T bpow(T x, int64_t n) {
+	T bpow(T x, i64 n) {
 		if(n == 0) {
 			return T(1);
 		} else {
@@ -54,7 +54,7 @@ namespace algebra {
 		}
 	}
 
-	template<int m>
+	template<i32 m>
 	struct modular {
 		// https://en.wikipedia.org/wiki/Berlekamp-Rabin_algorithm
 		// solves x^2 = y (mod m) assuming m is prime in O(log m).
@@ -91,12 +91,12 @@ namespace algebra {
 			}
 		}
 		
-		int r;
+		i32 r;
 		constexpr modular(): r(0) {}
-		constexpr modular(int64_t rr): r(rr % m) {if(r < 0) r += m;}
+		constexpr modular(i64 rr): r(rr % m) {if(r < 0) r += m;}
 		modular inv() const {return bpow(*this, m - 2);}
 		modular operator - () const {return r ? m - r : 0;}
-		modular operator * (const modular &t) const {return (int64_t)r * t.r % m;}
+		modular operator * (const modular &t) const {return (i64)r * t.r % m;}
 		modular operator / (const modular &t) const {return *this * t.inv();}
 		modular operator += (const modular &t) {r += t.r; if(r >= m) r -= m; return *this;}
 		modular operator -= (const modular &t) {r -= t.r; if(r < 0) r += m; return *this;}
@@ -108,27 +108,27 @@ namespace algebra {
 		bool operator == (const modular &t) const {return r == t.r;}
 		bool operator != (const modular &t) const {return r != t.r;}
 		
-		explicit operator int() const {return r;}
-		int64_t rem() const {return 2 * r > m ? r - m : r;}
+		explicit operator i32() const {return r;}
+		i64 rem() const {return 2 * r > m ? r - m : r;}
 	};
 	
-	template<int T>
+	template<i32 T>
 	istream& operator >> (istream &in, modular<T> &x) {
 		return in >> x.r;
 	}
 	
-	template<int T>
+	template<i32 T>
 	ostream& operator << (ostream &out, modular<T> const& x) {
 		return out << x.r;
 	}
 	
 	template<typename T>
-	T fact(int n) {
+	T fact(i32 n) {
 		static T F[maxn];
 		static bool init = false;
 		if(!init) {
 			F[0] = T(1);
-			for(int i = 1; i < maxn; i++) {
+			for(i32 i = 1; i < maxn; i++) {
 				F[i] = F[i - 1] * T(i);
 			}
 			init = true;
@@ -137,12 +137,12 @@ namespace algebra {
 	}
 	
 	template<typename T>
-	T rfact(int n) {
+	T rfact(i32 n) {
 		static T F[maxn];
 		static bool init = false;
 		if(!init) {
 			F[maxn - 1] = T(1) / fact<T>(maxn - 1);
-			for(int i = maxn - 2; i >= 0; i--) {
+			for(i32 i = maxn - 2; i >= 0; i--) {
 				F[i] = F[i + 1] * T(i + 1);
 			}
 			init = true;
@@ -151,11 +151,11 @@ namespace algebra {
 	}
 
 	template<typename T>
-	T small_inv(int n) {
+	T small_inv(i32 n) {
 		static T F[maxn];
 		static bool init = false;
 		if(!init) {
-			for(int i = 1; i < maxn; i++) {
+			for(i32 i = 1; i < maxn; i++) {
 				F[i] = rfact<T>(i) * fact<T>(i - 1);
 			}
 			init = true;
@@ -189,14 +189,14 @@ namespace algebra {
 		};
 
 		point w[maxn]; // w[2^n + k] = exp(pi * k / (2^n))
-		int bitr[maxn];// b[2^n + k] = bitreverse(k)
+		i32 bitr[maxn];// b[2^n + k] = bitreverse(k)
 		const ftype pi = acos(-1);
 		bool initiated = 0;
 		void init() {
 			if(!initiated) {
-				for(int i = 1; i < maxn; i *= 2) {
-					int ti = i / 2;
-					for(int j = 0; j < i; j++) {
+				for(i32 i = 1; i < maxn; i *= 2) {
+					i32 ti = i / 2;
+					for(i32 j = 0; j < i; j++) {
 						w[i + j] = point::polar(ftype(1), pi * j / i);
 						if(ti) {
 							bitr[i + j] = 2 * bitr[ti + j % ti] + (j >= ti);
@@ -207,21 +207,21 @@ namespace algebra {
 			}
 		}
 		
-		void fft(auto &a, int n) {
+		void fft(auto &a, i32 n) {
 			init();
 			if(n == 1) {
 				return;
 			}
-			int hn = n / 2;
-			for(int i = 0; i < n; i++) {
-				int ti = 2 * bitr[hn + i % hn] + (i > hn);
+			i32 hn = n / 2;
+			for(i32 i = 0; i < n; i++) {
+				i32 ti = 2 * bitr[hn + i % hn] + (i > hn);
 				if(i < ti) {
 					swap(a[i], a[ti]);
 				}
 			}
-			for(int i = 1; i < n; i *= 2) {
-				for(int j = 0; j < n; j += 2 * i) {
-					for(int k = j; k < j + i; k++) {
+			for(i32 i = 1; i < n; i *= 2) {
+				for(i32 j = 0; j < n; j += 2 * i) {
+					for(i32 k = j; k < j + i; k++) {
 						point t = a[k + i] * w[i + k - j];
 						a[k + i] = a[k] - t;
 						a[k] += t;
@@ -235,25 +235,25 @@ namespace algebra {
 			if(a.empty() || b.empty()) {
 				a.clear();
 			} else {
-				int n = a.size();
-				int m = b.size();
+				i32 n = sz(a);
+				i32 m = sz(b);
 				a.resize(n + m - 1);
-				for(int k = n + m - 2; k >= 0; k--) {
+				for(i32 k = n + m - 2; k >= 0; k--) {
 					a[k] *= b[0];
-					for(int j = max(k - n + 1, 1); j < min(k + 1, m); j++) {
+					for(i32 j = max(k - n + 1, 1); j < min(k + 1, m); j++) {
 						a[k] += a[k - j] * b[j];
 					}
 				}
 			}
 		}
 		
-		template<int m>
+		template<i32 m>
 		struct dft {
-			static constexpr int split = 1 << 15;
+			static constexpr i32 split = 1 << 15;
 			vector<point> A;
 			
 			dft(vector<modular<m>> const& a, size_t n): A(n) {
-				for(size_t i = 0; i < min(n, a.size()); i++) {
+				for(size_t i = 0; i < min(n, sz(a)); i++) {
 					A[i] = point(
 						a[i].rem() % split,
 						a[i].rem() / split
@@ -265,8 +265,8 @@ namespace algebra {
 			}
 		
 			auto operator * (dft const& B) {
-				assert(A.size() == B.A.size());
-				size_t n = A.size();
+				assert(sz(A) == sz(B.A));
+				size_t n = sz(A);
 				if(!n) {
 					return vector<modular<m>>();
 				}
@@ -279,7 +279,7 @@ namespace algebra {
 				fft(D, n);
 				reverse(begin(C) + 1, end(C));
 				reverse(begin(D) + 1, end(D));
-				int t = 2 * n;
+				i32 t = 2 * n;
 				vector<modular<m>> res(n);
 				for(size_t i = 0; i < n; i++) {
 					modular<m> A0 = llround(C[i].real() / t);
@@ -290,8 +290,8 @@ namespace algebra {
 				return res;
 			}
 			
-			point& operator [](int i) {return A[i];}
-			point operator [](int i) const {return A[i];}
+			point& operator [](i32 i) {return A[i];}
+			point operator [](i32 i) const {return A[i];}
 		};
 		
 		size_t com_size(size_t as, size_t bs) {
@@ -305,13 +305,13 @@ namespace algebra {
 			return n;
 		}
 		
-		template<int m>
+		template<i32 m>
 		void mul(vector<modular<m>> &a, vector<modular<m>> b) {
-			if(min(a.size(), b.size()) < magic) {
+			if(min(sz(a), sz(b)) < magic) {
 				mul_slow(a, b);
 				return;
 			}
-			auto n = com_size(a.size(), b.size());
+			auto n = com_size(sz(a), sz(b));
 			auto A = dft<m>(a, n);
 			if(a == b) {
 				a = A * A;
@@ -344,8 +344,8 @@ namespace algebra {
 		}
 		
 		poly operator += (const poly &t) {
-			a.resize(max(a.size(), t.a.size()));
-			for(size_t i = 0; i < t.a.size(); i++) {
+			a.resize(max(sz(a), t.sz(a)));
+			for(size_t i = 0; i < t.sz(a); i++) {
 				a[i] += t.a[i];
 			}
 			normalize();
@@ -353,8 +353,8 @@ namespace algebra {
 		}
 		
 		poly operator -= (const poly &t) {
-			a.resize(max(a.size(), t.a.size()));
-			for(size_t i = 0; i < t.a.size(); i++) {
+			a.resize(max(sz(a), t.sz(a)));
+			for(size_t i = 0; i < t.sz(a); i++) {
 				a[i] -= t.a[i];
 			}
 			normalize();
@@ -364,7 +364,7 @@ namespace algebra {
 		poly operator - (const poly &t) const {return poly(*this) -= t;}
 		
 		poly mod_xk(size_t k) const { // get first k coefficients
-			return vector<T>(begin(a), begin(a) + min(k, a.size()));
+			return vector<T>(begin(a), begin(a) + min(k, sz(a)));
 		}
 		
 		poly mul_xk(size_t k) const { // multiply by x^k
@@ -374,13 +374,13 @@ namespace algebra {
 		}
 		
 		poly div_xk(size_t k) const { // drop first k coefficients
-			return vector<T>(begin(a) + min(k, a.size()), end(a));
+			return vector<T>(begin(a) + min(k, sz(a)), end(a));
 		}
 		
 		poly substr(size_t l, size_t r) const { // return mod_xk(r).div_xk(l)
 			return vector<T>(
-				begin(a) + min(l, a.size()),
-				begin(a) + min(r, a.size())
+				begin(a) + min(l, sz(a)),
+				begin(a) + min(r, sz(a))
 			);
 		}
 		
@@ -389,7 +389,7 @@ namespace algebra {
 		
 		poly reverse(size_t n) const { // computes x^n A(x^{-1})
 			auto res = a;
-			res.resize(max(n, res.size()));
+			res.resize(max(n, sz(res)));
 			return vector<T>(res.rbegin(), res.rbegin() + n);
 		}
 		
@@ -401,11 +401,11 @@ namespace algebra {
 			vector<T> A(a);
 			vector<T> res;
 			T b_lead_inv = b.a.back().inv();
-			while(A.size() >= b.a.size()) {
+			while(sz(A) >= b.sz(a)) {
 				res.push_back(A.back() * b_lead_inv);
 				if(res.back() != T(0)) {
-					for(size_t i = 0; i < b.a.size(); i++) {
-						A[A.size() - i - 1] -= res.back() * b.a[b.a.size() - i - 1];
+					for(size_t i = 0; i < b.sz(a); i++) {
+						A[sz(A) - i - 1] -= res.back() * b.a[b.sz(a) - i - 1];
 					}
 				}
 				A.pop_back();
@@ -414,12 +414,12 @@ namespace algebra {
 			return {res, A};
 		}
 		
-		pair<poly, poly> divmod_hint(poly const& b, poly const& binv) const { // when inverse is known
+		pair<poly, poly> divmod_hi32(poly const& b, poly const& binv) const { // when inverse is known
 			assert(!b.is_zero());
 			if(deg() < b.deg()) {
 				return {poly{0}, *this};
 			}
-			int d = deg() - b.deg();
+			i32 d = deg() - b.deg();
 			if(min(d, b.deg()) < magic) {
 				return divmod_slow(b);
 			}
@@ -432,7 +432,7 @@ namespace algebra {
 			if(deg() < b.deg()) {
 				return {poly{0}, *this};
 			}
-			int d = deg() - b.deg();
+			i32 d = deg() - b.deg();
 			if(min(d, b.deg()) < magic) {
 				return divmod_slow(b);
 			}
@@ -472,7 +472,7 @@ namespace algebra {
 		// deg B' is at least 2 times less than deg A
 		static pair<vector<poly>, transform> half_gcd(poly A, poly B) {
 			assert(A.deg() >= B.deg());
-			int m = (A.deg() + 1) / 2;
+			i32 m = (A.deg() + 1) / 2;
 			if(B.deg() < m) {
 				return {{}, {T(1), T(0), T(0), T(1)}};
 			}
@@ -483,7 +483,7 @@ namespace algebra {
 			}
 			auto [ai, R] = A.divmod(B);
 			tie(A, B) = make_pair(B, R);
-			int k = 2 * m - B.deg();
+			i32 k = 2 * m - B.deg();
 			auto [as, Ts] = half_gcd(A.div_xk(k), B.div_xk(k));
 			concat(ar, {ai});
 			concat(ar, as);
@@ -508,8 +508,8 @@ namespace algebra {
 				}
 			}
 			trs.emplace_back(T(1), T(0), T(0), T(1));
-			while(trs.size() >= 2) {
-				trs[trs.size() - 2] = trs[trs.size() - 2] * trs[trs.size() - 1];
+			while(sz(trs) >= 2) {
+				trs[sz(trs) - 2] = trs[sz(trs) - 2] * trs[sz(trs) - 1];
 				trs.pop_back();
 			}
 			return {ak, trs.back()};
@@ -525,7 +525,7 @@ namespace algebra {
 		
 		// Returns the characteristic polynomial
 		// of the minimum linear recurrence for the sequence
-		poly min_rec_slow(int d) const {
+		poly min_rec_slow(i32 d) const {
 			auto R1 = mod_xk(d + 1).reverse(d + 1), R2 = xk(d + 1);
 			auto Q1 = poly(T(1)), Q2 = poly(T(0));
 			while(!R2.is_zero()) {
@@ -543,13 +543,13 @@ namespace algebra {
 			if(R - L == 1) {
 				return transform(*L);
 			} else {
-				int s = 0;
-				for(int i = 0; i < R - L; i++) {
-					s += L[i].a.size();
+				i32 s = 0;
+				for(i32 i = 0; i < R - L; i++) {
+					s += sz(L[i].a);
 				}
-				int c = 0;
-				for(int i = 0; i < R - L; i++) {
-					c += L[i].a.size();
+				i32 c = 0;
+				for(i32 i = 0; i < R - L; i++) {
+					c += sz(L[i].a);
 					if(2 * c > s) {
 						return convergent(L, L + i) * convergent(L + i, R);
 					}
@@ -558,7 +558,7 @@ namespace algebra {
 			}
 		}
 		
-		poly min_rec(int d) const {
+		poly min_rec(i32 d) const {
 			if(d < magic) {
 				return min_rec_slow(d);
 			}
@@ -567,9 +567,9 @@ namespace algebra {
 				return poly(1);
 			}
 			auto [a, Tr] = full_gcd(R1, R2);
-			int dr = (d + 1) - a[0].deg();
-			int dp = 0;
-			for(size_t i = 0; i + 1 < a.size(); i++) {
+			i32 dr = (d + 1) - a[0].deg();
+			i32 dp = 0;
+			for(size_t i = 0; i + 1 < sz(a); i++) {
 				dr -= a[i + 1].deg();
 				dp += a[i].deg();
 				if(dr < dp) {
@@ -586,7 +586,7 @@ namespace algebra {
 		optional<poly> inv_mod_slow(poly const& t) const {
 			auto R1 = *this, R2 = t;
 			auto Q1 = poly(T(1)), Q2 = poly(T(0));
-			int k = 0;
+			i32 k = 0;
 			while(!R2.is_zero()) {
 				k ^= 1;
 				auto [a, nR] = R1.divmod(R2);
@@ -633,7 +633,7 @@ namespace algebra {
 		
 		poly conj() const { // A(x) -> A(-x)
 			auto res = *this;
-			for(int i = 1; i <= deg(); i += 2) {
+			for(i32 i = 1; i <= deg(); i += 2) {
 				res.a[i] = -res[i];
 			}
 			return res;
@@ -641,7 +641,7 @@ namespace algebra {
 		
 		T eval(T x) const { // evaluates in single point x
 			T res(0);
-			for(int i = deg(); i >= 0; i--) {
+			for(i32 i = deg(); i >= 0; i--) {
 				res *= x;
 				res += a[i];
 			}
@@ -653,15 +653,15 @@ namespace algebra {
 			return a.back();
 		}
 		
-		int deg() const { // degree, -1 for P(x) = 0
-			return (int)a.size() - 1;
+		i32 deg() const { // degree, -1 for P(x) = 0
+			return (i32)sz(a) - 1;
 		}
 		
 		bool is_zero() const {
 			return a.empty();
 		}
 		
-		T operator [](int idx) const {
+		T operator [](i32 idx) const {
 			return idx < 0 || idx > deg() ? T(0) : a[idx];
 		}
 		
@@ -672,20 +672,20 @@ namespace algebra {
 		bool operator == (const poly &t) const {return a == t.a;}
 		bool operator != (const poly &t) const {return a != t.a;}
 		
-		poly deriv(int k = 1) { // calculate derivative
+		poly deriv(i32 k = 1) { // calculate derivative
 			if(deg() + 1 < k) {
 				return poly(T(0));
 			}
 			vector<T> res(deg() + 1 - k);
-			for(int i = k; i <= deg(); i++) {
+			for(i32 i = k; i <= deg(); i++) {
 				res[i - k] = fact<T>(i) * rfact<T>(i - k) * a[i];
 			}
 			return res;
 		}
 		
-		poly integr() { // calculate integral with C = 0
+		poly i32egr() { // calculate i32egral with C = 0
 			vector<T> res(deg() + 2);
-			for(int i = 0; i <= deg(); i++) {
+			for(i32 i = 0; i <= deg(); i++) {
 				res[i + 1] = a[i] * small_inv<T>(i + 1);
 			}
 			return res;
@@ -695,7 +695,7 @@ namespace algebra {
 			if(is_zero()) {
 				return -1;
 			}
-			int res = 0;
+			i32 res = 0;
 			while(a[res] == T(0)) {
 				res++;
 			}
@@ -704,7 +704,7 @@ namespace algebra {
 		
 		poly log(size_t n) { // calculate log p(x) mod x^n
 			assert(a[0] == T(1));
-			return (deriv().mod_xk(n) * inv(n)).integr().mod_xk(n);
+			return (deriv().mod_xk(n) * inv(n)).i32egr().mod_xk(n);
 		}
 		
 		poly exp(size_t n) { // calculate exp p(x) mod x^n
@@ -722,7 +722,7 @@ namespace algebra {
 			return ans.mod_xk(n);
 		}
 		
-		poly pow_bin(int64_t k, size_t n) { // O(n log n log k)
+		poly pow_bin(i64 k, size_t n) { // O(n log n log k)
 			if(k == 0) {
 				return poly(1).mod_xk(n);
 			} else {
@@ -733,14 +733,14 @@ namespace algebra {
 		}
 		
 		// Do not compute inverse from scratch
-		poly powmod_hint(int64_t k, poly const& md, poly const& mdinv) {
+		poly powmod_hi32(i64 k, poly const& md, poly const& mdinv) {
 			if(k == 0) {
 				return poly(1);
 			} else {
-				auto t = powmod_hint(k / 2, md, mdinv);
-				t = (t * t).divmod_hint(md, mdinv).second;
+				auto t = powmod_hi32(k / 2, md, mdinv);
+				t = (t * t).divmod_hi32(md, mdinv).second;
 				if(k % 2) {
-					t = (t * *this).divmod_hint(md, mdinv).second;
+					t = (t * *this).divmod_hi32(md, mdinv).second;
 				}
 				return t;
 			}
@@ -754,7 +754,7 @@ namespace algebra {
 			for(size_t i = t.deg(); i >= m; i--) {
 				t.a[i - m] += t.a[i];
 			}
-			t.a.resize(min(t.a.size(), m));
+			t.a.resize(min(t.sz(a), m));
 			return t;
 		}
 
@@ -762,7 +762,7 @@ namespace algebra {
 			return (a.circular_closure(m) * b.circular_closure(m)).circular_closure(m);
 		}
 
-		poly powmod_circular(int64_t k, size_t m) {
+		poly powmod_circular(i64 k, size_t m) {
 			if(k == 0) {
 				return poly(1);
 			} else {
@@ -775,8 +775,8 @@ namespace algebra {
 			}
 		}
 		
-		poly powmod(int64_t k, poly const& md) {
-			int d = md.deg();
+		poly powmod(i64 k, poly const& md) {
+			i32 d = md.deg();
 			if(d == -1) {
 				return k ? *this : poly(T(1));
 			}
@@ -787,12 +787,12 @@ namespace algebra {
 				return powmod_circular(k, d);
 			}
 			auto mdinv = md.reverse().inv(md.deg() + 1);
-			return powmod_hint(k, md, mdinv);
+			return powmod_hi32(k, md, mdinv);
 		}
 		
 		// O(d * n) with the derivative trick from
 		// https://codeforces.com/blog/entry/73947?#comment-581173
-		poly pow_dn(int64_t k, size_t n) {
+		poly pow_dn(i64 k, size_t n) {
 			if(n == 0) {
 				return poly(T(0));
 			}
@@ -800,8 +800,8 @@ namespace algebra {
 			vector<T> Q(n);
 			Q[0] = bpow(a[0], k);
 			auto a0inv = a[0].inv();
-			for(int i = 1; i < (int)n; i++) {
-				for(int j = 1; j <= min(deg(), i); j++) {
+			for(i32 i = 1; i < (i32)n; i++) {
+				for(i32 j = 1; j <= min(deg(), i); j++) {
 					Q[i] += a[j] * Q[i - j] * (T(k) * T(j) - T(i - j));
 				}
 				Q[i] *= small_inv<T>(i) * a0inv;
@@ -811,15 +811,15 @@ namespace algebra {
 		
 		// calculate p^k(n) mod x^n in O(n log n)
 		// might be quite slow due to high constant
-		poly pow(int64_t k, size_t n) {
+		poly pow(i64 k, size_t n) {
 			if(is_zero()) {
 				return k ? *this : poly(1);
 			}
-			int i = trailing_xk();
+			i32 i = trailing_xk();
 			if(i > 0) {
-				return k >= int64_t(n + i - 1) / i ? poly(T(0)) : div_xk(i).pow(k, n - i * k).mul_xk(i * k);
+				return k >= i64(n + i - 1) / i ? poly(T(0)) : div_xk(i).pow(k, n - i * k).mul_xk(i * k);
 			}
-			if(min(deg(), (int)n) <= magic) {
+			if(min(deg(), (i32)n) <= magic) {
 				return pow_dn(k, n);
 			}
 			if(k <= magic) {
@@ -835,7 +835,7 @@ namespace algebra {
 			if(is_zero()) {
 				return *this;
 			}
-			int i = trailing_xk();
+			i32 i = trailing_xk();
 			if(i % 2) {
 				return nullopt;
 			} else if(i > 0) {
@@ -858,7 +858,7 @@ namespace algebra {
 		poly mulx(T a) const { // component-wise multiplication with a^k
 			T cur = 1;
 			poly res(*this);
-			for(int i = 0; i <= deg(); i++) {
+			for(i32 i = 0; i <= deg(); i++) {
 				res.coef(i) *= cur;
 				cur *= a;
 			}
@@ -868,7 +868,7 @@ namespace algebra {
 		poly mulx_sq(T a) const { // component-wise multiplication with a^{k choose 2}
 			T cur = 1, total = 1;
 			poly res(*this);
-			for(int i = 0; i <= deg(); i++) {
+			for(i32 i = 0; i <= deg(); i++) {
 				res.coef(i) *= total;
 				cur *= a;
 				total *= cur;
@@ -878,7 +878,7 @@ namespace algebra {
 
 		// be mindful of maxn, as the function
 		// requires multiplying polynomials of size deg() and n+deg()!
-		poly chirpz(T z, int n) const { // P(1), P(z), P(z^2), ..., P(z^(n-1))
+		poly chirpz(T z, i32 n) const { // P(1), P(z), P(z^2), ..., P(z^(n-1))
 			if(is_zero()) {
 				return vector<T>(n, 0);
 			}
@@ -895,22 +895,22 @@ namespace algebra {
 		}
 
 		// res[i] = prod_{1 <= j <= i} 1/(1 - z^j)
-		static auto _1mzk_prod_inv(T z, int n) {
+		static auto _1mzk_prod_inv(T z, i32 n) {
 			vector<T> res(n, 1), zk(n);
 			zk[0] = 1;
-			for(int i = 1; i < n; i++) {
+			for(i32 i = 1; i < n; i++) {
 				zk[i] = zk[i - 1] * z;
 				res[i] = res[i - 1] * (T(1) - zk[i]);
 			}
 			res.back() = res.back().inv();
-			for(int i = n - 2; i >= 0; i--) {
+			for(i32 i = n - 2; i >= 0; i--) {
 				res[i] = (T(1) - zk[i+1]) * res[i+1];
 			}
 			return res;
 		}
 		
 		// prod_{0 <= j < n} (1 - z^j x)
-		static auto _1mzkx_prod(T z, int n) {
+		static auto _1mzkx_prod(T z, i32 n) {
 			if(n == 1) {
 				return poly(vector<T>{1, -1});
 			} else {
@@ -923,7 +923,7 @@ namespace algebra {
 			}
 		}
 
-		poly chirpz_inverse(T z, int n) const { // P(1), P(z), P(z^2), ..., P(z^(n-1))
+		poly chirpz_inverse(T z, i32 n) const { // P(1), P(z), P(z^2), ..., P(z^(n-1))
 			if(is_zero()) {
 				return {};
 			}
@@ -935,7 +935,7 @@ namespace algebra {
 				}
 			}
 			vector<T> y(n);
-			for(int i = 0; i < n; i++) {
+			for(i32 i = 0; i < n; i++) {
 				y[i] = (*this)[i];
 			}
 			auto prods_pos = _1mzk_prod_inv(z, n);
@@ -943,7 +943,7 @@ namespace algebra {
 
 			T zn = bpow(z, n-1).inv();
 			T znk = 1;
-			for(int i = 0; i < n; i++) {
+			for(i32 i = 0; i < n; i++) {
 				y[i] *= znk * prods_neg[i] * prods_pos[(n - 1) - i];
 				znk *= zn;
 			}
@@ -954,7 +954,7 @@ namespace algebra {
 			return (p_over_q * q).mod_xk(n).reverse(n);
 		}
 
-		static poly build(vector<poly> &res, int v, auto L, auto R) { // builds evaluation tree for (x-a1)(x-a2)...(x-an)
+		static poly build(vector<poly> &res, i32 v, auto L, auto R) { // builds evaluation tree for (x-a1)(x-a2)...(x-an)
 			if(R - L == 1) {
 				return res[v] = vector<T>{-*L, 1};
 			} else {
@@ -963,7 +963,7 @@ namespace algebra {
 			}
 		}
 
-		poly to_newton(vector<poly> &tree, int v, auto l, auto r) {
+		poly to_newton(vector<poly> &tree, i32 v, auto l, auto r) {
 			if(r - l == 1) {
 				return *this;
 			} else {
@@ -978,13 +978,13 @@ namespace algebra {
 			if(is_zero()) {
 				return *this;
 			}
-			int n = p.size();
+			i32 n = sz(p);
 			vector<poly> tree(4 * n);
 			build(tree, 1, begin(p), end(p));
 			return to_newton(tree, 1, begin(p), end(p));
 		}
 
-		vector<T> eval(vector<poly> &tree, int v, auto l, auto r) { // auxiliary evaluation function
+		vector<T> eval(vector<poly> &tree, i32 v, auto l, auto r) { // auxiliary evaluation function
 			if(r - l == 1) {
 				return {eval(*l)};
 			} else {
@@ -997,7 +997,7 @@ namespace algebra {
 		}
 		
 		vector<T> eval(vector<T> x) { // evaluate polynomial in (x1, ..., xn)
-			int n = x.size();
+			i32 n = sz(x);
 			if(is_zero()) {
 				return vector<T>(n, T(0));
 			}
@@ -1006,22 +1006,22 @@ namespace algebra {
 			return eval(tree, 1, begin(x), end(x));
 		}
 		
-		poly inter(vector<poly> &tree, int v, auto l, auto r, auto ly, auto ry) { // auxiliary interpolation function
+		poly i32er(vector<poly> &tree, i32 v, auto l, auto r, auto ly, auto ry) { // auxiliary i32erpolation function
 			if(r - l == 1) {
 				return {*ly / a[0]};
 			} else {
 				auto m = l + (r - l) / 2;
 				auto my = ly + (ry - ly) / 2;
-				auto A = (*this % tree[2 * v]).inter(tree, 2 * v, l, m, ly, my);
-				auto B = (*this % tree[2 * v + 1]).inter(tree, 2 * v + 1, m, r, my, ry);
+				auto A = (*this % tree[2 * v]).i32er(tree, 2 * v, l, m, ly, my);
+				auto B = (*this % tree[2 * v + 1]).i32er(tree, 2 * v + 1, m, r, my, ry);
 				return A * tree[2 * v + 1] + B * tree[2 * v];
 			}
 		}
 		
-		static auto inter(vector<T> x, vector<T> y) { // interpolates minimum polynomial from (xi, yi) pairs
-			int n = x.size();
+		static auto i32er(vector<T> x, vector<T> y) { // i32erpolates minimum polynomial from (xi, yi) pairs
+			i32 n = sz(x);
 			vector<poly> tree(4 * n);
-			return build(tree, 1, begin(x), end(x)).deriv().inter(tree, 1, begin(x), end(x), begin(y), end(y));
+			return build(tree, 1, begin(x), end(x)).deriv().i32er(tree, 1, begin(x), end(x), begin(y), end(y));
 		}
 
 		static auto resultant(poly a, poly b) { // computes resultant of a and b
@@ -1030,7 +1030,7 @@ namespace algebra {
 			} else if(b.deg() == 0) {
 				return bpow(b.lead(), a.deg());
 			} else {
-				int pw = a.deg();
+				i32 pw = a.deg();
 				a %= b;
 				pw -= a.deg();
 				auto mul = bpow(b.lead(), pw) * T((b.deg() & a.deg() & 1) ? -1 : 1);
@@ -1060,7 +1060,7 @@ namespace algebra {
 		}
 
 		static poly log1mx(size_t n) { // P(x) = log(1-x) (mod x^n)
-			return -ones(n).integr();
+			return -ones(n).i32egr();
 		}
 		
 		// [x^k] (a corr b) = sum_{i} a{(k-m)+i}*bi
@@ -1075,7 +1075,7 @@ namespace algebra {
 		
 		poly invborel() const { // ak *= k!
 			auto res = *this;
-			for(int i = 0; i <= deg(); i++) {
+			for(i32 i = 0; i <= deg(); i++) {
 				res.coef(i) *= fact<T>(i);
 			}
 			return res;
@@ -1083,7 +1083,7 @@ namespace algebra {
 		
 		poly borel() const { // ak /= k!
 			auto res = *this;
-			for(int i = 0; i <= deg(); i++) {
+			for(i32 i = 0; i <= deg(); i++) {
 				res.coef(i) *= rfact<T>(i);
 			}
 			return res;
@@ -1094,8 +1094,8 @@ namespace algebra {
 		}
 		
 		poly x2() { // P(x) -> P(x^2)
-			vector<T> res(2 * a.size());
-			for(size_t i = 0; i < a.size(); i++) {
+			vector<T> res(2 * sz(a));
+			for(size_t i = 0; i < sz(a); i++) {
 				res[2 * i] = a[i];
 			}
 			return res;
@@ -1106,20 +1106,20 @@ namespace algebra {
 			vector<T> res[2];
 			res[0].reserve(deg() / 2 + 1);
 			res[1].reserve(deg() / 2 + 1);
-			for(int i = 0; i <= deg(); i++) {
+			for(i32 i = 0; i <= deg(); i++) {
 				res[i % 2].push_back(a[i]);
 			}
 			return {res[0], res[1]};
 		}
 		
 		// Find [x^k] P / Q
-		static T kth_rec(poly P, poly Q, int64_t k) {
+		static T kth_rec(poly P, poly Q, i64 k) {
 			while(k > Q.deg()) {
-				int n = Q.a.size();
+				i32 n = sz(Q.a);
 				auto [Q0, Q1] = Q.mulx(-1).bisect();
 				auto [P0, P1] = P.bisect();
 				
-				int N = fft::com_size((n + 1) / 2, (n + 1) / 2);
+				i32 N = fft::com_size((n + 1) / 2, (n + 1) / 2);
 				
 				auto Q0f = fft::dft(Q0.a, N);
 				auto Q1f = fft::dft(Q1.a, N);
@@ -1137,7 +1137,7 @@ namespace algebra {
 			return (P * Q.inv(Q.deg() + 1))[k];
 		}
 		
-		poly inv(int n) const { // get inverse series mod x^n
+		poly inv(i32 n) const { // get inverse series mod x^n
 			auto Q = mod_xk(n);
 			if(n == 1) {
 				return Q[0].inv();
@@ -1145,7 +1145,7 @@ namespace algebra {
 			// Q(-x) = P0(x^2) + xP1(x^2)
 			auto [P0, P1] = Q.mulx(-1).bisect();
 			
-			int N = fft::com_size((n + 1) / 2, (n + 1) / 2);
+			i32 N = fft::com_size((n + 1) / 2, (n + 1) / 2);
 			
 			auto P0f = fft::dft(P0.a, N);
 			auto P1f = fft::dft(P1.a, N);
@@ -1160,19 +1160,19 @@ namespace algebra {
 		}
 		
 		// compute A(B(x)) mod x^n in O(n^2)
-		static poly compose(poly A, poly B, int n) {
-			int q = std::sqrt(n);
+		static poly compose(poly A, poly B, i32 n) {
+			i32 q = std::sqrt(n);
 			vector<poly> Bk(q);
 			auto Bq = B.pow(q, n);
 			Bk[0] = poly(T(1));
-			for(int i = 1; i < q; i++) {
+			for(i32 i = 1; i < q; i++) {
 				Bk[i] = (Bk[i - 1] * B).mod_xk(n);
 			}
 			poly Bqk(1);
 			poly ans;
-			for(int i = 0; i <= n / q; i++) {
+			for(i32 i = 0; i <= n / q; i++) {
 				poly cur;
-				for(int j = 0; j < q; j++) {
+				for(i32 j = 0; j < q; j++) {
 					cur += Bk[j] * A[i * q + j];
 				}
 				ans += (Bqk * cur).mod_xk(n);
@@ -1184,31 +1184,31 @@ namespace algebra {
 		// compute A(B(x)) mod x^n in O(sqrt(pqn log^3 n))
 		// preferrable when p = deg A and q = deg B
 		// are much less than n
-		static poly compose_large(poly A, poly B, int n) {
+		static poly compose_large(poly A, poly B, i32 n) {
 			if(B[0] != T(0)) {
 				return compose_large(A.shift(B[0]), B - B[0], n);
 			}
 			
-			int q = std::sqrt(n);
+			i32 q = std::sqrt(n);
 			auto [B0, B1] = make_pair(B.mod_xk(q), B.div_xk(q));
 			
 			B0 = B0.div_xk(1);
 			vector<poly> pw(A.deg() + 1);
-			auto getpow = [&](int k) {
+			auto getpow = [&](i32 k) {
 				return pw[k].is_zero() ? pw[k] = B0.pow(k, n - k) : pw[k];
 			};
 			
-			function<poly(poly const&, int, int)> compose_dac = [&getpow, &compose_dac](poly const& f, int m, int N) {
+			function<poly(poly const&, i32, i32)> compose_dac = [&getpow, &compose_dac](poly const& f, i32 m, i32 N) {
 				if(f.deg() <= 0) {
 					return f;
 				}
-				int k = m / 2;
+				i32 k = m / 2;
 				auto [f0, f1] = make_pair(f.mod_xk(k), f.div_xk(k));
 				auto [A, B] = make_pair(compose_dac(f0, k, N), compose_dac(f1, m - k, N - k));
 				return (A + (B.mod_xk(N - k) * getpow(k).mod_xk(N - k)).mul_xk(k)).mod_xk(N);
 			};
 			
-			int r = n / q;
+			i32 r = n / q;
 			auto Ar = A.deriv(r);
 			auto AB0 = compose_dac(Ar, Ar.deg() + 1, n);
 			
@@ -1218,14 +1218,14 @@ namespace algebra {
 			
 			vector<poly> B1p(r + 1);
 			B1p[0] = poly(T(1));
-			for(int i = 1; i <= r; i++) {
+			for(i32 i = 1; i <= r; i++) {
 				B1p[i] = (B1p[i - 1] * B1.mod_xk(n - i * q)).mod_xk(n - i * q);
 			}
 			while(r >= 0) {
 				ans += (AB0.mod_xk(n - r * q) * rfact<T>(r) * B1p[r]).mul_xk(r * q).mod_xk(n);
 				r--;
 				if(r >= 0) {
-					AB0 = ((AB0 * Bd).integr() + A[r] * fact<T>(r)).mod_xk(n);
+					AB0 = ((AB0 * Bd).i32egr() + A[r] * fact<T>(r)).mod_xk(n);
 				}
 			}
 			
@@ -1240,14 +1240,14 @@ namespace algebra {
 	
 	template<class T>
 	ostream& operator<<(ostream& os, poly<T>& p){
-		for(int i = 0; i < sz(p.a); i++)
-			osprint(os, p[i], ' ');
+		for(i32 i = 0; i < sz(p.a); i++)
+			ospri32(os, p[i], ' ');
 		return os;
 	}
 };
 
 using namespace algebra;
 
-const int mod = 998244353;
+const i32 mod = 998244353;
 typedef modular<mod> base;
 typedef poly<base> polyn;
