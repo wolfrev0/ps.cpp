@@ -8,7 +8,7 @@
 //u'이 많은 경우(++, +=, min=, max+ 등) MU::f(tr[c],MQ::fn(lz[c],ce-cs))이다. 아닌경우도(1395 스위치) 있음
 //propagate = u(u(a,x),y)=u(a,z)
 //읽어볼것: https://github.com/atcoder/ac-library
-
+//example: https://atcoder.jp/contests/abc322/submissions/46127985
 template<Monoid Q,Monoid U, class T=decltype(Q::id()),auto fcomb=lamp(U::f(a,Q::fn(b,c)),T a,T b,int c)>
 struct SegLazy{
 	int n; Arr<T> tr,lz;

@@ -17,48 +17,48 @@ template<class T, class M> T fn(T x,int n){
 	return n%2?M::f(M::f(res,res),x):M::f(res,res);
 }
 
-template<class T>struct MAdd{
-	static T id(){return T(0);}
+template<class T, T _id=T(0)>struct MAdd{
+	static T id(){return _id;}
 	static T f(T x,T y){return x+y;}
 	static T fn(T x,int n){return x*n;}
 };
-template<class T>struct MMul{
-	static T id(){return T(1);}
+template<class T, T _id=T(1)>struct MMul{
+	static T id(){return _id;}
 	static T f(T x,T y){return x*y;}
 	static T fn(T x,int n){return ::fn<T,MMul<T>>(x,n);}
 };
-template<class T>struct MAss{
-	static T id(){return nan<T>();}
+template<class T, T _id=nan<T>()>struct MAss{
+	static T id(){return _id;}
 	static T f(T x,T y){return y==id()?x:y;}
 	static T fn(T x,int n){return x;}
 };
-template<class T>struct MAssOnce{
-	static T id(){return nan<T>();}
+template<class T, T _id=nan<T>()>struct MAssOnce{
+	static T id(){return _id;}
 	static T f(T x,T y){return x==id()?y:x;}
 	static T fn(T x,int n){return x;}
 };
-template<class T>struct MMin{
-	static T id(){return inf<T>();}
+template<class T, T _id=inf<T>()>struct MMin{
+	static T id(){return _id;}
 	static T f(T x,T y){return min(x,y);}
 	static T fn(T x,int n){return x;}
 };
-template<class T>struct MMax{
-	static T id(){return -inf<T>();}
+template<class T, T _id=-inf<T>()>struct MMax{
+	static T id(){return _id;}
 	static T f(T x,T y){return max(x,y);}
 	static T fn(T x,int n){return x;}
 };
-template<class T>struct MXor{
-	static T id(){return T(0);}
+template<class T, T _id=T(0)>struct MXor{
+	static T id(){return _id;}
 	static T f(T x,T y){return x^y;}
 	static T fn(T x,int n){return n%2?x:0;}
 };
-template<class T>struct MGcd{
-	static T id(){return T(0);}
+template<class T, T _id=T(0)>struct MGcd{
+	static T id(){return _id;}
 	static T f(T x,T y){return gcd(x,y);}
 	static T fn(T x,int n){return x;}
 };
-template<class T>struct MFunc{
-	static T id(){return T();}
+template<class T, T _id=T()>struct MFunc{
+	static T id(){return _id;}
 	static T f(T x,T y){return x.f(y);}
 	static T fn(T x,int n){return ::fn<T,MFunc<T>>(x,n);}
 };
