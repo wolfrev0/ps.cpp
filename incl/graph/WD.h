@@ -42,6 +42,7 @@ struct GraphWD{
 		}
 		return d;
 	}
+	//not work when neg cycle exist
 	Arr<T> spfa(Arr<int> src){
 		deque<int> q;
 		Arr<char> inq(n);
@@ -77,6 +78,7 @@ struct GraphWD{
 			d.clear();
 		return d;
 	}
+	//not work when neg cycle exist
 	pair<Arr<T>,Arr<int>> spfa_track(Arr<int> src){
 		deque<int> q;
 		Arr<char> inq(n);
