@@ -1,7 +1,7 @@
 #pragma once
 #include "core/base.h"
 #include "math/struct/monoid.h"
-#include "graph/funcional.h"
+#include "graph/functional.h"
 
 //BOJ20931같이 업데이트 필요한건 어떻게?
 //BOJ12008(USACO262144)같이 중간에 값 들어가는건?
