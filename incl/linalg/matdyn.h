@@ -1,8 +1,9 @@
 #pragma once
 #include "core/base.h"
 
-#if !(DEBUG)
-	#pragma GCC optimize ("Ofast")
+#if !DEBUG
+	#pragma GCC push_options
+	#pragma GCC optimize ("O3")
 #endif
 //https://www.acmicpc.net/source/64632660
 //https://www.acmicpc.net/source/64632328
@@ -93,3 +94,7 @@ template<typename T> ostream& operator<<(ostream& s, const MatDyn<T>& MatDyn) {
 			osprint(s,MatDyn.a[i][j],' ');
 	return s;
 }
+
+#if !DEBUG
+	#pragma GCC pop_options
+#endif

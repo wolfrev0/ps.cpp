@@ -1,8 +1,9 @@
 #pragma once
 #include "core/base.h"
 
-#if !(DEBUG)
-	#pragma GCC optimize ("Ofast")
+#if !DEBUG
+	#pragma GCC push_options
+	#pragma GCC optimize ("O3")
 #endif
 template<class T,int _n,int _m> struct Mat{
 	static constexpr int n=_n,m=_m;
@@ -89,3 +90,7 @@ template<typename T,int n,int M> ostream& operator<<(ostream& s, const Mat<T,n,M
 			osprint(s,mat.a[i][j],' ');
 	return s;
 }
+
+#if !DEBUG
+	#pragma GCC pop_options
+#endif

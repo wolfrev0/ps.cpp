@@ -1,8 +1,9 @@
 #pragma once
 #include "core/base.h"
 
-#if !(DEBUG)
-	#pragma GCC optimize ("Ofast")
+#if !DEBUG
+	#pragma GCC push_options
+	#pragma GCC optimize ("O3")
 #endif
 //NOTE: Mat<m>(n)은 n*m행렬이다.
 template<int m> struct MatGF2{
@@ -91,3 +92,6 @@ template<int N> ostream& operator<<(ostream& os, const MatGF2Sq<N>& mat){
 	}
 	return os;
 }
+#if !DEBUG
+	#pragma GCC pop_options
+#endif
