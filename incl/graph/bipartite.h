@@ -10,48 +10,54 @@ template<class T> struct Bipartite{
 	// int hopcroft_karp(){}
 };
 
-//NOTE: self loop=0들어가는 경우 주의하자. 매칭값 0이됨
-//NOTE: minimum weighted bipartite matching
-//NOTE: 단순히 가중치를 음수로 바꾸면 max매칭이 되는게 맞는데 어째선지 잘 안됨(TLE남). 일단 max매칭은 mcmf로 풀자
-//NOTE: 매칭안된거 판별을 inf<int>()대신 inf<int>()/max(n,m)써야 오버플로 안나는듯? 아니면 매칭결과의 가중치 확인으로도 가능
-struct Hungarian{
-	using T=i64;
-	Hungarian(int n,int m):n(n),m(m),g(n+1,Arr<T>(m+1,inf<int>()/max({1ll,(i64)n,(i64)m}))){}
 
-	void add_edge(int a,int b,T c){g[a+1][b+1]=c;}
-	// mat[1][1] ~ mat[n][m]
-	// mat[i] : mat column of row i
-	pair<T,Arr<int>> calc(){
-		Arr<int> mat(n+1),p(m+1),way(m+1);
-		Arr<T> u(n+1),v(m+1);
-		for(int i=1;i<=n;i++){
-			p[0]=i;
-			int js=0;
-			Arr<T> minv(m+1,inf<int>());
-			Arr<char> used(m+1);
-			do{
-				used[js]=true;
-				int is=p[js],je;T d=inf<int>();
-				for(int j=1;j<=m;j++)
-					if(!used[j]){
-						T c=g[is][j] - u[is] - v[j];
-						if(c < minv[j])minv[j]=c,way[j]=js;
-						if(minv[j] < d)d=minv[j],je=j;
-					}
-				for(int j=0;j<=m;j++)
-					if(used[j])u[p[j]]+=d,v[j]-=d;
-					else minv[j]-=d;
-				js=je;
-			} while(p[js]);
-			do{
-				int je=way[js];
-				p[js]=p[je];
-				js=je;
-			} while(js);
-		}
-		for(int j=1;j<=m;j++)mat[p[j]]=j;
-		return{-v[0],mat};
+// code from https://www.acmicpc.net/source/67122393
+// assign 0 to the non-linked and negative pairs for maximum weight matching
+// assign -infty to the non-linked pairs for maximum weight maximum matching
+// infity should satisfy infity > n * (max_weight - min_weight)
+// O(n^2 * m)
+template<class T>
+tuple<T, vector<int>, vector<int>> hungarian_weighted_bipartite_matching(vector<vector<T>> a){
+	if(a.empty()) return {0, {}, {}};
+	bool swapped = false;
+	int n = (int)a.size() + 1, m = (int)a[0].size() + 1;
+	for(auto i = 0; i < n - 1; ++ i) for(auto j = 0; j < m - 1; ++ j) a[i][j] = -a[i][j];
+	if(n > m){
+		swap(n, m);
+		swapped = true;
+		vector b(n - 1, vector<T>(m - 1));
+		for(auto i = 0; i < n - 1; ++ i) for(auto j = 0; j < m - 1; ++ j) b[i][j] = a[j][i];
+		swap(a, b);
 	}
-	int n,m;
-	Arr<Arr<T>> g;
-};
+	vector<T> u(n), v(m);
+	vector<int> p(m), mu(n - 1);
+	for(auto i = 1; i < n; ++ i){
+		p[0] = i;
+		int j0 = 0; // add "dummy" worker 0
+		vector<T> dist(m, numeric_limits<T>::max());
+		vector<int> pv(m, -1), done(m + 1);
+		do{ // dijkstra
+			done[j0] = true;
+			int i0 = p[j0], j1;
+			T delta = numeric_limits<T>::max();
+			for(auto j = 1; j < m; ++ j) if(!done[j]){
+				T cur = a[i0 - 1][j - 1] - u[i0] - v[j];
+				if(cur < dist[j]) dist[j] = cur, pv[j] = j0;
+				if(dist[j] < delta) delta = dist[j], j1 = j;
+			}
+			for(auto j = 0; j < m; ++ j){
+				if(done[j]) u[p[j]] += delta, v[j] -= delta;
+				else dist[j] -= delta;
+			}
+			j0 = j1;
+		}while(p[j0]);
+		while(j0){ // update alternating path
+			int j1 = pv[j0];
+			p[j0] = p[j1], j0 = j1;
+		}
+	}
+	vector<int> mv(m - 1, -1);
+	for(auto j = 1; j < m; ++ j) if(p[j]) mu[p[j] - 1] = j - 1, mv[j - 1] = p[j] - 1;
+	if(swapped) swap(mu, mv);
+	return {v[0], mu, mv}; // min cost
+}
