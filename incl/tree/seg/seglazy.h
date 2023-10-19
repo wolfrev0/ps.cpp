@@ -59,12 +59,12 @@ private:
 		if(ce<=s)
 			;
 		else if(cs<s)
-			assmin(ret,prefix_search(c<<1,cs,cm,s,pred,acc))||assmin(ret,prefix_search(c<<1|1,cm,ce,s,pred,acc));
+			assmin(ret,prefix_search(c<<1,cs,cm,s,pred,acc)) || assmin(ret,prefix_search(c<<1|1,cm,ce,s,pred,acc));
 		else{
 			if(pred(acc,cs)){acc=Q::f(acc,tr[c]);return cs;}
 			if(!pred(Q::f(acc,tr[c]),ce)){acc=Q::f(acc,tr[c]);return inf<int>();}
 			if(ce-cs==1)return ce;
-			assmin(ret,prefix_search(c<<1,cs,cm,s,pred,acc))||assmin(ret,prefix_search(c<<1|1,cm,ce,s,pred,acc));
+			assmin(ret,prefix_search(c<<1,cs,cm,s,pred,acc)) || assmin(ret,prefix_search(c<<1|1,cm,ce,s,pred,acc));
 		}
 		return ret;
 	}
@@ -73,12 +73,12 @@ private:
 		if(e<=cs)
 			;
 		else if(e<ce)
-			assmax(ret,suffix_search(c<<1|1,cm,ce,e,pred,acc))||assmax(ret,suffix_search(c<<1,cs,cm,e,pred,acc));
+			assmax(ret,suffix_search(c<<1|1,cm,ce,e,pred,acc)) || assmax(ret,suffix_search(c<<1,cs,cm,e,pred,acc));
 		else{
 			if(pred(acc,ce)){acc=Q::f(acc,tr[c]);return ce;}
 			if(!pred(Q::f(tr[c],acc),cs)){acc=Q::f(tr[c],acc);return -1;}
 			if(ce-cs==1)return cs;
-			assmax(ret,suffix_search(c<<1|1,cm,ce,e,pred,acc))||assmax(ret,suffix_search(c<<1,cs,cm,e,pred,acc));
+			assmax(ret,suffix_search(c<<1|1,cm,ce,e,pred,acc)) || assmax(ret,suffix_search(c<<1,cs,cm,e,pred,acc));
 		}
 		return ret;
 	}
