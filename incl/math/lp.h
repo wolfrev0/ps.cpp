@@ -86,12 +86,6 @@ tuple<T,Arr<T>,Arr<T>> simplex(Arr<Arr<T>> a,Arr<T> b,Arr<T> obj){
 	for(int i=0;i<m;i++)
 		elim(i,m,p[i]);
 	
-	for(int i=0;i<m;i++){
-		int j=rand()%m;
-		swap(a[i],a[j]);
-		swap(p[i],p[j]);
-	}
-
 	//now shape of a = (m+1)*(n+s+m+2)
 	while(true){
 		int ev=0,lvi=-1;

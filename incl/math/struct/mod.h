@@ -3,7 +3,8 @@
 
 template<class T=u32, class U=u64, T m=998244353> struct Mod{
 	static_assert(m < numeric_limits<T>::max()/2);
-	Mod(auto n=0):n(n<0?((-n)%m?m-(-n)%m:0)%m:n%m){}
+	Mod():Mod(0){}
+	Mod(auto n):n(n<0?((-n)%m?m-(-n)%m:0)%m:n%m){}
 	explicit operator T()const{return n;}
 	explicit operator bool()const{return !!n;}
 
