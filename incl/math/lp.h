@@ -11,6 +11,11 @@
 //듀얼후 리덕션한 결과값 primal로 복원하기
 //https://math.stackexchange.com/questions/1226186/recovering-the-optimal-primal-solution-from-dual-solution
 //왠지 모르겠지만 double속도가 더 빨라서 확실한 실수오차문제가 아니면 그냥 f64로 냅두는게 좋은듯
+
+// #if !DEBUG
+// 	#pragma GCC push_options
+// 	#pragma GCC optimize ("Ofast")
+// #endif
 template<class T>//inplace transpose (메모리절약)
 void transpose(Arr<Arr<T>>& a){
 	int n=sz(a),m=sz(a[0]);
@@ -35,7 +40,7 @@ void transpose(Arr<Arr<T>>& a){
 }
 template<class T=fp,int M>
 void dualize(Arr<Arr<T>> &a,Arr<T> &b,Arr<T>& obj){
-	int m=sz(a), n=sz(a[0]);
+	__attribute__((unused)) int m=sz(a) , n=sz(a[0]);
 	transpose(a),swap(b,obj);
 	for(int i=0;i<n;i++){
 		for(auto& j:a[i])j=-j;
@@ -115,3 +120,7 @@ tuple<T,Arr<T>,Arr<T>> simplex(Arr<Arr<T>> a,Arr<T> b,Arr<T> obj){
 		dual[i]=a[-1][n+s+i]+(geq[i]?+M:0);
 	return {a[-1][-1],ans,dual};
 }
+
+// #if !DEBUG
+// 	#pragma GCC pop_options
+// #endif
