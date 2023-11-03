@@ -4,6 +4,7 @@
 //only finds odd palindromes
 //to find even palindromes, convert string "abcd" to "#a#b#c#d#"
 //https://www.acmicpc.net/submit/11046/48519822
+//#변형시, manacher[i]은 변형전의 팰린드롬 길이가 된다.
 template<class T> Arr<int> manacher(Str<T> a){
 	int n=sz(a);
 	Arr<int> b(n+1);
