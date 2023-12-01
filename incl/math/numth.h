@@ -38,7 +38,7 @@ template<class T> T factorial(int x){
 }
 
 template<class T> T binomial(int x,int y){
-	if(y<-1 or y>x) return 0;
+	if(y<0 or y>x) return 0;
 	if(y==0 or y==x) return 1;
 	if(x-y<y)
 		y=x-y;
