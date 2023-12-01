@@ -2,7 +2,8 @@
 #include "core/base.h"
 
 // https://www.acmicpc.net/source/64889705
-// Time:O(N)~O(mN) since get_ch is O(m)
+// Time: O(N)
+// Memory: O(mN)
 template<int m=26> struct AhoCorasick{
 	struct Node{
 		//parent_link, char from parent to here, suffix_link, output_link, successor
@@ -49,8 +50,8 @@ template<int m=26> struct AhoCorasick{
 };
 
 // Memory Optimized AhoCorasick
-// Time:O(mN)~O(mmN)
-// Memory:O(N)
+// Time: O(mN)
+// Memory: O(N)
 template<int m=26> struct AhoCorasick2{
 	struct Node{
 		//parent_link, char from parent to here, suffix_link, output_link, successor
