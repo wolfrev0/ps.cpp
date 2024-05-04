@@ -1,7 +1,8 @@
 #pragma once
 #include "core/base.h"
 
-template<class T> struct Fenwick{
+struct Fenwick{
+	using T=int;
 	Fenwick(int n=0):n(n),tr(n+1){}
 	T q(int i){return q(i,i+1);}
 	T q(int s,int e){

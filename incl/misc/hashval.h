@@ -113,12 +113,12 @@ struct HashSeq{
 	void push_front(HashSeq x){*this=x+*this;}
 	void pop_back(HashSeq x){
 		for(int i=0;i<pn;i++)
-			h[i]=(h[i]-x.h[i])*inv(pow(p[i],x.cnt));
+			h[i]=(h[i]-x.h[i])*inv(pow(p[i],x.cnt));//inv(pow(x,y)) can be memoized
 		cnt-=x.cnt;
 	}
 	void pop_front(HashSeq x){
 		for(int i=0;i<pn;i++)
-			h[i]-=x.h[i]*pow(p[i],cnt-1);
+			h[i]-=x.h[i]*pow(p[i],cnt-x.cnt);
 		cnt-=x.cnt;
 	}
 	int size()const{return cnt;}

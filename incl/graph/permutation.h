@@ -45,7 +45,7 @@ Arr<Arr<int>> permu_decompose(const Arr<int>& p){
 #include "tree/seg/fenwick.h"
 int inversion_count(const Arr<int>& a){
 	int n=sz(a),cnt=0;
-	Fenwick<int> fw(n);
+	Fenwick fw(n);
 	for(int i=0;i<n;i++){
 		cnt+=i-fw.q(0,a[i]);
 		fw.upd(a[i],+1);
