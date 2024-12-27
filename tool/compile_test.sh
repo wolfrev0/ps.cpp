@@ -13,4 +13,3 @@ done
 echo 'signed main(){}' >> res/_tmp_compile_.cpp
 tool/build_cmake.sh res/_tmp_compile_.cpp Debug
 tool/build_cmake.sh res/_tmp_compile_.cpp Release
-tool/build_cmake.sh res/_tmp_compile_.cpp Profile

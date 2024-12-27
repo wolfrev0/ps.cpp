@@ -5,8 +5,12 @@ src=${1:-"src/main.cpp"}
 build_type=${2:-"Debug"}
 export CXX=g++-13
 
-# for mac os
-tac() { tail -r -- "$@"; }
+if [ "$(uname)" == "Darwin" ]; then # Mac OS X platform
+	tac() { tail -r -- "$@"; }
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then # GNU/Linux platform
+	: # tac
+fi
+
 
 #########################
 #   CREATE submit.cpp   #
