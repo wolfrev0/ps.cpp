@@ -3,14 +3,16 @@ set -e
 mkdir -p build
 src=${1:-"src/main.cpp"}
 build_type=${2:-"Debug"}
+export CXX=g++-13
 
-
+# for mac os
+tac() { tail -r -- "$@"; }
 
 #########################
 #   CREATE submit.cpp   #
 #########################
 function f(){
-	arr=$(g++ $src -iquote ./incl -std=c++20 -Wall -Wno-unused-variable -MM | cut -d ' ' -f2-)
+	arr=$(${CXX} $src -iquote ./incl -std=c++20 -Wall -Wno-unused-variable -MM | cut -d ' ' -f2-)
 	arr="${arr//\\}"
 	if (( 1 < $(echo $arr | wc -w | cat) )); then
 		for i in $arr
@@ -48,5 +50,5 @@ cpp -P build/build1.tmp | clang-format -style=Google >> build/submit.cpp
 #   build execution file   #
 ############################
 mkdir -p build/$src/$build_type
-cmake -GNinja -Bbuild/$src/$build_type -DSOURCE_PATH=${src} -DCMAKE_BUILD_TYPE=${build_type}
+cmake -GNinja -Bbuild/$src/$build_type -DSOURCE_PATH=${src} -DCMAKE_BUILD_TYPE=${build_type} -DCMAKE_CXX_COMPILER=${CXX}
 cmake --build build/$src/$build_type 
