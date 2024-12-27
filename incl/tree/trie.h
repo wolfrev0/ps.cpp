@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //메모리 적당히 절약법: 배열대신 map, Ahocorasick2방법, 정렬후 이분탐색(채점번호 33273843), RadixTree
 template<int n> struct Trie{

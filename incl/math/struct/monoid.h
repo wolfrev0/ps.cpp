@@ -1,7 +1,5 @@
 #pragma once
-
-#include "core/config.h"
-#include "core/arr.h"
+#include "core.h"
 
 template<typename T>
 concept Monoid=requires(T t){

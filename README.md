@@ -18,7 +18,7 @@ General-purpose header-only modern c++(20+) library with well-abstracted algorit
 
 ## Sample Code
 ``` cpp
-#include "core/base.h"
+#include "core.h"
 i32 main(){
 	//Can get arbitrary tuple from stdin
 	auto [n,m,k,x]=input<int,short,int,string>();

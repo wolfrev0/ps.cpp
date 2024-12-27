@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //https://codeforces.com/contest/1555/submission/124802305
 //MLE시 좌표압축하면 메모리 많이 줆 https://www.acmicpc.net/source/31803947

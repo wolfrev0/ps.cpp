@@ -1,4 +1,4 @@
-#include "core/base.h"
+#include "core.h"
 
 #define endl '\n' // Remove it when interactive
 #define CHECK_INPUT 1

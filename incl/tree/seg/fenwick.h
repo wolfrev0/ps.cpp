@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 struct Fenwick{
 	using T=int;

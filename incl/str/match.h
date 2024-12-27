@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 // ff[i] = longest proper (prefix==suffix) length of s[0,i]
 template<class T> Arr<int> failure_function(const Str<T> &p) {

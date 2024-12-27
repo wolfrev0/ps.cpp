@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //NOTE: 그룹union시 부가적인 연산 필요하면 걍 복붙해서 고쳐쓰는게 편하다(9938,3830등)
 struct UFgroup{

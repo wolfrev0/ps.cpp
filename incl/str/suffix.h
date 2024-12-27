@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 // Suffix Array
 // sa[i]: 사전순으로 i번째인 접미사의 시작인덱스

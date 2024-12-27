@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 // https://codeforces.com/blog/entry/68953
 // can use greedy maximize

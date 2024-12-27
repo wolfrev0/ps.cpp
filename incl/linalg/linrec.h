@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 // Berlekamp Massey
 // NOTE: Linear Recurrence Sequence의 점화식 도출은 행렬형태로 표현해서

@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 #if !DEBUG
 	#pragma GCC push_options

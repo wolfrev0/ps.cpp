@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 template<class T> struct Bipartite{
 	Arr<T> a[2];

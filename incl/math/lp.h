@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //입력: Ax<=b, obj
 //출력: maximize obj*x

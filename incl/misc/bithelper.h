@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 // NOTE: bitmask>>64 cause UB, expected 0, cause f(x)=x, See #1, https://stackoverflow.com/questions/18918256/is-right-shift-undefined-behavior-if-the-count-is-larger-than-the-width-of-the-t
 bool ispow2(int n){return (n&-n)==n and n;}

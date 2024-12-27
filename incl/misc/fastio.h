@@ -1,8 +1,6 @@
 #pragma once
-
 #define FASTIO
-#include "core/abbr.h"
-#include "core/arr.h"
+#include "core.h"
 
 struct FastCIN{
 	static const int SZ=1<<24;

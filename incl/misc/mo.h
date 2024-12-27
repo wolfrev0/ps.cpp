@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //TODO: 홀짝 나눠서 올라갔다가 내려갔다가 하도록 하면 더 빨라진다고 함
 //이게 힐베르트에서 하라는건지 그냥 생mo에서 하라는건지는 잘 몰루

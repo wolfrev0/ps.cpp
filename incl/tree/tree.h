@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 template<class T> struct Tree{
 	Tree(int n=0):n(n),g(n){}

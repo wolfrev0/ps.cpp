@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 #include "misc/gccext.h"
 
 //TODO: DynSeg+BinaryLifting해서 복잡도 log로 개선하기

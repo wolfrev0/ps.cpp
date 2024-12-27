@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 #include "math/struct/monoid.h"
 
 //SplayBST는 splay+a(자료구조)로 변환가능할듯.

@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //https://atcoder.jp/contests/arc119/tasks/arc119_c
 struct BucketBias{

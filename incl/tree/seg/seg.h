@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 #include "math/struct/monoid.h"
 
 template<Monoid Q> struct Seg{

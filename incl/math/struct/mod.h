@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 template<class T=u32, class U=u64, T m=998244353> struct Mod{
 	static_assert(m < numeric_limits<T>::max()/2);

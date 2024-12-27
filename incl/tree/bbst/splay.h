@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 #include "math/struct/monoid.h"
 
 //NOTE: Upd없어도 삭제 후 삽입하면 됨

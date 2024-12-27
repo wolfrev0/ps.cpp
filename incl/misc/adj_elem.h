@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 template<class T>
 pair<Arr<int>,Arr<int>> adj_eq(const Arr<T>& a){

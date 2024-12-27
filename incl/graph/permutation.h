@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 Arr<int> permu_inv(const Arr<int>& a){
 	Arr<int> r(sz(a));

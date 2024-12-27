@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //only finds odd palindromes
 //to find even palindromes, convert string "abcd" to "#a#b#c#d#"

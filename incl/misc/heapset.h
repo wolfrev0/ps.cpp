@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 template<class T, class CMP> struct HeapSet{
 	HeapSet(CMP cmp):a(cmp),b(cmp){}

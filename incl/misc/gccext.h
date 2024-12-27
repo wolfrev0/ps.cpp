@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 #include "misc/random.h"
 
 using namespace __gnu_pbds;

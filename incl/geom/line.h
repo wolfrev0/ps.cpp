@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 #include "geom/vec2.h"
 #include "math/numth.h"
 

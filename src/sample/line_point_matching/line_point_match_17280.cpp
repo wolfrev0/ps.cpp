@@ -1,4 +1,4 @@
-#include "core/base.h"
+#include "core.h"
 #include "misc/ordering.h"
 
 void solve(){

@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 // https://www.acmicpc.net/source/64889705
 // Time: O(N)

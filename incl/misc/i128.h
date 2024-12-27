@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 using i128=__int128;
 istream& operator>>(istream& s,i128& a){tie(a)=input();return s;}

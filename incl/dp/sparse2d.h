@@ -1,5 +1,5 @@
 //2022 scpc 2차 4번 (부분점수)
-#include "core/base.h"
+#include "core.h"
 
 const int B=9;
 

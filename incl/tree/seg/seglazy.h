@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 #include "math/struct/monoid.h"
 
 //q(u(a[l],x),u(a[l+1],x),...,u(a[r],x))

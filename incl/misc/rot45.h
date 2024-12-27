@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //회전변환시 계수 1/sqrt(2)를 제거하고 사용.
 //fi: -n~n, se: 0~2n

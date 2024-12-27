@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 #include "math/struct/frac.h"
 
 //기하 디버그 팁: 완전이상하게 동작하면 T=f64로 해봐라

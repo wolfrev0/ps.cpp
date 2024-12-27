@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //지금 ordering이 unique하지 않으면 5896에서 문제가 있는데, 이유가 multiset에서 지울때,,, 왜틀리는지 모르겠다..
 //usecase: BOJ5896

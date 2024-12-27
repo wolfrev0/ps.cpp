@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 template<class T> struct Rect{
 	T x1,y1,x2,y2;

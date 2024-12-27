@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 Arr<char> sieve_primes(int n) {
 	n++;

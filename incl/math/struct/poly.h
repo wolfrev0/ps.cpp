@@ -2,7 +2,7 @@
 
 // Source From: https://github.com/cp-algorithms/cp-algorithms-aux/blob/master/src/polynomial.cpp
 #pragma once
-#include "core/base.h"
+#include "core.h"
 #include "misc/random.h"
 
 /* Verified on https://judge.yosupo.jp:

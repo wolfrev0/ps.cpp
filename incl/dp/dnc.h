@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //DEFINITIONS
 //d[i][j] = min{-1<=k<=j}(d[i-1][k]+c[k+1][j+1]

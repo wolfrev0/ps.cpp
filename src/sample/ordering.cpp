@@ -1,4 +1,4 @@
-#include "core/base.h"
+#include "core.h"
 #include "math/struct/ordering.h"
 
 #define endl '\n' // Remove it when interactive

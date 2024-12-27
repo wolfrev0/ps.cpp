@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //not tested
 Arr<int> sos(const Arr<int>&a){

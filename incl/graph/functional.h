@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 struct FunctionalGraph{
 	FunctionalGraph(i32 n):n(n),a(n,-1){}

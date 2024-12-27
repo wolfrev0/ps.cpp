@@ -1,5 +1,5 @@
 #pragma once
-#include "core/base.h"
+#include "core.h"
 
 //almost O(logN) due to pow()
 template<class T, u32 pn=2>

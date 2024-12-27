@@ -1,4 +1,4 @@
-#include "core/base.h"
+#include "core.h"
 signed main(){
 	println("hello world");
 }
